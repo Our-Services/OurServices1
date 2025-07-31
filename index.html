@@ -292,6 +292,40 @@
             opacity: 1;
             pointer-events: auto;
         }
+        #customAlertModal .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        #customAlertModal .modal-buttons button {
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        #customAlertModal .modal-buttons .confirm-btn {
+            background-color: #ef4444; /* Red for delete */
+            color: white;
+        }
+        #customAlertModal .modal-buttons .confirm-btn:hover {
+            background-color: #dc2626;
+        }
+        #customAlertModal .modal-buttons .cancel-btn {
+            background-color: #cbd5e0; /* Gray for cancel */
+            color: #334155;
+        }
+        body.dark #customAlertModal .modal-buttons .cancel-btn {
+            background-color: #4a5568;
+            color: #e2e8f0;
+        }
+        #customAlertModal .modal-buttons .cancel-btn:hover {
+            background-color: #94a3b8;
+        }
+        body.dark #customAlertModal .modal-buttons .cancel-btn:hover {
+            background-color: #64748b;
+        }
 
 
         /* Mobile menu styles */
@@ -358,7 +392,10 @@
     <div id="customAlertModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[2000] hidden">
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
             <p id="customAlertMessage" class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4"></p>
-            <button id="customAlertCloseBtn" class="btn-primary px-6 py-2">حسناً</button>
+            <div id="customAlertButtons" class="modal-buttons">
+                <button id="customAlertCloseBtn" class="btn-primary">حسناً</button>
+                <!-- Confirmation buttons will be added here if needed -->
+            </div>
         </div>
     </div>
 
@@ -420,7 +457,7 @@
                 مصمم جميع أنواع المشاريع والمواقع والتصاميم والبحوث والواجبات
             </h1>
             <p class="text-2xl sm:text-3xl font-light mb-8">
-                <span class="bg-yellow-400 text-gray-900 px-4 py-2 rounded-lg shadow-lg inline-block transform -rotate-1 skew-x-2" data-i18n="heroDiscount">
+                <span class="bg-yellow-400 text-gray-900 px-4 py-2 rounded-lg shadow-lg inline-block transform -rotate-1 skew-x-2">
                     خصم 30% لفترة محدودة على كامل الخدمات
                 </span>
             </p>
@@ -585,7 +622,7 @@
         // Firebase Imports
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, query, onSnapshot, serverTimestamp, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Firebase Initialization (Global variables from Canvas)
         // ملاحظة هامة: عندما ترفع الموقع على Netlify، ستحتاج إلى استبدال هذا السطر
@@ -708,7 +745,11 @@
                 alertCommentAddedSuccess: "تم إضافة التعليق بنجاح!",
                 alertCommentAddError: "حدث خطأ أثناء إضافة التعليق. الرجاء المحاولة مرة أخرى.",
                 alertFirebaseInitError: "فشل تهيئة Firebase. قد لا تعمل التعليقات بشكل صحيح.",
-                alertFirebaseNotReady: "Firebase غير جاهز بعد. الرجاء الانتظار."
+                alertFirebaseNotReady: "Firebase غير جاهز بعد. الرجاء الانتظار.",
+                alertDeleteConfirm: "هل أنت متأكد أنك تريد حذف هذا التعليق؟", // New translation key
+                alertDeleteSuccess: "تم حذف التعليق بنجاح!", // New translation key
+                alertDeleteError: "حدث خطأ أثناء حذف التعليق. الرجاء المحاولة مرة أخرى.", // New translation key
+                alertNoPermission: "ليس لديك صلاحية لحذف هذا التعليق." // New translation key
             },
             en: {
                 siteTitle: "Our Services",
@@ -770,7 +811,11 @@
                 alertCommentAddedSuccess: "Comment added successfully!",
                 alertCommentAddError: "Error adding comment. Please try again.",
                 alertFirebaseInitError: "Firebase initialization failed. Comments may not work correctly.",
-                alertFirebaseNotReady: "Firebase not ready yet. Please wait."
+                alertFirebaseNotReady: "Firebase not ready yet. Please wait.",
+                alertDeleteConfirm: "Are you sure you want to delete this comment?", // New translation key
+                alertDeleteSuccess: "Comment deleted successfully!", // New translation key
+                alertDeleteError: "Error deleting comment. Please try again.", // New translation key
+                alertNoPermission: "You do not have permission to delete this comment." // New translation key
             },
             zh: {
                 siteTitle: "我们的服务",
@@ -832,24 +877,66 @@
                 alertCommentAddedSuccess: "评论添加成功！",
                 alertCommentAddError: "添加评论时出错。请重试。",
                 alertFirebaseInitError: "Firebase 初始化失败。评论可能无法正常工作。",
-                alertFirebaseNotReady: "Firebase 尚未准备好。请稍候。"
+                alertFirebaseNotReady: "Firebase 尚未准备好。请稍候。",
+                alertDeleteConfirm: "您确定要删除此评论吗？", // New translation key
+                alertDeleteSuccess: "评论删除成功！", // New translation key
+                alertDeleteError: "删除评论时出错。请重试。", // New translation key
+                alertNoPermission: "您没有权限删除此评论。" // New translation key
             }
         };
 
         // Custom Alert Modal Logic
         const customAlertModal = document.getElementById('customAlertModal');
         const customAlertMessage = document.getElementById('customAlertMessage');
-        const customAlertCloseBtn = document.getElementById('customAlertCloseBtn');
+        const customAlertButtons = document.getElementById('customAlertButtons'); // Container for buttons
 
-        function showAlert(messageKey) {
+        // Function to show custom alert/confirmation
+        function showAlert(messageKey, type = 'alert', onConfirm = null) {
             const currentLang = localStorage.getItem('selectedLanguage') || 'ar';
             customAlertMessage.textContent = translations[currentLang][messageKey] || messageKey;
+
+            // Clear previous buttons
+            customAlertButtons.innerHTML = '';
+
+            if (type === 'alert') {
+                const closeBtn = document.createElement('button');
+                closeBtn.id = 'customAlertCloseBtn';
+                closeBtn.className = 'btn-primary';
+                closeBtn.textContent = translations[currentLang].customAlertClose || 'حسناً'; // "حسناً" is default
+                closeBtn.addEventListener('click', () => {
+                    customAlertModal.classList.add('hidden');
+                });
+                customAlertButtons.appendChild(closeBtn);
+            } else if (type === 'confirm') {
+                const confirmBtn = document.createElement('button');
+                confirmBtn.className = 'confirm-btn';
+                confirmBtn.textContent = translations[currentLang].confirmText || 'نعم'; // "نعم" is default
+                confirmBtn.addEventListener('click', () => {
+                    customAlertModal.classList.add('hidden');
+                    if (onConfirm) onConfirm(true);
+                });
+
+                const cancelBtn = document.createElement('button');
+                cancelBtn.className = 'cancel-btn';
+                cancelBtn.textContent = translations[currentLang].cancelText || 'إلغاء'; // "إلغاء" is default
+                cancelBtn.addEventListener('click', () => {
+                    customAlertModal.classList.add('hidden');
+                    if (onConfirm) onConfirm(false);
+                });
+
+                customAlertButtons.appendChild(confirmBtn);
+                customAlertButtons.appendChild(cancelBtn);
+            }
+
             customAlertModal.classList.remove('hidden');
         }
 
-        customAlertCloseBtn.addEventListener('click', () => {
-            customAlertModal.classList.add('hidden');
-        });
+        // Add default close button listener if it was removed by previous calls
+        // This is a fallback, actual buttons are dynamically created in showAlert
+        // customAlertCloseBtn.addEventListener('click', () => {
+        //     customAlertModal.classList.add('hidden');
+        // });
+
 
         // JavaScript for mobile navigation toggle
         const hamburger = document.getElementById('hamburger');
@@ -1089,7 +1176,7 @@
                     name: commentName,
                     text: commentText,
                     timestamp: serverTimestamp(),
-                    userId: userId
+                    userId: userId // Store the userId with the comment
                 });
                 document.getElementById('commentName').value = '';
                 document.getElementById('commentText').value = '';
@@ -1100,6 +1187,33 @@
                 showAlert("alertCommentAddError");
             }
         });
+
+        // Function to delete a comment
+        async function deleteComment(commentId, commentUserId) {
+            if (!isAuthReady) {
+                showAlert("alertFirebaseNotReady");
+                return;
+            }
+
+            // Check if the current user is the owner of the comment
+            if (userId !== commentUserId) {
+                showAlert("alertNoPermission");
+                return;
+            }
+
+            showAlert("alertDeleteConfirm", 'confirm', async (confirmed) => {
+                if (confirmed) {
+                    try {
+                        await deleteDoc(doc(db, `artifacts/${appId}/public/data/comments`, commentId));
+                        console.log("Comment deleted successfully!");
+                        showAlert("alertDeleteSuccess");
+                    } catch (e) {
+                        console.error("Error deleting document: ", e);
+                        showAlert("alertDeleteError");
+                    }
+                }
+            });
+        }
 
         // Function to load and display comments
         function loadComments() {
@@ -1125,8 +1239,9 @@
 
                 snapshot.forEach((doc) => {
                     const comment = doc.data();
+                    const commentId = doc.id; // Get the document ID for deletion
                     const commentElement = document.createElement('div');
-                    commentElement.className = 'bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-sm';
+                    commentElement.className = 'bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-sm relative'; // Added relative for positioning delete button
                     commentElement.innerHTML = `
                         <div class="flex items-center mb-2">
                             <p class="font-semibold text-indigo-600 dark:text-indigo-300">${comment.name}</p>
@@ -1134,8 +1249,23 @@
                         </div>
                         <p class="text-gray-800 dark:text-gray-200">${comment.text}</p>
                         <p class="text-xs text-gray-400 dark:text-gray-500 mt-2 break-all">User ID: ${comment.userId}</p>
+                        ${userId === comment.userId ? `
+                            <button class="absolute top-2 left-2 text-red-500 hover:text-red-700 p-1 rounded-full focus:outline-none" data-comment-id="${commentId}" data-comment-user-id="${comment.userId}" aria-label="Delete comment">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1zm2 3a1 1 0 011-1h4a1 1 0 110 2H10a1 1 0 01-1-1zm0 3a1 1 0 011-1h4a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+                            </button>
+                        ` : ''}
                     `;
                     commentsList.appendChild(commentElement);
+
+                    // Add event listener to the delete button if it exists
+                    if (userId === comment.userId) {
+                        const deleteButton = commentElement.querySelector(`[data-comment-id="${commentId}"]`);
+                        if (deleteButton) {
+                            deleteButton.addEventListener('click', () => {
+                                deleteComment(commentId, comment.userId);
+                            });
+                        }
+                    }
                 });
             }, (error) => {
                 console.error("Error listening to comments:", error);
