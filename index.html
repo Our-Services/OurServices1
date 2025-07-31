@@ -183,6 +183,9 @@
         body.dark #contact {
             background-color: #1a202c; /* Darker background for contact section */
         }
+        body.dark #comments {
+            background-color: #1a202c; /* Darker background for comments section */
+        }
 
 
         /* Dark mode toggle button styles */
@@ -277,6 +280,20 @@
             height: 20px;
         }
 
+        /* Custom Alert Modal Styles */
+        #customAlertModal {
+            transition: opacity 0.3s ease;
+        }
+        #customAlertModal.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        #customAlertModal:not(.hidden) {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+
         /* Mobile menu styles */
         @media (max-width: 767px) {
             .hamburger-icon {
@@ -337,6 +354,14 @@
 </head>
 <body class="font-sans antialiased">
 
+    <!-- Custom Alert Modal -->
+    <div id="customAlertModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[2000] hidden">
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
+            <p id="customAlertMessage" class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4"></p>
+            <button id="customAlertCloseBtn" class="btn-primary px-6 py-2">حسناً</button>
+        </div>
+    </div>
+
     <!-- Navigation Bar -->
     <nav class="navbar py-4 px-6">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
@@ -382,6 +407,7 @@
                     <a href="#about-us" class="nav-link" data-i18n="navAboutUs">من نحن؟</a>
                     <a href="#services" class="nav-link" data-i18n="navServices">ماذا نقدم؟</a>
                     <a href="#contact" class="nav-link" data-i18n="navContact">تواصل معنا</a>
+                    <a href="#comments" class="nav-link" data-i18n="navComments">التعليقات</a>
                 </div>
             </div>
         </div>
@@ -520,12 +546,106 @@
         </div>
     </section>
 
+    <!-- Comments Section -->
+    <section id="comments" class="py-16 px-4 bg-gray-50 dark:bg-gray-800">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="section-heading text-center mb-12" data-i18n="commentsHeading">التعليقات</h2>
+            <div class="card p-8 md:p-12">
+                <h3 class="text-2xl font-semibold mb-6 text-indigo-700 dark:text-indigo-400" data-i18n="leaveComment">اترك تعليقك</h3>
+                <form id="commentForm" class="space-y-4">
+                    <div>
+                        <label for="commentName" class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-i18n="commentNameLabel">اسمك:</label>
+                        <input type="text" id="commentName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="ادخل اسمك" data-i18n-placeholder="commentNamePlaceholder" required>
+                    </div>
+                    <div>
+                        <label for="commentText" class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-i18n="commentTextLabel">تعليقك:</label>
+                        <textarea id="commentText" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="اكتب تعليقك هنا..." data-i18n-placeholder="commentTextPlaceholder" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary w-full" data-i18n="commentSubmitBtn">إرسال التعليق</button>
+                </form>
+
+                <hr class="my-8 border-gray-200 dark:border-gray-600">
+
+                <h3 class="text-2xl font-semibold mb-6 text-indigo-700 dark:text-indigo-400" data-i18n="allComments">جميع التعليقات</h3>
+                <div id="commentsList" class="space-y-6">
+                    <!-- Comments will be loaded here -->
+                    <p id="commentsLoading" class="text-center text-gray-500 dark:text-gray-400" data-i18n="commentsLoading">جاري تحميل التعليقات...</p>
+                    <p id="noComments" class="text-center text-gray-500 dark:text-gray-400 hidden" data-i18n="noComments">لا توجد تعليقات حتى الآن. كن أول من يعلق!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-8 text-center">
         <p data-i18n="footerText">&copy; 2024 جميع الحقوق محفوظة لفريق التصميم والمشاريع.</p>
     </footer>
 
-    <script>
+    <script type="module">
+        // Firebase Imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Firebase Initialization (Global variables from Canvas)
+        // ملاحظة هامة: عندما ترفع الموقع على Netlify، ستحتاج إلى استبدال هذا السطر
+        // بإعدادات Firebase الفعلية الخاصة بك التي نسختها من Firebase Console.
+        const firebaseConfig = {
+            apiKey: "AIzaSyBbL9kbE7oP5CW4HmZJGCCmZRY2L5wxxkM",
+            authDomain: "ourservices-c5658.firebaseapp.com",
+            projectId: "ourservices-c5658",
+            storageBucket: "ourservices-c5658.firebasestorage.app",
+            messagingSenderId: "951641862997",
+            appId: "1:951641862997:web:4744607ef9c0c516d9f5dc",
+            measurementId: "G-5LTEVPPJW1"
+        };
+
+        // هذا المتغير يستخدم لتحديد مسار البيانات في Firestore.
+        // في بيئة Canvas، يتم توفيره تلقائيًا.
+        // عند النشر على Netlify، لن يكون __app_id معرفًا، لذا سيتم استخدام 'default-app-id'.
+        // تأكد أن قواعد أمان Firestore الخاصة بك تتطابق مع المسار الذي يتم إنشاؤه هنا.
+        // المسار المتوقع: artifacts/default-app-id/public/data/comments
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        let app, db, auth, userId;
+        let isAuthReady = false;
+
+        // Function to initialize Firebase and authenticate
+        async function initFirebase() {
+            try {
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // سجل قيم إعدادات Firebase و appId للتحقق من صحتها
+                console.log("Firebase Config:", firebaseConfig);
+                console.log("Resolved App ID for Firestore Path:", appId);
+
+
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        console.log("Firebase authenticated. User ID:", userId);
+                        console.log("Firestore Path for Comments: artifacts/" + appId + "/public/data/comments"); // Log the full path
+                        isAuthReady = true;
+                        // Once authenticated, load comments
+                        loadComments();
+                    } else {
+                        console.log("No user signed in. Signing in anonymously...");
+                        // تأكد من تفعيل المصادقة المجهولة (Anonymous Authentication) في مشروع Firebase الخاص بك.
+                        // اذهب إلى Firebase Console -> Authentication -> Sign-in method -> Anonymous -> Enable.
+                        await signInAnonymously(auth);
+                    }
+                });
+            } catch (error) {
+                console.error("Error initializing Firebase:", error);
+                showAlert("alertFirebaseInitError");
+            }
+        }
+
+        // Call Firebase initialization
+        initFirebase();
+
         // Translations object
         const translations = {
             ar: {
@@ -535,6 +655,7 @@
                 navAboutUs: "من نحن؟",
                 navServices: "ماذا نقدم؟",
                 navContact: "تواصل معنا",
+                navComments: "التعليقات", // New translation key
                 heroTitle: "مصمم جميع أنواع المشاريع والمواقع والتصاميم والبحوث والواجبات",
                 heroDiscount: "خصم 30% لفترة محدودة على كامل الخدمات",
                 heroSubtitle: "نقدم لكم حلولاً متكاملة لتلبية جميع احتياجاتكم الأكاديمية والمهنية",
@@ -571,7 +692,23 @@
                 whatsappNumberKSA: "0500900329 داخل المملكة",
                 whatsappNumberOutsideKSA: "+60163340537 خارج المملكة",
                 footerText: "&copy; 2024 جميع الحقوق محفوظة لفريق التصميم والمشاريع.",
-                currentLangDisplay: "العربية"
+                currentLangDisplay: "العربية",
+                commentsHeading: "التعليقات", // New translation key
+                leaveComment: "اترك تعليقك", // New translation key
+                commentNameLabel: "اسمك:", // New translation key
+                commentNamePlaceholder: "ادخل اسمك", // New translation key
+                commentTextLabel: "تعليقك:", // New translation key
+                commentTextPlaceholder: "اكتب تعليقك هنا...", // New translation key
+                commentSubmitBtn: "إرسال التعليق", // New translation key
+                allComments: "جميع التعليقات", // New translation key
+                commentsLoading: "جاري تحميل التعليقات...", // New translation key
+                noComments: "لا توجد تعليقات حتى الآن. كن أول من يعلق!", // New translation key
+                alertNameTextEmpty: "الرجاء إدخال اسمك.",
+                alertCommentTextEmpty: "الرجاء إدخال تعليقك.",
+                alertCommentAddedSuccess: "تم إضافة التعليق بنجاح!",
+                alertCommentAddError: "حدث خطأ أثناء إضافة التعليق. الرجاء المحاولة مرة أخرى.",
+                alertFirebaseInitError: "فشل تهيئة Firebase. قد لا تعمل التعليقات بشكل صحيح.",
+                alertFirebaseNotReady: "Firebase غير جاهز بعد. الرجاء الانتظار."
             },
             en: {
                 siteTitle: "Our Services",
@@ -580,6 +717,7 @@
                 navAboutUs: "About Us",
                 navServices: "What We Offer?",
                 navContact: "Contact Us",
+                navComments: "Comments", // New translation key
                 heroTitle: "Designer of All Types of Projects, Websites, Designs, Research, and Assignments",
                 heroDiscount: "30% discount for a limited time on all services",
                 heroSubtitle: "We offer integrated solutions to meet all your academic and professional needs",
@@ -616,7 +754,23 @@
                 whatsappNumberKSA: "0500900329 inside KSA",
                 whatsappNumberOutsideKSA: "+60163340537 outside KSA",
                 footerText: "&copy; 2024 All rights reserved for the Design and Projects Team.",
-                currentLangDisplay: "English"
+                currentLangDisplay: "English",
+                commentsHeading: "Comments", // New translation key
+                leaveComment: "Leave your comment", // New translation key
+                commentNameLabel: "Your Name:", // New translation key
+                commentNamePlaceholder: "Enter your name", // New translation key
+                commentTextLabel: "Your Comment:", // New translation key
+                commentTextPlaceholder: "Write your comment here...", // New translation key
+                commentSubmitBtn: "Submit Comment", // New translation key
+                allComments: "All Comments", // New translation key
+                commentsLoading: "Loading comments...", // New translation key
+                noComments: "No comments yet. Be the first to comment!", // New translation key
+                alertNameTextEmpty: "Please enter your name.",
+                alertCommentTextEmpty: "Please enter your comment.",
+                alertCommentAddedSuccess: "Comment added successfully!",
+                alertCommentAddError: "Error adding comment. Please try again.",
+                alertFirebaseInitError: "Firebase initialization failed. Comments may not work correctly.",
+                alertFirebaseNotReady: "Firebase not ready yet. Please wait."
             },
             zh: {
                 siteTitle: "我们的服务",
@@ -625,6 +779,7 @@
                 navAboutUs: "关于我们",
                 navServices: "我们提供什么？",
                 navContact: "联系我们",
+                navComments: "评论", // New translation key
                 heroTitle: "各种项目、网站、设计、研究和作业的设计师",
                 heroDiscount: "所有服务限时30%折扣",
                 heroSubtitle: "我们提供全面的解决方案，满足您所有的学术和专业需求",
@@ -655,15 +810,46 @@
                 service6Title: "视频和图像设计与编辑",
                 service6Desc: "高质量地设计和编辑视频和图像，以满足您的所有需求。",
                 service7Title: "网站编程和开发",
-                service7Desc: "使用JavaScript编程交互式和美观的网站，并使用CSS进行样式设计，包括将网站托管到服务器并创建专用链接。",
+                service7Desc: "使用JavaScript编程交互式和美观的网站，并使用CSS进行样式设计، بما في ذلك استضافة الموقع على خادم وإنشاء رابط خاص به.",
                 contactHeading: "联系我们",
-                contactSubtitle: "我们很高兴通过WhatsApp接收您的咨询和请求：",
+                contactSubtitle: "我们很高高兴通过WhatsApp接收您的咨询和请求：",
                 whatsappNumberKSA: "0500900329 沙特阿拉伯境内",
                 whatsappNumberOutsideKSA: "+60163340537 沙特阿拉伯境外",
                 footerText: "&copy; 2024 设计与项目团队保留所有权利。",
-                currentLangDisplay: "中文"
+                currentLangDisplay: "中文",
+                commentsHeading: "评论", // New translation key
+                leaveComment: "留下您的评论", // New translation key
+                commentNameLabel: "您的姓名：", // New translation key
+                commentNamePlaceholder: "输入您的姓名", // New translation key
+                commentTextLabel: "您的评论：", // New translation key
+                commentTextPlaceholder: "在此输入您的评论...", // New translation key
+                commentSubmitBtn: "提交评论", // New translation key
+                allComments: "所有评论", // New translation key
+                commentsLoading: "正在加载评论...", // New translation key
+                noComments: "目前没有评论。成为第一个评论的人！", // New translation key
+                alertNameTextEmpty: "请输入您的姓名。",
+                alertCommentTextEmpty: "请输入您的评论。",
+                alertCommentAddedSuccess: "评论添加成功！",
+                alertCommentAddError: "添加评论时出错。请重试。",
+                alertFirebaseInitError: "Firebase 初始化失败。评论可能无法正常工作。",
+                alertFirebaseNotReady: "Firebase 尚未准备好。请稍候。"
             }
         };
+
+        // Custom Alert Modal Logic
+        const customAlertModal = document.getElementById('customAlertModal');
+        const customAlertMessage = document.getElementById('customAlertMessage');
+        const customAlertCloseBtn = document.getElementById('customAlertCloseBtn');
+
+        function showAlert(messageKey) {
+            const currentLang = localStorage.getItem('selectedLanguage') || 'ar';
+            customAlertMessage.textContent = translations[currentLang][messageKey] || messageKey;
+            customAlertModal.classList.remove('hidden');
+        }
+
+        customAlertCloseBtn.addEventListener('click', () => {
+            customAlertModal.classList.add('hidden');
+        });
 
         // JavaScript for mobile navigation toggle
         const hamburger = document.getElementById('hamburger');
@@ -676,7 +862,7 @@
             hamburger.classList.toggle('open');
             // Also toggle the language switcher visibility on mobile if needed
             if (window.innerWidth < 768) {
-                languageSwitcher.classList.toggle('hidden');
+                languageSwitcher.classList.add('hidden'); // Hide on mobile if menu is open
             }
         });
 
@@ -770,6 +956,14 @@
                 }
             });
 
+            // Update placeholder texts based on data-i18n-placeholder attributes
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (currentTranslation[key]) {
+                    element.setAttribute('placeholder', currentTranslation[key]);
+                }
+            });
+
             // Update current language display text
             currentLanguageText.textContent = currentTranslation.currentLangDisplay;
 
@@ -786,15 +980,19 @@
 
             // Adjust section heading underline direction
             document.querySelectorAll('.section-heading').forEach(heading => {
-                const afterStyle = heading.querySelector('style') || document.createElement('style');
-                if (!heading.querySelector('style')) {
-                    heading.appendChild(afterStyle);
+                // Remove any existing style tag for clean updates
+                let existingStyle = heading.querySelector('style');
+                if (existingStyle) {
+                    existingStyle.remove();
                 }
+
+                const styleTag = document.createElement('style');
                 if (lang === 'ar') {
-                    afterStyle.textContent = `.section-heading::after { right: 0; left: auto; }`;
+                    styleTag.textContent = `#${heading.id}::after { right: 0; left: auto; }`;
                 } else {
-                    afterStyle.textContent = `.section-heading::after { left: 0; right: auto; }`;
+                    styleTag.textContent = `#${heading.id}::after { left: 0; right: auto; }`;
                 }
+                heading.appendChild(styleTag);
             });
 
             // Adjust language dropdown alignment for RTL/LTR
@@ -854,6 +1052,96 @@
         if (window.innerWidth < 768) {
             navLinks.classList.add('hidden');
             languageSwitcher.classList.add('hidden'); // Hide language switcher on mobile initially
+        }
+
+
+        // Comments Logic
+        const commentForm = document.getElementById('commentForm');
+        const commentsList = document.getElementById('commentsList');
+        const commentsLoading = document.getElementById('commentsLoading');
+        const noComments = document.getElementById('noComments');
+
+        // Function to add a new comment
+        commentForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!isAuthReady) {
+                console.warn("Firebase not ready yet. Please wait.");
+                showAlert("alertFirebaseNotReady");
+                return;
+            }
+
+            const commentName = document.getElementById('commentName').value.trim();
+            const commentText = document.getElementById('commentText').value.trim();
+
+            if (commentName === '') {
+                showAlert('alertNameTextEmpty');
+                return;
+            }
+            if (commentText === '') {
+                showAlert('alertCommentTextEmpty');
+                return;
+            }
+
+            try {
+                // Path for public comments: artifacts/{appId}/public/data/comments
+                await addDoc(collection(db, `artifacts/${appId}/public/data/comments`), {
+                    name: commentName,
+                    text: commentText,
+                    timestamp: serverTimestamp(),
+                    userId: userId
+                });
+                document.getElementById('commentName').value = '';
+                document.getElementById('commentText').value = '';
+                console.log("Comment added successfully!");
+                showAlert("alertCommentAddedSuccess");
+            } catch (e) {
+                console.error("Error adding document: ", e);
+                showAlert("alertCommentAddError");
+            }
+        });
+
+        // Function to load and display comments
+        function loadComments() {
+            if (!db) {
+                console.warn("Firestore not initialized yet.");
+                return;
+            }
+
+            // Path for public comments: artifacts/{appId}/public/data/comments
+            const commentsRef = collection(db, `artifacts/${appId}/public/data/comments`);
+            const q = query(commentsRef); // No orderBy to avoid index issues as per instructions
+
+            onSnapshot(q, (snapshot) => {
+                commentsList.innerHTML = ''; // Clear existing comments
+                commentsLoading.classList.add('hidden'); // Hide loading indicator
+
+                if (snapshot.empty) {
+                    noComments.classList.remove('hidden');
+                    return;
+                } else {
+                    noComments.classList.add('hidden');
+                }
+
+                snapshot.forEach((doc) => {
+                    const comment = doc.data();
+                    const commentElement = document.createElement('div');
+                    commentElement.className = 'bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-sm';
+                    commentElement.innerHTML = `
+                        <div class="flex items-center mb-2">
+                            <p class="font-semibold text-indigo-600 dark:text-indigo-300">${comment.name}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mr-auto">${comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString() : 'التاريخ غير متوفر'}</p>
+                        </div>
+                        <p class="text-gray-800 dark:text-gray-200">${comment.text}</p>
+                        <p class="text-xs text-gray-400 dark:text-gray-500 mt-2 break-all">User ID: ${comment.userId}</p>
+                    `;
+                    commentsList.appendChild(commentElement);
+                });
+            }, (error) => {
+                console.error("Error listening to comments:", error);
+                commentsLoading.textContent = translations[localStorage.getItem('selectedLanguage') || 'ar'].commentsLoadingError || "فشل تحميل التعليقات.";
+                commentsLoading.classList.remove('hidden');
+            });
         }
     </script>
 
