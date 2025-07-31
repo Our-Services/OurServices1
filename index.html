@@ -260,24 +260,55 @@
         }
 
 
-        /* Specific overrides for comments section and input fields to ensure light background in light mode */
-        /* and dark background in dark mode for inputs */
-        /* Removed !important from #comments background-color to allow dark mode to work */
-        /* Added !important to input/textarea background-color for dark mode to ensure it overrides element.style */
+        /* Specific overrides for comments section background */
         #comments {
-            background-color: white; /* Default to white in light mode, will be overridden by dark:bg-gray-800 in dark mode HTML */
+            background-color: white; /* Default to white in light mode */
         }
+        body.dark #comments {
+            background-color: #1a202c; /* Darker background for comments section in dark mode */
+        }
+
+        /* Styling for individual comment cards within commentsList */
+        #commentsList > div {
+            background-color: white; /* Explicitly white in light mode */
+            color: #1a202c; /* Explicitly very dark text in light mode (gray-900 equivalent) */
+            transition: background-color 0.3s ease, color 0.3s ease; /* Add transition for smoothness */
+        }
+        body.dark #commentsList > div {
+            background-color: #2d3748; /* Darker card background in dark mode */
+            color: #e2e8f0; /* Light text in dark mode */
+        }
+
+        /* Styling for the comment text itself within the card */
+        #commentsList > div p.text-gray-900 { /* This targets the specific paragraph for comment text */
+            color: #1a202c; /* Ensure very dark text in light mode */
+        }
+        body.dark #commentsList > div p.dark\:text-gray-200 {
+            color: #e2e8f0; /* Ensure light text in dark mode */
+        }
+
+        /* NEW: Input and Textarea specific styles for light mode */
         #comments input[type="text"],
         #comments textarea {
-            background-color: #f6f7f8 !important; /* Force white background for input and textarea fields in light mode */
-            color: #334155 !important; /* Force dark text color in light mode */
-            border-color: #e2e8f0 !important; /* Force light border color in light mode */
+            background-color: white; /* Ensure white background in light mode */
+            color: #1a202c; /* Dark text color in light mode (gray-900 equivalent) */
+            border-color: #e2e8f0; /* Light border color in light mode (gray-200 equivalent) */
         }
+        #comments input[type="text"]::placeholder,
+        #comments textarea::placeholder {
+            color: #64748b; /* Placeholder color in light mode (slate-500) */
+        }
+
+        /* NEW: Input and Textarea specific styles for dark mode */
         body.dark #comments input[type="text"],
         body.dark #comments textarea {
-            background-color: #334155 !important; /* Force dark background for inputs in dark mode (Tailwind slate-700) */
-            color: #e2e8f0 !important; /* Force light text color in dark mode inputs */
-            border-color: #475569 !important; /* Force dark border color in dark mode inputs (Tailwind slate-600) */
+            background-color: #334155; /* Dark background for inputs in dark mode (slate-700) */
+            color: #e2e8f0; /* Light text color in dark mode inputs */
+            border-color: #475569; /* Dark border color in dark mode inputs (slate-600) */
+        }
+        body.dark #comments input[type="text"]::placeholder,
+        body.dark #comments textarea::placeholder {
+            color: #94a3b8; /* Placeholder color in dark mode (slate-400) */
         }
 
 
@@ -524,6 +555,11 @@
         <p>&copy; 2024 جميع الحقوق محفوظة لفريق التصميم والمشاريع.</p>
     </footer>
 
+    <!-- Mode Indicator -->
+    <div id="modeIndicator" class="fixed bottom-4 right-4 bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-xs font-semibold z-50">
+        الوضع الفاتح
+    </div>
+
     <script type="module">
         // Firebase Imports
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -755,15 +791,26 @@
         const darkModeToggle = document.getElementById('darkModeToggle');
         const darkModeIconPath = document.getElementById('darkModeIconPath');
         const body = document.body;
+        const modeIndicator = document.getElementById('modeIndicator'); // Get the mode indicator element
 
         // Function to apply dark mode
         function applyDarkMode(isDark) {
             if (isDark) {
                 body.classList.add('dark');
                 darkModeIconPath.setAttribute('d', 'M12 2.5a.5.5 0 01.5.5v2a.5.5 0 01-1 0v-2a.5.5 0 01.5-.5zM18.364 5.636a.5.5 0 01.354.854l-1.414 1.414a.5.5 0 01-.707-.707l1.414-1.414a.5.5 0 01.353-.147zM21.5 12a.5.5 0 01.5-.5h2a.5.5 0 010 1h-2a.5.5 0 01-.5-.5zM18.364 18.364a.5.5 0 01-.354.854l-1.414-1.414a.5.5 0 01.707.707l1.414 1.414a.5.5 0 01-.353.147zM12 21.5a.5.5 0 01-.5-.5v-2a.5.5 0 011 0v2a.5.5 0 01-.5.5zM5.636 18.364a.5.5 0 01-.354-.854l1.414-1.414a.5.5 0 01.707.707l-1.414 1.414a.5.5 0 01-.353.147zM2.5 12a.5.5 0 01.5-.5h2a.5.5 0 010 1h-2a.5.5 0 01-.5-.5zM5.636 5.636a.5.5 0 01.354-.854l1.414 1.414a.5.5 0 01-.707.707L5.283 5.99a.5.5 0 01.353-.147zM12 7a5 5 0 100 10 5 5 0 000-10z'); // Sun icon path
+                if (modeIndicator) {
+                    modeIndicator.textContent = 'الوضع الداكن';
+                    modeIndicator.classList.remove('bg-gray-200', 'text-gray-800');
+                    modeIndicator.classList.add('bg-gray-700', 'text-gray-100');
+                }
             } else {
                 body.classList.remove('dark');
                 darkModeIconPath.setAttribute('d', 'M12 3a9 9 0 109 9c0-.46-.04-.92-.12-1.36a5.999 5.999 0 01-8.588-8.588C12.92 3.04 12.46 3 12 3z'); // Moon icon path
+                if (modeIndicator) {
+                    modeIndicator.textContent = 'الوضع الفاتح';
+                    modeIndicator.classList.remove('bg-gray-700', 'text-gray-100');
+                    modeIndicator.classList.add('bg-gray-200', 'text-gray-800');
+                }
             }
         }
 
@@ -910,14 +957,14 @@
                     const comment = doc.data();
                     const commentId = doc.id; // Get the document ID for deletion
                     const commentElement = document.createElement('div');
-                    // Changed bg-gray-100 to bg-white for light mode
-                    commentElement.className = 'bg-white dark:bg-gray-700 p-4 rounded-lg shadow-sm relative'; // Added relative for positioning delete button
+                    // Removed dark:bg-gray-700 from here, background will be controlled by CSS
+                    commentElement.className = 'p-4 rounded-lg shadow-sm relative'; // Added relative for positioning delete button
                     commentElement.innerHTML = `
                         <div class="flex items-center mb-2">
                             <p class="font-semibold text-indigo-600 dark:text-indigo-300">${comment.name}</p>
                             <p class="text-xs text-gray-500 dark:text-gray-400 mr-auto">${comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString() : 'التاريخ غير متوفر'}</p>
                         </div>
-                        <p class="text-gray-800 dark:text-gray-200">${comment.text}</p>
+                        <p class="text-gray-900 dark:text-gray-200">${comment.text}</p>
                         <p class="text-xs text-gray-400 dark:text-gray-500 mt-2 break-all">User ID: ${comment.userId}</p>
                         ${userId === comment.userId ? `
                             <button class="absolute top-2 left-2 text-red-500 hover:text-red-700 p-1 rounded-full focus:outline-none" data-comment-id="${commentId}" data-comment-user-id="${comment.userId}" aria-label="حذف التعليق">
