@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-lang-key="siteTitle">خدماتنا - تصميم وتطوير المشاريع</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts - Inter (for general text, Arabic might use system fallback) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* Light Mode Styles (Default) */
@@ -192,19 +190,13 @@
         body.dark #comments {
             background-color: #1a202c; /* Darker background for comments section */
         }
-
-
-        /* Dark mode toggle button styles */
-        #darkModeToggle {
+        body.dark #darkModeToggle {
             background: none;
             border: none;
             cursor: pointer;
             padding: 0.5rem;
             border-radius: 50%;
             transition: background-color 0.3s ease;
-        }
-        #darkModeToggle:hover {
-            background-color: rgba(0, 0, 0, 0.05);
         }
         body.dark #darkModeToggle:hover {
             background-color: rgba(255, 255, 255, 0.1);
@@ -387,6 +379,46 @@
         body.dark #commentsList > div p.dark\:text-gray-200 {
             color: #e2e8f0; /* Ensure light text in dark mode */
         }
+       
+        /* Custom file input styling */
+        .custom-file-input {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            cursor: pointer;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem; /* rounded-xl */
+            font-weight: 600;
+            background-color: #f8fafc;
+            color: #334155;
+            border: 1px solid #e2e8f0;
+            transition: background-color 0.2s ease, border-color 0.2s ease; /* Modified */
+            text-align: center;
+        }
+        .custom-file-input:hover {
+            background-color: #e2e8f0;
+            border-color: #cbd5e0; /* Modified */
+        }
+        .custom-file-input input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ✨ NEW: Custom file input styling for dark mode */
+        body.dark .custom-file-input {
+            background-color: #334155; /* slate-700 */
+            color: #e2e8f0; /* slate-200 */
+            border-color: #475569; /* slate-600 */
+        }
+        body.dark .custom-file-input:hover {
+            background-color: #4a5568; /* slate-600 */
+            border-color: #64748b; /* slate-500 */
+        }
 
         /* NEW: Input and Textarea specific styles for light mode */
         #comments input[type="text"],
@@ -511,30 +543,23 @@
 </head>
 <body class="font-sans antialiased">
 
-    <!-- Custom Alert Modal -->
     <div id="customAlertModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[2000] hidden">
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
             <p id="customAlertMessage" class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4"></p>
             <div id="customAlertButtons" class="modal-buttons">
-                <!-- Buttons/Input will be dynamically added here -->
-            </div>
+                </div>
         </div>
     </div>
 
-    <!-- Full-screen image modal -->
     <div id="fullImageModal">
         <img id="fullImage" src="#" alt="Full size comment image">
     </div>
 
-    <!-- Navigation Bar -->
     <nav class="navbar py-4 px-6">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <!-- Logo/Site Title -->
             <a href="#hero" class="text-2xl font-bold text-indigo-700" data-lang-key="siteTitle">خدماتنا</a>
 
-            <!-- Navigation Links and Dark Mode Toggle -->
             <div class="flex items-center gap-4 sm:gap-6">
-                <!-- Language Dropdown Container -->
                 <div class="language-dropdown-container">
                     <button id="languageDropdownButton" class="language-dropdown-button" aria-label="Toggle language dropdown">
                         <svg class="language-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -549,21 +574,18 @@
                     </ul>
                 </div>
 
-                <!-- Dark Mode Toggle Button -->
                 <button id="darkModeToggle" aria-label="Toggle dark mode">
                     <svg class="dark-mode-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path id="darkModeIconPath" d="M12 3a9 9 0 109 9c0-.46-.04-.92-.12-1.36a5.999 5.999 0 01-8.588-8.588C12.92 3.04 12.46 3 12 3z"/>
                     </svg>
                 </button>
 
-                <!-- Hamburger Icon for Mobile -->
                 <div class="hamburger-icon md:hidden" id="hamburger">
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
 
-                <!-- Navigation Links -->
                 <div class="nav-links-container hidden md:flex gap-6" id="navLinks">
                     <a href="#hero" class="nav-link" data-lang-key="navHome">الرئيسية</a>
                     <a href="#features" class="nav-link" data-lang-key="navWhyChooseUs">لماذا تختارنا؟</a>
@@ -576,7 +598,6 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <header id="hero" class="hero-section text-center">
         <div class="max-w-4xl mx-auto">
             <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 leading-tight" data-lang-key="heroTitle">
@@ -596,7 +617,6 @@
         </div>
     </header>
 
-    <!-- Features Section -->
     <section id="features" class="py-16 px-4">
         <div class="max-w-6xl mx-auto">
             <h2 class="section-heading text-center mb-12" data-lang-key="featuresHeading">لماذا تختارنا؟</h2>
@@ -633,7 +653,6 @@
         </div>
     </section>
 
-    <!-- About Us Section -->
     <section id="about-us" class="py-16 px-4 bg-white">
         <div class="max-w-6xl mx-auto text-center">
             <h2 class="section-heading mb-12" data-lang-key="aboutUsHeading">من نحن؟</h2>
@@ -648,7 +667,6 @@
         </div>
     </section>
 
-    <!-- Services Section -->
     <section id="services" class="py-16 px-4">
         <div class="max-w-6xl mx-auto">
             <h2 class="section-heading text-center mb-12" data-lang-key="servicesHeading">ماذا نقدم؟</h2>
@@ -685,7 +703,6 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section id="contact" class="py-16 px-4 bg-gray-100">
         <div class="max-w-4xl mx-auto text-center">
             <h2 class="section-heading mb-12" data-lang-key="contactHeading">للتواصل معنا</h2>
@@ -701,11 +718,10 @@
                 </a>
                 <a href="https://wa.me/60163340537" target="_blank" class="contact-link">
                     <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.58 15.36 3.42 16.92L2.06 22L7.3 20.64C8.86 21.49 10.56 21.94 12.29 21.94H12.04C17.5 21.94 21.95 17.49 21.95 12.04C21.95 6.58 17.5 2 12.04 2ZM17.29 15.5L16.4 17.46C16.14 17.97 15.54 18.15 15.03 17.89C13.97 17.34 12.78 16.71 11.66 15.93C10.27 14.96 9.17 13.82 8.21 12.43C7.43 11.31 6.8 10.12 6.25 9.06C5.99 8.55 6.17 7.95 6.68 7.69L8.64 6.8C9.15 6.54 9.75 6.72 10.01 7.23L10.66 8.59C10.92 9.1 10.74 9.7 10.23 9.96L9.62 10.27C9.28 10.45 9.16 10.86 9.34 11.2C9.89 12.26 10.74 13.11 11.8 13.66C12.14 13.84 12.55 13.72 12.73 13.38L13.04 12.77C13.3 12.26 13.9 12.08 14.41 12.34L15.77 12.99C16.28 13.25 16.46 13.85 16.2 14.36L15.5 15.5ZM12.04 4C16.46 4 20.04 7.58 20.04 12.04C20.04 16.46 16.46 20.04 12.04 20.04C10.61 20.04 9.25 19.68 8.05 18.99L7.66 18.77L4.69 19.53L5.45 16.56L5.23 16.17C4.54 14.97 4.18 13.61 4.18 12.04C4.18 7.58 7.76 4 12.04 4Z"/>
+                        <path d="M12.04 2C6.58 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1s-1 .45-1 1v3h-1c-.9 0-1.64.58-1.9 1.39-.77-2.31-1.04-4.83-.5-7.44h6.89c.54 2.61.27 5.13-.5 7.44zM12 4.07c3.95.49 7 3.85 7 7.93 0 .62-.08 1.21-.21 1.79L15 9V8c0-1.1-.9-2-2-2H9v-.93c.71-.1 1.45-.17 2.21-.17.76 0 1.5.07 2.21.17z"/>
                     </svg>
                     <span data-lang-key="whatsappNumberOutsideKSA">+60163340537 خارج المملكة</span>
                 </a>
-                <!-- New Telegram Contact Link -->
                 <a href="https://t.me/AHMADxx41" target="_blank" class="contact-link bg-blue-500 hover:bg-blue-600">
                     <svg class="telegram-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.35 7.6l-2.45 7.42c-.22.68-.83.92-1.39.63l-2.73-2.1c-.24-.19-.48-.2-.72-.01l-1.35 1.04c-.3.23-.74.07-.82-.3l-.9-4.22c-.09-.43.14-.86.53-1.02l9.08-3.41c.42-.16.85.16.85.6v.01c-.01.35-.13.6-.33.72zm-4.38 5.75l.95-.73c.12-.1.29-.1.41 0l2.36 1.83c.1.08.13.23.07.35l-.83.74c-.08.07-.19.1-.3.07l-2.5-1.92c-.1-.08-.13-.23-.07-.35zm1.53-2.85l-4.52 3.49-1.96-1.51c-.1-.08-.24-.05-.32.06l-.72.93c-.08.1-.06.26.04.34l2.12 1.63c.1.08.24.05.32-.06l5.36-4.13c.1-.08.06-.23-.04-.32l-1.22-1.24c-.11-.11-.27-.11-.38 0z"/>
@@ -716,7 +732,6 @@
         </div>
     </section>
 
-    <!-- Comments Section -->
     <section id="comments" class="py-16 px-4 bg-white dark:bg-gray-800">
         <div class="max-w-4xl mx-auto">
             <h2 class="section-heading text-center mb-12" data-lang-key="commentsHeading">التعليقات</h2>
@@ -733,7 +748,12 @@
                     </div>
                     <div>
                         <label for="commentImage" class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-lang-key="commentImageLabel">إضافة صورة (اختياري):</label>
-                        <input type="file" id="commentImage" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100 dark:text-gray-400 dark:file:bg-gray-600 dark:file:text-gray-200 dark:hover:file:bg-gray-500">
+                        <div class="relative mt-1">
+                            <input type="file" id="commentImage" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                            <div id="customFileInput" class="custom-file-input">
+                                <span id="fileInputText" data-lang-key="fileInputChoose">اختيار ملف</span>
+                            </div>
+                        </div>
                         <img id="imagePreview" src="#" alt="Image Preview" class="hidden">
                     </div>
                     <button type="submit" class="btn-primary w-full" data-lang-key="commentSubmitBtn">إرسال التعليق</button>
@@ -743,7 +763,6 @@
 
                 <h3 class="text-2xl font-semibold mb-6 text-indigo-700 dark:text-indigo-400" data-lang-key="allComments">جميع التعليقات</h3>
                 <div id="commentsList" class="space-y-6">
-                    <!-- Comments will be loaded here -->
                     <p id="commentsLoading" class="text-center text-gray-500 dark:text-gray-400" data-lang-key="commentsLoading">جاري تحميل التعليقات...</p>
                     <p id="noComments" class="text-center text-gray-500 dark:text-gray-400 hidden" data-lang-key="noComments">لا توجد تعليقات حتى الآن. كن أول من يعلق!</p>
                 </div>
@@ -751,17 +770,14 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-gray-800 text-white py-8 text-center">
         <p id="footerCopyright" data-lang-key="footerText">© 2025 جميع الحقوق محفوظة لفريق التصميم والمشاريع.</p>
     </footer>
 
-    <!-- Mode Indicator -->
     <div id="modeIndicator" class="fixed bottom-4 right-4 bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-xs font-semibold z-50">
         الوضع الفاتح
     </div>
 
-    <!-- Developer Mode Indicator -->
     <div id="developerModeIndicator" class="hidden">
         وضع المطور
     </div>
@@ -812,6 +828,7 @@
         const imagePreview = document.getElementById('imagePreview');
         const fullImageModal = document.getElementById('fullImageModal');
         const fullImage = document.getElementById('fullImage');
+        const fileInputText = document.getElementById('fileInputText');
 
         async function initFirebase() {
             try {
@@ -894,6 +911,8 @@
                 commentTextLabel: "تعليقك:",
                 commentTextPlaceholder: "اكتب تعليقك هنا...",
                 commentImageLabel: "إضافة صورة (اختياري):",
+                fileInputChoose: "اختيار ملف",
+                fileInputNoFile: "لم يتم اختيار أي ملف",
                 commentSubmitBtn: "إرسال التعليق",
                 allComments: "جميع التعليقات",
                 commentsLoading: "جاري تحميل التعليقات...",
@@ -975,6 +994,8 @@
                 commentTextLabel: "Your Comment:",
                 commentTextPlaceholder: "Write your comment here...",
                 commentImageLabel: "Add an image (optional):",
+                fileInputChoose: "Choose file",
+                fileInputNoFile: "No file chosen",
                 commentSubmitBtn: "Submit Comment",
                 allComments: "All Comments",
                 commentsLoading: "Loading comments...",
@@ -1056,6 +1077,8 @@
                 commentTextLabel: "您的评论：",
                 commentTextPlaceholder: "在此处撰写您的评论...",
                 commentImageLabel: "添加图片（可选）：",
+                fileInputChoose: "选择文件",
+                fileInputNoFile: "未选择任何文件",
                 commentSubmitBtn: "提交评论",
                 allComments: "所有评论",
                 commentsLoading: "正在加载评论...",
@@ -1073,7 +1096,7 @@
                 alertNoPermission: "您没有权限删除此评论。",
                 alertDeveloperModePrompt: "请输入密S码进入开发者模式：",
                 alertDeveloperModeSuccess: "开发者模式已成功激活！",
-    alertDeveloperModeInvalid: "密S码不正确。请重试。",
+                alertDeveloperModeInvalid: "密S码不正确。请重试。",
                 alertDeveloperModeExit: "已退出开发者模式。",
                 confirmText: "是",
                 cancelText: "取消",
@@ -1292,9 +1315,11 @@
                     imagePreview.classList.remove('hidden');
                 };
                 reader.readAsDataURL(file);
+                fileInputText.textContent = file.name;
             } else {
                 imagePreview.src = '#';
                 imagePreview.classList.add('hidden');
+                fileInputText.textContent = translations[currentLang].fileInputNoFile;
             }
         });
 
@@ -1358,6 +1383,7 @@
                 document.getElementById('commentText').value = '';
                 commentImageInput.value = '';
                 imagePreview.classList.add('hidden');
+                fileInputText.textContent = translations[currentLang].fileInputChoose; // Reset custom button text
                 console.log("Comment added successfully!");
                 showAlert("alertCommentAddedSuccess");
             } catch (e) {
@@ -1367,16 +1393,16 @@
         });
         
         const getTargetLanguageCode = (lang) => {
-          switch (lang) {
-            case 'ar':
-              return 'ar';
-            case 'en':
-              return 'en';
-            case 'zh':
-              return 'zh';
-            default:
-              return 'en';
-          }
+            switch (lang) {
+                case 'ar':
+                    return 'ar';
+                case 'en':
+                    return 'en';
+                case 'zh':
+                    return 'zh';
+                default:
+                    return 'en';
+            }
         };
 
         async function translateComment(commentTextElement, originalText) {
@@ -1439,7 +1465,6 @@
             });
         }
         
-        // This function is now in the global scope to be callable from onclick
         window.showFullImage = function(imageUrl) {
             fullImage.src = imageUrl;
             fullImageModal.classList.add('active');
