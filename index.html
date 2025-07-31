@@ -226,6 +226,7 @@
         }
         #customAlertModal .modal-buttons {
             display: flex;
+            flex-direction: column; /* Changed to column to stack input and button */
             justify-content: center;
             gap: 1rem;
             margin-top: 1rem;
@@ -289,25 +290,29 @@
 
         /* NEW: Input and Textarea specific styles for light mode */
         #comments input[type="text"],
-        #comments textarea {
+        #comments textarea,
+        #developerPasswordInput { /* Added developerPasswordInput */
             background-color: #f6f7f8; /* Ensure white background in light mode */
             color: #1a202c; /* Dark text color in light mode (gray-900 equivalent) */
             border-color: #e2e8f0; /* Light border color in light mode (gray-200 equivalent) */
         }
         #comments input[type="text"]::placeholder,
-        #comments textarea::placeholder {
+        #comments textarea::placeholder,
+        #developerPasswordInput::placeholder { /* Added developerPasswordInput */
             color: #64748b; /* Placeholder color in light mode (slate-500) */
         }
 
         /* NEW: Input and Textarea specific styles for dark mode */
         body.dark #comments input[type="text"],
-        body.dark #comments textarea {
+        body.dark #comments textarea,
+        body.dark #developerPasswordInput { /* Added developerPasswordInput */
             background-color: #334155; /* Dark background for inputs in dark mode (slate-700) */
             color: #e2e8f0; /* Light text color in dark mode inputs */
             border-color: #475569; /* Dark border color in dark mode inputs (slate-600) */
         }
         body.dark #comments input[type="text"]::placeholder,
-        body.dark #comments textarea::placeholder {
+        body.dark #comments textarea::placeholder,
+        body.dark #developerPasswordInput::placeholder { /* Added developerPasswordInput */
             color: #94a3b8; /* Placeholder color in dark mode (slate-400) */
         }
 
@@ -337,6 +342,27 @@
                 text-align: center;
             }
         }
+
+        /* Developer Mode Indicator Styles */
+        #developerModeIndicator {
+            position: fixed;
+            bottom: 4rem; /* Position above the dark mode indicator */
+            right: 4rem;
+            background-color: #ef4444; /* Red background for developer mode */
+            color: white;
+            px-3 py-1 rounded-full text-xs font-semibold;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px; /* Full rounded */
+            font-size: 0.75rem; /* text-xs */
+            font-weight: 600; /* font-semibold */
+            z-index: 50; /* Same as modeIndicator */
+            cursor: pointer; /* Indicate clickable */
+            transition: opacity 0.3s ease, background-color 0.3s ease;
+            display: none; /* Hidden by default */
+        }
+        body.dark #developerModeIndicator {
+            background-color: #dc2626; /* Darker red in dark mode */
+        }
     </style>
 </head>
 <body class="font-sans antialiased">
@@ -346,8 +372,7 @@
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
             <p id="customAlertMessage" class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4"></p>
             <div id="customAlertButtons" class="modal-buttons">
-                <button id="customAlertCloseBtn" class="btn-primary">حسناً</button>
-                <!-- Confirmation buttons will be added here if needed -->
+                <!-- Buttons/Input will be dynamically added here -->
             </div>
         </div>
     </div>
@@ -552,12 +577,17 @@
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-8 text-center">
-        <p>&copy; 2024 جميع الحقوق محفوظة لفريق التصميم والمشاريع.</p>
+        <p id="footerCopyright">&copy; 2024 جميع الحقوق محفوظة لفريق التصميم والمشاريع.</p>
     </footer>
 
     <!-- Mode Indicator -->
     <div id="modeIndicator" class="fixed bottom-4 right-4 bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-xs font-semibold z-50">
         الوضع الفاتح
+    </div>
+
+    <!-- Developer Mode Indicator -->
+    <div id="developerModeIndicator" class="hidden">
+        وضع المطور
     </div>
 
     <script type="module">
@@ -588,6 +618,8 @@
 
         let app, db, auth, userId;
         let isAuthReady = false;
+        let isDeveloperMode = false; // New global flag for developer mode
+        const DEVELOPER_MODE_SECRET = "Ahmad@2006"; // The secret code
 
         // Function to initialize Firebase and authenticate
         async function initFirebase() {
@@ -618,7 +650,7 @@
                 });
             } catch (error) {
                 console.error("Error initializing Firebase:", error);
-                showAlert("فشل تهيئة Firebase. قد لا تعمل التعليقات بشكل صحيح.");
+                showAlert("alertFirebaseInitError");
             }
         }
 
@@ -692,6 +724,9 @@
                 alertDeleteSuccess: "تم حذف التعليق بنجاح!",
                 alertDeleteError: "حدث خطأ أثناء حذف التعليق. الرجاء المحاولة مرة أخرى.",
                 alertNoPermission: "ليس لديك صلاحية لحذف هذا التعليق.",
+                alertDeveloperModePrompt: "الرجاء إدخال الكود السري للدخول إلى وضع المطور:", // New translation
+                alertDeveloperModeSuccess: "تم تفعيل وضع المطور بنجاح!", // New translation
+                alertDeveloperModeInvalid: "الكود السري غير صحيح. الرجاء المحاولة مرة أخرى.", // New translation
                 confirmText: "نعم", // For custom alert confirm button
                 cancelText: "إلغاء", // For custom alert cancel button
                 customAlertClose: "حسناً" // For custom alert close button
@@ -870,7 +905,7 @@
 
             if (!isAuthReady) {
                 console.warn("Firebase not ready yet. Please wait.");
-                showAlert("Firebase غير جاهز بعد. الرجاء الانتظار."); // Hardcoded Arabic
+                showAlert("alertFirebaseNotReady");
                 return;
             }
 
@@ -878,11 +913,11 @@
             const commentText = document.getElementById('commentText').value.trim();
 
             if (commentName === '') {
-                showAlert('الرجاء إدخال اسمك.'); // Hardcoded Arabic
+                showAlert('alertNameTextEmpty');
                 return;
             }
             if (commentText === '') {
-                showAlert('الرجاء إدخال تعليقك.'); // Hardcoded Arabic
+                showAlert('alertCommentTextEmpty');
                 return;
             }
 
@@ -897,35 +932,35 @@
                 document.getElementById('commentName').value = '';
                 document.getElementById('commentText').value = '';
                 console.log("Comment added successfully!");
-                showAlert("تم إضافة التعليق بنجاح!"); // Hardcoded Arabic
+                showAlert("alertCommentAddedSuccess");
             } catch (e) {
                 console.error("Error adding document: ", e);
-                showAlert("حدث خطأ أثناء إضافة التعليق. الرجاء المحاولة مرة أخرى."); // Hardcoded Arabic
+                showAlert("alertCommentAddError");
             }
         });
 
         // Function to delete a comment
         async function deleteComment(commentId, commentUserId) {
             if (!isAuthReady) {
-                showAlert("Firebase غير جاهز بعد. الرجاء الانتظار."); // Hardcoded Arabic
+                showAlert("alertFirebaseNotReady");
                 return;
             }
 
-            // Check if the current user is the owner of the comment
-            if (userId !== commentUserId) {
-                showAlert("ليس لديك صلاحية لحذف هذا التعليق."); // Hardcoded Arabic
+            // Allow deletion if in developer mode OR if the current user is the owner
+            if (userId !== commentUserId && !isDeveloperMode) {
+                showAlert("alertNoPermission");
                 return;
             }
 
-            showAlert("هل أنت متأكد أنك تريد حذف هذا التعليق؟", 'confirm', async (confirmed) => { // Hardcoded Arabic
+            showAlert("alertDeleteConfirm", 'confirm', async (confirmed) => {
                 if (confirmed) {
                     try {
                         await deleteDoc(doc(db, `artifacts/${appId}/public/data/comments`, commentId));
                         console.log("Comment deleted successfully!");
-                        showAlert("تم حذف التعليق بنجاح!"); // Hardcoded Arabic
+                        showAlert("alertDeleteSuccess");
                     } catch (e) {
                         console.error("Error deleting document: ", e);
-                        showAlert("حدث خطأ أثناء حذف التعليق. الرجاء المحاولة مرة أخرى."); // Hardcoded Arabic
+                        showAlert("alertDeleteError");
                     }
                 }
             });
@@ -966,7 +1001,7 @@
                         </div>
                         <p class="text-gray-900 dark:text-gray-200">${comment.text}</p>
                         <p class="text-xs text-gray-400 dark:text-gray-500 mt-2 break-all">User ID: ${comment.userId}</p>
-                        ${userId === comment.userId ? `
+                        ${(userId === comment.userId || isDeveloperMode) ? `
                             <button class="absolute top-2 left-2 text-red-500 hover:text-red-700 p-1 rounded-full focus:outline-none" data-comment-id="${commentId}" data-comment-user-id="${comment.userId}" aria-label="حذف التعليق">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1zm2 3a1 1 0 011-1h4a1 1 0 110 2H10a1 1 0 01-1-1zm0 3a1 1 0 011-1h4a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
                             </button>
@@ -975,7 +1010,7 @@
                     commentsList.appendChild(commentElement);
 
                     // Add event listener to the delete button if it exists
-                    if (userId === comment.userId) {
+                    if (userId === comment.userId || isDeveloperMode) {
                         const deleteButton = commentElement.querySelector(`[data-comment-id="${commentId}"]`);
                         if (deleteButton) {
                             deleteButton.addEventListener('click', () => {
@@ -990,6 +1025,88 @@
                 commentsLoading.classList.remove('hidden');
             });
         }
+
+        // Developer Mode Activation Logic (5 clicks on footer)
+        let footerClickCount = 0;
+        let lastFooterClickTime = 0;
+        const footerCopyright = document.getElementById('footerCopyright');
+
+        footerCopyright.addEventListener('click', (e) => {
+            const currentTime = new Date().getTime();
+
+            if (currentTime - lastFooterClickTime < 5000) { // 5 seconds threshold
+                footerClickCount++;
+            } else {
+                footerClickCount = 1; // Reset if too much time has passed
+            }
+            lastFooterClickTime = currentTime;
+
+            if (footerClickCount === 5) {
+                footerClickCount = 0; // Reset for next sequence
+                lastFooterClickTime = 0; // Reset timer
+                showDeveloperModePrompt();
+            }
+        });
+
+        function showDeveloperModePrompt() {
+            customAlertMessage.textContent = translations.ar.alertDeveloperModePrompt;
+
+            customAlertButtons.innerHTML = ''; // Clear existing buttons
+
+            const passwordInput = document.createElement('input');
+            passwordInput.type = 'password';
+            passwordInput.id = 'developerPasswordInput';
+            passwordInput.className = 'mt-4 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2';
+            passwordInput.placeholder = translations.ar.alertDeveloperModePrompt; // Using the prompt text as placeholder
+            customAlertButtons.appendChild(passwordInput);
+
+            const submitBtn = document.createElement('button');
+            submitBtn.className = 'btn-primary mt-4';
+            submitBtn.textContent = translations.ar.customAlertClose; // "حسناً" or "دخول"
+            submitBtn.addEventListener('click', () => {
+                const enteredCode = passwordInput.value;
+                if (enteredCode === DEVELOPER_MODE_SECRET) {
+                    isDeveloperMode = true;
+                    customAlertModal.classList.add('hidden');
+                    showAlert("alertDeveloperModeSuccess");
+                    // Show developer mode indicator
+                    developerModeIndicator.style.display = 'block';
+                    // Reload comments to show delete buttons for all comments
+                    loadComments();
+                } else {
+                    showAlert("alertDeveloperModeInvalid");
+                }
+            });
+            customAlertButtons.appendChild(submitBtn);
+
+            customAlertModal.classList.remove('hidden');
+        }
+
+        // Developer Mode Indicator Logic (3 clicks on indicator to exit)
+        let devModeIndicatorClickCount = 0;
+        let lastDevModeIndicatorClickTime = 0;
+        const developerModeIndicator = document.getElementById('developerModeIndicator');
+
+        developerModeIndicator.addEventListener('click', () => {
+            const currentTime = new Date().getTime();
+
+            if (currentTime - lastDevModeIndicatorClickTime < 5000) { // 5 seconds threshold for exiting
+                devModeIndicatorClickCount++;
+            } else {
+                devModeIndicatorClickCount = 1; // Reset if too much time has passed
+            }
+            lastDevModeIndicatorClickTime = currentTime;
+
+            if (devModeIndicatorClickCount === 3) {
+                devModeIndicatorClickCount = 0; // Reset for next sequence
+                lastDevModeIndicatorClickTime = 0; // Reset timer
+                isDeveloperMode = false; // Deactivate developer mode
+                developerModeIndicator.style.display = 'none'; // Hide indicator
+                showAlert("تم الخروج من وضع المطور."); // Inform user
+                loadComments(); // Reload comments to hide developer delete buttons
+            }
+        });
+
     </script>
 
 </body>
