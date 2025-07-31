@@ -296,13 +296,22 @@
             transition: background-color 0.2s ease;
             cursor: pointer;
             border: none;
-            margin-right: 0.5rem;
         }
         .translate-btn:hover {
             background-color: #4f46e5;
         }
-
-
+        .translate-btn-container {
+            margin-left: 0.5rem;
+        }
+        body[dir="rtl"] .translate-btn-container {
+            margin-left: 0;
+            margin-right: 0.5rem;
+        }
+        .comment-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
         /* Custom Alert Modal Styles */
         #customAlertModal {
             transition: opacity 0.3s ease;
@@ -406,6 +415,14 @@
         body.dark #developerPasswordInput::placeholder { /* Added developerPasswordInput */
             color: #94a3b8; /* Placeholder color in dark mode (slate-400) */
         }
+        /* Styling for the image preview in the comment form */
+        #imagePreview {
+            max-width: 100px;
+            max-height: 100px;
+            margin-top: 1rem;
+            border-radius: 0.5rem;
+            object-fit: cover;
+        }
 
 
         /* Mobile menu styles */
@@ -453,6 +470,43 @@
         body.dark #developerModeIndicator {
             background-color: #dc2626; /* Darker red in dark mode */
         }
+        /* Full-screen image modal */
+        #fullImageModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        #fullImageModal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #fullImageModal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 0.5rem;
+        }
+        /* Comment image styling */
+        .comment-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .comment-image:hover {
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body class="font-sans antialiased">
@@ -465,6 +519,11 @@
                 <!-- Buttons/Input will be dynamically added here -->
             </div>
         </div>
+    </div>
+
+    <!-- Full-screen image modal -->
+    <div id="fullImageModal">
+        <img id="fullImage" src="#" alt="Full size comment image">
     </div>
 
     <!-- Navigation Bar -->
@@ -672,6 +731,11 @@
                         <label for="commentText" class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-lang-key="commentTextLabel">تعليقك:</label>
                         <textarea id="commentText" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white" data-lang-key="commentTextPlaceholder" placeholder="اكتب تعليقك هنا..." required></textarea>
                     </div>
+                    <div>
+                        <label for="commentImage" class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-lang-key="commentImageLabel">إضافة صورة (اختياري):</label>
+                        <input type="file" id="commentImage" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100 dark:text-gray-400 dark:file:bg-gray-600 dark:file:text-gray-200 dark:hover:file:bg-gray-500">
+                        <img id="imagePreview" src="#" alt="Image Preview" class="hidden">
+                    </div>
                     <button type="submit" class="btn-primary w-full" data-lang-key="commentSubmitBtn">إرسال التعليق</button>
                 </form>
 
@@ -704,85 +768,67 @@
 
     <script type="module">
         // Firebase Imports
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, onSnapshot, serverTimestamp, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, onSnapshot, serverTimestamp, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
 
         // Firebase Initialization
-        // ملاحظة هامة: عندما ترفع الموقع على Netlify، ستحتاج إلى استبدال هذا الكائن
-        // بإعدادات Firebase الفعلية الخاصة بك التي نسختها من Firebase Console.
         const firebaseConfig = {
             apiKey: "AIzaSyBbL9kbE7oP5CW4HmZJGCCmZRY2L5wxxkM",
             authDomain: "ourservices-c5658.firebaseapp.com",
             projectId: "ourservices-c5658",
-            storageBucket: "ourservices-c5658.firebasestorage.app",
+            storageBucket: "ourservices-c5658.appspot.com",
             messagingSenderId: "951641862997",
             appId: "1:951641862997:web:4744607ef9c0c516d9f5dc",
             measurementId: "G-5LTEVPPJW1"
         };
-
-        // هذا المتغير يستخدم لتحديد مسار البيانات في Firestore.
-        // في بيئة Canvas، يتم توفيره تلقائيًا.
-        // عند النشر على Netlify، لن يكون __app_id معرفًا، لذا سيتم استخدام 'default-app-id'.
-        // تأكد أن قواعد أمان Firestore الخاصة بك تتطابق مع المسار الذي يتم إنشاؤه هنا.
-        // المسار المتوقع: artifacts/default-app-id/public/data/comments
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 
         let app, db, auth, userId;
         let isAuthReady = false;
-        let isDeveloperMode = false; // New global flag for developer mode
-        const DEVELOPER_MODE_SECRET = "Ahmad@2006"; // The secret code
+        let isDeveloperMode = false;
+        const DEVELOPER_MODE_SECRET = "Ahmad@2006";
+        const GEMINI_API_KEY = "AIzaSyCqjjC8Klto6AtPE1Ac7ucxiS0juSdwM5E";
+        const IMGBB_API_KEY = "c60db8672872317bb4b7e2ed96227adf";
 
-        // Get DOM elements
         const customAlertModal = document.getElementById('customAlertModal');
         const customAlertMessage = document.getElementById('customAlertMessage');
         const customAlertButtons = document.getElementById('customAlertButtons');
-
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('navLinks');
-
         const darkModeToggle = document.getElementById('darkModeToggle');
         const darkModeIconPath = document.getElementById('darkModeIconPath');
         const body = document.body;
         const modeIndicator = document.getElementById('modeIndicator');
-
         const developerModeIndicator = document.getElementById('developerModeIndicator');
-
         const languageDropdownButton = document.getElementById('languageDropdownButton');
         const languageDropdownMenu = document.getElementById('languageDropdownMenu');
-
         const commentForm = document.getElementById('commentForm');
         const commentsList = document.getElementById('commentsList');
         const commentsLoading = document.getElementById('commentsLoading');
         const noComments = document.getElementById('noComments');
-
         const footerCopyright = document.getElementById('footerCopyright');
+        const commentImageInput = document.getElementById('commentImage');
+        const imagePreview = document.getElementById('imagePreview');
+        const fullImageModal = document.getElementById('fullImageModal');
+        const fullImage = document.getElementById('fullImage');
 
-
-        // Function to initialize Firebase and authenticate
         async function initFirebase() {
             try {
                 app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
-
-                // سجل قيم إعدادات Firebase و appId للتحقق من صحتها
                 console.log("Firebase Config:", firebaseConfig);
                 console.log("Resolved App ID for Firestore Path:", appId);
-
 
                 onAuthStateChanged(auth, async (user) => {
                     if (user) {
                         userId = user.uid;
                         console.log("Firebase authenticated. User ID:", userId);
-                        console.log("Firestore Path for Comments: artifacts/" + appId + "/public/data/comments"); // Log the full path
                         isAuthReady = true;
-                        // Once authenticated, load comments
                         loadComments();
                     } else {
                         console.log("No user signed in. Signing in anonymously...");
-                        // تأكد من تفعيل المصادقة المجهولة (Anonymous Authentication) في مشروع Firebase الخاص بك.
-                        // اذهب إلى Firebase Console -> Authentication -> Sign-in method -> Anonymous -> Enable.
                         await signInAnonymously(auth);
                     }
                 });
@@ -791,11 +837,8 @@
                 showAlert("alertFirebaseInitError");
             }
         }
-
-        // Call Firebase initialization
         initFirebase();
 
-        // Translations object
         const translations = {
             ar: {
                 siteTitle: "خدماتنا - تصميم وتطوير المشاريع",
@@ -850,6 +893,7 @@
                 commentNamePlaceholder: "ادخل اسمك",
                 commentTextLabel: "تعليقك:",
                 commentTextPlaceholder: "اكتب تعليقك هنا...",
+                commentImageLabel: "إضافة صورة (اختياري):",
                 commentSubmitBtn: "إرسال التعليق",
                 allComments: "جميع التعليقات",
                 commentsLoading: "جاري تحميل التعليقات...",
@@ -873,7 +917,9 @@
                 cancelText: "إلغاء",
                 customAlertClose: "حسناً",
                 developerModeIndicatorText: "وضع المطور",
-                translateBtnText: "ترجمة"
+                translateBtnText: "ترجمة",
+                translateError: "فشل في الترجمة.",
+                imageUploadError: "فشل رفع الصورة. الرجاء المحاولة مرة أخرى."
             },
             en: {
                 siteTitle: "Our Services - Project Design & Development",
@@ -928,6 +974,7 @@
                 commentNamePlaceholder: "Enter your name",
                 commentTextLabel: "Your Comment:",
                 commentTextPlaceholder: "Write your comment here...",
+                commentImageLabel: "Add an image (optional):",
                 commentSubmitBtn: "Submit Comment",
                 allComments: "All Comments",
                 commentsLoading: "Loading comments...",
@@ -951,7 +998,9 @@
                 cancelText: "Cancel",
                 customAlertClose: "OK",
                 developerModeIndicatorText: "Developer Mode",
-                translateBtnText: "Translate"
+                translateBtnText: "Translate",
+                translateError: "Translation failed.",
+                imageUploadError: "Image upload failed. Please try again."
             },
             zh: {
                 siteTitle: "我们的服务 - 项目设计与开发",
@@ -1006,6 +1055,7 @@
                 commentNamePlaceholder: "输入您的姓名",
                 commentTextLabel: "您的评论：",
                 commentTextPlaceholder: "在此处撰写您的评论...",
+                commentImageLabel: "添加图片（可选）：",
                 commentSubmitBtn: "提交评论",
                 allComments: "所有评论",
                 commentsLoading: "正在加载评论...",
@@ -1029,7 +1079,8 @@
                 cancelText: "取消",
                 customAlertClose: "确定",
                 developerModeIndicatorText: "开发者模式",
-                translateBtnText: "翻译"
+                translateBtnText: "翻译",
+                translateError: "Translation failed."
             }
         };
 
@@ -1071,16 +1122,9 @@
         }
 
         // Custom Alert Modal Logic
-        // Moved to top of script for early access
-        // const customAlertModal = document.getElementById('customAlertModal');
-        // const customAlertMessage = document.getElementById('customAlertMessage');
-        // const customAlertButtons = document.getElementById('customAlertButtons');
-
-        // Function to show custom alert/confirmation
         function showAlert(messageKey, type = 'alert', onConfirm = null) {
             customAlertMessage.textContent = translations[currentLang][messageKey] || messageKey;
 
-            // Clear previous buttons
             customAlertButtons.innerHTML = '';
 
             if (type === 'alert') {
@@ -1118,10 +1162,6 @@
 
 
         // JavaScript for mobile navigation toggle
-        // Moved to top of script for early access
-        // const hamburger = document.getElementById('hamburger');
-        // const navLinks = document.getElementById('navLinks');
-
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('hidden');
             navLinks.classList.toggle('open');
@@ -1159,13 +1199,6 @@
         });
 
         // Dark Mode Toggle Logic
-        // Moved to top of script for early access
-        // const darkModeToggle = document.getElementById('darkModeToggle');
-        // const darkModeIconPath = document.getElementById('darkModeIconPath');
-        // const body = document.body;
-        // const modeIndicator = document.getElementById('modeIndicator'); // Get the mode indicator element
-
-        // Function to update mode indicator text based on current language
         function updateModeIndicatorText() {
             if (modeIndicator) {
                 if (body.classList.contains('dark')) {
@@ -1180,7 +1213,6 @@
             }
         }
 
-        // Function to apply dark mode
         function applyDarkMode(isDark) {
             if (isDark) {
                 body.classList.add('dark');
@@ -1213,38 +1245,29 @@
 
 
         // Language Dropdown Logic
-        // Moved to top of script for early access
-        // const languageDropdownButton = document.getElementById('languageDropdownButton');
-        // const languageDropdownMenu = document.getElementById('languageDropdownMenu');
-
-        // Toggle dropdown visibility
         languageDropdownButton.addEventListener('click', (event) => {
             languageDropdownMenu.classList.toggle('active');
-            event.stopPropagation(); // Prevent click from immediately closing the dropdown
+            event.stopPropagation();
         });
 
-        // Close dropdown when clicking outside
         document.addEventListener('click', (event) => {
             if (!languageDropdownMenu.contains(event.target) && !languageDropdownButton.contains(event.target)) {
                 languageDropdownMenu.classList.remove('active');
             }
         });
 
-        // Handle language selection from dropdown
         languageDropdownMenu.querySelectorAll('li').forEach(item => {
             item.addEventListener('click', (event) => {
                 const selectedLang = event.target.getAttribute('data-lang');
                 setLanguage(selectedLang);
-                languageDropdownMenu.classList.remove('active'); // Close dropdown after selection
+                languageDropdownMenu.classList.remove('active');
             });
         });
 
-        // Initial language set on load
         setLanguage(currentLang);
 
-        // Adjust mobile menu visibility on resize
         window.addEventListener('resize', () => {
-            if (window.innerWidth >= 767) { /* Changed from 768 to 767 to match media query */
+            if (window.innerWidth >= 767) {
                 navLinks.classList.remove('hidden', 'open');
                 hamburger.classList.remove('open');
             } else {
@@ -1254,20 +1277,28 @@
             }
         });
 
-        // Initial check for mobile view on load
-        if (window.innerWidth < 767) { /* Changed from 768 to 767 to match media query */
+        if (window.innerWidth < 767) {
             navLinks.classList.add('hidden');
         }
 
 
         // Comments Logic
-        // Moved to top of script for early access
-        // const commentForm = document.getElementById('commentForm');
-        // const commentsList = document.getElementById('commentsList');
-        // const commentsLoading = document.getElementById('commentsLoading');
-        // const noComments = document.getElementById('noComments');
+        commentImageInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imagePreview.src = e.target.result;
+                    imagePreview.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.src = '#';
+                imagePreview.classList.add('hidden');
+            }
+        });
 
-        // Function to add a new comment
+
         commentForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -1279,6 +1310,7 @@
 
             const commentName = document.getElementById('commentName').value.trim();
             const commentText = document.getElementById('commentText').value.trim();
+            const commentImageFile = commentImageInput.files[0];
 
             if (commentName === '') {
                 showAlert('alertNameTextEmpty');
@@ -1289,16 +1321,43 @@
                 return;
             }
 
+            let imageUrl = null;
+            if (commentImageFile) {
+                try {
+                    // Use ImgBB API to upload the image
+                    const formData = new FormData();
+                    formData.append("image", commentImageFile);
+                    const uploadResponse = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                        method: "POST",
+                        body: formData
+                    });
+                    const uploadResult = await uploadResponse.json();
+                    if (uploadResult.success) {
+                        imageUrl = uploadResult.data.url;
+                    } else {
+                        console.error("Image upload failed:", uploadResult.error.message);
+                        showAlert("imageUploadError");
+                        return;
+                    }
+                } catch (e) {
+                    console.error("Error uploading image:", e);
+                    showAlert("imageUploadError");
+                    return;
+                }
+            }
+
             try {
-                // Path for public comments: artifacts/{appId}/public/data/comments
                 await addDoc(collection(db, `artifacts/${appId}/public/data/comments`), {
                     name: commentName,
                     text: commentText,
+                    imageUrl: imageUrl,
                     timestamp: serverTimestamp(),
-                    userId: userId // Store the userId with the comment
+                    userId: userId
                 });
                 document.getElementById('commentName').value = '';
                 document.getElementById('commentText').value = '';
+                commentImageInput.value = '';
+                imagePreview.classList.add('hidden');
                 console.log("Comment added successfully!");
                 showAlert("alertCommentAddedSuccess");
             } catch (e) {
@@ -1307,7 +1366,6 @@
             }
         });
         
-        // Function to get the target language code for translation
         const getTargetLanguageCode = (lang) => {
           switch (lang) {
             case 'ar':
@@ -1317,22 +1375,20 @@
             case 'zh':
               return 'zh';
             default:
-              return 'en'; // Default to English if language is not supported
+              return 'en';
           }
         };
 
-        // Function to handle translation of a single comment
         async function translateComment(commentTextElement, originalText) {
             const targetLang = getTargetLanguageCode(currentLang);
             const prompt = `Translate the following text to ${targetLang} language:\n\n${originalText}`;
             
-            // Show a loading indicator
             commentTextElement.textContent = `${translations[currentLang].commentsLoading}...`;
 
             let chatHistory = [];
             chatHistory.push({ role: "user", parts: [{ text: prompt }] });
             const payload = { contents: chatHistory };
-            const apiKey = "AIzaSyCqjjC8Klto6AtPE1Ac7ucxiS0juSdwM5E" 
+            const apiKey = GEMINI_API_KEY;
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
             try {
@@ -1349,23 +1405,21 @@
                     const translatedText = result.candidates[0].content.parts[0].text;
                     commentTextElement.textContent = translatedText;
                 } else {
-                    commentTextElement.textContent = translations[currentLang].alertCommentAddError;
+                    commentTextElement.textContent = translations[currentLang].translateError;
                 }
             } catch (e) {
                 console.error("Error during translation:", e);
-                commentTextElement.textContent = translations[currentLang].alertCommentAddError;
+                commentTextElement.textContent = translations[currentLang].translateError;
             }
         }
 
 
-        // Function to delete a comment
         async function deleteComment(commentId, commentUserId) {
             if (!isAuthReady) {
                 showAlert("alertFirebaseNotReady");
                 return;
             }
 
-            // Allow deletion if in developer mode OR if the current user is the owner
             if (userId !== commentUserId && !isDeveloperMode) {
                 showAlert("alertNoPermission");
                 return;
@@ -1384,21 +1438,29 @@
                 }
             });
         }
+        
+        // This function is now in the global scope to be callable from onclick
+        window.showFullImage = function(imageUrl) {
+            fullImage.src = imageUrl;
+            fullImageModal.classList.add('active');
+        }
 
-        // Function to load and display comments
+        fullImageModal.addEventListener('click', () => {
+            fullImageModal.classList.remove('active');
+        });
+
         function loadComments() {
             if (!db) {
                 console.warn("Firestore not initialized yet.");
                 return;
             }
 
-            // Path for public comments: artifacts/{appId}/public/data/comments
             const commentsRef = collection(db, `artifacts/${appId}/public/data/comments`);
-            const q = query(commentsRef); // No orderBy to avoid index issues as per instructions
+            const q = query(commentsRef);
 
             onSnapshot(q, (snapshot) => {
-                commentsList.innerHTML = ''; // Clear existing comments
-                commentsLoading.classList.add('hidden'); // Hide loading indicator
+                commentsList.innerHTML = '';
+                commentsLoading.classList.add('hidden');
 
                 if (snapshot.empty) {
                     noComments.classList.remove('hidden');
@@ -1409,18 +1471,17 @@
 
                 snapshot.forEach((doc) => {
                     const comment = doc.data();
-                    const commentId = doc.id; // Get the document ID for deletion
+                    const commentId = doc.id;
                     const commentElement = document.createElement('div');
-                    // Removed dark:bg-gray-700 from here, background will be controlled by CSS
-                    commentElement.className = 'p-4 rounded-lg shadow-sm relative'; // Added relative for positioning delete button
+                    commentElement.className = 'p-4 rounded-lg shadow-sm relative';
                     commentElement.innerHTML = `
                         <div class="flex items-center justify-between mb-2">
                             <p class="font-semibold text-indigo-600 dark:text-indigo-300">${comment.name}</p>
                             <div class="flex items-center">
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mr-2">${comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString(currentLang) : translations[currentLang].commentDateUnavailable}</p>
                                 <button class="translate-btn" data-comment-id="${commentId}" data-original-text="${comment.text}">
                                     ${translations[currentLang].translateBtnText}
                                 </button>
-                                <p class="text-xs text-gray-500 dark:text-gray-400 mr-2">${comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString(currentLang) : translations[currentLang].commentDateUnavailable}</p>
                                 ${(userId === comment.userId || isDeveloperMode) ? `
                                     <button class="text-red-500 hover:text-red-700 p-1 rounded-full focus:outline-none" data-delete-id="${commentId}" data-comment-user-id="${comment.userId}" aria-label="${translations[currentLang].alertDeleteConfirm}">
                                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1zm2 3a1 1 0 011-1h4a1 1 0 110 2H10a1 1 0 01-1-1zm0 3a1 1 0 011-1h4a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
@@ -1429,11 +1490,11 @@
                             </div>
                         </div>
                         <p class="text-gray-900 dark:text-gray-200" data-comment-text="${commentId}">${comment.text}</p>
+                        ${comment.imageUrl ? `<img src="${comment.imageUrl}" alt="Comment Image" class="mt-4 comment-image" onclick="window.showFullImage('${comment.imageUrl}')">` : ''}
                         <p class="text-xs text-gray-400 dark:text-gray-500 mt-2 break-all">User ID: ${comment.userId}</p>
                     `;
                     commentsList.appendChild(commentElement);
 
-                    // Add event listener to the translate button
                     const translateButton = commentElement.querySelector(`.translate-btn[data-comment-id="${commentId}"]`);
                     const commentTextElement = commentElement.querySelector(`[data-comment-text="${commentId}"]`);
                     
@@ -1444,7 +1505,6 @@
                         });
                     }
 
-                    // Add event listener to the delete button if it exists
                     if (userId === comment.userId || isDeveloperMode) {
                         const deleteButton = commentElement.querySelector(`[data-delete-id="${commentId}"]`);
                         if (deleteButton) {
@@ -1456,103 +1516,90 @@
                 });
             }, (error) => {
                 console.error("Error listening to comments:", error);
-                commentsLoading.textContent = translations[currentLang].alertCommentAddError; // Use translated message
+                commentsLoading.textContent = translations[currentLang].alertCommentAddError;
                 commentsLoading.classList.remove('hidden');
             });
         }
 
-        // Developer Mode Activation Logic (5 clicks on footer)
         let footerClickCount = 0;
         let lastFooterClickTime = 0;
-        // Moved to top of script for early access
-        // const footerCopyright = document.getElementById('footerCopyright');
 
         footerCopyright.addEventListener('click', (e) => {
             const currentTime = new Date().getTime();
 
-            if (currentTime - lastFooterClickTime < 5000) { // 5 seconds threshold
+            if (currentTime - lastFooterClickTime < 5000) {
                 footerClickCount++;
             } else {
-                footerClickCount = 1; // Reset if too much time has passed
+                footerClickCount = 1;
             }
             lastFooterClickTime = currentTime;
 
             if (footerClickCount === 5) {
-                footerClickCount = 0; // Reset for next sequence
-                lastFooterClickTime = 0; // Reset timer
+                footerClickCount = 0;
+                lastFooterClickTime = 0;
                 showDeveloperModePrompt();
             }
         });
 
         function showDeveloperModePrompt() {
             customAlertMessage.textContent = translations[currentLang].alertDeveloperModePrompt;
-
-            customAlertButtons.innerHTML = ''; // Clear existing buttons
+            customAlertButtons.innerHTML = '';
 
             const passwordInput = document.createElement('input');
             passwordInput.type = 'password';
             passwordInput.id = 'developerPasswordInput';
             passwordInput.className = 'mt-4 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2';
-            passwordInput.placeholder = translations[currentLang].alertDeveloperModePrompt; // Using the prompt text as placeholder
+            passwordInput.placeholder = translations[currentLang].alertDeveloperModePrompt;
             customAlertButtons.appendChild(passwordInput);
 
             const submitBtn = document.createElement('button');
             submitBtn.className = 'btn-primary mt-4';
-            submitBtn.textContent = translations[currentLang].customAlertClose; // "حسناً" or "دخول"
+            submitBtn.textContent = translations[currentLang].customAlertClose;
             submitBtn.addEventListener('click', () => {
                 const enteredCode = passwordInput.value;
                 if (enteredCode === DEVELOPER_MODE_SECRET) {
                     isDeveloperMode = true;
                     customAlertModal.classList.add('hidden');
                     showAlert("alertDeveloperModeSuccess");
-                    // Show developer mode indicator
                     developerModeIndicator.style.display = 'block';
-                    updateDeveloperModeIndicatorText(); // Update text on activation
-                    // Reload comments to show delete buttons for all comments
+                    updateDeveloperModeIndicatorText();
                     loadComments();
                 } else {
                     showAlert("alertDeveloperModeInvalid");
                 }
             });
             customAlertButtons.appendChild(submitBtn);
-
             customAlertModal.classList.remove('hidden');
         }
 
-        // Function to update developer mode indicator text based on current language
         function updateDeveloperModeIndicatorText() {
             if (developerModeIndicator) {
                 developerModeIndicator.textContent = translations[currentLang].developerModeIndicatorText;
             }
         }
 
-        // Developer Mode Indicator Logic (3 clicks on indicator to exit)
         let devModeIndicatorClickCount = 0;
         let lastDevModeIndicatorClickTime = 0;
-        // Moved to top of script for early access
-        // const developerModeIndicator = document.getElementById('developerModeIndicator');
 
         developerModeIndicator.addEventListener('click', () => {
             const currentTime = new Date().getTime();
 
-            if (currentTime - lastDevModeIndicatorClickTime < 5000) { // 5 seconds threshold for exiting
+            if (currentTime - lastDevModeIndicatorClickTime < 5000) {
                 devModeIndicatorClickCount++;
             } else {
-                devModeIndicatorClickCount = 1; // Reset if too much time has passed
+                devModeIndicatorClickCount = 1;
             }
             lastDevModeIndicatorClickTime = currentTime;
 
             if (devModeIndicatorClickCount === 3) {
-                devModeIndicatorClickCount = 0; // Reset for next sequence
-                lastDevModeIndicatorClickTime = 0; // Reset timer
-                isDeveloperMode = false; // Deactivate developer mode
-                developerModeIndicator.style.display = 'none'; // Hide indicator
-                showAlert("alertDeveloperModeExit"); // Inform user
-                loadComments(); // Reload comments to hide developer delete buttons
+                devModeIndicatorClickCount = 0;
+                lastDevModeIndicatorClickTime = 0;
+                isDeveloperMode = false;
+                developerModeIndicator.style.display = 'none';
+                showAlert("alertDeveloperModeExit");
+                loadComments();
             }
         });
-
     </script>
-
 </body>
 </html>
