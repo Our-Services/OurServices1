@@ -133,7 +133,7 @@
         body.dark .dev-action-btn { color: #f87171; }
         .dev-action-btn:hover { opacity: 0.7; }
         
-        /* New styling for the green 'Order Now' button */
+        /* Styling for the green 'Order Now' button */
         .btn-order-now {
             background-color: #10B981; /* green-500 */
             color: white;
@@ -146,6 +146,34 @@
         .btn-order-now:hover {
             background-color: #059669; /* green-600 */
             transform: translateY(-2px);
+        }
+
+        /* Styling for the navbar 'Order Now' button */
+        .nav-link.order-now-btn {
+            background-color: #10B981;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .nav-link.order-now-btn:hover {
+            background-color: #059669;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Styling for the popup order form container */
+        .order-form-container {
+            background-color: white;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dark mode styling for the popup order form container */
+        body.dark .order-form-container {
+            background-color: #2d3748; /* Dark gray background */
+            color: #e2e8f0; /* Light text for dark mode */
         }
     </style>
 </head>
@@ -164,7 +192,7 @@
 
     <!-- Order Now Modal -->
     <div id="orderModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[3000] hidden">
-        <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-2xl max-w-lg w-full m-4 relative">
+        <div class="order-form-container p-8 rounded-xl shadow-2xl max-w-lg w-full m-4 relative">
             <button id="closeOrderModal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -480,7 +508,7 @@
                 orderFieldRequired: "This field is required."
             },
             zh: { 
-                siteTitle: "我们的服务 - 项目设计与开发", navHome: "首页", navWhyChooseUs: "为什么选择我们？", navAboutUs: "关于我们", navServices: "我们提供什么？", navContact: "联系我们", navComments: "评论", heroTitle: "各类项目、网站、设计、研究和作业的设计师", heroDiscount: "所有服务限时30%折扣", heroSubtitle: "我们提供全面的解决方案，满足您所有的学术和专业需求", heroContactBtn: "立即联系我们", featuresHeading: "为什么选择我们？", feature1Title: "出色的视觉格式", feature1Desc: "我们提供多种美观的格式，突出您的作品。", feature2Title: "专业的文本格式", feature2Desc: "研究和项目内容的精确格式化。", feature3Title: "超过100种字体", feature3Desc: "从各种独特的字体中选择。", feature4Title: "出色的演示文稿", feature4Desc: "设计有吸引力且创新的PowerPoint演示文稿。", aboutUsHeading: "我们是谁？", aboutUsParagraph1: "我们是一支由马来西亚UCSI大学毕业生组成的先进团队，结合了深厚的学术知识和丰富的实践经验，在设计和实施许多大型和小型项目方面。", aboutUsParagraph2: "我们致力于以极具竞争力的价格提供高质量的服务，始终将客户满意度作为我们的首要宗旨✨。", servicesHeading: "我们提供什么？", service1Title: "3D设计", service1Desc: "使用AutoCAD和3D打印软件设计所有类型的3D零件，支持所有可打印文件格式。", service2Title: "演示文稿（PowerPoint）", service2Desc: "设计PowerPoint演示文稿，包括完整的格式设置、图片和视觉效果。", service3Title: "Excel文件格式化", service3Desc: "高专业地设计、修改和格式化Excel文件。", service4Title: "工程设计与规划", service4Desc: "工程设计、规划、电气工程及其他专业工程工作。", service5Title: "报告撰写与格式化", service5Desc: "高质量、高精度地撰写和格式化Word报告。", service6Title: "视频和照片设计/编辑", service6Desc: "高质量地设计和编辑视频和照片，以满足您的所有需求。", service7Title: "网站编程与开发", service7Desc: "使用JavaScript编程交互式和美观的网站，并使用CSS进行样式设置，包括将网站托管到服务器并创建专用链接。", contactHeading: "联系我们", contactSubtitle: "我们很高高兴通过以下方式接收您的咨询和请求：", whatsappNumberKSA: "0500900329 沙特阿拉伯境内", whatsappNumberOutsideKSA: "+60163340537 沙特阿拉伯境外", telegramContact: "通过Telegram联系", footerText: "© 2025 所有权利由设计与项目团队保留。", modeLight: "浅色模式", modeDark: "深色模式", commentsHeading: "评论", leaveComment: "发表评论", commentNameLabel: "您的姓名：", commentNamePlaceholder: "输入您的姓名", commentTextLabel: "您的评论：", commentTextPlaceholder: "在此处撰写您的评论...", commentRatingLabel: "您的评分：", commentImageLabel: "添加图片（可选）：", fileInputChoose: "选择文件", fileInputNoFile: "未选择任何文件", commentSubmitBtn: "提交评论", allComments: "所有评论", commentsLoading: "正在加载评论...", noComments: "暂无评论。成为第一个评论的人！", commentDateUnavailable: "日期不可用", alertNameTextEmpty: "请输入您的姓名。", alertCommentTextEmpty: "请输入您的评论。", alertCommentAddedSuccess: "评论添加成功！", alertCommentAddError: "添加评论时发生错误。请重试。", alertFirebaseInitError: "Firebase初始化失败。评论可能无法正常工作。", alertFirebaseNotReady: "Firebase尚未准备好。请稍候。", alertDeleteConfirm: "您确定要删除此评论吗？", alertDeleteSuccess: "评论删除成功！", alertDeleteError: "删除评论时发生错误。请重试。", alertNoPermission: "您没有权限删除此评论。", alertDeveloperModePrompt: "请输入密码进入开发者模式：", alertDeveloperModeSuccess: "开发者模式已成功激活！", alertDeveloperModeInvalid: "密码不正确。请重试。", alertDeveloperModeExit: "已退出开发者模式。", confirmText: "是", cancelText: "取消", customAlertClose: "确定", developerModeIndicatorText: "开发者模式", translateBtnText: "翻译", translateError: "翻译失败。", imageUploadError: "图片上传失败。请重试。", resetDislikesConfirm: "您确定要重置“不喜欢”吗？", resetDislikesSuccess: "“不喜欢”已成功重置！", resetDislikesError: "重置“不喜欢”失败。",
+                siteTitle: "我们的服务 - 项目设计与开发", navHome: "首页", navWhyChooseUs: "为什么选择我们？", navAboutUs: "关于我们", navServices: "我们提供什么？", navContact: "联系我们", navComments: "评论", heroTitle: "各类项目、网站、设计、研究和作业的设计师", heroDiscount: "所有服务限时30%折扣", heroSubtitle: "我们提供全面的解决方案，满足您所有的学术和专业需求", heroContactBtn: "立即联系我们", featuresHeading: "为什么选择我们？", feature1Title: "出色的视觉格式", feature1Desc: "我们提供多种美观的格式，突出您的作品。", feature2Title: "专业的文本格式", feature2Desc: "研究和项目内容的精确格式化。", feature3Title: "超过100种字体", feature3Desc: "从各种独特的字体中选择。", feature4Title: "出色的演示文稿", feature4Desc: "设计有吸引力且创新的PowerPoint演示文稿。", aboutUsHeading: "我们是谁？", aboutUsParagraph1: "我们是一支由马来西亚UCSI大学毕业生组成的先进团队，结合了深厚的学术知识和丰富的实践经验，在设计和实施许多大型和小型项目方面。", aboutUsParagraph2: "我们致力于以极具竞争力的价格提供高质量的服务，始终将客户满意度作为我们的首要宗旨✨。", servicesHeading: "我们提供什么？", service1Title: "3D设计", service1Desc: "使用AutoCAD和3D打印软件设计所有类型的3D零件，支持所有可打印文件格式。", service2Title: "演示文稿（PowerPoint）", service2Desc: "设计PowerPoint演示文稿，包括完整的格式设置、图片和视觉效果。", service3Title: "Excel文件格式化", service3Desc: "高专业地设计、修改和格式化Excel文件。", service4Title: "工程设计与规划", service4Desc: "工程设计、规划、电气工程及其他专业工程工作。", service5Title: "报告撰写与格式化", service5Desc: "高质量、高精度地撰写和格式化Word报告。", service6Title: "视频和照片设计/编辑", service6Desc: "高质量地设计和编辑视频和照片，以满足您的所有需求。", service7Title: "网站编程与开发", service7Desc: "使用JavaScript编程交互式和美观的网站，并使用CSS进行样式设置，包括将网站托管到服务器并创建专用链接。", contactHeading: "联系我们", contactSubtitle: "我们很高高兴通过以下方式接收您的咨询和请求：", whatsappNumberKSA: "0500900329 沙特阿拉伯境内", whatsappNumberOutsideKSA: "+60163340537 沙特阿拉伯境外", telegramContact: "通过Telegram联系", footerText: "© 2025 所有权利由设计与项目团队保留。", modeLight: "浅色模式", modeDark: "深色模式", commentsHeading: "评论", leaveComment: "发表评论", commentNameLabel: "您的姓名：", commentNamePlaceholder: "输入您的姓名", commentTextLabel: "您的评论：", commentTextPlaceholder: "在此处撰写您的评论...", commentRatingLabel: "您的评分：", commentImageLabel: "添加图片（可选）：", fileInputChoose: "选择文件", fileInputNoFile: "未选择任何文件", commentSubmitBtn: "提交评论", allComments: "所有评论", commentsLoading: "正在加载评论...", noComments: "暂无评论。成为第一个评论的人！", commentDateUnavailable: "日期不可用", alertNameTextEmpty: "请输入您的姓名。", alertCommentTextEmpty: "请输入您的评论。", alertCommentAddedSuccess: "评论添加成功！", alertCommentAddError: "添加评论时发生错误。请重试。", alertFirebaseInitError: "Firebase初始化失败。评论可能无法正常工作。", alertFirebaseNotReady: "Firebase尚未准备好。请稍候。", alertDeleteConfirm: "您确定要删除此评论吗？", alertDeleteSuccess: "评论删除成功！", alertDeleteError: "删除评论时发生错误。请重试。", alertNoPermission: "您没有权限删除此评论。", alertDeveloperModePrompt: "请输入密码进入开发者模式：", alertDeveloperModeSuccess: "开发者模式已成功激活！", alertDeveloper模式Invalid: "密码不正确。请重试。", alertDeveloperModeExit: "已退出开发者模式。", confirmText: "是", cancelText: "取消", customAlertClose: "确定", developerModeIndicatorText: "开发者模式", translateBtnText: "翻译", translateError: "翻译失败。", imageUploadError: "图片上传失败。请重试。", resetDislikesConfirm: "您确定要重置“不喜欢”吗？", resetDislikesSuccess: "“不喜欢”已成功重置！", resetDislikesError: "重置“不喜欢”失败。",
                 // New translations for the order form
                 orderNowBtn: "立即订购",
                 orderFormTitle: "服务请求表",
