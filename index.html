@@ -207,7 +207,7 @@
                         <li data-lang="ar">العربية</li>
                         <li data-lang="en">English</li>
                         <li data-lang="zh">中文</li>
-                    </ul>
+                    </ul-tag>
                 </div>
                 <button id="darkModeToggle" aria-label="Toggle dark mode">
                     <svg class="dark-mode-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path id="darkModeIconPath" d="M12 3a9 9 0 109 9c0-.46-.04-.92-.12-1.36a5.999 5.999 0 01-8.588-8.588C12.92 3.04 12.46 3 12 3z"/></svg>
@@ -874,17 +874,18 @@
                             </div>
                             <div class="flex items-center flex-shrink-0">
                                 <p class="text-xs text-gray-500 dark:text-gray-400 mx-2">${comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString(currentLang) : translations[currentLang].commentDateUnavailable}</p>
-                                <button class="translate-btn" data-action="translate" data-original-text="${comment.text.replace(/"/g, '&quot;')}">${translations[currentLang].translateBtnText}</button>
                                 ${(userId === comment.userId || isDeveloperMode) ? `
                                     <button class="text-red-500 hover:text-red-700 p-1 rounded-full focus:outline-none ml-1" data-action="delete" aria-label="Delete">
                                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1zm2 3a1 1 0 011-1h2a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
                                     </button>` : ''}
                             </div>
                         </div>
-                        <p class="text-gray-900 dark:text-gray-200 mt-1" data-comment-text-id="${commentId}">${comment.text}</p>
-                        <div class="flex items-center space-x-4 space-x-reverse mt-2 text-sm text-gray-500 dark:text-gray-400">
-                           ${comment.imageUrl ? `<img src="${comment.imageUrl}" alt="Comment Image" class="mt-4 comment-image" onclick="window.showFullImage('${comment.imageUrl}')">` : ''}
+                        <div class="flex items-center space-x-2 space-x-reverse mb-2">
+                           <p class="text-xs text-gray-500 dark:text-gray-400">${comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString(currentLang) : translations[currentLang].commentDateUnavailable}</p>
+                           <button class="translate-btn" data-action="translate" data-original-text="${comment.text.replace(/"/g, '&quot;')}">${translations[currentLang].translateBtnText}</button>
                         </div>
+                        <p class="text-gray-900 dark:text-gray-200 mt-1" data-comment-text-id="${commentId}">${comment.text}</p>
+                        ${comment.imageUrl ? `<img src="${comment.imageUrl}" alt="Comment Image" class="mt-4 comment-image" onclick="window.showFullImage('${comment.imageUrl}')">` : ''}
                         <div class="comment-actions">
                              <button class="action-btn ${hasLiked ? 'liked' : ''}" data-action="like" aria-label="Like"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333V19h8.333a2 2 0 001.992-1.838l.93-5.585A2 2 0 0015.333 9H12V4.5a2.5 2.5 0 00-5 0V9H6Z"></path></svg><span>${comment.likes || 0}</span></button>
                              <button class="action-btn ${hasDisliked ? 'disliked' : ''}" data-action="dislike" aria-label="Dislike"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M18 9.5a1.5 1.5 0 11-3 0v-6a1.5 1.5 0 013 0v6zM14 9.667V1H5.667a2 2 0 00-1.992 1.838l-.93 5.585A2 2 0 004.667 11H8v4.5a2.5 2.5 0 005 0V11h3.333Z"></path></svg><span>${comment.dislikes || 0}</span></button>
