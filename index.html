@@ -77,8 +77,10 @@
         #customAlertModal .modal-buttons .cancel-btn { background-color: #cbd5e0; color: #334155; }
         body.dark #customAlertModal .modal-buttons .cancel-btn { background-color: #4a5568; color: #e2e8f0; }
         body.dark #customAlertModal .modal-buttons .cancel-btn:hover { background-color: #64748b; }
-        #commentsList > div { background-color: white; color: #1a202c; transition: background-color 0.3s ease, color 0.3s ease; }
-        body.dark #commentsList > div { background-color: #2d3748; color: #e2e8f0; }
+        #commentsList > div { background-color: #00000009; transition: background-color 0.3s ease, color 0.3s ease; }
+        #commentsList > div p { color: rgb(65, 77, 102); }
+        body.dark #commentsList > div { background-color: #43526b42; }
+        body.dark #commentsList > div p { color: #e2e8f0; }
         .custom-file-input { position: relative; overflow: hidden; display: inline-block; cursor: pointer; padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 600; background-color: #f8fafc; color: #334155; border: 1px solid #e2e8f0; transition: background-color 0.2s ease, border-color 0.2s ease; text-align: center; }
         .custom-file-input:hover { background-color: #e2e8f0; border-color: #cbd5e0; }
         .custom-file-input input[type="file"] { position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
@@ -354,7 +356,7 @@
         let isDeveloperMode = false;
         const DEVELOPER_MODE_SECRET = "Ahmad@2006";
         const GEMINI_API_KEY = "AIzaSyCqjjC8Klto6AtPE1Ac7ucxiS0juSdwM5E";
-        const IMGBB_API_KEY = "c60db8672872317bb4b7e2ed96227adf";
+        const IMGBB_API_KEY = "c0db8672872317bb4b7e2ed96227adf";
 
         // DOM Elements
         const customAlertModal = document.getElementById('customAlertModal');
@@ -462,7 +464,7 @@
                 orderFieldRequired: "This field is required."
             },
             zh: { 
-                siteTitle: "我们的服务 - 项目设计与开发", navHome: "首页", navWhyChooseUs: "为什么选择我们？", navAboutUs: "关于我们", navServices: "我们提供什么？", navContact: "联系我们", navComments: "评论", heroTitle: "各类项目、网站、设计、研究和作业的设计师", heroDiscount: "所有服务限时30%折扣", heroSubtitle: "我们提供全面的解决方案，满足您所有的学术和专业需求", heroContactBtn: "立即联系我们", featuresHeading: "为什么选择我们？", feature1Title: "出色的视觉格式", feature1Desc: "我们提供多种美观的格式，突出您的作品。", feature2Title: "专业的文本格式", feature2Desc: "研究和项目内容的精确格式化。", feature3Title: "超过100种字体", feature3Desc: "从各种独特的字体中选择。", feature4Title: "出色的演示文稿", feature4Desc: "设计有吸引力且创新的PowerPoint演示文稿。", aboutUsHeading: "我们是谁？", aboutUsParagraph1: "我们是一支由马来西亚UCSI大学毕业生组成的先进团队，结合了深厚的学术知识和丰富的实践经验，在设计和实施许多大型和小型项目方面。", aboutUsParagraph2: "我们致力于以极具竞争力的价格提供高质量的服务，始终将客户满意度作为我们的首要宗旨✨。", servicesHeading: "我们提供什么？", service1Title: "3D设计", service1Desc: "使用AutoCAD和3D打印软件设计所有类型的3D零件，支持所有可打印文件格式。", service2Title: "演示文稿（PowerPoint）", service2Desc: "设计PowerPoint演示文稿，包括完整的格式设置、图片和视觉效果。", service3Title: "Excel文件格式化", service3Desc: "高专业地设计、修改和格式化Excel文件。", service4Title: "工程设计与规划", service4Desc: "工程设计、规划、电气工程及其他专业工程工作。", service5Title: "报告撰写与格式化", service5Desc: "高质量、高精度地撰写和格式化Word报告。", service6Title: "视频和照片设计/编辑", service6Desc: "高质量地设计和编辑视频和照片，以满足您的所有需求。", service7Title: "网站编程与开发", service7Desc: "使用JavaScript编程交互式和美观的网站，并使用CSS进行样式设置，包括将网站托管到服务器并创建专用链接。", contactHeading: "联系我们", contactSubtitle: "我们很高兴通过以下方式接收您的咨询和请求：", whatsappNumberKSA: "0500900329 沙特阿拉伯境内", whatsappNumberOutsideKSA: "+60163340537 沙特阿拉伯境外", telegramContact: "通过Telegram联系", footerText: "© 2025 所有权利由设计与项目团队保留。", modeLight: "浅色模式", modeDark: "深色模式", commentsHeading: "评论", leaveComment: "发表评论", commentNameLabel: "您的姓名：", commentNamePlaceholder: "输入您的姓名", commentTextLabel: "您的评论：", commentTextPlaceholder: "在此处撰写您的评论...", commentRatingLabel: "您的评分：", commentImageLabel: "添加图片（可选）：", fileInputChoose: "选择文件", fileInputNoFile: "未选择任何文件", commentSubmitBtn: "提交评论", allComments: "所有评论", commentsLoading: "正在加载评论...", noComments: "暂无评论。成为第一个评论的人！", commentDateUnavailable: "日期不可用", alertNameTextEmpty: "请输入您的姓名。", alertCommentTextEmpty: "请输入您的评论。", alertCommentAddedSuccess: "评论添加成功！", alertCommentAddError: "添加评论时发生错误。请重试。", alertFirebaseInitError: "Firebase初始化失败。评论可能无法正常工作。", alertFirebaseNotReady: "Firebase尚未准备好。请稍候。", alertDeleteConfirm: "您确定要删除此评论吗？", alertDeleteSuccess: "评论删除成功！", alertDeleteError: "删除评论时发生错误。请重试。", alertNoPermission: "您没有权限删除此评论。", alertDeveloperModePrompt: "请输入密码进入开发者模式：", alertDeveloperModeSuccess: "开发者模式已成功激活！", alertDeveloperModeInvalid: "密码不正确。请重试。", alertDeveloperModeExit: "已退出开发者模式。", confirmText: "是", cancelText: "取消", customAlertClose: "确定", developerModeIndicatorText: "开发者模式", translateBtnText: "翻译", translateError: "翻译失败。", imageUploadError: "图片上传失败。请重试。", resetDislikesConfirm: "您确定要重置“不喜欢”吗？", resetDislikesSuccess: "“不喜欢”已成功重置！", resetDislikesError: "重置“不喜欢”失败。",
+                siteTitle: "我们的服务 - 项目设计与开发", navHome: "首页", navWhyChooseUs: "为什么选择我们？", navAboutUs: "关于我们", navServices: "我们提供什么？", navContact: "联系我们", navComments: "评论", heroTitle: "各类项目、网站、设计、研究和作业的设计师", heroDiscount: "所有服务限时30%折扣", heroSubtitle: "我们提供全面的解决方案，满足您所有的学术和专业需求", heroContactBtn: "立即联系我们", featuresHeading: "为什么选择我们？", feature1Title: "出色的视觉格式", feature1Desc: "我们提供多种美观的格式，突出您的作品。", feature2Title: "专业的文本格式", feature2Desc: "研究和项目内容的精确格式化。", feature3Title: "超过100种字体", feature3Desc: "从各种独特的字体中选择。", feature4Title: "出色的演示文稿", feature4Desc: "设计有吸引力且创新的PowerPoint演示文稿。", aboutUsHeading: "我们是谁？", aboutUsParagraph1: "我们是一支由马来西亚UCSI大学毕业生组成的先进团队，结合了深厚的学术知识和丰富的实践经验，在设计和实施许多大型和小型项目方面。", aboutUsParagraph2: "我们致力于以极具竞争力的价格提供高质量的服务，始终将客户满意度作为我们的首要宗旨✨。", servicesHeading: "我们提供什么？", service1Title: "3D设计", service1Desc: "使用AutoCAD和3D打印软件设计所有类型的3D零件，支持所有可打印文件格式。", service2Title: "演示文稿（PowerPoint）", service2Desc: "设计PowerPoint演示文稿，包括完整的格式设置、图片和视觉效果。", service3Title: "Excel文件格式化", service3Desc: "高专业地设计、修改和格式化Excel文件。", service4Title: "工程设计与规划", service4Desc: "工程设计、规划、电气工程及其他专业工程工作。", service5Title: "报告撰写与格式化", service5Desc: "高质量、高精度地撰写和格式化Word报告。", service6Title: "视频和照片设计/编辑", service6Desc: "高质量地设计和编辑视频和照片，以满足您的所有需求。", service7Title: "网站编程与开发", service7Desc: "使用JavaScript编程交互式和美观的网站，并使用CSS进行样式设置，包括将网站托管到服务器并创建专用链接。", contactHeading: "联系我们", contactSubtitle: "我们很高高兴通过以下方式接收您的咨询和请求：", whatsappNumberKSA: "0500900329 沙特阿拉伯境内", whatsappNumberOutsideKSA: "+60163340537 沙特阿拉伯境外", telegramContact: "通过Telegram联系", footerText: "© 2025 所有权利由设计与项目团队保留。", modeLight: "浅色模式", modeDark: "深色模式", commentsHeading: "评论", leaveComment: "发表评论", commentNameLabel: "您的姓名：", commentNamePlaceholder: "输入您的姓名", commentTextLabel: "您的评论：", commentTextPlaceholder: "在此处撰写您的评论...", commentRatingLabel: "您的评分：", commentImageLabel: "添加图片（可选）：", fileInputChoose: "选择文件", fileInputNoFile: "未选择任何文件", commentSubmitBtn: "提交评论", allComments: "所有评论", commentsLoading: "正在加载评论...", noComments: "暂无评论。成为第一个评论的人！", commentDateUnavailable: "日期不可用", alertNameTextEmpty: "请输入您的姓名。", alertCommentTextEmpty: "请输入您的评论。", alertCommentAddedSuccess: "评论添加成功！", alertCommentAddError: "添加评论时发生错误。请重试。", alertFirebaseInitError: "Firebase初始化失败。评论可能无法正常工作。", alertFirebaseNotReady: "Firebase尚未准备好。请稍候。", alertDeleteConfirm: "您确定要删除此评论吗？", alertDeleteSuccess: "评论删除成功！", alertDeleteError: "删除评论时发生错误。请重试。", alertNoPermission: "您没有权限删除此评论。", alertDeveloperModePrompt: "请输入密码进入开发者模式：", alertDeveloperModeSuccess: "开发者模式已成功激活！", alertDeveloperModeInvalid: "密码不正确。请重试。", alertDeveloperModeExit: "已退出开发者模式。", confirmText: "是", cancelText: "取消", customAlertClose: "确定", developerModeIndicatorText: "开发者模式", translateBtnText: "翻译", translateError: "翻译失败。", imageUploadError: "图片上传失败。请重试。", resetDislikesConfirm: "您确定要重置“不喜欢”吗？", resetDislikesSuccess: "“不喜欢”已成功重置！", resetDislikesError: "重置“不喜欢”失败。",
                 // New translations for the order form
                 orderNowBtn: "立即订购",
                 orderFormTitle: "服务请求表",
@@ -520,7 +522,7 @@
                 const translation = translations[currentLang]?.[key] || translations.en[key];
                 serviceOptions[i].textContent = translation;
             }
-
+            
             document.getElementById('currentLanguageText').textContent = lang.toUpperCase();
             updateModeIndicatorText();
             updateDeveloperModeIndicatorText();
@@ -811,11 +813,25 @@
                 }
             });
         }
+        
+        const commentTextCache = new Map();
 
-        async function translateComment(commentTextElement, originalText) {
+        async function translateComment(commentText, originalText) {
             const targetLang = { ar: 'ar', en: 'en', zh: 'zh' }[currentLang] || 'en';
+            if (commentText.dataset.lang === targetLang) {
+                commentText.textContent = originalText;
+                commentText.dataset.lang = '';
+                return;
+            }
+
+            if (commentTextCache.has(`${originalText}-${targetLang}`)) {
+                commentText.textContent = commentTextCache.get(`${originalText}-${targetLang}`);
+                commentText.dataset.lang = targetLang;
+                return;
+            }
+
             const prompt = `Translate the following text to the ${targetLang} language. Provide only the translated text, without any additional explanatory phrases like "Here is the translation:":\n\n${originalText}`;
-            commentTextElement.textContent = `${translations[currentLang].commentsLoading}...`;
+            commentText.textContent = `${translations[currentLang].commentsLoading}...`;
             try {
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`, {
                     method: 'POST',
@@ -833,7 +849,9 @@
                 
                 if (result.candidates && result.candidates.length > 0 && result.candidates[0].content?.parts?.[0]?.text) {
                      const translatedText = result.candidates[0].content.parts[0].text;
-                     commentTextElement.textContent = translatedText.trim();
+                     commentText.textContent = translatedText.trim();
+                     commentText.dataset.lang = targetLang;
+                     commentTextCache.set(`${originalText}-${targetLang}`, translatedText.trim());
                 } else {
                     console.error("Invalid response from translation API:", result);
                     if (result.candidates?.[0]?.finishReason === 'SAFETY') {
@@ -844,14 +862,25 @@
 
             } catch (e) {
                 console.error("Error during translation:", e);
-                commentTextElement.textContent = translations[currentLang].translateError;
+                commentText.textContent = translations[currentLang].translateError;
             }
         }
+        
+        async function translateAllComments() {
+             const comments = document.querySelectorAll('#commentsList [data-comment-text-id]');
+             for (const commentTextElement of comments) {
+                const originalText = commentTextElement.dataset.originalText;
+                if (originalText) {
+                    await translateComment(commentTextElement, originalText);
+                }
+            }
+        }
+
 
         function loadComments() {
             if (!db) return;
             const q = query(collection(db, `artifacts/${appId}/public/data/comments`), orderBy("timestamp", "desc"));
-            const unsubscribe = onSnapshot(q, (snapshot) => {
+            const unsubscribe = onSnapshot(q, async (snapshot) => {
                 commentsList.innerHTML = '';
                 commentsLoading.classList.add('hidden');
                 noComments.classList.toggle('hidden', !snapshot.empty);
@@ -865,7 +894,9 @@
 
                     const hasLiked = comment.likedBy?.includes(userId);
                     const hasDisliked = comment.dislikedBy?.includes(userId);
-
+                    const originalText = comment.text;
+                    const commentDate = comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString(currentLang) : translations[currentLang].commentDateUnavailable;
+                    
                     commentElement.innerHTML = `
                         <div class="flex items-start justify-between mb-2 gap-4">
                             <div class="flex items-center gap-3">
@@ -873,18 +904,14 @@
                                 ${comment.rating > 0 ? createStarDisplay(comment.rating) : ''}
                             </div>
                             <div class="flex items-center flex-shrink-0">
-                                <p class="text-xs text-gray-500 dark:text-gray-400 mx-2">${comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString(currentLang) : translations[currentLang].commentDateUnavailable}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mx-2">${commentDate}</p>
                                 ${(userId === comment.userId || isDeveloperMode) ? `
                                     <button class="text-red-500 hover:text-red-700 p-1 rounded-full focus:outline-none ml-1" data-action="delete" aria-label="Delete">
                                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1zm2 3a1 1 0 011-1h2a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
                                     </button>` : ''}
                             </div>
                         </div>
-                        <div class="flex items-center space-x-2 space-x-reverse mb-2">
-                           <p class="text-xs text-gray-500 dark:text-gray-400">${comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString(currentLang) : translations[currentLang].commentDateUnavailable}</p>
-                           <button class="translate-btn" data-action="translate" data-original-text="${comment.text.replace(/"/g, '&quot;')}">${translations[currentLang].translateBtnText}</button>
-                        </div>
-                        <p class="text-gray-900 dark:text-gray-200 mt-1" data-comment-text-id="${commentId}">${comment.text}</p>
+                        <p class="text-gray-900 dark:text-gray-200 mt-1" data-comment-text-id="${commentId}" data-original-text="${originalText}">${comment.text}</p>
                         ${comment.imageUrl ? `<img src="${comment.imageUrl}" alt="Comment Image" class="mt-4 comment-image" onclick="window.showFullImage('${comment.imageUrl}')">` : ''}
                         <div class="comment-actions">
                              <button class="action-btn ${hasLiked ? 'liked' : ''}" data-action="like" aria-label="Like"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333V19h8.333a2 2 0 001.992-1.838l.93-5.585A2 2 0 0015.333 9H12V4.5a2.5 2.5 0 00-5 0V9H6Z"></path></svg><span>${comment.likes || 0}</span></button>
@@ -902,17 +929,11 @@
                             handleReaction(commentId, action);
                         } else if (action === 'delete') {
                             deleteComment(commentId, comment.userId);
-                        } else if (action === 'reset-dislikes') {
-                            resetDislikes(commentId);
-                        } else if (action === 'translate') {
-                            const textElement = commentElement.querySelector(`[data-comment-text-id="${commentId}"]`);
-                            const originalText = button.dataset.originalText;
-                            if (textElement && originalText) {
-                                translateComment(textElement, originalText);
-                            }
                         }
                     });
                 });
+                // After loading all comments, translate them to the current language
+                translateAllComments();
             }, (error) => {
                 console.error("Error listening to comments:", error);
                 commentsLoading.textContent = translations[currentLang].alertCommentAddError;
@@ -966,7 +987,6 @@
         }
 
         heroOrderNowBtn.addEventListener('click', showOrderModal);
-        // The orderNowNavBtn is now a button, not a link, so we listen for a click event directly.
         orderNowNavBtn.addEventListener('click', showOrderModal);
         closeOrderModal.addEventListener('click', hideOrderModal);
         orderModal.addEventListener('click', (e) => {
