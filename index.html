@@ -85,7 +85,7 @@
         body.dark .custom-file-input { background-color: #334155; color: #e2e8f0; border-color: #475569; }
         body.dark .custom-file-input:hover { background-color: #4a5568; border-color: #64748b; }
         #imagePreview { max-width: 100px; max-height: 100px; margin-top: 1rem; border-radius: 0.5rem; object-fit: cover; }
-        #comments input[type="text"], #comments textarea, #developerPasswordInput, #orderForm input[type="text"], #orderForm input[type="email"], #orderForm input[type="tel"], #orderForm select, #orderForm textarea { background-color: #f6f7f8; color: #1a202c; border-color: #e2e8f0; }
+        #comments input[type="text"], #comments textarea, #developerPasswordInput, #orderForm input[type="text"], #orderForm input[type="email"], #orderForm input[type="tel"], #orderForm select, #orderForm textarea { background-color: #f6f7ff; color: #1a202c; border-color: #e2e8f0; }
         #comments input[type="text"]::placeholder, #comments textarea::placeholder, #developerPasswordInput::placeholder, #orderForm input::placeholder, #orderForm textarea::placeholder { color: #64748b; }
         body.dark #comments input[type="text"], body.dark #comments textarea, body.dark #developerPasswordInput, body.dark #orderForm input, body.dark #orderForm select, body.dark #orderForm textarea { background-color: #334155; color: #e2e8f0; border-color: #475569; }
         body.dark #comments input[type="text"]::placeholder, body.dark #comments textarea::placeholder, body.dark #developerPasswordInput::placeholder, body.dark #orderForm input::placeholder, body.dark #orderForm textarea::placeholder { color: #94a3b8; }
@@ -263,6 +263,14 @@
             color: #b91c1c;
         }
 
+        .map-link {
+            text-decoration: underline;
+            color: #6366f1;
+            transition: color 0.2s ease;
+        }
+        .map-link:hover {
+            color: #4f46e5;
+        }
     </style>
 </head>
 <body class="font-sans antialiased">
@@ -331,6 +339,10 @@
                     </div>
                     <div id="orderImagesPreview" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 mt-4"></div>
                 </div>
+                <!-- Geolocation field for the order form -->
+                <div id="orderGeolocationField" class="hidden">
+                    <input type="hidden" id="orderGeolocation" name="geolocation_link">
+                </div>
                 <button type="submit" id="submitOrderBtn" class="btn-primary w-full" data-lang-key="orderSubmitBtn">تقديم الطلب</button>
             </form>
         </div>
@@ -385,7 +397,7 @@
             <div class="max-w-6xl mx-auto">
                 <h2 class="section-heading text-center mb-12" data-lang-key="featuresHeading">لماذا تختارنا؟</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m1.636 6.364l.707-.707M6 21v-1m6.364-1.636l-.707-.707M12 21h-1m-4.636-1.636l-.707.707M3 12h1m-.707-6.364l.707-.707M12 3v1m-6.364 1.636l-.707-.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature1Title">تنسيقات شكل رائعة</h3><p class="text-gray-600" data-lang-key="feature1Desc">نقدم العديد من التنسيقات الجمالية التي تبرز عملك.</p></div>
+                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m1.636 6.364l.707-.707M6 21v-1m6.364-1.636l-.707-.707M12 21h-1m-4.636-1.636l-.707.707M3 12h1m-.707-6.364l.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature1Title">تنسيقات شكل رائعة</h3><p class="text-gray-600" data-lang-key="feature1Desc">نقدم العديد من التنسيقات الجمالية التي تبرز عملك.</p></div>
                     <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature2Title">تنسيق كلام احترافي</h3><p class="text-gray-600" data-lang-key="feature2Desc">تنسيق دقيق للمحتوى في البحوث والمشاريع.</p></div>
                     <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature3Title">أكثر من 100 نوع خط</h3><p class="text-gray-600" data-lang-key="feature3Desc">اختر من مجموعة واسعة من الخطوط المميزة.</p></div>
                     <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m-4 8h4m10-8h4m-4 8h4M7 12h10l4-8H3l4 8zm0 0v8a2 2 0 002 2h6a2 2 0 002-2v-8m-12 4h.01M17 12h.01"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature4Title">عروض تقديمية مميزة</h3><p class="text-gray-600" data-lang-key="feature4Desc">تصميم عروض بوربوينت جذابة ومبتكرة.</p></div>
@@ -395,7 +407,7 @@
 
         <section id="about-us" class="py-16 px-4 bg-white">
             <div class="max-w-6xl mx-auto text-center">
-                <h2 class="section-heading mb-12" data-lang-key="aboutUsHeading">من نحن؟</h2>
+                <h2 class="section-heading mb-12" data-lang-key="aboutUsHeading">من نحن؟ </h2>
                 <div class="card p-8 md:p-12">
                     <p class="text-lg md:text-xl leading-relaxed text-gray-700" data-lang-key="aboutUsParagraph1">نحن فريق متقدم من خريجي جامعة UCSI الماليزية، نجمع بين المعرفة الأكاديمية العميقة والخبرة العملية الواسعة في تصميم وتنفيذ العديد من المشاريع الكبيرة والصغيرة.</p></div>
         </section>
@@ -540,9 +552,11 @@
         const orderFilesInput = document.getElementById('orderFiles');
         const orderFileInputText = document.getElementById('orderFileInputText');
         const orderImagesPreview = document.getElementById('orderImagesPreview');
+        const orderGeolocationInput = document.getElementById('orderGeolocation');
         
         // List to hold files chosen for the order form
         let orderFiles = [];
+        let userLocation = { latitude: null, longitude: null };
 
         async function initFirebase() {
             try {
@@ -588,7 +602,8 @@
                 orderSubmitBtn: "تقديم الطلب",
                 orderSuccess: "شكراً لك! تم استلام طلبك بنجاح. سنتواصل معك في أقرب وقت ممكن.",
                 orderError: "حدث خطأ أثناء إرسال طلبك. الرجاء المحاولة مرة أخرى.",
-                orderFieldRequired: "This field is required."
+                orderFieldRequired: "This field is required.",
+                locationUnavailable: "الموقع غير متوفر"
             },
             en: { 
                 siteTitle: "Our Services - Project Design & Development", navHome: "Home", navWhyChooseUs: "Why Choose Us?", navAboutUs: "About Us", navServices: "What We Offer?", navContact: "Contact Us", navComments: "Comments", heroTitle: "Designer of all types of projects, websites, designs, research, and assignments", heroDiscount: "30% discount for a limited time on all services", heroSubtitle: "We offer integrated solutions to meet all your academic and professional needs", heroContactBtn: "Contact Us Now", featuresHeading: "Why Choose Us?", feature1Title: "Excellent Visual Formats", feature1Desc: "We provide many aesthetic formats that highlight your work.", feature2Title: "Professional Text Formatting", feature2Desc: "Precise content formatting for research and projects.", feature3Title: "Over 100 Font Types", feature3Desc: "Choose from a wide range of distinctive fonts.", feature4Title: "Outstanding Presentations", feature4Desc: "Designing attractive and innovative PowerPoint presentations.", aboutUsHeading: "Who Are We?", aboutUsParagraph1: "We are an advanced team of UCSI Malaysian University graduates, combining deep academic knowledge with extensive practical experience in designing and implementing many large and small projects.", aboutUsParagraph2: "We are committed to providing high-quality services at highly competitive prices, with a constant focus on achieving customer satisfaction as our first and last motto ✨.", servicesHeading: "What We Offer?", service1Title: "3D Design", service1Desc: "Designing all types of 3D parts on AutoCAD and 3D printing software in all printable file formats.", service2Title: "Presentations (PowerPoint)", service2Desc: "Designing PowerPoint presentations with full formatting and adding images and visual effects.", service3Title: "Excel File Formatting", service3Desc: "Designing, modifying, and formatting Excel files with high professionalism.", service4Title: "Engineering Designs & Plans", service4Desc: "Engineering designs, plans, electrical works, and other specialized engineering works.", service5Title: "Report Writing & Formatting", service5Desc: "Writing and formatting reports in Word with high quality and accuracy.", service6Title: "Video & Photo Design/Editing", service6Desc: "Designing and editing videos and photos with high quality to suit all your needs.", service7Title: "Web Programming & Development", service7Desc: "Programming interactive and aesthetic websites using JavaScript and styling with CSS, including hosting the site on a server and creating a dedicated link.", contactHeading: "Contact Us", contactSubtitle: "We are happy to receive your inquiries and requests via the following channels:", whatsappNumberKSA: "0500900329 Inside KSA", whatsappNumberOutsideKSA: "+60163340537 Outside KSA", telegramContact: "Contact via Telegram", footerText: "© 2025 All rights reserved for the Design and Projects Team.", modeLight: "Light Mode", modeDark: "Dark Mode", commentsHeading: "Comments", leaveComment: "Leave a comment", commentNameLabel: "Your Name:", commentNamePlaceholder: "Enter your name", commentTextLabel: "Your Comment:", commentTextPlaceholder: "Write your comment here...", commentRatingLabel: "Your Rating:", commentImageLabel: "Add an image (optional):", fileInputChoose: "Choose file", fileInputNoFile: "No file chosen", commentSubmitBtn: "Submit Comment", allComments: "All Comments", commentsLoading: "Loading comments...", noComments: "No comments yet. Be the first to comment!", commentDateUnavailable: "Date Unavailable", alertNameTextEmpty: "Please enter your name.", alertCommentTextEmpty: "Please enter your comment.", alertCommentAddedSuccess: "Comment submitted successfully!", alertCommentAddError: "An error occurred while adding the comment. Please try again.", alertFirebaseInitError: "Firebase initialization failed. Comments may not work correctly.", alertFirebaseNotReady: "Firebase is not ready yet. Please wait.", alertDeleteConfirm: "Are you sure you want to delete this comment?", alertDeleteSuccess: "Comment deleted successfully!", alertDeleteError: "An error occurred while deleting the comment. Please try again.", alertNoPermission: "You do not have permission to delete this comment.", alertDeveloperModePrompt: "Please enter the secret code to enter developer mode:", alertDeveloperModeSuccess: "Developer mode activated successfully!", alertDeveloperModeInvalid: "Incorrect secret code. Please try again.", alertDeveloperModeExit: "Exited developer mode.", confirmText: "Yes", cancelText: "Cancel", customAlertClose: "OK", developerModeIndicatorText: "Developer Mode", translateBtnText: "Translate", translateError: "Translation failed.", imageUploadError: "Image upload failed. Please try again.", resetDislikesConfirm: "Are you sure you want to reset the dislikes?", resetDislikesSuccess: "Dislikes reset successfully!", resetDislikesError: "Failed to reset dislikes.",
@@ -612,7 +627,8 @@
                 orderSubmitBtn: "Submit Request",
                 orderSuccess: "Thank you! Your request has been received successfully. We will contact you as soon as possible.",
                 orderError: "An error occurred while submitting your request. Please try again.",
-                orderFieldRequired: "This field is required."
+                orderFieldRequired: "This field is required.",
+                locationUnavailable: "Location unavailable"
             },
             zh: { 
                 siteTitle: "我们的服务 - 项目设计与开发", navHome: "首页", navWhyChooseUs: "为什么选择我们？", navAboutUs: "关于我们", navServices: "我们提供什么？", navContact: "联系我们", navComments: "评论", heroTitle: "各类项目、网站、设计、研究和作业的设计师", heroDiscount: "所有服务限时30%折扣", heroSubtitle: "我们提供全面的解决方案，满足您所有的学术和专业需求", heroContactBtn: "立即联系我们", featuresHeading: "为什么选择我们？", feature1Title: "出色的视觉格式", feature1Desc: "我们提供多种美观的格式，突出您的作品。", feature2Title: "专业的文本格式", feature2Desc: "研究和项目内容的精确格式化。", feature3Title: "超过100种字体", feature3Desc: "从各种独特的字体中选择。", feature4Title: "出色的演示文稿", feature4Desc: "设计有吸引力且创新的PowerPoint演示文稿。", aboutUsHeading: "我们是谁？", aboutUsParagraph1: "我们是一支由马来西亚UCSI大学毕业生组成的先进团队，结合了深厚的学术知识和丰富的实践经验，在设计和实施许多大型和小型项目方面。", aboutUsParagraph2: "我们致力于以极具竞争力的价格提供高质量的服务，始终将客户满意度作为我们的首要宗旨✨。", servicesHeading: "我们提供什么？", service1Title: "3D设计", service1Desc: "使用AutoCAD和3D打印软件设计所有类型的3D零件，支持所有可打印文件格式。", service2Title: "演示文稿（PowerPoint）", service2Desc: "设计PowerPoint演示文稿，包括完整的格式设置、图片和视觉效果。", service3Title: "Excel文件格式化", service3Desc: "高专业地设计、修改和格式化Excel文件。", service4Title: "工程设计与规划", service4Desc: "工程设计、规划、电气工程及其他专业工程工作。", service5Title: "报告撰写与格式化", service5Desc: "高质量、高精度地撰写和格式化Word报告。", service6Title: "视频和照片设计/编辑", service6Desc: "高质量地设计和编辑视频和照片，以满足您的所有需求。", service7Title: "网站编程与开发", service7Desc: "使用JavaScript编程交互式和美观的网站，并使用CSS进行样式设置，包括将网站托管到服务器并创建专用链接。", contactHeading: "联系我们", contactSubtitle: "我们很高高兴通过以下方式接收您的咨询和请求：", whatsappNumberKSA: "0500900329 沙特阿拉伯境内", whatsappNumberOutsideKSA: "+60163340537 沙特阿拉伯境外", telegramContact: "通过Telegram联系", footerText: "© 2025 所有权利由设计与项目团队保留。", modeLight: "浅色模式", modeDark: "深色模式", commentsHeading: "评论", leaveComment: "发表评论", commentNameLabel: "您的姓名：", commentNamePlaceholder: "输入您的姓名", commentTextLabel: "您的评论：", commentTextPlaceholder: "在此处撰写您的评论...", commentRatingLabel: "您的评分：", commentImageLabel: "添加图片（可选）：", fileInputChoose: "选择文件", fileInputNoFile: "未选择任何文件", commentSubmitBtn: "提交评论", allComments: "所有评论", commentsLoading: "正在加载评论...", noComments: "暂无评论。成为第一个评论的人！", commentDateUnavailable: "日期不可用", alertNameTextEmpty: "请输入您的姓名。", alertCommentTextEmpty: "请输入您的评论。", alertCommentAddedSuccess: "评论添加成功！", alertCommentAddError: "添加评论时发生错误。请重试。", alertFirebaseInitError: "Firebase初始化失败。评论可能无法正常工作。", alertFirebaseNotReady: "Firebase尚未准备好。请稍候。", alertDeleteConfirm: "您确定要删除此评论吗？", alertDeleteSuccess: "评论删除成功！", alertDeleteError: "删除评论时发生错误。请重试。", alertNoPermission: "您没有权限删除此评论。", alertDeveloperModePrompt: "请输入密码进入开发者模式：", alertDeveloperModeSuccess: "开发者模式已成功激活！", alertDeveloperModeInvalid: "密码不正确。请重试。", alertDeveloperModeExit: "已退出开发者模式。", confirmText: "是", cancelText: "取消", customAlertClose: "确定", developerModeIndicatorText: "开发者模式", translateBtnText: "翻译", translateError: "翻译失败。", imageUploadError: "图片上传失败。请重试。", resetDislikesConfirm: "您确定要重置“不喜欢”吗？", resetDislikesSuccess: "“不喜欢”已成功重置！", resetDislikesError: "重置“不喜欢”失败。",
@@ -636,7 +652,8 @@
                 orderSubmitBtn: "提交请求",
                 orderSuccess: "Thank you! Your request has been received successfully. We will contact you as soon as possible.",
                 orderError: "An error occurred while submitting your request. Please try again.",
-                orderFieldRequired: "This field is required."
+                orderFieldRequired: "This field is required.",
+                locationUnavailable: "位置不可用"
             }
         };
 
@@ -889,8 +906,7 @@
 
             // Get device and location info before submitting the comment
             const { device, browser, deviceName } = getDeviceInfo();
-            const { latitude, longitude } = await getGeolocation();
-
+            
             try {
                 await addDoc(collection(db, `artifacts/${appId}/public/data/comments`), {
                     name: commentName,
@@ -906,8 +922,8 @@
                     device,
                     browser,
                     deviceName,
-                    latitude,
-                    longitude
+                    latitude: userLocation.latitude,
+                    longitude: userLocation.longitude
                 });
                 commentForm.reset();
                 imagePreview.classList.add('hidden');
@@ -970,7 +986,6 @@
             if (userAgent.indexOf("Mac") !== -1) os = "MacOS";
             if (userAgent.indexOf("Linux") !== -1) os = "Linux";
             if (userAgent.indexOf("Android") !== -1) os = "Android";
-            if (userAgent.indexOf("like Mac") !== -1) os = "iOS";
             if (userAgent.match(/iPhone/i)) {
                 const iphoneModel = userAgent.match(/iPhone\s(.*?);/i);
                 if (iphoneModel && iphoneModel[1]) {
@@ -999,19 +1014,28 @@
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
                         (position) => {
-                            resolve({
+                            userLocation = {
                                 latitude: position.coords.latitude,
                                 longitude: position.coords.longitude,
-                            });
+                            };
+                            resolve(userLocation);
                         },
                         (error) => {
-                            console.error("Geolocation error:", error);
-                            resolve({ latitude: null, longitude: null });
+                            let errorMessage = "Geolocation permission denied or location is unavailable.";
+                            if (error.code === error.PERMISSION_DENIED) {
+                                errorMessage = "Geolocation permission was denied by the user or disabled by a permissions policy.";
+                            } else if (error.message) {
+                                errorMessage = `Geolocation error: ${error.message}`;
+                            }
+                            console.error(errorMessage);
+                            userLocation = { latitude: null, longitude: null };
+                            resolve(userLocation);
                         }
                     );
                 } else {
                     console.log("Geolocation is not supported by this browser.");
-                    resolve({ latitude: null, longitude: null });
+                    userLocation = { latitude: null, longitude: null };
+                    resolve(userLocation);
                 }
             });
         }
@@ -1172,15 +1196,18 @@
                     
                     // Added geolocation to the dev info HTML
                     const geolocationHTML = (comment.latitude && comment.longitude) ? 
-                        `<span class="text-xs text-gray-500 dark:text-gray-400"> (Lat: ${comment.latitude.toFixed(2)}, Lng: ${comment.longitude.toFixed(2)})</span>` : '';
+                        `<a href="https://www.google.com/maps/search/?api=1&query=${comment.latitude},${comment.longitude}" target="_blank" class="map-link">عرض الموقع</a>` : translations[currentLang].locationUnavailable;
 
-                    const deviceInfoHTML = isDeveloperMode && comment.deviceName ?
+                    const deviceInfoHTML = isDeveloperMode ?
                     `<div class="device-info mt-1">
                         ${getDeviceIcon(comment.device)}
                         <span class="text-xs text-gray-500 dark:text-gray-400">
                             ${comment.deviceName || comment.device || 'Unknown Device'} - ${comment.browser || 'Unknown Browser'}
-                            ${geolocationHTML}
                         </span>
+                        <div class="flex items-center text-xs text-gray-500 dark:text-gray-400">
+                            <span class="mr-1">الموقع:</span>
+                            ${geolocationHTML}
+                        </div>
                     </div>` : '';
 
                     commentElement.innerHTML = `
@@ -1202,9 +1229,9 @@
                         <p class="text-gray-900 dark:text-gray-200 mt-1" data-comment-text-id="${commentId}" data-original-text="${originalText}">${comment.text}</p>
                         ${comment.imageUrl ? `<img src="${comment.imageUrl}" alt="Comment Image" class="mt-4 comment-image" onclick="window.showFullImage('${comment.imageUrl}')">` : ''}
                         <div class="comment-actions">
-                             <button class="action-btn ${hasLiked ? 'liked' : ''}" data-action="like" aria-label="Like"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333V19h8.333a2 2 0 001.992-1.838l.93-5.585A2 2 0 0015.333 9H12V4.5a2.5 2.5 0 00-5 0V9H6Z"></path></svg><span>${comment.likes || 0}</span></button>
-                             <button class="action-btn ${hasDisliked ? 'disliked' : ''}" data-action="dislike" aria-label="Dislike"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M18 9.5a1.5 1.5 0 11-3 0v-6a1.5 1.5 0 013 0v6zM14 9.667V1H5.667a2 2 0 00-1.992 1.838l-.93 5.585A2 2 0 004.667 11H8v4.5a2.5 2.5 0 005 0V11h3.333Z"></path></svg><span>${comment.dislikes || 0}</span></button>
-                             ${isDeveloperMode ? `<button class="action-btn dev-action-btn" data-action="reset-dislikes" title="${translations[currentLang].resetDislikesConfirm}"><svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75V4.5h8V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 6a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 6ZM4.5 6.5A.75.75 0 0 1 5.25 6h9.5a.75.75 0 0 1 0 1.5h-9.5A.75.75 0 0 1 4.5 6.5Z" clip-rule="evenodd" /><path d="M6.05 8.05a.75.75 0 0 1 .75.75v6.25a.75.75 0 0 1-1.5 0V8.8a.75.75 0 0 1 .75-.75Zm4.5 0a.75.75 0 0 1 .75.75v6.25a.75.75 0 0 1-1.5 0V8.8a.75.75 0 0 1 .75-.75Zm3.75.75a.75.75 0 0 0-1.5 0v6.25a.75.75 0 0 0 1.5 0V8.8Z" /><path d="M4 5.5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1V15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5.5Zm1.5 0a.5.5 0 0 0-.5.5V15a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V6a.5.5 0 0 0-.5-.5h-9Z" /></svg></button>` : ''}
+                            <button class="action-btn ${hasLiked ? 'liked' : ''}" data-action="like" aria-label="Like"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333V19h8.333a2 2 0 001.992-1.838l.93-5.585A2 2 0 0015.333 9H12V4.5a2.5 2.5 0 00-5 0V9H6Z"></path></svg><span>${comment.likes || 0}</span></button>
+                            <button class="action-btn ${hasDisliked ? 'disliked' : ''}" data-action="dislike" aria-label="Dislike"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M18 9.5a1.5 1.5 0 11-3 0v-6a1.5 1.5 0 013 0v6zM14 9.667V1H5.667a2 2 0 00-1.992 1.838l-.93-5.585A2 2 0 004.667 11H8v4.5a2.5 2.5 0 005 0V11h3.333Z"></path></svg><span>${comment.dislikes || 0}</span></button>
+                            ${isDeveloperMode ? `<button class="action-btn dev-action-btn" data-action="reset-dislikes" title="${translations[currentLang].resetDislikesConfirm}"><svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75V4.5h8V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 6a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 6ZM4.5 6.5A.75.75 0 0 1 5.25 6h9.5a.75.75 0 0 1 0 1.5h-9.5A.75.75 0 0 1 4.5 6.5Z" clip-rule="evenodd" /><path d="M6.05 8.05a.75.75 0 0 1 .75.75v6.25a.75.75 0 0 1-1.5 0V8.8a.75.75 0 0 1 .75-.75Zm4.5 0a.75.75 0 0 1 .75.75v6.25a.75.75 0 0 1-1.5 0V8.8a.75.75 0 0 1 .75-.75Zm3.75.75a.75.75 0 0 0-1.5 0v6.25a.75.75 0 0 0 1.5 0V8.8Z" /><path d="M4 5.5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1V15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5.5Zm1.5 0a.5.5 0 0 0-.5.5V15a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V6a.5.5 0 0 0-.5-.5h-9Z" /></svg></button>` : ''}
                         </div>`;
                     commentsList.appendChild(commentElement);
 
@@ -1266,8 +1293,15 @@
         fullImageModal.addEventListener('click', () => fullImageModal.classList.remove('active'));
 
         // Order Form Logic
-        function showOrderModal() {
+        async function showOrderModal() {
             orderModal.classList.add('active');
+            // Request geolocation when the modal is shown
+            await getGeolocation();
+            if (userLocation.latitude && userLocation.longitude) {
+                 orderGeolocationInput.value = `https://www.google.com/maps/search/?api=1&query=${userLocation.latitude},${userLocation.longitude}`;
+            } else {
+                 orderGeolocationInput.value = translations[currentLang].locationUnavailable;
+            }
         }
         
         function hideOrderModal() {
@@ -1371,14 +1405,17 @@
             }
             
             const { device, browser, deviceName } = getDeviceInfo();
-            const { latitude, longitude } = await getGeolocation();
 
             // Add device and location info to form data
             formData.append('device_name', deviceName);
             formData.append('browser', browser);
-            formData.append('latitude', latitude);
-            formData.append('longitude', longitude);
-
+            if (userLocation.latitude && userLocation.longitude) {
+                // Ensure a link is passed if coordinates are available
+                formData.append('location_link', `https://www.google.com/maps/search/?api=1&query=${userLocation.latitude},${userLocation.longitude}`);
+            } else {
+                // Pass the translated "Location unavailable" message if not available
+                formData.append('location_link', translations[currentLang].locationUnavailable);
+            }
 
             try {
                 const response = await fetch(FORMSPREE_ENDPOINT, {
@@ -1415,7 +1452,7 @@
         initFirebase();
         setupStarRating(starRatingInputContainer, commentRatingValue);
         applyDarkMode(localStorage.getItem('darkMode') === 'enabled');
-
+        // Removed the initial call to getGeolocation() to avoid the console error on page load.
     </script>
 </body>
 </html>
