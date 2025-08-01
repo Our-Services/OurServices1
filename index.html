@@ -8,537 +8,128 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* Light Mode Styles (Default) */
-        body {
-            font-family: 'Inter', sans-serif; /* Fallback to system sans-serif for Arabic if Inter doesn't support it fully */
-            background-color: #f8fafc; /* Light blue-gray background */
-            color: #334155; /* Dark slate gray text */
-            scroll-behavior: smooth; /* Smooth scrolling for anchor links */
-            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for dark mode */
-        }
-        .hero-section {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); /* Gradient background */
-            color: white;
-            padding: 4rem 1rem;
-            border-bottom-left-radius: 50px;
-            border-bottom-right-radius: 50px;
-        }
-        .section-heading {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 2rem;
-            font-size: 2.25rem; /* text-4xl */
-            font-weight: 700; /* font-bold */
-            color: #1e293b; /* Darker text for headings */
-        }
-        .section-heading::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            right: 0; /* Fixed for RTL */
-            width: 70%;
-            height: 4px;
-            background-color: #6366f1; /* Primary color underline */
-            border-radius: 2px;
-        }
-        .card {
-            background-color: white;
-            border-radius: 1.5rem; /* rounded-3xl */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-xl */
-            padding: 2rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        .btn-primary {
-            background-color: #6366f1; /* Primary color */
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.75rem; /* rounded-xl */
-            font-weight: 600;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-        .btn-primary:hover {
-            background-color: #4f46e5; /* Darker primary on hover */
-            transform: translateY(-2px);
-        }
-        .contact-link {
-            display: inline-flex;
-            align-items: center;
-            background-color: #10b981; /* Green for WhatsApp */
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-        .contact-link:hover {
-            background-color: #059669; /* Darker green on hover */
-            transform: translateY(-2px);
-        }
-        .whatsapp-icon {
-            width: 24px;
-            height: 24px;
-            margin-left: 0.5rem; /* For RTL */
-        }
-        .telegram-icon {
-            width: 24px;
-            height: 24px;
-            margin-left: 0.5rem;
-            fill: white;
-        }
-        /* Navigation specific styles */
-        .navbar {
-            background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white */
-            backdrop-filter: blur(10px); /* Frosted glass effect */
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            border-bottom-left-radius: 1rem;
-            border-bottom-right-radius: 1rem;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .nav-link {
-            color: #334155;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        .nav-link:hover {
-            background-color: #e2e8f0; /* Light gray on hover */
-            color: #1e293b;
-        }
-        .hamburger-icon {
-            display: none; /* Hidden by default on larger screens */
-            cursor: pointer;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 30px;
-            height: 20px;
-        }
-        .hamburger-icon span {
-            display: block;
-            width: 100%;
-            height: 3px;
-            background-color: #334155;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-        .hamburger-icon.open span:nth-child(1) {
-            transform: translateY(8px) rotate(45deg);
-        }
-        .hamburger-icon.open span:nth-child(2) {
-            opacity: 0;
-        }
-        .hamburger-icon.open span:nth-child(3) {
-            transform: translateY(-9px) rotate(-45deg);
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #334155; scroll-behavior: smooth; transition: background-color 0.3s ease, color 0.3s ease; }
+        .hero-section { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white; padding: 4rem 1rem; border-bottom-left-radius: 50px; border-bottom-right-radius: 50px; }
+        .section-heading { position: relative; display: inline-block; margin-bottom: 2rem; font-size: 2.25rem; font-weight: 700; color: #1e293b; }
+        .section-heading::after { content: ''; position: absolute; bottom: -8px; right: 0; width: 70%; height: 4px; background-color: #6366f1; border-radius: 2px; }
+        .card { background-color: white; border-radius: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); padding: 2rem; transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .btn-primary { background-color: #6366f1; color: white; padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 600; transition: background-color 0.3s ease, transform 0.2s ease; }
+        .btn-primary:hover { background-color: #4f46e5; transform: translateY(-2px); }
+        .contact-link { display: inline-flex; align-items: center; background-color: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 600; transition: background-color 0.3s ease, transform 0.2s ease; }
+        .contact-link:hover { background-color: #059669; transform: translateY(-2px); }
+        .whatsapp-icon { width: 24px; height: 24px; margin-left: 0.5rem; }
+        .telegram-icon { width: 24px; height: 24px; margin-left: 0.5rem; fill: white; }
+        .navbar { background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); border-bottom-left-radius: 1rem; border-bottom-right-radius: 1rem; transition: background-color 0.3s ease, box-shadow 0.3s ease; }
+        .nav-link { color: #334155; font-weight: 500; padding: 0.5rem 1rem; border-radius: 0.5rem; transition: background-color 0.3s ease, color 0.3s ease; }
+        .nav-link:hover { background-color: #e2e8f0; color: #1e293b; }
+        .hamburger-icon { display: none; cursor: pointer; flex-direction: column; justify-content: space-between; width: 30px; height: 20px; }
+        .hamburger-icon span { display: block; width: 100%; height: 3px; background-color: #334155; border-radius: 2px; transition: all 0.3s ease; }
+        .hamburger-icon.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .hamburger-icon.open span:nth-child(2) { opacity: 0; }
+        .hamburger-icon.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
         /* Dark Mode Styles */
-        body.dark {
-            background-color: #1a202c; /* Dark background */
-            color: #e2e8f0; /* Light text */
-        }
-        body.dark .navbar {
-            background-color: rgba(26, 32, 44, 0.95); /* Darker transparent navbar */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-        body.dark .nav-link {
-            color: #cbd5e0; /* Lighter links in dark mode */
-        }
-        body.dark .nav-link:hover {
-            background-color: #2d3748; /* Darker gray on hover */
-            color: #f7fafc;
-        }
-        body.dark .section-heading {
-            color: #f7fafc; /* White heading in dark mode */
-        }
-        body.dark .section-heading::after {
-            background-color: #8b5cf6; /* Purple underline in dark mode */
-        }
-        body.dark .card {
-            background-color: #2d3748; /* Darker card background */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
-            color: #cbd5e0; /* Light text in cards */
-        }
-        body.dark .card h3 {
-            color: #a78bfa; /* Lighter indigo for card headings */
-        }
-        body.dark .card p {
-            color: #cbd5e0; /* Lighter gray for card text */
-        }
-        body.dark .hamburger-icon span {
-            background-color: #e2e8f0; /* Lighter hamburger icon in dark mode */
-        }
-        body.dark .nav-links-container {
-            background-color: rgba(26, 32, 44, 0.98); /* Darker mobile menu */
-        }
-        body.dark .hero-section .bg-yellow-400 {
-            background-color: #f6ad55; /* Adjusted yellow for dark mode */
-            color: #1a202c;
-        }
-        /* Specific section background overrides for dark mode */
-        body.dark #about-us {
-            background-color: #2d3748; /* Darker background for about us section */
-        }
-        body.dark #contact {
-            background-color: #1a202c; /* Darker background for contact section */
-        }
-        body.dark #comments {
-            background-color: #1a202c; /* Darker background for comments section */
-        }
-        body.dark #darkModeToggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-            transition: background-color 0.3s ease;
-        }
-        body.dark #darkModeToggle:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        .dark-mode-icon {
-            width: 24px;
-            height: 24px;
-            color: #334155; /* Icon color in light mode */
-        }
-        body.dark .dark-mode-icon {
-            color: #f7fafc; /* Icon color in dark mode */
-        }
+        body.dark { background-color: #1a202c; color: #e2e8f0; }
+        body.dark .navbar { background-color: rgba(26, 32, 44, 0.95); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
+        body.dark .nav-link { color: #cbd5e0; }
+        body.dark .nav-link:hover { background-color: #2d3748; color: #f7fafc; }
+        body.dark .section-heading { color: #f7fafc; }
+        body.dark .section-heading::after { background-color: #8b5cf6; }
+        body.dark .card { background-color: #2d3748; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1); color: #cbd5e0; }
+        body.dark .card h3 { color: #a78bfa; }
+        body.dark .card p { color: #cbd5e0; }
+        body.dark .hamburger-icon span { background-color: #e2e8f0; }
+        body.dark .nav-links-container { background-color: rgba(26, 32, 44, 0.98); }
+        body.dark .hero-section .bg-yellow-400 { background-color: #f6ad55; color: #1a202c; }
+        body.dark #about-us { background-color: #2d3748; }
+        body.dark #contact { background-color: #1a202c; }
+        body.dark #comments { background-color: #1a202c; }
+        body.dark #darkModeToggle { background: none; border: none; cursor: pointer; padding: 0.5rem; border-radius: 50%; transition: background-color 0.3s ease; }
+        body.dark #darkModeToggle:hover { background-color: rgba(255, 255, 255, 0.1); }
+        .dark-mode-icon { width: 24px; height: 24px; color: #334155; }
+        body.dark .dark-mode-icon { color: #f7fafc; }
 
         /* Language Dropdown Styles */
-        .language-dropdown-container {
-            position: relative;
-            display: inline-block;
-        }
-        .language-dropdown-button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-            transition: background-color 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 500;
-            color: #334155;
-        }
-        .language-dropdown-button:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-        body.dark .language-dropdown-button {
-            color: #e2e8f0;
-        }
-        body.dark .language-dropdown-button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        .language-icon {
-            width: 24px;
-            height: 24px;
-            margin-right: 0.25rem; /* Space between icon and text */
-        }
-        .language-dropdown-menu {
-            position: absolute;
-            top: 100%; /* Position below the button */
-            right: 0; /* Align to the right */
-            background-color: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            min-width: 120px;
-            z-index: 1001; /* Above navbar */
-            overflow: hidden; /* For rounded corners */
-            display: none; /* Hidden by default */
-        }
-        body.dark .language-dropdown-menu {
-            background-color: #2d3748;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-        .language-dropdown-menu.active {
-            display: block;
-        }
-        .language-dropdown-menu li {
-            padding: 0.75rem 1rem;
-            cursor: pointer;
-            color: #334155;
-            transition: background-color 0.2s ease;
-        }
-        .language-dropdown-menu li:hover {
-            background-color: #e2e8f0;
-        }
-        body.dark .language-dropdown-menu li {
-            color: #e2e8f0;
-        }
-        body.dark .language-dropdown-menu li:hover {
-            background-color: #4a5568;
-        }
+        .language-dropdown-container { position: relative; display: inline-block; }
+        .language-dropdown-button { background: none; border: none; cursor: pointer; padding: 0.5rem; border-radius: 50%; transition: background-color 0.3s ease; display: flex; align-items: center; justify-content: center; font-weight: 500; color: #334155; }
+        .language-dropdown-button:hover { background-color: rgba(0, 0, 0, 0.05); }
+        body.dark .language-dropdown-button { color: #e2e8f0; }
+        body.dark .language-dropdown-button:hover { background-color: rgba(255, 255, 255, 0.1); }
+        .language-icon { width: 24px; height: 24px; margin-right: 0.25rem; }
+        .language-dropdown-menu { position: absolute; top: 100%; right: 0; background-color: white; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); min-width: 120px; z-index: 1001; overflow: hidden; display: none; }
+        body.dark .language-dropdown-menu { background-color: #2d3748; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); }
+        .language-dropdown-menu.active { display: block; }
+        .language-dropdown-menu li { padding: 0.75rem 1rem; cursor: pointer; color: #334155; transition: background-color 0.2s ease; }
+        .language-dropdown-menu li:hover { background-color: #e2e8f0; }
+        body.dark .language-dropdown-menu li { color: #e2e8f0; }
+        body.dark .language-dropdown-menu li:hover { background-color: #4a5568; }
 
-        /* Comment Translate Button */
-        .translate-btn {
-            background-color: #6366f1; /* Primary color */
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 0.5rem;
-            font-size: 0.75rem; /* text-xs */
-            font-weight: 600;
-            transition: background-color 0.2s ease;
-            cursor: pointer;
-            border: none;
-        }
-        .translate-btn:hover {
-            background-color: #4f46e5;
-        }
-        .translate-btn-container {
-            margin-left: 0.5rem;
-        }
-        body[dir="rtl"] .translate-btn-container {
-            margin-left: 0;
-            margin-right: 0.5rem;
-        }
-        .comment-header-actions {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        /* Custom Alert Modal Styles */
-        #customAlertModal {
-            transition: opacity 0.3s ease;
-        }
-        #customAlertModal.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        #customAlertModal:not(.hidden) {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        #customAlertModal .modal-buttons {
-            display: flex;
-            flex-direction: column; /* Changed to column to stack input and button */
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        #customAlertModal .modal-buttons button {
-            padding: 0.5rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-        #customAlertModal .modal-buttons .confirm-btn {
-            background-color: #ef4444; /* Red for delete */
-            color: white;
-        }
-        #customAlertModal .modal-buttons .confirm-btn:hover {
-            background-color: #dc2626;
-        }
-        #customAlertModal .modal-buttons .cancel-btn {
-            background-color: #cbd5e0; /* Gray for cancel */
-            color: #334155;
-        }
-        body.dark #customAlertModal .modal-buttons .cancel-btn {
-            background-color: #4a5568;
-            color: #e2e8f0;
-        }
-        body.dark #customAlertModal .modal-buttons .cancel-btn:hover {
-            background-color: #94a3b8;
-        }
-        body.dark #customAlertModal .modal-buttons .cancel-btn:hover {
-            background-color: #64748b;
-        }
-
-
-        /* Specific overrides for comments section background */
-        #comments {
-            background-color: white; /* Default to white in light mode */
-        }
-        body.dark #comments {
-            background-color: #1a202c; /* Darker background for comments section in dark mode */
-        }
-
-        /* Styling for individual comment cards within commentsList */
-        #commentsList > div {
-            background-color: white; /* Explicitly white in light mode */
-            color: #1a202c; /* Explicitly very dark text in light mode (gray-900 equivalent) */
-            transition: background-color 0.3s ease, color 0.3s ease; /* Add transition for smoothness */
-        }
-        body.dark #commentsList > div {
-            background-color: #2d3748; /* Darker card background in dark mode */
-            color: #e2e8f0; /* Light text in dark mode */
-        }
-
-        /* Styling for the comment text itself within the card */
-        #commentsList > div p.text-gray-900 { /* This targets the specific paragraph for comment text */
-            color: #1a202c; /* Ensure very dark text in light mode */
-        }
-        body.dark #commentsList > div p.dark\:text-gray-200 {
-            color: #e2e8f0; /* Ensure light text in dark mode */
-        }
-       
-        /* Custom file input styling */
-        .custom-file-input {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-            cursor: pointer;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.75rem; /* rounded-xl */
-            font-weight: 600;
-            background-color: #f8fafc;
-            color: #334155;
-            border: 1px solid #e2e8f0;
-            transition: background-color 0.2s ease, border-color 0.2s ease; /* Modified */
-            text-align: center;
-        }
-        .custom-file-input:hover {
-            background-color: #e2e8f0;
-            border-color: #cbd5e0; /* Modified */
-        }
-        .custom-file-input input[type="file"] {
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            cursor: pointer;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* ✨ NEW: Custom file input styling for dark mode */
-        body.dark .custom-file-input {
-            background-color: #334155; /* slate-700 */
-            color: #e2e8f0; /* slate-200 */
-            border-color: #475569; /* slate-600 */
-        }
-        body.dark .custom-file-input:hover {
-            background-color: #4a5568; /* slate-600 */
-            border-color: #64748b; /* slate-500 */
-        }
-
-        /* NEW: Input and Textarea specific styles for light mode */
-        #comments input[type="text"],
-        #comments textarea,
-        #developerPasswordInput { /* Added developerPasswordInput */
-            background-color: #f6f7f8; /* Ensure white background in light mode */
-            color: #1a202c; /* Dark text color in light mode (gray-900 equivalent) */
-            border-color: #e2e8f0; /* Light border color in light mode (gray-200 equivalent) */
-        }
-        #comments input[type="text"]::placeholder,
-        #comments textarea::placeholder,
-        #developerPasswordInput::placeholder { /* Added developerPasswordInput */
-            color: #64748b; /* Placeholder color in light mode (slate-500) */
-        }
-
-        /* NEW: Input and Textarea specific styles for dark mode */
-        body.dark #comments input[type="text"],
-        body.dark #comments textarea,
-        body.dark #developerPasswordInput { /* Added developerPasswordInput */
-            background-color: #334155; /* Dark background for inputs in dark mode (slate-700) */
-            color: #e2e8f0; /* Light text color in dark mode inputs */
-            border-color: #475569; /* Dark border color in dark mode inputs (slate-600) */
-        }
-        body.dark #comments input[type="text"]::placeholder,
-        body.dark #comments textarea::placeholder,
-        body.dark #developerPasswordInput::placeholder { /* Added developerPasswordInput */
-            color: #94a3b8; /* Placeholder color in dark mode (slate-400) */
-        }
-        /* Styling for the image preview in the comment form */
-        #imagePreview {
-            max-width: 100px;
-            max-height: 100px;
-            margin-top: 1rem;
-            border-radius: 0.5rem;
-            object-fit: cover;
-        }
-
-
-        /* Mobile menu styles */
+        /* Comment & UI Styles */
+        .translate-btn { background-color: #6366f1; color: white; padding: 0.25rem 0.75rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; transition: background-color 0.2s ease; cursor: pointer; border: none; }
+        .translate-btn:hover { background-color: #4f46e5; }
+        #customAlertModal { transition: opacity 0.3s ease; }
+        #customAlertModal.hidden { opacity: 0; pointer-events: none; }
+        #customAlertModal .modal-buttons { display: flex; flex-direction: column; justify-content: center; gap: 1rem; margin-top: 1rem; }
+        #customAlertModal .modal-buttons button { padding: 0.5rem 1.5rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; transition: background-color 0.2s ease; }
+        #customAlertModal .modal-buttons .confirm-btn { background-color: #ef4444; color: white; }
+        #customAlertModal .modal-buttons .confirm-btn:hover { background-color: #dc2626; }
+        #customAlertModal .modal-buttons .cancel-btn { background-color: #cbd5e0; color: #334155; }
+        body.dark #customAlertModal .modal-buttons .cancel-btn { background-color: #4a5568; color: #e2e8f0; }
+        body.dark #customAlertModal .modal-buttons .cancel-btn:hover { background-color: #64748b; }
+        #commentsList > div { background-color: white; color: #1a202c; transition: background-color 0.3s ease, color 0.3s ease; }
+        body.dark #commentsList > div { background-color: #2d3748; color: #e2e8f0; }
+        .custom-file-input { position: relative; overflow: hidden; display: inline-block; cursor: pointer; padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 600; background-color: #f8fafc; color: #334155; border: 1px solid #e2e8f0; transition: background-color 0.2s ease, border-color 0.2s ease; text-align: center; }
+        .custom-file-input:hover { background-color: #e2e8f0; border-color: #cbd5e0; }
+        .custom-file-input input[type="file"] { position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+        body.dark .custom-file-input { background-color: #334155; color: #e2e8f0; border-color: #475569; }
+        body.dark .custom-file-input:hover { background-color: #4a5568; border-color: #64748b; }
+        #imagePreview { max-width: 100px; max-height: 100px; margin-top: 1rem; border-radius: 0.5rem; object-fit: cover; }
+        #comments input[type="text"], #comments textarea, #developerPasswordInput { background-color: #f6f7f8; color: #1a202c; border-color: #e2e8f0; }
+        #comments input[type="text"]::placeholder, #comments textarea::placeholder, #developerPasswordInput::placeholder { color: #64748b; }
+        body.dark #comments input[type="text"], body.dark #comments textarea, body.dark #developerPasswordInput { background-color: #334155; color: #e2e8f0; border-color: #475569; }
+        body.dark #comments input[type="text"]::placeholder, body.dark #comments textarea::placeholder, body.dark #developerPasswordInput::placeholder { color: #94a3b8; }
+        
         @media (max-width: 767px) {
-            .hamburger-icon {
-                display: flex; /* Show hamburger on small screens */
-            }
-            .nav-links-container {
-                display: none; /* Hide nav links by default on small screens */
-                flex-direction: column;
-                width: 100%;
-                background-color: rgba(255, 255, 255, 0.98);
-                padding-bottom: 1rem;
-                border-bottom-left-radius: 1rem;
-                border-bottom-right-radius: 1rem;
-            }
-            body.dark .nav-links-container {
-                background-color: rgba(26, 32, 44, 0.98); /* Ensure mobile menu is dark in dark mode */
-            }
-            .nav-links-container.open {
-                display: flex; /* Show when open */
-            }
-            .nav-link {
-                padding: 0.75rem 1rem;
-                text-align: center;
-            }
+            .hamburger-icon { display: flex; }
+            .nav-links-container { display: none; flex-direction: column; width: 100%; background-color: rgba(255, 255, 255, 0.98); padding-bottom: 1rem; border-radius: 1rem; }
+            body.dark .nav-links-container { background-color: rgba(26, 32, 44, 0.98); }
+            .nav-links-container.open { display: flex; }
+            .nav-link { padding: 0.75rem 1rem; text-align: center; }
         }
+        
+        #developerModeIndicator { position: fixed; bottom: 4rem; right: 4rem; background-color: #ef4444; color: white; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; z-index: 50; cursor: pointer; transition: opacity 0.3s ease, background-color 0.3s ease; display: none; }
+        body.dark #developerModeIndicator { background-color: #dc2626; }
+        #fullImageModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); display: flex; align-items: center; justify-content: center; z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        #fullImageModal.active { opacity: 1; pointer-events: auto; }
+        #fullImageModal img { max-width: 90%; max-height: 90%; border-radius: 0.5rem; }
+        .comment-image { width: 100px; height: 100px; object-fit: cover; border-radius: 0.5rem; cursor: pointer; transition: transform 0.2s ease; }
+        .comment-image:hover { transform: scale(1.05); }
 
-        /* Developer Mode Indicator Styles */
-        #developerModeIndicator {
-            position: fixed;
-            bottom: 4rem; /* Position above the dark mode indicator */
-            right: 4rem;
-            background-color: #ef4444; /* Red background for developer mode */
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px; /* Full rounded */
-            font-size: 0.75rem; /* text-xs */
-            font-weight: 600; /* font-semibold */
-            z-index: 50; /* Same as modeIndicator */
-            cursor: pointer; /* Indicate clickable */
-            transition: opacity 0.3s ease, background-color 0.3s ease;
-            display: none; /* Hidden by default */
-        }
-        body.dark #developerModeIndicator {
-            background-color: #dc2626; /* Darker red in dark mode */
-        }
-        /* Full-screen image modal */
-        #fullImageModal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        #fullImageModal.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        #fullImageModal img {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 0.5rem;
-        }
-        /* Comment image styling */
-        .comment-image {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-        .comment-image:hover {
-            transform: scale(1.05);
-        }
+        /* Star Rating Styles */
+        .star-rating { display: flex; direction: ltr; align-items: center; gap: 0.125rem; }
+        .star-rating svg { width: 1.25rem; height: 1.25rem; color: #cbd5e0; }
+        .star-rating.interactive svg { cursor: pointer; }
+        .star-rating svg.filled { color: #f59e0b; }
+        body.dark .star-rating svg { color: #4a5568; }
+        body.dark .star-rating svg.filled { color: #f59e0b; }
+        #commentForm .star-rating svg { width: 1.5rem; height: 1.5rem; transition: color 0.2s ease, transform 0.2s ease; }
+        #commentForm .star-rating.interactive svg:hover { color: #f59e0b; transform: scale(1.1); }
+        
+        /* Comment Actions (Like/Dislike) Styles */
+        .comment-actions { display: flex; align-items: center; gap: 1rem; margin-top: 0.75rem; }
+        .action-btn { background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 0.35rem; font-size: 0.875rem; color: #64748b; transition: color 0.2s ease; padding: 0.25rem; border-radius: 9999px; }
+        .action-btn:hover { color: #1e293b; }
+        .action-btn.liked { color: #4f46e5; }
+        .action-btn.disliked { color: #ef4444; }
+        .action-btn svg { width: 1.2rem; height: 1.2rem; }
+        body.dark .action-btn { color: #94a3b8; }
+        body.dark .action-btn:hover { color: #e2e8f0; }
+        body.dark .action-btn.liked { color: #818cf8; }
+        body.dark .action-btn.disliked { color: #f87171; }
+        .dev-action-btn { color: #ef4444; }
+        body.dark .dev-action-btn { color: #f87171; }
+        .dev-action-btn:hover { opacity: 0.7; }
     </style>
 </head>
 <body class="font-sans antialiased">
@@ -546,8 +137,7 @@
     <div id="customAlertModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[2000] hidden">
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
             <p id="customAlertMessage" class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4"></p>
-            <div id="customAlertButtons" class="modal-buttons">
-                </div>
+            <div id="customAlertButtons" class="modal-buttons"></div>
         </div>
     </div>
 
@@ -558,13 +148,10 @@
     <nav class="navbar py-4 px-6">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <a href="#hero" class="text-2xl font-bold text-indigo-700" data-lang-key="siteTitle">خدماتنا</a>
-
             <div class="flex items-center gap-4 sm:gap-6">
                 <div class="language-dropdown-container">
                     <button id="languageDropdownButton" class="language-dropdown-button" aria-label="Toggle language dropdown">
-                        <svg class="language-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1s-1 .45-1 1v3h-1c-.9 0-1.64.58-1.9 1.39-.77-2.31-1.04-4.83-.5-7.44h6.89c.54 2.61.27 5.13-.5 7.44zM12 4.07c3.95.49 7 3.85 7 7.93 0 .62-.08 1.21-.21 1.79L15 9V8c0-1.1-.9-2-2-2H9v-.93c.71-.1 1.45-.17 2.21-.17.76 0 1.5.07 2.21.17z"/>
-                        </svg>
+                        <svg class="language-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1s-1 .45-1 1v3h-1c-.9 0-1.64.58-1.9 1.39-.77-2.31-1.04-4.83-.5-7.44h6.89c.54 2.61.27 5.13-.5 7.44zM12 4.07c3.95.49 7 3.85 7 7.93 0 .62-.08 1.21-.21 1.79L15 9V8c0-1.1-.9-2-2-2H9v-.93c.71-.1 1.45-.17 2.21-.17.76 0 1.5.07 2.21.17z"/></svg>
                         <span id="currentLanguageText">AR</span>
                     </button>
                     <ul id="languageDropdownMenu" class="language-dropdown-menu">
@@ -573,19 +160,10 @@
                         <li data-lang="zh">中文</li>
                     </ul>
                 </div>
-
                 <button id="darkModeToggle" aria-label="Toggle dark mode">
-                    <svg class="dark-mode-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path id="darkModeIconPath" d="M12 3a9 9 0 109 9c0-.46-.04-.92-.12-1.36a5.999 5.999 0 01-8.588-8.588C12.92 3.04 12.46 3 12 3z"/>
-                    </svg>
+                    <svg class="dark-mode-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path id="darkModeIconPath" d="M12 3a9 9 0 109 9c0-.46-.04-.92-.12-1.36a5.999 5.999 0 01-8.588-8.588C12.92 3.04 12.46 3 12 3z"/></svg>
                 </button>
-
-                <div class="hamburger-icon md:hidden" id="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-
+                <div class="hamburger-icon md:hidden" id="hamburger"><span></span><span></span><span></span></div>
                 <div class="nav-links-container hidden md:flex gap-6" id="navLinks">
                     <a href="#hero" class="nav-link" data-lang-key="navHome">الرئيسية</a>
                     <a href="#features" class="nav-link" data-lang-key="navWhyChooseUs">لماذا تختارنا؟</a>
@@ -600,193 +178,115 @@
 
     <header id="hero" class="hero-section text-center">
         <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 leading-tight" data-lang-key="heroTitle">
-                مصمم جميع أنواع المشاريع والمواقع والتصاميم والبحوث والواجبات
-            </h1>
-            <p class="text-2xl sm:text-3xl font-light mb-8">
-                <span class="bg-yellow-400 text-gray-900 px-4 py-2 rounded-lg shadow-lg inline-block transform -rotate-1 skew-x-2" data-lang-key="heroDiscount">
-                    خصم 30% لفترة محدودة على كامل الخدمات
-                </span>
-            </p>
-            <p class="text-lg sm:text-xl font-light mb-8" data-lang-key="heroSubtitle">
-                نقدم لكم حلولاً متكاملة لتلبية جميع احتياجاتكم الأكاديمية والمهنية
-            </p>
-            <a href="#contact" class="btn-primary inline-block text-lg" data-lang-key="heroContactBtn">
-                تواصل معنا الآن
-            </a>
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 leading-tight" data-lang-key="heroTitle">مصمم جميع أنواع المشاريع والمواقع والتصاميم والبحوث والواجبات</h1>
+            <p class="text-2xl sm:text-3xl font-light mb-8"><span class="bg-yellow-400 text-gray-900 px-4 py-2 rounded-lg shadow-lg inline-block transform -rotate-1 skew-x-2" data-lang-key="heroDiscount">خصم 30% لفترة محدودة على كامل الخدمات</span></p>
+            <p class="text-lg sm:text-xl font-light mb-8" data-lang-key="heroSubtitle">نقدم لكم حلولاً متكاملة لتلبية جميع احتياجاتكم الأكاديمية والمهنية</p>
+            <a href="#contact" class="btn-primary inline-block text-lg" data-lang-key="heroContactBtn">تواصل معنا الآن</a>
         </div>
     </header>
 
-    <section id="features" class="py-16 px-4">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="section-heading text-center mb-12" data-lang-key="featuresHeading">لماذا تختارنا؟</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="card text-center">
-                    <div class="text-indigo-600 mb-4">
-                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m1.636 6.364l.707-.707M6 21v-1m6.364-1.636l-.707-.707M12 21h-1m-4.636-1.636l-.707.707M3 12h1m-.707-6.364l.707-.707M12 3v1m-6.364 1.636l-.707-.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2" data-lang-key="feature1Title">تنسيقات شكل رائعة</h3>
-                    <p class="text-gray-600" data-lang-key="feature1Desc">نقدم العديد من التنسيقات الجمالية التي تبرز عملك.</p>
-                </div>
-                <div class="card text-center">
-                    <div class="text-indigo-600 mb-4">
-                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2" data-lang-key="feature2Title">تنسيق كلام احترافي</h3>
-                    <p class="text-gray-600" data-lang-key="feature2Desc">تنسيق دقيق للمحتوى في البحوث والمشاريع.</p>
-                </div>
-                <div class="card text-center">
-                    <div class="text-indigo-600 mb-4">
-                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2" data-lang-key="feature3Title">أكثر من 100 نوع خط</h3>
-                    <p class="text-gray-600" data-lang-key="feature3Desc">اختر من مجموعة واسعة من الخطوط المميزة.</p>
-                </div>
-                <div class="card text-center">
-                    <div class="text-indigo-600 mb-4">
-                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m-4 8h4m10-8h4m-4 8h4M7 12h10l4-8H3l4 8zm0 0v8a2 2 0 002 2h6a2 2 0 002-2v-8m-12 4h.01M17 12h.01"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2" data-lang-key="feature4Title">عروض تقديمية مميزة</h3>
-                    <p class="text-gray-600" data-lang-key="feature4Desc">تصميم عروض بوربوينت جذابة ومبتكرة.</p>
+    <main>
+        <section id="features" class="py-16 px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="section-heading text-center mb-12" data-lang-key="featuresHeading">لماذا تختارنا؟</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m1.636 6.364l.707-.707M6 21v-1m6.364-1.636l-.707-.707M12 21h-1m-4.636-1.636l-.707.707M3 12h1m-.707-6.364l.707-.707M12 3v1m-6.364 1.636l-.707-.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature1Title">تنسيقات شكل رائعة</h3><p class="text-gray-600" data-lang-key="feature1Desc">نقدم العديد من التنسيقات الجمالية التي تبرز عملك.</p></div>
+                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature2Title">تنسيق كلام احترافي</h3><p class="text-gray-600" data-lang-key="feature2Desc">تنسيق دقيق للمحتوى في البحوث والمشاريع.</p></div>
+                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature3Title">أكثر من 100 نوع خط</h3><p class="text-gray-600" data-lang-key="feature3Desc">اختر من مجموعة واسعة من الخطوط المميزة.</p></div>
+                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m-4 8h4m10-8h4m-4 8h4M7 12h10l4-8H3l4 8zm0 0v8a2 2 0 002 2h6a2 2 0 002-2v-8m-12 4h.01M17 12h.01"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature4Title">عروض تقديمية مميزة</h3><p class="text-gray-600" data-lang-key="feature4Desc">تصميم عروض بوربوينت جذابة ومبتكرة.</p></div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="about-us" class="py-16 px-4 bg-white">
-        <div class="max-w-6xl mx-auto text-center">
-            <h2 class="section-heading mb-12" data-lang-key="aboutUsHeading">من نحن؟</h2>
-            <div class="card p-8 md:p-12">
-                <p class="text-lg md:text-xl leading-relaxed text-gray-700" data-lang-key="aboutUsParagraph1">
-                    نحن فريق متقدم من خريجي جامعة UCSI الماليزية، نجمع بين المعرفة الأكاديمية العميقة والخبرة العملية الواسعة في تصميم وتنفيذ العديد من المشاريع الكبيرة والصغيرة.
-                </p>
-                <p class="text-lg md:text-xl leading-relaxed text-gray-700 mt-4" data-lang-key="aboutUsParagraph2">
-                    نلتزم بتقديم خدمات عالية الجودة بأسعار تنافسية للغاية، مع التركيز الدائم على تحقيق رضا العميل كشعارنا الأول والأخير ✨.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <section id="services" class="py-16 px-4">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="section-heading text-center mb-12" data-lang-key="servicesHeading">ماذا نقدم؟</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="card">
-                    <h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service1Title">تصميم ثلاثي الأبعاد</h3>
-                    <p class="text-gray-600" data-lang-key="service1Desc">تصميم جميع أنواع القطع ثلاثية الأبعاد على برامج الأوتوكاد وبرامج الطباعة ثلاثية الأبعاد بجميع صيغ الملفات القابلة للطباعة.</p>
-                </div>
-                <div class="card">
-                    <h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service2Title">عروض تقديمية (بوربوينت)</h3>
-                    <p class="text-gray-600" data-lang-key="service2Desc">تصميم عروض تقديمية على البوربوينت مع كامل التنسيق وإضافة الصور والحركات المرئية.</p>
-                </div>
-                <div class="card">
-                    <h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service3Title">تنسيق ملفات إكسل</h3>
-                    <p class="text-gray-600" data-lang-key="service3Desc">تصميم وتعديل وتنسيق ملفات إكسل باحترافية عالية.</p>
-                </div>
-                <div class="card">
-                    <h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service4Title">تصاميم هندسية ومخططات</h3>
-                    <p class="text-gray-600" data-lang-key="service4Desc">تصاميم هندسية، مخططات، كهرباء، وغيرها من الأعمال الهندسية المتخصصة.</p>
-                </div>
-                <div class="card">
-                    <h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service5Title">كتابة وتنسيق تقارير</h3>
-                    <p class="text-gray-600" data-lang-key="service5Desc">كتابة وتنسيق التقارير على برنامج الوورد بجودة ودقة عالية.</p>
-                </div>
-                <div class="card">
-                    <h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service6Title">تصميم وتعديل فيديوهات وصور</h3>
-                    <p class="text-gray-600" data-lang-key="service6Desc">تصميم وتعديل الفيديوهات والصور بجودة عالية لتناسب جميع احتياجاتكم.</p>
-                </div>
-                <div class="card lg:col-span-3">
-                    <h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service7Title">برمجة وتطوير مواقع الويب</h3>
-                    <p class="text-gray-600" data-lang-key="service7Desc">برمجة مواقع ويب تفاعلية وجمالية باستخدام لغة JavaScript وتنسيق الشكل باستخدام CSS، مع إضافة الموقع على سيرفر وإنشاء رابط خاص به.</p>
+        <section id="about-us" class="py-16 px-4 bg-white">
+            <div class="max-w-6xl mx-auto text-center">
+                <h2 class="section-heading mb-12" data-lang-key="aboutUsHeading">من نحن؟</h2>
+                <div class="card p-8 md:p-12">
+                    <p class="text-lg md:text-xl leading-relaxed text-gray-700" data-lang-key="aboutUsParagraph1">نحن فريق متقدم من خريجي جامعة UCSI الماليزية، نجمع بين المعرفة الأكاديمية العميقة والخبرة العملية الواسعة في تصميم وتنفيذ العديد من المشاريع الكبيرة والصغيرة.</p>
+                    <p class="text-lg md:text-xl leading-relaxed text-gray-700 mt-4" data-lang-key="aboutUsParagraph2">نلتزم بتقديم خدمات عالية الجودة بأسعار تنافسية للغاية، مع التركيز الدائم على تحقيق رضا العميل كشعارنا الأول والأخير ✨.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="contact" class="py-16 px-4 bg-gray-100">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="section-heading mb-12" data-lang-key="contactHeading">للتواصل معنا</h2>
-            <p class="text-lg md:text-xl mb-8" data-lang-key="contactSubtitle">
-                يسعدنا استقبال استفساراتكم وطلباتكم عبر وسائل التواصل التالية:
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
-                <a href="https://wa.me/966500900329" target="_blank" class="contact-link">
-                    <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.58 15.36 3.42 16.92L2.06 22L7.3 20.64C8.86 21.49 10.56 21.94 12.29 21.94H12.04C17.5 21.94 21.95 17.49 21.95 12.04C21.95 6.58 17.5 2 12.04 2ZM17.29 15.5L16.4 17.46C16.14 17.97 15.54 18.15 15.03 17.89C13.97 17.34 12.78 16.71 11.66 15.93C10.27 14.96 9.17 13.82 8.21 12.43C7.43 11.31 6.8 10.12 6.25 9.06C5.99 8.55 6.17 7.95 6.68 7.69L8.64 6.8C9.15 6.54 9.75 6.72 10.01 7.23L10.66 8.59C10.92 9.1 10.74 9.7 10.23 9.96L9.62 10.27C9.28 10.45 9.16 10.86 9.34 11.2C9.89 12.26 10.74 13.11 11.8 13.66C12.14 13.84 12.55 13.72 12.73 13.38L13.04 12.77C13.3 12.26 13.9 12.08 14.41 12.34L15.77 12.99C16.28 13.25 16.46 13.85 16.2 14.36L15.5 15.5ZM12.04 4C16.46 4 20.04 7.58 20.04 12.04C20.04 16.46 16.46 20.04 12.04 20.04C10.61 20.04 9.25 19.68 8.05 18.99L7.66 18.77L4.69 19.53L5.45 16.56L5.23 16.17C4.54 14.97 4.18 13.61 4.18 12.04C4.18 7.58 7.76 4 12.04 4Z"/>
-                    </svg>
-                    <span data-lang-key="whatsappNumberKSA">0500900329 داخل المملكة</span>
-                </a>
-                <a href="https://wa.me/60163340537" target="_blank" class="contact-link">
-                    <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12.04 2C6.58 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1s-1 .45-1 1v3h-1c-.9 0-1.64.58-1.9 1.39-.77-2.31-1.04-4.83-.5-7.44h6.89c.54 2.61.27 5.13-.5 7.44zM12 4.07c3.95.49 7 3.85 7 7.93 0 .62-.08 1.21-.21 1.79L15 9V8c0-1.1-.9-2-2-2H9v-.93c.71-.1 1.45-.17 2.21-.17.76 0 1.5.07 2.21.17z"/>
-                    </svg>
-                    <span data-lang-key="whatsappNumberOutsideKSA">+60163340537 خارج المملكة</span>
-                </a>
-                <a href="https://t.me/AHMADxx41" target="_blank" class="contact-link bg-blue-500 hover:bg-blue-600">
-                    <svg class="telegram-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.35 7.6l-2.45 7.42c-.22.68-.83.92-1.39.63l-2.73-2.1c-.24-.19-.48-.2-.72-.01l-1.35 1.04c-.3.23-.74.07-.82-.3l-.9-4.22c-.09-.43.14-.86.53-1.02l9.08-3.41c.42-.16.85.16.85.6v.01c-.01.35-.13.6-.33.72zm-4.38 5.75l.95-.73c.12-.1.29-.1.41 0l2.36 1.83c.1.08.13.23.07.35l-.83.74c-.08.07-.19.1-.3.07l-2.5-1.92c-.1-.08-.13-.23-.07-.35zm1.53-2.85l-4.52 3.49-1.96-1.51c-.1-.08-.24-.05-.32.06l-.72.93c-.08.1-.06.26.04.34l2.12 1.63c.1.08.24.05.32-.06l5.36-4.13c.1-.08.06-.23-.04-.32l-1.22-1.24c-.11-.11-.27-.11-.38 0z"/>
-                    </svg>
-                    <span data-lang-key="telegramContact">التواصل عبر التلجرام</span>
-                </a>
+        <section id="services" class="py-16 px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="section-heading text-center mb-12" data-lang-key="servicesHeading">ماذا نقدم؟</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service1Title">تصميم ثلاثي الأبعاد</h3><p class="text-gray-600" data-lang-key="service1Desc">تصميم جميع أنواع القطع ثلاثية الأبعاد على برامج الأوتوكاد وبرامج الطباعة ثلاثية الأبعاد بجميع صيغ الملفات القابلة للطباعة.</p></div>
+                    <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service2Title">عروض تقديمية (بوربوينت)</h3><p class="text-gray-600" data-lang-key="service2Desc">تصميم عروض تقديمية على البوربوينت مع كامل التنسيق وإضافة الصور والحركات المرئية.</p></div>
+                    <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service3Title">تنسيق ملفات إكسل</h3><p class="text-gray-600" data-lang-key="service3Desc">تصميم وتعديل وتنسيق ملفات إكسل باحترافية عالية.</p></div>
+                    <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service4Title">تصاميم هندسية ومخططات</h3><p class="text-gray-600" data-lang-key="service4Desc">تصاميم هندسية، مخططات، كهرباء، وغيرها من الأعمال الهندسية المتخصصة.</p></div>
+                    <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service5Title">كتابة وتنسيق تقارير</h3><p class="text-gray-600" data-lang-key="service5Desc">كتابة وتنسيق التقارير على برنامج الوورد بجودة ودقة عالية.</p></div>
+                    <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service6Title">تصميم وتعديل فيديوهات وصور</h3><p class="text-gray-600" data-lang-key="service6Desc">تصميم وتعديل الفيديوهات والصور بجودة عالية لتناسب جميع احتياجاتكم.</p></div>
+                    <div class="card lg:col-span-3"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service7Title">برمجة وتطوير مواقع الويب</h3><p class="text-gray-600" data-lang-key="service7Desc">برمجة مواقع ويب تفاعلية وجمالية باستخدام لغة JavaScript وتنسيق الشكل باستخدام CSS، مع إضافة الموقع على سيرفر وإنشاء رابط خاص به.</p></div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="comments" class="py-16 px-4 bg-white dark:bg-gray-800">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="section-heading text-center mb-12" data-lang-key="commentsHeading">التعليقات</h2>
-            <div class="card p-8 md:p-12">
-                <h3 class="text-2xl font-semibold mb-6 text-indigo-700 dark:text-indigo-400" data-lang-key="leaveComment">اترك تعليقك</h3>
-                <form id="commentForm" class="space-y-4">
-                    <div>
-                        <label for="commentName" class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-lang-key="commentNameLabel">اسمك:</label>
-                        <input type="text" id="commentName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white" data-lang-key="commentNamePlaceholder" placeholder="ادخل اسمك" required>
-                    </div>
-                    <div>
-                        <label for="commentText" class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-lang-key="commentTextLabel">تعليقك:</label>
-                        <textarea id="commentText" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white" data-lang-key="commentTextPlaceholder" placeholder="اكتب تعليقك هنا..." required></textarea>
-                    </div>
-                    <div>
-                        <label for="commentImage" class="block text-sm font-medium text-gray-700 dark:text-gray-300" data-lang-key="commentImageLabel">إضافة صورة (اختياري):</label>
-                        <div class="relative mt-1">
-                            <input type="file" id="commentImage" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
-                            <div id="customFileInput" class="custom-file-input">
-                                <span id="fileInputText" data-lang-key="fileInputChoose">اختيار ملف</span>
-                            </div>
+        <section id="contact" class="py-16 px-4 bg-gray-100">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="section-heading mb-12" data-lang-key="contactHeading">للتواصل معنا</h2>
+                <p class="text-lg md:text-xl mb-8" data-lang-key="contactSubtitle">يسعدنا استقبال استفساراتكم وطلباتكم عبر وسائل التواصل التالية:</p>
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+                    <a href="https://wa.me/966500900329" target="_blank" class="contact-link"><svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.58 15.36 3.42 16.92L2.06 22L7.3 20.64C8.86 21.49 10.56 21.94 12.29 21.94H12.04C17.5 21.94 21.95 17.49 21.95 12.04C21.95 6.58 17.5 2 12.04 2ZM17.29 15.5L16.4 17.46C16.14 17.97 15.54 18.15 15.03 17.89C13.97 17.34 12.78 16.71 11.66 15.93C10.27 14.96 9.17 13.82 8.21 12.43C7.43 11.31 6.8 10.12 6.25 9.06C5.99 8.55 6.17 7.95 6.68 7.69L8.64 6.8C9.15 6.54 9.75 6.72 10.01 7.23L10.66 8.59C10.92 9.1 10.74 9.7 10.23 9.96L9.62 10.27C9.28 10.45 9.16 10.86 9.34 11.2C9.89 12.26 10.74 13.11 11.8 13.66C12.14 13.84 12.55 13.72 12.73 13.38L13.04 12.77C13.3 12.26 13.9 12.08 14.41 12.34L15.77 12.99C16.28 13.25 16.46 13.85 16.2 14.36L15.5 15.5ZM12.04 4C16.46 4 20.04 7.58 20.04 12.04C20.04 16.46 16.46 20.04 12.04 20.04C10.61 20.04 9.25 19.68 8.05 18.99L7.66 18.77L4.69 19.53L5.45 16.56L5.23 16.17C4.54 14.97 4.18 13.61 4.18 12.04C4.18 7.58 7.76 4 12.04 4Z"/></svg><span data-lang-key="whatsappNumberKSA">0500900329 داخل المملكة</span></a>
+                    <a href="https://wa.me/60163340537" target="_blank" class="contact-link"><svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1s-1 .45-1 1v3h-1c-.9 0-1.64.58-1.9 1.39-.77-2.31-1.04-4.83-.5-7.44h6.89c.54 2.61.27 5.13-.5 7.44zM12 4.07c3.95.49 7 3.85 7 7.93 0 .62-.08 1.21-.21 1.79L15 9V8c0-1.1-.9-2-2-2H9v-.93c.71-.1 1.45-.17 2.21-.17.76 0 1.5.07 2.21.17z"/></svg><span data-lang-key="whatsappNumberOutsideKSA">+60163340537 خارج المملكة</span></a>
+                    <a href="https://t.me/AHMADxx41" target="_blank" class="contact-link bg-blue-500 hover:bg-blue-600"><svg class="telegram-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.35 7.6l-2.45 7.42c-.22.68-.83.92-1.39.63l-2.73-2.1c-.24-.19-.48-.2-.72-.01l-1.35 1.04c-.3.23-.74.07-.82-.3l-.9-4.22c-.09-.43.14-.86.53-1.02l9.08-3.41c.42-.16.85.16.85.6v.01c-.01.35-.13.6-.33.72zm-4.38 5.75l.95-.73c.12-.1.29-.1.41 0l2.36 1.83c.1.08.13.23.07.35l-.83.74c-.08.07-.19.1-.3.07l-2.5-1.92c-.1-.08-.13-.23-.07-.35zm1.53-2.85l-4.52 3.49-1.96-1.51c-.1-.08-.24-.05-.32.06l-.72.93c-.08.1-.06.26.04.34l2.12 1.63c.1.08.24.05.32-.06l5.36-4.13c.1-.08.06-.23-.04-.32l-1.22-1.24c-.11-.11-.27-.11-.38 0z"/></svg><span data-lang-key="telegramContact">التواصل عبر التلجرام</span></a>
+                </div>
+            </div>
+        </section>
+
+        <section id="comments" class="py-16 px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="section-heading text-center mb-12" data-lang-key="commentsHeading">التعليقات</h2>
+                <div class="card p-8 md:p-12">
+                    <h3 class="text-2xl font-semibold mb-6 text-indigo-700 dark:text-indigo-400" data-lang-key="leaveComment">اترك تعليقك</h3>
+                    <form id="commentForm" class="space-y-4">
+                        <div>
+                            <label for="commentName" class="block text-sm font-medium" data-lang-key="commentNameLabel">اسمك:</label>
+                            <input type="text" id="commentName" class="mt-1 block w-full rounded-md shadow-sm" data-lang-key="commentNamePlaceholder" placeholder="ادخل اسمك" required>
                         </div>
-                        <img id="imagePreview" src="#" alt="Image Preview" class="hidden">
+                        <div>
+                            <label for="commentText" class="block text-sm font-medium" data-lang-key="commentTextLabel">تعليقك:</label>
+                            <textarea id="commentText" rows="4" class="mt-1 block w-full rounded-md shadow-sm" data-lang-key="commentTextPlaceholder" placeholder="اكتب تعليقك هنا..." required></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium" data-lang-key="commentRatingLabel">تقييمك:</label>
+                            <div id="starRatingInput" class="star-rating interactive flex mt-1"></div>
+                            <input type="hidden" id="commentRatingValue" value="0">
+                        </div>
+                        <div>
+                            <label for="commentImage" class="block text-sm font-medium" data-lang-key="commentImageLabel">إضافة صورة (اختياري):</label>
+                            <div class="relative mt-1">
+                                <input type="file" id="commentImage" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                                <div class="custom-file-input"><span id="fileInputText" data-lang-key="fileInputChoose">اختيار ملف</span></div>
+                            </div>
+                            <img id="imagePreview" src="#" alt="Image Preview" class="hidden">
+                        </div>
+                        <button type="submit" class="btn-primary w-full" data-lang-key="commentSubmitBtn">إرسال التعليق</button>
+                    </form>
+                    <hr class="my-8 border-gray-200 dark:border-gray-600">
+                    <h3 class="text-2xl font-semibold mb-6 text-indigo-700 dark:text-indigo-400" data-lang-key="allComments">جميع التعليقات</h3>
+                    <div id="commentsList" class="space-y-6">
+                        <p id="commentsLoading" class="text-center text-gray-500 dark:text-gray-400" data-lang-key="commentsLoading">جاري تحميل التعليقات...</p>
+                        <p id="noComments" class="text-center text-gray-500 dark:text-gray-400 hidden" data-lang-key="noComments">لا توجد تعليقات حتى الآن. كن أول من يعلق!</p>
                     </div>
-                    <button type="submit" class="btn-primary w-full" data-lang-key="commentSubmitBtn">إرسال التعليق</button>
-                </form>
-
-                <hr class="my-8 border-gray-200 dark:border-gray-600">
-
-                <h3 class="text-2xl font-semibold mb-6 text-indigo-700 dark:text-indigo-400" data-lang-key="allComments">جميع التعليقات</h3>
-                <div id="commentsList" class="space-y-6">
-                    <p id="commentsLoading" class="text-center text-gray-500 dark:text-gray-400" data-lang-key="commentsLoading">جاري تحميل التعليقات...</p>
-                    <p id="noComments" class="text-center text-gray-500 dark:text-gray-400 hidden" data-lang-key="noComments">لا توجد تعليقات حتى الآن. كن أول من يعلق!</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <footer class="bg-gray-800 text-white py-8 text-center">
         <p id="footerCopyright" data-lang-key="footerText">© 2025 جميع الحقوق محفوظة لفريق التصميم والمشاريع.</p>
     </footer>
 
-    <div id="modeIndicator" class="fixed bottom-4 right-4 bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-xs font-semibold z-50">
-        الوضع الفاتح
-    </div>
-
-    <div id="developerModeIndicator" class="hidden">
-        وضع المطور
-    </div>
+    <div id="modeIndicator" class="fixed bottom-4 right-4 bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-xs font-semibold z-50">الوضع الفاتح</div>
+    <div id="developerModeIndicator" class="hidden">وضع المطور</div>
 
     <script type="module">
         // Firebase Imports
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, onSnapshot, serverTimestamp, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, onSnapshot, serverTimestamp, doc, deleteDoc, runTransaction, arrayUnion, arrayRemove, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         // Firebase Initialization
         const firebaseConfig = {
@@ -807,6 +307,7 @@
         const GEMINI_API_KEY = "AIzaSyCqjjC8Klto6AtPE1Ac7ucxiS0juSdwM5E";
         const IMGBB_API_KEY = "c60db8672872317bb4b7e2ed96227adf";
 
+        // DOM Elements
         const customAlertModal = document.getElementById('customAlertModal');
         const customAlertMessage = document.getElementById('customAlertMessage');
         const customAlertButtons = document.getElementById('customAlertButtons');
@@ -829,23 +330,21 @@
         const fullImageModal = document.getElementById('fullImageModal');
         const fullImage = document.getElementById('fullImage');
         const fileInputText = document.getElementById('fileInputText');
-
+        const starRatingInputContainer = document.getElementById('starRatingInput');
+        const commentRatingValue = document.getElementById('commentRatingValue');
+        
         async function initFirebase() {
             try {
                 app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
-                console.log("Firebase Config:", firebaseConfig);
-                console.log("Resolved App ID for Firestore Path:", appId);
-
+                
                 onAuthStateChanged(auth, async (user) => {
                     if (user) {
                         userId = user.uid;
-                        console.log("Firebase authenticated. User ID:", userId);
                         isAuthReady = true;
                         loadComments();
                     } else {
-                        console.log("No user signed in. Signing in anonymously...");
                         await signInAnonymously(auth);
                     }
                 });
@@ -854,347 +353,75 @@
                 showAlert("alertFirebaseInitError");
             }
         }
-        initFirebase();
-
+        
         const translations = {
-            ar: {
-                siteTitle: "خدماتنا - تصميم وتطوير المشاريع",
-                navHome: "الرئيسية",
-                navWhyChooseUs: "لماذا تختارنا؟",
-                navAboutUs: "من نحن؟",
-                navServices: "ماذا نقدم؟",
-                navContact: "تواصل معنا",
-                navComments: "التعليقات",
-                heroTitle: "مصمم جميع أنواع المشاريع والمواقع والتصاميم والبحوث والواجبات",
-                heroDiscount: "خصم 30% لفترة محدودة على كامل الخدمات",
-                heroSubtitle: "نقدم لكم حلولاً متكاملة لتلبية جميع احتياجاتكم الأكاديمية والمهنية",
-                heroContactBtn: "تواصل معنا الآن",
-                featuresHeading: "لماذا تختارنا؟",
-                feature1Title: "تنسيقات شكل رائعة",
-                feature1Desc: "نقدم العديد من التنسيقات الجمالية التي تبرز عملك.",
-                feature2Title: "تنسيق كلام احترافي",
-                feature2Desc: "تنسيق دقيق للمحتوى في البحوث والمشاريع.",
-                feature3Title: "أكثر من 100 نوع خط",
-                feature3Desc: "اختر من مجموعة واسعة من الخطوط المميزة.",
-                feature4Title: "عروض تقديمية مميزة",
-                feature4Desc: "تصميم عروض بوربوينت جذابة ومبتكرة.",
-                aboutUsHeading: "من نحن؟",
-                aboutUsParagraph1: "نحن فريق متقدم من خريجي جامعة UCSI الماليزية، نجمع بين المعرفة الأكاديمية العميقة والخبرة العملية الواسعة في تصميم وتنفيذ العديد من المشاريع الكبيرة والصغيرة.",
-                aboutUsParagraph2: "نلتزم بتقديم خدمات عالية الجودة بأسعار تنافسية للغاية، مع التركيز الدائم على تحقيق رضا العميل كشعارنا الأول والأخير ✨.",
-                servicesHeading: "ماذا نقدم؟",
-                service1Title: "تصميم ثلاثي الأبعاد",
-                service1Desc: "تصميم جميع أنواع القطع ثلاثية الأبعاد على برامج الأوتوكاد وبرامج الطباعة ثلاثية الأبعاد بجميع صيغ الملفات القابلة للطباعة.",
-                service2Title: "عروض تقديمية (بوربوينت)",
-                service2Desc: "تصميم عروض تقديمية على البوربوينت مع كامل التنسيق وإضافة الصور والحركات المرئية.",
-                service3Title: "تنسيق ملفات إكسل",
-                service3Desc: "تصميم وتعديل وتنسيق ملفات إكسل باحترافية عالية.",
-                service4Title: "تصاميم هندسية ومخططات",
-                service4Desc: "تصاميم هندسية، مخططات، كهرباء، وغيرها من الأعمال الهندسية المتخصصة.",
-                service5Title: "كتابة وتنسيق تقارير",
-                service5Desc: "كتابة وتنسيق التقارير على برنامج الوورد بجودة ودقة عالية.",
-                service6Title: "تصميم وتعديل فيديوهات وصور",
-                service6Desc: "تصميم وتعديل الفيديوهات والصور بجودة عالية لتناسب جميع احتياجاتكم.",
-                service7Title: "برمجة وتطوير مواقع الويب",
-                service7Desc: "برمجة مواقع ويب تفاعلية وجمالية باستخدام لغة JavaScript وتنسيق الشكل باستخدام CSS، مع إضافة الموقع على سيرفر وإنشاء رابط خاص به.",
-                contactHeading: "للتواصل معنا",
-                contactSubtitle: "يسعدنا استقبال استفساراتكم وطلباتكم عبر وسائل التواصل التالية:",
-                whatsappNumberKSA: "0500900329 داخل المملكة",
-                whatsappNumberOutsideKSA: "+60163340537 خارج المملكة",
-                telegramContact: "التواصل عبر التلجرام",
-                footerText: "© 2025 جميع الحقوق محفوظة لفريق التصميم والمشاريع.",
-                modeLight: "الوضع الفاتح",
-                modeDark: "الوضع الداكن",
-                commentsHeading: "التعليقات",
-                leaveComment: "اترك تعليقك",
-                commentNameLabel: "اسمك:",
-                commentNamePlaceholder: "ادخل اسمك",
-                commentTextLabel: "تعليقك:",
-                commentTextPlaceholder: "اكتب تعليقك هنا...",
-                commentImageLabel: "إضافة صورة (اختياري):",
-                fileInputChoose: "اختيار ملف",
-                fileInputNoFile: "لم يتم اختيار أي ملف",
-                commentSubmitBtn: "إرسال التعليق",
-                allComments: "جميع التعليقات",
-                commentsLoading: "جاري تحميل التعليقات...",
-                noComments: "لا توجد تعليقات حتى الآن. كن أول من يعلق!",
-                commentDateUnavailable: "التاريخ غير متوفر",
-                alertNameTextEmpty: "الرجاء إدخال اسمك.",
-                alertCommentTextEmpty: "الرجاء إدخال تعليقك.",
-                alertCommentAddedSuccess: "تم إضافة التعليق بنجاح!",
-                alertCommentAddError: "حدث خطأ أثناء إضافة التعليق. الرجاء المحاولة مرة أخرى.",
-                alertFirebaseInitError: "فشل تهيئة Firebase. قد لا تعمل التعليقات بشكل صحيح.",
-                alertFirebaseNotReady: "Firebase غير جاهز بعد. الرجاء الانتظار.",
-                alertDeleteConfirm: "هل أنت متأكد أنك تريد حذف هذا التعليق؟",
-                alertDeleteSuccess: "تم حذف التعليق بنجاح!",
-                alertDeleteError: "حدث خطأ أثناء حذف التعليق. الرجاء المحاولة مرة أخرى.",
-                alertNoPermission: "ليس لديك صلاحية لحذف هذا التعليق.",
-                alertDeveloperModePrompt: "الرجاء إدخال الكود السري للدخول إلى وضع المطور:",
-                alertDeveloperModeSuccess: "تم تفعيل وضع المطور بنجاح!",
-                alertDeveloperModeInvalid: "الكود السري غير صحيح. الرجاء المحاولة مرة أخرى.",
-                alertDeveloperModeExit: "تم الخروج من وضع المطور.",
-                confirmText: "نعم",
-                cancelText: "إلغاء",
-                customAlertClose: "حسناً",
-                developerModeIndicatorText: "وضع المطور",
-                translateBtnText: "ترجمة",
-                translateError: "فشل في الترجمة.",
-                imageUploadError: "فشل رفع الصورة. الرجاء المحاولة مرة أخرى."
-            },
-            en: {
-                siteTitle: "Our Services - Project Design & Development",
-                navHome: "Home",
-                navWhyChooseUs: "Why Choose Us?",
-                navAboutUs: "About Us",
-                navServices: "What We Offer?",
-                navContact: "Contact Us",
-                navComments: "Comments",
-                heroTitle: "Designer of all types of projects, websites, designs, research, and assignments",
-                heroDiscount: "30% discount for a limited time on all services",
-                heroSubtitle: "We offer integrated solutions to meet all your academic and professional needs",
-                heroContactBtn: "Contact Us Now",
-                featuresHeading: "Why Choose Us?",
-                feature1Title: "Excellent Visual Formats",
-                feature1Desc: "We provide many aesthetic formats that highlight your work.",
-                feature2Title: "Professional Text Formatting",
-                feature2Desc: "Precise content formatting for research and projects.",
-                feature3Title: "Over 100 Font Types",
-                feature3Desc: "Choose from a wide range of distinctive fonts.",
-                feature4Title: "Outstanding Presentations",
-                feature4Desc: "Designing attractive and innovative PowerPoint presentations.",
-                aboutUsHeading: "Who Are We?",
-                aboutUsParagraph1: "We are an advanced team of UCSI Malaysian University graduates, combining deep academic knowledge with extensive practical experience in designing and implementing many large and small projects.",
-                aboutUsParagraph2: "We are committed to providing high-quality services at highly competitive prices, with a constant focus on achieving customer satisfaction as our first and last motto ✨.",
-                servicesHeading: "What We Offer?",
-                service1Title: "3D Design",
-                service1Desc: "Designing all types of 3D parts on AutoCAD and 3D printing software in all printable file formats.",
-                service2Title: "Presentations (PowerPoint)",
-                service2Desc: "Designing PowerPoint presentations with full formatting and adding images and visual effects.",
-                service3Title: "Excel File Formatting",
-                service3Desc: "Designing, modifying, and formatting Excel files with high professionalism.",
-                service4Title: "Engineering Designs & Plans",
-                service4Desc: "Engineering designs, plans, electrical works, and other specialized engineering works.",
-                service5Title: "Report Writing & Formatting",
-                service5Desc: "Writing and formatting reports in Word with high quality and accuracy.",
-                service6Title: "Video & Photo Design/Editing",
-                service6Desc: "Designing and editing videos and photos with high quality to suit all your needs.",
-                service7Title: "Web Programming & Development",
-                service7Desc: "Programming interactive and aesthetic websites using JavaScript and styling with CSS, including hosting the site on a server and creating a dedicated link.",
-                contactHeading: "Contact Us",
-                contactSubtitle: "We are happy to receive your inquiries and requests via the following channels:",
-                whatsappNumberKSA: "0500900329 Inside KSA",
-                whatsappNumberOutsideKSA: "+60163340537 Outside KSA",
-                telegramContact: "Contact via Telegram",
-                footerText: "© 2025 All rights reserved for the Design and Projects Team.",
-                modeLight: "Light Mode",
-                modeDark: "Dark Mode",
-                commentsHeading: "Comments",
-                leaveComment: "Leave a comment",
-                commentNameLabel: "Your Name:",
-                commentNamePlaceholder: "Enter your name",
-                commentTextLabel: "Your Comment:",
-                commentTextPlaceholder: "Write your comment here...",
-                commentImageLabel: "Add an image (optional):",
-                fileInputChoose: "Choose file",
-                fileInputNoFile: "No file chosen",
-                commentSubmitBtn: "Submit Comment",
-                allComments: "All Comments",
-                commentsLoading: "Loading comments...",
-                noComments: "No comments yet. Be the first to comment!",
-                commentDateUnavailable: "Date Unavailable",
-                alertNameTextEmpty: "Please enter your name.",
-                alertCommentTextEmpty: "Please enter your comment.",
-                alertCommentAddedSuccess: "Comment added successfully!",
-                alertCommentAddError: "An error occurred while adding the comment. Please try again.",
-                alertFirebaseInitError: "Firebase initialization failed. Comments may not work correctly.",
-                alertFirebaseNotReady: "Firebase is not ready yet. Please wait.",
-                alertDeleteConfirm: "Are you sure you want to delete this comment?",
-                alertDeleteSuccess: "Comment deleted successfully!",
-                alertDeleteError: "An error occurred while deleting the comment. Please try again.",
-                alertNoPermission: "You do not have permission to delete this comment.",
-                alertDeveloperModePrompt: "Please enter the secret code to enter developer mode:",
-                alertDeveloperModeSuccess: "Developer mode activated successfully!",
-                alertDeveloperModeInvalid: "Incorrect secret code. Please try again.",
-                alertDeveloperModeExit: "Exited developer mode.",
-                confirmText: "Yes",
-                cancelText: "Cancel",
-                customAlertClose: "OK",
-                developerModeIndicatorText: "Developer Mode",
-                translateBtnText: "Translate",
-                translateError: "Translation failed.",
-                imageUploadError: "Image upload failed. Please try again."
-            },
-            zh: {
-                siteTitle: "我们的服务 - 项目设计与开发",
-                navHome: "首页",
-                navWhyChooseUs: "为什么选择我们？",
-                navAboutUs: "关于我们",
-                navServices: "我们提供什么？",
-                navContact: "联系我们",
-                navComments: "评论",
-                heroTitle: "各类项目、网站、设计、研究和作业的设计师",
-                heroDiscount: "所有服务限时30%折扣",
-                heroSubtitle: "我们提供全面的解决方案，满足您所有的学术和专业需求",
-                heroContactBtn: "立即联系我们",
-                featuresHeading: "为什么选择我们？",
-                feature1Title: "出色的视觉格式",
-                feature1Desc: "我们提供多种美观的格式，突出您的作品。",
-                feature2Title: "专业的文本格式",
-                feature2Desc: "研究和项目内容的精确格式化。",
-                feature3Title: "超过100种字体",
-                feature3Desc: "从各种独特的字体中选择。",
-                feature4Title: "出色的演示文稿",
-                feature4Desc: "设计有吸引力且创新的PowerPoint演示文稿。",
-                aboutUsHeading: "我们是谁？",
-                aboutUsParagraph1: "我们是一支由马来西亚UCSI大学毕业生组成的先进团队，结合了深厚的学术知识和丰富的实践经验，在设计和实施许多大型和小型项目方面。",
-                aboutUsParagraph2: "我们致力于以极具竞争力的价格提供高质量的服务，始终将客户满意度作为我们的首要宗旨✨。",
-                servicesHeading: "我们提供什么？",
-                service1Title: "3D设计",
-                service1Desc: "使用AutoCAD和3D打印软件设计所有类型的3D零件，支持所有可打印文件格式。",
-                service2Title: "演示文稿（PowerPoint）",
-                service2Desc: "设计PowerPoint演示文稿，包括完整的格式设置、图片和视觉效果。",
-                service3Title: "Excel文件格式化",
-                service3Desc: "高专业地设计、修改和格式化Excel文件。",
-                service4Title: "工程设计与规划",
-                service4Desc: "工程设计、规划、电气工程及其他专业工程工作。",
-                service5Title: "报告撰写与格式化",
-                service5Desc: "高质量、高精度地撰写和格式化Word报告。",
-                service6Title: "视频和照片设计/编辑",
-                service6Desc: "高质量地设计和编辑视频和照片，以满足您的所有需求。",
-                service7Title: "网站编程与开发",
-                service7Desc: "使用JavaScript编程交互式和美观的网站，并使用CSS进行样式设置，包括将网站托管到服务器并创建专用链接。",
-                contactHeading: "联系我们",
-                contactSubtitle: "我们很高兴通过以下方式接收您的咨询和请求：",
-                whatsappNumberKSA: "0500900329 沙特阿拉伯境内",
-                whatsappNumberOutsideKSA: "+60163340537 沙特阿拉伯境外",
-                telegramContact: "通过Telegram联系",
-                footerText: "© 2025 所有权利由设计与项目团队保留。",
-                modeLight: "浅色模式",
-                modeDark: "深色模式",
-                commentsHeading: "评论",
-                leaveComment: "发表评论",
-                commentNameLabel: "您的姓名：",
-                commentNamePlaceholder: "输入您的姓名",
-                commentTextLabel: "您的评论：",
-                commentTextPlaceholder: "在此处撰写您的评论...",
-                commentImageLabel: "添加图片（可选）：",
-                fileInputChoose: "选择文件",
-                fileInputNoFile: "未选择任何文件",
-                commentSubmitBtn: "提交评论",
-                allComments: "所有评论",
-                commentsLoading: "正在加载评论...",
-                noComments: "暂无评论。成为第一个评论的人！",
-                commentDateUnavailable: "日期不可用",
-                alertNameTextEmpty: "请输入您的姓名。",
-                alertCommentTextEmpty: "请输入您的评论。",
-                alertCommentAddedSuccess: "评论添加成功！",
-                alertCommentAddError: "添加评论时发生错误。请重试。",
-                alertFirebaseInitError: "Firebase初始化失败。评论可能无法正常工作。",
-                alertFirebaseNotReady: "Firebase尚未准备好。请稍候。",
-                alertDeleteConfirm: "您确定要删除此评论吗？",
-                alertDeleteSuccess: "评论删除成功！",
-                alertDeleteError: "删除评论时发生错误。请重试。",
-                alertNoPermission: "您没有权限删除此评论。",
-                alertDeveloperModePrompt: "请输入密S码进入开发者模式：",
-                alertDeveloperModeSuccess: "开发者模式已成功激活！",
-                alertDeveloperModeInvalid: "密S码不正确。请重试。",
-                alertDeveloperModeExit: "已退出开发者模式。",
-                confirmText: "是",
-                cancelText: "取消",
-                customAlertClose: "确定",
-                developerModeIndicatorText: "开发者模式",
-                translateBtnText: "翻译",
-                translateError: "Translation failed."
-            }
+            ar: { siteTitle: "خدماتنا - تصميم وتطوير المشاريع", navHome: "الرئيسية", navWhyChooseUs: "لماذا تختارنا؟", navAboutUs: "من نحن؟", navServices: "ماذا نقدم؟", navContact: "تواصل معنا", navComments: "التعليقات", heroTitle: "مصمم جميع أنواع المشاريع والمواقع والتصاميم والبحوث والواجبات", heroDiscount: "خصم 30% لفترة محدودة على كامل الخدمات", heroSubtitle: "نقدم لكم حلولاً متكاملة لتلبية جميع احتياجاتكم الأكاديمية والمهنية", heroContactBtn: "تواصل معنا الآن", featuresHeading: "لماذا تختارنا؟", feature1Title: "تنسيقات شكل رائعة", feature1Desc: "نقدم العديد من التنسيقات الجمالية التي تبرز عملك.", feature2Title: "تنسيق كلام احترافي", feature2Desc: "تنسيق دقيق للمحتوى في البحوث والمشاريع.", feature3Title: "أكثر من 100 نوع خط", feature3Desc: "اختر من مجموعة واسعة من الخطوط المميزة.", feature4Title: "عروض تقديمية مميزة", feature4Desc: "تصميم عروض بوربوينت جذابة ومبتكرة.", aboutUsHeading: "من نحن؟", aboutUsParagraph1: "نحن فريق متقدم من خريجي جامعة UCSI الماليزية، نجمع بين المعرفة الأكاديمية العميقة والخبرة العملية الواسعة في تصميم وتنفيذ العديد من المشاريع الكبيرة والصغيرة.", aboutUsParagraph2: "نلتزم بتقديم خدمات عالية الجودة بأسعار تنافسية للغاية، مع التركيز الدائم على تحقيق رضا العميل كشعارنا الأول والأخير ✨.", servicesHeading: "ماذا نقدم؟", service1Title: "تصميم ثلاثي الأبعاد", service1Desc: "تصميم جميع أنواع القطع ثلاثية الأبعاد على برامج الأوتوكاد وبرامج الطباعة ثلاثية الأبعاد بجميع صيغ الملفات القابلة للطباعة.", service2Title: "عروض تقديمية (بوربوينت)", service2Desc: "تصميم عروض تقديمية على البوربوينت مع كامل التنسيق وإضافة الصور والحركات المرئية.", service3Title: "تنسيق ملفات إكسل", service3Desc: "تصميم وتعديل وتنسيق ملفات إكسل باحترافية عالية.", service4Title: "تصاميم هندسية ومخططات", service4Desc: "تصاميم هندسية، مخططات، كهرباء، وغيرها من الأعمال الهندسية المتخصصة.", service5Title: "كتابة وتنسيق تقارير", service5Desc: "كتابة وتنسيق التقارير على برنامج الوورد بجودة ودقة عالية.", service6Title: "تصميم وتعديل فيديوهات وصور", service6Desc: "تصميم وتعديل الفيديوهات والصور بجودة عالية لتناسب جميع احتياجاتكم.", service7Title: "برمجة وتطوير مواقع الويب", service7Desc: "برمجة مواقع ويب تفاعلية وجمالية باستخدام لغة JavaScript وتنسيق الشكل باستخدام CSS، مع إضافة الموقع على سيرفر وإنشاء رابط خاص به.", contactHeading: "للتواصل معنا", contactSubtitle: "يسعدنا استقبال استفساراتكم وطلباتكم عبر وسائل التواصل التالية:", whatsappNumberKSA: "0500900329 داخل المملكة", whatsappNumberOutsideKSA: "+60163340537 خارج المملكة", telegramContact: "التواصل عبر التلجرام", footerText: "© 2025 جميع الحقوق محفوظة لفريق التصميم والمشاريع.", modeLight: "الوضع الفاتح", modeDark: "الوضع الداكن", commentsHeading: "التعليقات", leaveComment: "اترك تعليقك", commentNameLabel: "اسمك:", commentNamePlaceholder: "ادخل اسمك", commentTextLabel: "تعليقك:", commentTextPlaceholder: "اكتب تعليقك هنا...", commentRatingLabel: "تقييمك:", commentImageLabel: "إضافة صورة (اختياري):", fileInputChoose: "اختيار ملف", fileInputNoFile: "لم يتم اختيار أي ملف", commentSubmitBtn: "إرسال التعليق", allComments: "جميع التعليقات", commentsLoading: "جاري تحميل التعليقات...", noComments: "لا توجد تعليقات حتى الآن. كن أول من يعلق!", commentDateUnavailable: "التاريخ غير متوفر", alertNameTextEmpty: "الرجاء إدخال اسمك.", alertCommentTextEmpty: "الرجاء إدخال تعليقك.", alertCommentAddedSuccess: "تم إضافة التعليق بنجاح!", alertCommentAddError: "حدث خطأ أثناء إضافة التعليق. الرجاء المحاولة مرة أخرى.", alertFirebaseInitError: "فشل تهيئة Firebase. قد لا تعمل التعليقات بشكل صحيح.", alertFirebaseNotReady: "Firebase غير جاهز بعد. الرجاء الانتظار.", alertDeleteConfirm: "هل أنت متأكد أنك تريد حذف هذا التعليق؟", alertDeleteSuccess: "تم حذف التعليق بنجاح!", alertDeleteError: "حدث خطأ أثناء حذف التعليق. الرجاء المحاولة مرة أخرى.", alertNoPermission: "ليس لديك صلاحية لحذف هذا التعليق.", alertDeveloperModePrompt: "الرجاء إدخال الكود السري للدخول إلى وضع المطور:", alertDeveloperModeSuccess: "تم تفعيل وضع المطور بنجاح!", alertDeveloperModeInvalid: "الكود السري غير صحيح. الرجاء المحاولة مرة أخرى.", alertDeveloperModeExit: "تم الخروج من وضع المطور.", confirmText: "نعم", cancelText: "إلغاء", customAlertClose: "حسناً", developerModeIndicatorText: "وضع المطور", translateBtnText: "ترجمة", translateError: "فشل في الترجمة.", imageUploadError: "فشل رفع الصورة. الرجاء المحاولة مرة أخرى.", resetDislikesConfirm: "هل أنت متأكد من إعادة تعيين عدد مرات عدم الإعجاب؟", resetDislikesSuccess: "تمت إعادة تعيين عدم الإعجاب بنجاح!", resetDislikesError: "فشل في إعادة تعيين عدم الإعجاب.", },
+            en: { siteTitle: "Our Services - Project Design & Development", navHome: "Home", navWhyChooseUs: "Why Choose Us?", navAboutUs: "About Us", navServices: "What We Offer?", navContact: "Contact Us", navComments: "Comments", heroTitle: "Designer of all types of projects, websites, designs, research, and assignments", heroDiscount: "30% discount for a limited time on all services", heroSubtitle: "We offer integrated solutions to meet all your academic and professional needs", heroContactBtn: "Contact Us Now", featuresHeading: "Why Choose Us?", feature1Title: "Excellent Visual Formats", feature1Desc: "We provide many aesthetic formats that highlight your work.", feature2Title: "Professional Text Formatting", feature2Desc: "Precise content formatting for research and projects.", feature3Title: "Over 100 Font Types", feature3Desc: "Choose from a wide range of distinctive fonts.", feature4Title: "Outstanding Presentations", feature4Desc: "Designing attractive and innovative PowerPoint presentations.", aboutUsHeading: "Who Are We?", aboutUsParagraph1: "We are an advanced team of UCSI Malaysian University graduates, combining deep academic knowledge with extensive practical experience in designing and implementing many large and small projects.", aboutUsParagraph2: "We are committed to providing high-quality services at highly competitive prices, with a constant focus on achieving customer satisfaction as our first and last motto ✨.", servicesHeading: "What We Offer?", service1Title: "3D Design", service1Desc: "Designing all types of 3D parts on AutoCAD and 3D printing software in all printable file formats.", service2Title: "Presentations (PowerPoint)", service2Desc: "Designing PowerPoint presentations with full formatting and adding images and visual effects.", service3Title: "Excel File Formatting", service3Desc: "Designing, modifying, and formatting Excel files with high professionalism.", service4Title: "Engineering Designs & Plans", service4Desc: "Engineering designs, plans, electrical works, and other specialized engineering works.", service5Title: "Report Writing & Formatting", service5Desc: "Writing and formatting reports in Word with high quality and accuracy.", service6Title: "Video & Photo Design/Editing", service6Desc: "Designing and editing videos and photos with high quality to suit all your needs.", service7Title: "Web Programming & Development", service7Desc: "Programming interactive and aesthetic websites using JavaScript and styling with CSS, including hosting the site on a server and creating a dedicated link.", contactHeading: "Contact Us", contactSubtitle: "We are happy to receive your inquiries and requests via the following channels:", whatsappNumberKSA: "0500900329 Inside KSA", whatsappNumberOutsideKSA: "+60163340537 Outside KSA", telegramContact: "Contact via Telegram", footerText: "© 2025 All rights reserved for the Design and Projects Team.", modeLight: "Light Mode", modeDark: "Dark Mode", commentsHeading: "Comments", leaveComment: "Leave a comment", commentNameLabel: "Your Name:", commentNamePlaceholder: "Enter your name", commentTextLabel: "Your Comment:", commentTextPlaceholder: "Write your comment here...", commentRatingLabel: "Your Rating:", commentImageLabel: "Add an image (optional):", fileInputChoose: "Choose file", fileInputNoFile: "No file chosen", commentSubmitBtn: "Submit Comment", allComments: "All Comments", commentsLoading: "Loading comments...", noComments: "No comments yet. Be the first to comment!", commentDateUnavailable: "Date Unavailable", alertNameTextEmpty: "Please enter your name.", alertCommentTextEmpty: "Please enter your comment.", alertCommentAddedSuccess: "Comment added successfully!", alertCommentAddError: "An error occurred while adding the comment. Please try again.", alertFirebaseInitError: "Firebase initialization failed. Comments may not work correctly.", alertFirebaseNotReady: "Firebase is not ready yet. Please wait.", alertDeleteConfirm: "Are you sure you want to delete this comment?", alertDeleteSuccess: "Comment deleted successfully!", alertDeleteError: "An error occurred while deleting the comment. Please try again.", alertNoPermission: "You do not have permission to delete this comment.", alertDeveloperModePrompt: "Please enter the secret code to enter developer mode:", alertDeveloperModeSuccess: "Developer mode activated successfully!", alertDeveloperModeInvalid: "Incorrect secret code. Please try again.", alertDeveloperModeExit: "Exited developer mode.", confirmText: "Yes", cancelText: "Cancel", customAlertClose: "OK", developerModeIndicatorText: "Developer Mode", translateBtnText: "Translate", translateError: "Translation failed.", imageUploadError: "Image upload failed. Please try again.", resetDislikesConfirm: "Are you sure you want to reset the dislikes?", resetDislikesSuccess: "Dislikes reset successfully!", resetDislikesError: "Failed to reset dislikes.", },
+            zh: { siteTitle: "我们的服务 - 项目设计与开发", navHome: "首页", navWhyChooseUs: "为什么选择我们？", navAboutUs: "关于我们", navServices: "我们提供什么？", navContact: "联系我们", navComments: "评论", heroTitle: "各类项目、网站、设计、研究和作业的设计师", heroDiscount: "所有服务限时30%折扣", heroSubtitle: "我们提供全面的解决方案，满足您所有的学术和专业需求", heroContactBtn: "立即联系我们", featuresHeading: "为什么选择我们？", feature1Title: "出色的视觉格式", feature1Desc: "我们提供多种美观的格式，突出您的作品。", feature2Title: "专业的文本格式", feature2Desc: "研究和项目内容的精确格式化。", feature3Title: "超过100种字体", feature3Desc: "从各种独特的字体中选择。", feature4Title: "出色的演示文稿", feature4Desc: "设计有吸引力且创新的PowerPoint演示文稿。", aboutUsHeading: "我们是谁？", aboutUsParagraph1: "我们是一支由马来西亚UCSI大学毕业生组成的先进团队，结合了深厚的学术知识和丰富的实践经验，在设计和实施许多大型和小型项目方面。", aboutUsParagraph2: "我们致力于以极具竞争力的价格提供高质量的服务，始终将客户满意度作为我们的首要宗旨✨。", servicesHeading: "我们提供什么？", service1Title: "3D设计", service1Desc: "使用AutoCAD和3D打印软件设计所有类型的3D零件，支持所有可打印文件格式。", service2Title: "演示文稿（PowerPoint）", service2Desc: "设计PowerPoint演示文稿，包括完整的格式设置、图片和视觉效果。", service3Title: "Excel文件格式化", service3Desc: "高专业地设计、修改和格式化Excel文件。", service4Title: "工程设计与规划", service4Desc: "工程设计、规划、电气工程及其他专业工程工作。", service5Title: "报告撰写与格式化", service5Desc: "高质量、高精度地撰写和格式化Word报告。", service6Title: "视频和照片设计/编辑", service6Desc: "高质量地设计和编辑视频和照片，以满足您的所有需求。", service7Title: "网站编程与开发", service7Desc: "使用JavaScript编程交互式和美观的网站，并使用CSS进行样式设置，包括将网站托管到服务器并创建专用链接。", contactHeading: "联系我们", contactSubtitle: "我们很高兴通过以下方式接收您的咨询和请求：", whatsappNumberKSA: "0500900329 沙特阿拉伯境内", whatsappNumberOutsideKSA: "+60163340537 沙特阿拉伯境外", telegramContact: "通过Telegram联系", footerText: "© 2025 所有权利由设计与项目团队保留。", modeLight: "浅色模式", modeDark: "深色模式", commentsHeading: "评论", leaveComment: "发表评论", commentNameLabel: "您的姓名：", commentNamePlaceholder: "输入您的姓名", commentTextLabel: "您的评论：", commentTextPlaceholder: "在此处撰写您的评论...", commentRatingLabel: "您的评分：", commentImageLabel: "添加图片（可选）：", fileInputChoose: "选择文件", fileInputNoFile: "未选择任何文件", commentSubmitBtn: "提交评论", allComments: "所有评论", commentsLoading: "正在加载评论...", noComments: "暂无评论。成为第一个评论的人！", commentDateUnavailable: "日期不可用", alertNameTextEmpty: "请输入您的姓名。", alertCommentTextEmpty: "请输入您的评论。", alertCommentAddedSuccess: "评论添加成功！", alertCommentAddError: "添加评论时发生错误。请重试。", alertFirebaseInitError: "Firebase初始化失败。评论可能无法正常工作。", alertFirebaseNotReady: "Firebase尚未准备好。请稍候。", alertDeleteConfirm: "您确定要删除此评论吗？", alertDeleteSuccess: "评论删除成功！", alertDeleteError: "删除评论时发生错误。请重试。", alertNoPermission: "您没有权限删除此评论。", alertDeveloperModePrompt: "请输入密码进入开发者模式：", alertDeveloperModeSuccess: "开发者模式已成功激活！", alertDeveloperModeInvalid: "密码不正确。请重试。", alertDeveloperModeExit: "已退出开发者模式。", confirmText: "是", cancelText: "取消", customAlertClose: "确定", developerModeIndicatorText: "开发者模式", translateBtnText: "翻译", translateError: "翻译失败。", imageUploadError: "图片上传失败。请重试。", resetDislikesConfirm: "您确定要重置“不喜欢”吗？", resetDislikesSuccess: "“不喜欢”已成功重置！", resetDislikesError: "重置“不喜欢”失败。", }
         };
 
-        let currentLang = localStorage.getItem('lang') || 'ar'; // Default to Arabic
-        const htmlElement = document.documentElement; // Get the html element
+        let currentLang = localStorage.getItem('lang') || 'ar';
+        const htmlElement = document.documentElement;
 
-        // Function to set the language
         function setLanguage(lang) {
             currentLang = lang;
             localStorage.setItem('lang', lang);
-            htmlElement.lang = lang; // Set lang attribute
+            htmlElement.lang = lang;
+            htmlElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
 
-            // Set direction based on language
-            if (lang === 'ar') {
-                htmlElement.dir = 'rtl';
-            } else {
-                htmlElement.dir = 'ltr';
-            }
-
-            // Update all elements with data-lang-key
             document.querySelectorAll('[data-lang-key]').forEach(element => {
                 const key = element.getAttribute('data-lang-key');
-                if (translations[currentLang] && translations[currentLang][key]) {
+                const translation = translations[currentLang]?.[key] || translations.en[key];
+                if (translation) {
                     if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                        element.placeholder = translations[currentLang][key];
+                        element.placeholder = translation;
                     } else {
-                        element.textContent = translations[currentLang][key];
+                        element.textContent = translation;
                     }
                 }
             });
 
-            // Update specific elements that are not directly mapped by data-lang-key
             document.getElementById('currentLanguageText').textContent = lang.toUpperCase();
-            updateModeIndicatorText(); // Update mode indicator text
-            updateDeveloperModeIndicatorText(); // Update developer mode indicator text
-            
-            // Reload comments to apply new language to timestamps and buttons
+            updateModeIndicatorText();
+            updateDeveloperModeIndicatorText();
             loadComments();
         }
 
-        // Custom Alert Modal Logic
         function showAlert(messageKey, type = 'alert', onConfirm = null) {
             customAlertMessage.textContent = translations[currentLang][messageKey] || messageKey;
-
             customAlertButtons.innerHTML = '';
-
             if (type === 'alert') {
                 const closeBtn = document.createElement('button');
-                closeBtn.id = 'customAlertCloseBtn';
                 closeBtn.className = 'btn-primary';
                 closeBtn.textContent = translations[currentLang].customAlertClose;
-                closeBtn.addEventListener('click', () => {
-                    customAlertModal.classList.add('hidden');
-                });
+                closeBtn.onclick = () => customAlertModal.classList.add('hidden');
                 customAlertButtons.appendChild(closeBtn);
             } else if (type === 'confirm') {
                 const confirmBtn = document.createElement('button');
                 confirmBtn.className = 'confirm-btn';
                 confirmBtn.textContent = translations[currentLang].confirmText;
-                confirmBtn.addEventListener('click', () => {
-                    customAlertModal.classList.add('hidden');
-                    if (onConfirm) onConfirm(true);
-                });
+                confirmBtn.onclick = () => { customAlertModal.classList.add('hidden'); if (onConfirm) onConfirm(true); };
 
                 const cancelBtn = document.createElement('button');
                 cancelBtn.className = 'cancel-btn';
                 cancelBtn.textContent = translations[currentLang].cancelText;
-                cancelBtn.addEventListener('click', () => {
-                    customAlertModal.classList.add('hidden');
-                    if (onConfirm) onConfirm(false);
-                });
-
+                cancelBtn.onclick = () => { customAlertModal.classList.add('hidden'); if (onConfirm) onConfirm(false); };
+                
                 customAlertButtons.appendChild(confirmBtn);
                 customAlertButtons.appendChild(cancelBtn);
             }
-
             customAlertModal.classList.remove('hidden');
         }
 
-
-        // JavaScript for mobile navigation toggle
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('hidden');
             navLinks.classList.toggle('open');
             hamburger.classList.toggle('open');
         });
 
-        // Close mobile menu when a link is clicked
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
-                if (window.innerWidth < 767) { /* Changed from 768 to 767 to match media query */
+                if (window.innerWidth < 767) {
                     navLinks.classList.add('hidden');
                     navLinks.classList.remove('open');
                     hamburger.classList.remove('open');
@@ -1202,342 +429,316 @@
             });
         });
 
-        // Smooth scrolling for all anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-
                 const targetId = this.getAttribute('href');
-                if (targetId === '#') {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                } else {
-                    document.querySelector(targetId).scrollIntoView({
-                        behavior: 'smooth'
-                    });
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
                 }
             });
         });
 
-        // Dark Mode Toggle Logic
         function updateModeIndicatorText() {
             if (modeIndicator) {
                 if (body.classList.contains('dark')) {
                     modeIndicator.textContent = translations[currentLang].modeDark;
-                    modeIndicator.classList.remove('bg-gray-200', 'text-gray-800');
-                    modeIndicator.classList.add('bg-gray-700', 'text-gray-100');
+                    modeIndicator.className = 'fixed bottom-4 right-4 bg-gray-700 text-gray-100 px-3 py-1 rounded-full text-xs font-semibold z-50';
                 } else {
                     modeIndicator.textContent = translations[currentLang].modeLight;
-                    modeIndicator.classList.remove('bg-gray-700', 'text-gray-100');
-                    modeIndicator.classList.add('bg-gray-200', 'text-gray-800');
+                    modeIndicator.className = 'fixed bottom-4 right-4 bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-xs font-semibold z-50';
                 }
             }
         }
-
+        
         function applyDarkMode(isDark) {
             if (isDark) {
                 body.classList.add('dark');
-                darkModeIconPath.setAttribute('d', 'M12 2.5a.5.5 0 01.5.5v2a.5.5 0 01-1 0v-2a.5.5 0 01.5-.5zM18.364 5.636a.5.5 0 01.354.854l-1.414 1.414a.5.5 0 01-.707-.707l1.414-1.414a.5.5 0 01.353-.147zM21.5 12a.5.5 0 01.5-.5h2a.5.5 0 010 1h-2a.5.5 0 01-.5-.5zM18.364 18.364a.5.5 0 01-.354.854l-1.414-1.414a.5.5 0 01.707.707l1.414 1.414a.5.5 0 01-.353.147zM12 21.5a.5.5 0 01-.5-.5v-2a.5.5 0 011 0v2a.5.5 0 01-.5.5zM5.636 18.364a.5.5 0 01-.354-.854l1.414-1.414a.5.5 0 01.707.707l-1.414 1.414a.5.5 0 01-.353.147zM2.5 12a.5.5 0 01.5-.5h2a.5.5 0 010 1h-2a.5.5 0 01-.5-.5zM5.636 5.636a.5.5 0 01.354-.854l1.414 1.414a.5.5 0 01-.707.707L5.283 5.99a.5.5 0 01.353-.147zM12 7a5 5 0 100 10 5 5 0 000-10z'); // Sun icon path
+                darkModeIconPath.setAttribute('d', 'M12 2.5a.5.5 0 01.5.5v2a.5.5 0 01-1 0v-2a.5.5 0 01.5-.5zM18.364 5.636a.5.5 0 01.354.854l-1.414 1.414a.5.5 0 01-.707-.707l1.414-1.414a.5.5 0 01.353-.147zM21.5 12a.5.5 0 01.5-.5h2a.5.5 0 010 1h-2a.5.5 0 01-.5-.5zM18.364 18.364a.5.5 0 01-.354.854l-1.414-1.414a.5.5 0 01.707.707l1.414 1.414a.5.5 0 01-.353.147zM12 21.5a.5.5 0 01-.5-.5v-2a.5.5 0 011 0v2a.5.5 0 01-.5.5zM5.636 18.364a.5.5 0 01-.354-.854l1.414-1.414a.5.5 0 01.707.707l-1.414 1.414a.5.5 0 01-.353.147zM2.5 12a.5.5 0 01.5-.5h2a.5.5 0 010 1h-2a.5.5 0 01-.5-.5zM5.636 5.636a.5.5 0 01.354-.854l1.414 1.414a.5.5 0 01-.707.707L5.283 5.99a.5.5 0 01.353-.147zM12 7a5 5 0 100 10 5 5 0 000-10z');
             } else {
                 body.classList.remove('dark');
-                darkModeIconPath.setAttribute('d', 'M12 3a9 9 0 109 9c0-.46-.04-.92-.12-1.36a5.999 5.999 0 01-8.588-8.588C12.92 3.04 12.46 3 12 3z'); // Moon icon path
+                darkModeIconPath.setAttribute('d', 'M12 3a9 9 0 109 9c0-.46-.04-.92-.12-1.36a5.999 5.999 0 01-8.588-8.588C12.92 3.04 12.46 3 12 3z');
             }
-            updateModeIndicatorText(); // Update text after applying class
+            updateModeIndicatorText();
         }
 
-        // Check for saved dark mode preference on load
-        const savedDarkMode = localStorage.getItem('darkMode');
-        if (savedDarkMode === 'enabled') {
-            applyDarkMode(true);
-        } else {
-            applyDarkMode(false);
-        }
-
-        // Toggle dark mode on button click
         darkModeToggle.addEventListener('click', () => {
-            if (body.classList.contains('dark')) {
-                localStorage.setItem('darkMode', 'disabled');
-                applyDarkMode(false);
-            } else {
-                localStorage.setItem('darkMode', 'enabled');
-                applyDarkMode(true);
-            }
+            const isDark = !body.classList.contains('dark');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            applyDarkMode(isDark);
         });
 
-
-        // Language Dropdown Logic
-        languageDropdownButton.addEventListener('click', (event) => {
+        languageDropdownButton.addEventListener('click', (e) => {
             languageDropdownMenu.classList.toggle('active');
-            event.stopPropagation();
+            e.stopPropagation();
         });
 
-        document.addEventListener('click', (event) => {
-            if (!languageDropdownMenu.contains(event.target) && !languageDropdownButton.contains(event.target)) {
+        document.addEventListener('click', (e) => {
+            if (!languageDropdownMenu.contains(e.target) && !languageDropdownButton.contains(e.target)) {
                 languageDropdownMenu.classList.remove('active');
             }
         });
 
         languageDropdownMenu.querySelectorAll('li').forEach(item => {
-            item.addEventListener('click', (event) => {
-                const selectedLang = event.target.getAttribute('data-lang');
-                setLanguage(selectedLang);
+            item.addEventListener('click', (e) => {
+                setLanguage(e.target.getAttribute('data-lang'));
                 languageDropdownMenu.classList.remove('active');
             });
         });
-
-        setLanguage(currentLang);
-
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 767) {
-                navLinks.classList.remove('hidden', 'open');
-                hamburger.classList.remove('open');
-            } else {
-                if (!navLinks.classList.contains('open')) {
-                    navLinks.classList.add('hidden');
-                }
-            }
-        });
-
-        if (window.innerWidth < 767) {
-            navLinks.classList.add('hidden');
-        }
-
-
-        // Comments Logic
+        
         commentImageInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = (e) => {
-                    imagePreview.src = e.target.result;
+                reader.onload = (event) => {
+                    imagePreview.src = event.target.result;
                     imagePreview.classList.remove('hidden');
                 };
                 reader.readAsDataURL(file);
-                fileInputText.textContent = file.name;
+                fileInputText.textContent = file.name.length > 20 ? file.name.substring(0, 17) + '...' : file.name;
             } else {
                 imagePreview.src = '#';
                 imagePreview.classList.add('hidden');
-                fileInputText.textContent = translations[currentLang].fileInputNoFile;
+                fileInputText.textContent = translations[currentLang].fileInputChoose;
             }
         });
 
+        function setupStarRating(container, input) {
+            container.innerHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                const star = document.createElement('span');
+                star.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"></path></svg>`;
+                star.dataset.value = i;
+                container.appendChild(star);
+            }
+            
+            const stars = container.querySelectorAll('span');
+            const updateStars = (rating) => {
+                stars.forEach(star => star.querySelector('svg').classList.toggle('filled', star.dataset.value <= rating));
+            };
+
+            container.addEventListener('click', e => {
+                const star = e.target.closest('span');
+                if (star) {
+                    input.value = star.dataset.value;
+                    updateStars(input.value);
+                }
+            });
+
+            container.addEventListener('mouseover', e => {
+                const star = e.target.closest('span');
+                if (star) updateStars(star.dataset.value);
+            });
+            
+            container.addEventListener('mouseout', () => updateStars(input.value));
+            updateStars(input.value);
+        }
 
         commentForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-
-            if (!isAuthReady) {
-                console.warn("Firebase not ready yet. Please wait.");
-                showAlert("alertFirebaseNotReady");
-                return;
-            }
+            if (!isAuthReady) { showAlert("alertFirebaseNotReady"); return; }
 
             const commentName = document.getElementById('commentName').value.trim();
             const commentText = document.getElementById('commentText').value.trim();
+            const rating = parseInt(commentRatingValue.value, 10);
             const commentImageFile = commentImageInput.files[0];
 
-            if (commentName === '') {
-                showAlert('alertNameTextEmpty');
-                return;
-            }
-            if (commentText === '') {
-                showAlert('alertCommentTextEmpty');
-                return;
-            }
+            if (!commentName) { showAlert('alertNameTextEmpty'); return; }
+            if (!commentText) { showAlert('alertCommentTextEmpty'); return; }
 
             let imageUrl = null;
             if (commentImageFile) {
+                const formData = new FormData();
+                formData.append("image", commentImageFile);
                 try {
-                    // Use ImgBB API to upload the image
-                    const formData = new FormData();
-                    formData.append("image", commentImageFile);
-                    const uploadResponse = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-                        method: "POST",
-                        body: formData
-                    });
-                    const uploadResult = await uploadResponse.json();
-                    if (uploadResult.success) {
-                        imageUrl = uploadResult.data.url;
-                    } else {
-                        console.error("Image upload failed:", uploadResult.error.message);
-                        showAlert("imageUploadError");
-                        return;
-                    }
-                } catch (e) {
-                    console.error("Error uploading image:", e);
+                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: formData });
+                    const result = await res.json();
+                    if (result.success) imageUrl = result.data.url;
+                    else throw new Error(result.error.message);
+                } catch (err) {
+                    console.error("Image upload failed:", err);
                     showAlert("imageUploadError");
                     return;
                 }
             }
 
             try {
-                await addDoc(collection(db, `artifacts/${appId}/public/data/comments`), {
-                    name: commentName,
-                    text: commentText,
-                    imageUrl: imageUrl,
-                    timestamp: serverTimestamp(),
-                    userId: userId
-                });
-                document.getElementById('commentName').value = '';
-                document.getElementById('commentText').value = '';
-                commentImageInput.value = '';
+                await addDoc(collection(db, `artifacts/${appId}/public/data/comments`), { name: commentName, text: commentText, rating, imageUrl, timestamp: serverTimestamp(), userId, likes: 0, dislikes: 0, likedBy: [], dislikedBy: [] });
+                commentForm.reset();
                 imagePreview.classList.add('hidden');
-                fileInputText.textContent = translations[currentLang].fileInputChoose; // Reset custom button text
-                console.log("Comment added successfully!");
+                fileInputText.textContent = translations[currentLang].fileInputChoose;
+                commentRatingValue.value = "0";
+                setupStarRating(starRatingInputContainer, commentRatingValue);
                 showAlert("alertCommentAddedSuccess");
-            } catch (e) {
-                console.error("Error adding document: ", e);
+            } catch (err) {
+                console.error("Error adding comment: ", err);
                 showAlert("alertCommentAddError");
             }
         });
         
-        const getTargetLanguageCode = (lang) => {
-            switch (lang) {
-                case 'ar':
-                    return 'ar';
-                case 'en':
-                    return 'en';
-                case 'zh':
-                    return 'zh';
-                default:
-                    return 'en';
+        function createStarDisplay(rating) {
+            let starsHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                starsHTML += `<svg class="${i <= rating ? 'filled' : ''}" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"></path></svg>`;
             }
-        };
+            return `<div class="star-rating">${starsHTML}</div>`;
+        }
+        
+        async function handleReaction(commentId, reactionType) {
+            if (!isAuthReady) { showAlert("alertFirebaseNotReady"); return; }
+            const commentRef = doc(db, `artifacts/${appId}/public/data/comments`, commentId);
+            try {
+                await runTransaction(db, async (transaction) => {
+                    const commentDoc = await transaction.get(commentRef);
+                    if (!commentDoc.exists()) throw "Document does not exist!";
+                    const data = commentDoc.data();
+                    let { likes, dislikes, likedBy, dislikedBy } = data;
+                    likedBy = likedBy || []; dislikedBy = dislikedBy || [];
+                    const hasLiked = likedBy.includes(userId);
+                    const hasDisliked = dislikedBy.includes(userId);
+
+                    if (reactionType === 'like') {
+                        if (hasLiked) { transaction.update(commentRef, { likes: likes - 1, likedBy: arrayRemove(userId) }); } 
+                        else {
+                            const updates = { likes: likes + 1, likedBy: arrayUnion(userId) };
+                            if (hasDisliked) { updates.dislikes = dislikes - 1; updates.dislikedBy = arrayRemove(userId); }
+                            transaction.update(commentRef, updates);
+                        }
+                    } else if (reactionType === 'dislike') {
+                        if (hasDisliked) { transaction.update(commentRef, { dislikes: dislikes - 1, dislikedBy: arrayRemove(userId) }); } 
+                        else {
+                            const updates = { dislikes: dislikes + 1, dislikedBy: arrayUnion(userId) };
+                            if (hasLiked) { updates.likes = likes - 1; updates.likedBy = arrayRemove(userId); }
+                            transaction.update(commentRef, updates);
+                        }
+                    }
+                });
+            } catch (e) { console.error("Reaction transaction failed: ", e); }
+        }
+        
+        async function resetDislikes(commentId) {
+            showAlert("resetDislikesConfirm", 'confirm', async (confirmed) => {
+                if (confirmed) {
+                    const commentRef = doc(db, `artifacts/${appId}/public/data/comments`, commentId);
+                    try {
+                        await runTransaction(db, async (t) => t.update(commentRef, { dislikes: 0, dislikedBy: [] }));
+                        showAlert("resetDislikesSuccess");
+                    } catch (e) { console.error("Error resetting dislikes:", e); showAlert("resetDislikesError"); }
+                }
+            });
+        }
+
+        async function deleteComment(commentId, commentUserId) {
+            if (!isAuthReady) { showAlert("alertFirebaseNotReady"); return; }
+            if (userId !== commentUserId && !isDeveloperMode) { showAlert("alertNoPermission"); return; }
+            showAlert("alertDeleteConfirm", 'confirm', async (confirmed) => {
+                if (confirmed) {
+                    try {
+                        await deleteDoc(doc(db, `artifacts/${appId}/public/data/comments`, commentId));
+                        showAlert("alertDeleteSuccess");
+                    } catch (e) { console.error("Error deleting document: ", e); showAlert("alertDeleteError"); }
+                }
+            });
+        }
 
         async function translateComment(commentTextElement, originalText) {
-            const targetLang = getTargetLanguageCode(currentLang);
-            const prompt = `Translate the following text to ${targetLang} language:\n\n${originalText}`;
-            
+            const targetLang = { ar: 'ar', en: 'en', zh: 'zh' }[currentLang] || 'en';
+            const prompt = `Translate the following text to the ${targetLang} language. Provide only the translated text, without any additional explanatory phrases like "Here is the translation:":\n\n${originalText}`;
             commentTextElement.textContent = `${translations[currentLang].commentsLoading}...`;
-
-            let chatHistory = [];
-            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-            const payload = { contents: chatHistory };
-            const apiKey = GEMINI_API_KEY;
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
             try {
-                const response = await fetch(apiUrl, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
                 });
-                const result = await response.json();
 
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    const translatedText = result.candidates[0].content.parts[0].text;
-                    commentTextElement.textContent = translatedText;
-                } else {
-                    commentTextElement.textContent = translations[currentLang].translateError;
+                if (!response.ok) {
+                    const errorBody = await response.json();
+                    console.error("Translation API request failed:", response.status, errorBody);
+                    throw new Error(`API request failed with status ${response.status}`);
                 }
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 && result.candidates[0].content?.parts?.[0]?.text) {
+                     const translatedText = result.candidates[0].content.parts[0].text;
+                     commentTextElement.textContent = translatedText.trim();
+                } else {
+                    console.error("Invalid response from translation API:", result);
+                    if (result.candidates?.[0]?.finishReason === 'SAFETY') {
+                         console.error("Translation blocked due to safety settings.");
+                    }
+                    throw new Error("Invalid or blocked API response.");
+                }
+
             } catch (e) {
                 console.error("Error during translation:", e);
                 commentTextElement.textContent = translations[currentLang].translateError;
             }
         }
 
-
-        async function deleteComment(commentId, commentUserId) {
-            if (!isAuthReady) {
-                showAlert("alertFirebaseNotReady");
-                return;
-            }
-
-            if (userId !== commentUserId && !isDeveloperMode) {
-                showAlert("alertNoPermission");
-                return;
-            }
-
-            showAlert("alertDeleteConfirm", 'confirm', async (confirmed) => {
-                if (confirmed) {
-                    try {
-                        await deleteDoc(doc(db, `artifacts/${appId}/public/data/comments`, commentId));
-                        console.log("Comment deleted successfully!");
-                        showAlert("alertDeleteSuccess");
-                    } catch (e) {
-                        console.error("Error deleting document: ", e);
-                        showAlert("alertDeleteError");
-                    }
-                }
-            });
-        }
-        
-        window.showFullImage = function(imageUrl) {
-            fullImage.src = imageUrl;
-            fullImageModal.classList.add('active');
-        }
-
-        fullImageModal.addEventListener('click', () => {
-            fullImageModal.classList.remove('active');
-        });
-
         function loadComments() {
-            if (!db) {
-                console.warn("Firestore not initialized yet.");
-                return;
-            }
-
-            const commentsRef = collection(db, `artifacts/${appId}/public/data/comments`);
-            const q = query(commentsRef);
-
-            onSnapshot(q, (snapshot) => {
+            if (!db) return;
+            const q = query(collection(db, `artifacts/${appId}/public/data/comments`), orderBy("timestamp", "desc"));
+            const unsubscribe = onSnapshot(q, (snapshot) => {
                 commentsList.innerHTML = '';
                 commentsLoading.classList.add('hidden');
+                noComments.classList.toggle('hidden', !snapshot.empty);
 
-                if (snapshot.empty) {
-                    noComments.classList.remove('hidden');
-                    return;
-                } else {
-                    noComments.classList.add('hidden');
-                }
-
-                snapshot.forEach((doc) => {
+                snapshot.docs.forEach((doc) => {
                     const comment = doc.data();
                     const commentId = doc.id;
                     const commentElement = document.createElement('div');
                     commentElement.className = 'p-4 rounded-lg shadow-sm relative';
+                    commentElement.dataset.commentId = commentId;
+
+                    const hasLiked = comment.likedBy?.includes(userId);
+                    const hasDisliked = comment.dislikedBy?.includes(userId);
+
                     commentElement.innerHTML = `
-                        <div class="flex items-center justify-between mb-2">
-                            <p class="font-semibold text-indigo-600 dark:text-indigo-300">${comment.name}</p>
-                            <div class="flex items-center">
-                                <p class="text-xs text-gray-500 dark:text-gray-400 mr-2">${comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString(currentLang) : translations[currentLang].commentDateUnavailable}</p>
-                                <button class="translate-btn" data-comment-id="${commentId}" data-original-text="${comment.text}">
-                                    ${translations[currentLang].translateBtnText}
-                                </button>
+                        <div class="flex items-start justify-between mb-2 gap-4">
+                            <div class="flex items-center gap-3">
+                                <p class="font-semibold text-indigo-600 dark:text-indigo-300">${comment.name || 'Anonymous'}</p>
+                                ${comment.rating > 0 ? createStarDisplay(comment.rating) : ''}
+                            </div>
+                            <div class="flex items-center flex-shrink-0">
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mx-2">${comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString(currentLang) : translations[currentLang].commentDateUnavailable}</p>
+                                <button class="translate-btn" data-action="translate" data-original-text="${comment.text.replace(/"/g, '&quot;')}">${translations[currentLang].translateBtnText}</button>
                                 ${(userId === comment.userId || isDeveloperMode) ? `
-                                    <button class="text-red-500 hover:text-red-700 p-1 rounded-full focus:outline-none" data-delete-id="${commentId}" data-comment-user-id="${comment.userId}" aria-label="${translations[currentLang].alertDeleteConfirm}">
-                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1zm2 3a1 1 0 011-1h4a1 1 0 110 2H10a1 1 0 01-1-1zm0 3a1 1 0 011-1h4a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-                                    </button>
-                                ` : ''}
+                                    <button class="text-red-500 hover:text-red-700 p-1 rounded-full focus:outline-none ml-1" data-action="delete" aria-label="Delete">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1zm2 3a1 1 0 011-1h2a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+                                    </button>` : ''}
                             </div>
                         </div>
-                        <p class="text-gray-900 dark:text-gray-200" data-comment-text="${commentId}">${comment.text}</p>
+                        <p class="text-gray-900 dark:text-gray-200 mt-1" data-comment-text-id="${commentId}">${comment.text}</p>
                         ${comment.imageUrl ? `<img src="${comment.imageUrl}" alt="Comment Image" class="mt-4 comment-image" onclick="window.showFullImage('${comment.imageUrl}')">` : ''}
-                        <p class="text-xs text-gray-400 dark:text-gray-500 mt-2 break-all">User ID: ${comment.userId}</p>
-                    `;
+                        <div class="comment-actions">
+                             <button class="action-btn ${hasLiked ? 'liked' : ''}" data-action="like" aria-label="Like"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333V19h8.333a2 2 0 001.992-1.838l.93-5.585A2 2 0 0015.333 9H12V4.5a2.5 2.5 0 00-5 0V9H6Z"></path></svg><span>${comment.likes || 0}</span></button>
+                             <button class="action-btn ${hasDisliked ? 'disliked' : ''}" data-action="dislike" aria-label="Dislike"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M18 9.5a1.5 1.5 0 11-3 0v-6a1.5 1.5 0 013 0v6zM14 9.667V1H5.667a2 2 0 00-1.992 1.838l-.93 5.585A2 2 0 004.667 11H8v4.5a2.5 2.5 0 005 0V11h3.333Z"></path></svg><span>${comment.dislikes || 0}</span></button>
+                             ${isDeveloperMode ? `<button class="action-btn dev-action-btn" data-action="reset-dislikes" title="${translations[currentLang].resetDislikesConfirm}"><svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75V4.5h8V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 6a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 6ZM4.5 6.5A.75.75 0 0 1 5.25 6h9.5a.75.75 0 0 1 0 1.5h-9.5A.75.75 0 0 1 4.5 6.5Z" clip-rule="evenodd" /><path d="M6.05 8.05a.75.75 0 0 1 .75.75v6.25a.75.75 0 0 1-1.5 0V8.8a.75.75 0 0 1 .75-.75Zm4.5 0a.75.75 0 0 1 .75.75v6.25a.75.75 0 0 1-1.5 0V8.8a.75.75 0 0 1 .75-.75Zm3.75.75a.75.75 0 0 0-1.5 0v6.25a.75.75 0 0 0 1.5 0V8.8Z" /><path d="M4 5.5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1V15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5.5Zm1.5 0a.5.5 0 0 0-.5.5V15a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V6a.5.5 0 0 0-.5-.5h-9Z" /></svg></button>` : ''}
+                        </div>`;
                     commentsList.appendChild(commentElement);
 
-                    const translateButton = commentElement.querySelector(`.translate-btn[data-comment-id="${commentId}"]`);
-                    const commentTextElement = commentElement.querySelector(`[data-comment-text="${commentId}"]`);
-                    
-                    if (translateButton && commentTextElement) {
-                        translateButton.addEventListener('click', () => {
-                            const originalText = translateButton.getAttribute('data-original-text');
-                            translateComment(commentTextElement, originalText);
-                        });
-                    }
+                    commentElement.addEventListener('click', (e) => {
+                        const button = e.target.closest('button[data-action]');
+                        if (!button) return;
+                        const action = button.dataset.action;
 
-                    if (userId === comment.userId || isDeveloperMode) {
-                        const deleteButton = commentElement.querySelector(`[data-delete-id="${commentId}"]`);
-                        if (deleteButton) {
-                            deleteButton.addEventListener('click', () => {
-                                deleteComment(commentId, comment.userId);
-                            });
+                        if (action === 'like' || action === 'dislike') {
+                            handleReaction(commentId, action);
+                        } else if (action === 'delete') {
+                            deleteComment(commentId, comment.userId);
+                        } else if (action === 'reset-dislikes') {
+                            resetDislikes(commentId);
+                        } else if (action === 'translate') {
+                            const textElement = commentElement.querySelector(`[data-comment-text-id="${commentId}"]`);
+                            const originalText = button.dataset.originalText;
+                            if (textElement && originalText) {
+                                translateComment(textElement, originalText);
+                            }
                         }
-                    }
+                    });
                 });
             }, (error) => {
                 console.error("Error listening to comments:", error);
@@ -1545,23 +746,14 @@
                 commentsLoading.classList.remove('hidden');
             });
         }
-
-        let footerClickCount = 0;
-        let lastFooterClickTime = 0;
-
-        footerCopyright.addEventListener('click', (e) => {
-            const currentTime = new Date().getTime();
-
-            if (currentTime - lastFooterClickTime < 5000) {
-                footerClickCount++;
-            } else {
-                footerClickCount = 1;
-            }
-            lastFooterClickTime = currentTime;
-
+        
+        let footerClickCount = 0, lastFooterClickTime = 0;
+        footerCopyright.addEventListener('click', () => {
+            const now = Date.now();
+            if (now - lastFooterClickTime < 3000) footerClickCount++; else footerClickCount = 1;
+            lastFooterClickTime = now;
             if (footerClickCount === 5) {
                 footerClickCount = 0;
-                lastFooterClickTime = 0;
                 showDeveloperModePrompt();
             }
         });
@@ -1569,20 +761,18 @@
         function showDeveloperModePrompt() {
             customAlertMessage.textContent = translations[currentLang].alertDeveloperModePrompt;
             customAlertButtons.innerHTML = '';
-
             const passwordInput = document.createElement('input');
             passwordInput.type = 'password';
             passwordInput.id = 'developerPasswordInput';
-            passwordInput.className = 'mt-4 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2';
-            passwordInput.placeholder = translations[currentLang].alertDeveloperModePrompt;
+            passwordInput.className = 'mt-4 block w-full rounded-md shadow-sm p-2';
+            passwordInput.placeholder = 'Secret Code...';
             customAlertButtons.appendChild(passwordInput);
 
             const submitBtn = document.createElement('button');
             submitBtn.className = 'btn-primary mt-4';
-            submitBtn.textContent = translations[currentLang].customAlertClose;
-            submitBtn.addEventListener('click', () => {
-                const enteredCode = passwordInput.value;
-                if (enteredCode === DEVELOPER_MODE_SECRET) {
+            submitBtn.textContent = translations[currentLang].confirmText;
+            submitBtn.onclick = () => {
+                if (passwordInput.value === DEVELOPER_MODE_SECRET) {
                     isDeveloperMode = true;
                     customAlertModal.classList.add('hidden');
                     showAlert("alertDeveloperModeSuccess");
@@ -1592,7 +782,7 @@
                 } else {
                     showAlert("alertDeveloperModeInvalid");
                 }
-            });
+            };
             customAlertButtons.appendChild(submitBtn);
             customAlertModal.classList.remove('hidden');
         }
@@ -1602,29 +792,25 @@
                 developerModeIndicator.textContent = translations[currentLang].developerModeIndicatorText;
             }
         }
-
-        let devModeIndicatorClickCount = 0;
-        let lastDevModeIndicatorClickTime = 0;
-
+        
         developerModeIndicator.addEventListener('click', () => {
-            const currentTime = new Date().getTime();
-
-            if (currentTime - lastDevModeIndicatorClickTime < 5000) {
-                devModeIndicatorClickCount++;
-            } else {
-                devModeIndicatorClickCount = 1;
-            }
-            lastDevModeIndicatorClickTime = currentTime;
-
-            if (devModeIndicatorClickCount === 3) {
-                devModeIndicatorClickCount = 0;
-                lastDevModeIndicatorClickTime = 0;
-                isDeveloperMode = false;
-                developerModeIndicator.style.display = 'none';
-                showAlert("alertDeveloperModeExit");
-                loadComments();
-            }
+            isDeveloperMode = false;
+            developerModeIndicator.style.display = 'none';
+            showAlert("alertDeveloperModeExit");
+            loadComments();
         });
+        
+        window.showFullImage = (imageUrl) => {
+            fullImage.src = imageUrl;
+            fullImageModal.classList.add('active');
+        };
+        fullImageModal.addEventListener('click', () => fullImageModal.classList.remove('active'));
+
+        // Initial setup
+        initFirebase();
+        setupStarRating(starRatingInputContainer, commentRatingValue);
+        applyDarkMode(localStorage.getItem('darkMode') === 'enabled');
+
     </script>
 </body>
 </html>
