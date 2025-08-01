@@ -81,7 +81,7 @@
         #commentsList > div p { color: rgb(65, 77, 102); }
         body.dark #commentsList > div { background-color: #43526b42; }
         body.dark #commentsList > div p { color: #e2e8f0; }
-        .custom-file-input { position: relative; overflow: hidden; display: inline-block; cursor: pointer; padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 600; background-color: #f8fafc; color: #334155; border: 1px solid #e2e8f0; transition: background-color 0.2s ease, border-color 0.2s ease; text-align: center; }
+        .custom-file-input { position: relative; overflow: hidden; display: inline-block; cursor: pointer; padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 600; background-color: #f8fafc; color: #334155; border: 1px solid #e2e8f0; text-align: center; }
         .custom-file-input:hover { background-color: #e2e8f0; border-color: #cbd5e0; }
         .custom-file-input input[type="file"] { position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
         body.dark .custom-file-input { background-color: #334155; color: #e2e8f0; border-color: #475569; }
@@ -100,7 +100,7 @@
             .nav-link { padding: 0.75rem 1rem; text-align: center; }
         }
         
-        #developerModeIndicator { position: fixed; bottom: 4rem; right: 4rem; background-color: #ef4444; color: white; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; z-index: 50; cursor: pointer; transition: opacity 0.3s ease, background-color 0.3s ease; display: none; }
+        #developerModeIndicator { position: fixed; bottom: 4rem; right: 4rem; background-color: #ef4444; color: white; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; z-index: 50; display: none; }
         body.dark #developerModeIndicator { background-color: #dc2626; }
         #fullImageModal, #orderModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); display: flex; align-items: center; justify-content: center; z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         #fullImageModal.active, #orderModal.active { opacity: 1; pointer-events: auto; }
@@ -155,7 +155,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
-            <h2 class="text-2xl font-bold text-center mb-6 text-indigo-700 dark:text-indigo-400" data-lang-key="orderFormTitle">اطلب الآن</h2>
+            <h2 class="text-2xl font-bold text-center mb-6 text-indigo-700 dark:text-indigo-400" data-lang-key="orderFormTitle">نموذج طلب خدمة</h2>
             <form id="orderForm" class="space-y-4">
                 <div>
                     <label for="orderName" class="block text-sm font-medium" data-lang-key="orderNameLabel">الاسم الكامل:</label>
@@ -209,7 +209,7 @@
                         <li data-lang="ar">العربية</li>
                         <li data-lang="en">English</li>
                         <li data-lang="zh">中文</li>
-                    </ul-tag>
+                    </ul>
                 </div>
                 <button id="darkModeToggle" aria-label="Toggle dark mode">
                     <svg class="dark-mode-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path id="darkModeIconPath" d="M12 3a9 9 0 109 9c0-.46-.04-.92-.12-1.36a5.999 5.999 0 01-8.588-8.588C12.92 3.04 12.46 3 12 3z"/></svg>
@@ -227,7 +227,8 @@
                     <button id="orderNowNavBtn" class="nav-link text-white bg-indigo-500 hover:bg-indigo-600 rounded-lg px-4 py-2" data-lang-key="orderNowBtn">اطلب الآن</button>
                 </div>
             </div>
-        </nav>
+        </div>
+    </nav>
 
     <header id="hero" class="hero-section text-center">
         <div class="max-w-4xl mx-auto">
@@ -290,7 +291,7 @@
             <div class="max-w-4xl mx-auto">
                 <h2 class="section-heading text-center mb-12" data-lang-key="commentsHeading">التعليقات</h2>
                 <div class="card p-8 md:p-12">
-                    <h3 class="text-2xl font-semibold mb-6 text-indigo-700 dark:text-indigo-400" data-lang-key="leaveComment">اترك تعليقك</h3>
+                    <h3 class="text-2xl font-semibold mb-6 text-indigo-700 dark:text-indigo-400" data-lang-key="leaveComment">أضف تعليقك</h3>
                     <form id="commentForm" class="space-y-4">
                         <div>
                             <label for="commentName" class="block text-sm font-medium" data-lang-key="commentNameLabel">اسمك:</label>
@@ -418,7 +419,7 @@
         
         const translations = {
             ar: { 
-                siteTitle: "خدماتنا - تصميم وتطوير المشاريع", navHome: "الرئيسية", navWhyChooseUs: "لماذا تختارنا؟", navAboutUs: "من نحن؟", navServices: "ماذا نقدم؟", navContact: "تواصل معنا", navComments: "التعليقات", heroTitle: "مصمم جميع أنواع المشاريع والمواقع والتصاميم والبحوث والواجبات", heroDiscount: "خصم 30% لفترة محدودة على كامل الخدمات", heroSubtitle: "نقدم لكم حلولاً متكاملة لتلبية جميع احتياجاتكم الأكاديمية والمهنية", heroContactBtn: "تواصل معنا الآن", featuresHeading: "لماذا تختارنا؟", feature1Title: "تنسيقات شكل رائعة", feature1Desc: "نقدم العديد من التنسيقات الجمالية التي تبرز عملك.", feature2Title: "تنسيق كلام احترافي", feature2Desc: "تنسيق دقيق للمحتوى في البحوث والمشاريع.", feature3Title: "أكثر من 100 نوع خط", feature3Desc: "اختر من مجموعة واسعة من الخطوط المميزة.", feature4Title: "عروض تقديمية مميزة", feature4Desc: "تصميم عروض بوربوينت جذابة ومبتكرة.", aboutUsHeading: "من نحن؟", aboutUsParagraph1: "نحن فريق متقدم من خريجي جامعة UCSI الماليزية، نجمع بين المعرفة الأكاديمية العميقة والخبرة العملية الواسعة في تصميم وتنفيذ العديد من المشاريع الكبيرة والصغيرة.", aboutUsParagraph2: "نلتزم بتقديم خدمات عالية الجودة بأسعار تنافسية للغاية، مع التركيز الدائم على تحقيق رضا العميل كشعارنا الأول والأخير ✨.", servicesHeading: "ماذا نقدم؟", service1Title: "تصميم ثلاثي الأبعاد", service1Desc: "تصميم جميع أنواع القطع ثلاثية الأبعاد على برامج الأوتوكاد وبرامج الطباعة ثلاثية الأبعاد بجميع صيغ الملفات القابلة للطباعة.", service2Title: "عروض تقديمية (بوربوينت)", service2Desc: "تصميم عروض تقديمية على البوربوينت مع كامل التنسيق وإضافة الصور والحركات المرئية.", service3Title: "تنسيق ملفات إكسل", service3Desc: "تصميم وتعديل وتنسيق ملفات إكسل باحترافية عالية.", service4Title: "تصاميم هندسية ومخططات", service4Desc: "تصاميم هندسية، مخططات، كهرباء، وغيرها من الأعمال الهندسية المتخصصة.", service5Title: "كتابة وتنسيق تقارير", service5Desc: "كتابة وتنسيق التقارير على برنامج الوورد بجودة ودقة عالية.", service6Title: "تصميم وتعديل فيديوهات وصور", service6Desc: "تصميم وتعديل الفيديوهات والصور بجودة عالية لتناسب جميع احتياجاتكم.", service7Title: "برمجة وتطوير مواقع الويب", service7Desc: "برمجة مواقع ويب تفاعلية وجمالية باستخدام لغة JavaScript وتنسيق الشكل باستخدام CSS، مع إضافة الموقع على سيرفر وإنشاء رابط خاص به.", contactHeading: "للتواصل معنا", contactSubtitle: "يسعدنا استقبال استفساراتكم وطلباتكم عبر وسائل التواصل التالية:", whatsappNumberKSA: "0500900329 داخل المملكة", whatsappNumberOutsideKSA: "+60163340537 خارج المملكة", telegramContact: "التواصل عبر التلجرام", footerText: "© 2025 جميع الحقوق محفوظة لفريق التصميم والمشاريع.", modeLight: "الوضع الفاتح", modeDark: "الوضع الداكن", commentsHeading: "التعليقات", leaveComment: "اترك تعليقك", commentNameLabel: "اسمك:", commentNamePlaceholder: "ادخل اسمك", commentTextLabel: "تعليقك:", commentTextPlaceholder: "اكتب تعليقك هنا...", commentRatingLabel: "تقييمك:", commentImageLabel: "إضافة صورة (اختياري):", fileInputChoose: "اختيار ملف", fileInputNoFile: "لم يتم اختيار أي ملف", commentSubmitBtn: "إرسال التعليق", allComments: "جميع التعليقات", commentsLoading: "جاري تحميل التعليقات...", noComments: "لا توجد تعليقات حتى الآن. كن أول من يعلق!", commentDateUnavailable: "التاريخ غير متوفر", alertNameTextEmpty: "الرجاء إدخال اسمك.", alertCommentTextEmpty: "الرجاء إدخال تعليقك.", alertCommentAddedSuccess: "تم إضافة التعليق بنجاح!", alertCommentAddError: "حدث خطأ أثناء إضافة التعليق. الرجاء المحاولة مرة أخرى.", alertFirebaseInitError: "فشل تهيئة Firebase. قد لا تعمل التعليقات بشكل صحيح.", alertFirebaseNotReady: "Firebase غير جاهز بعد. الرجاء الانتظار.", alertDeleteConfirm: "هل أنت متأكد أنك تريد حذف هذا التعليق؟", alertDeleteSuccess: "تم حذف التعليق بنجاح!", alertDeleteError: "حدث خطأ أثناء حذف التعليق. الرجاء المحاولة مرة أخرى.", alertNoPermission: "ليس لديك صلاحية لحذف هذا التعليق.", alertDeveloperModePrompt: "الرجاء إدخال الكود السري للدخول إلى وضع المطور:", alertDeveloperModeSuccess: "تم تفعيل وضع المطور بنجاح!", alertDeveloperModeInvalid: "الكود السري غير صحيح. الرجاء المحاولة مرة أخرى.", alertDeveloperModeExit: "تم الخروج من وضع المطور.", confirmText: "نعم", cancelText: "إلغاء", customAlertClose: "حسناً", developerModeIndicatorText: "وضع المطور", translateBtnText: "ترجمة", translateError: "فشل في الترجمة.", imageUploadError: "فشل رفع الصورة. الرجاء المحاولة مرة أخرى.", resetDislikesConfirm: "هل أنت متأكد من إعادة تعيين عدد مرات عدم الإعجاب؟", resetDislikesSuccess: "تمت إعادة تعيين عدم الإعجاب بنجاح!", resetDislikesError: "فشل في إعادة تعيين عدم الإعجاب.",
+                siteTitle: "خدماتنا - تصميم وتطوير المشاريع", navHome: "الرئيسية", navWhyChooseUs: "لماذا تختارنا؟", navAboutUs: "من نحن؟", navServices: "ماذا نقدم؟", navContact: "تواصل معنا", navComments: "التعليقات", heroTitle: "مصمم جميع أنواع المشاريع والمواقع والتصاميم والبحوث والواجبات", heroDiscount: "خصم 30% لفترة محدودة على كامل الخدمات", heroSubtitle: "نقدم لكم حلولاً متكاملة لتلبية جميع احتياجاتكم الأكاديمية والمهنية", heroContactBtn: "تواصل معنا الآن", featuresHeading: "لماذا تختارنا؟", feature1Title: "تنسيقات شكل رائعة", feature1Desc: "نقدم العديد من التنسيقات الجمالية التي تبرز عملك.", feature2Title: "تنسيق كلام احترافي", feature2Desc: "تنسيق دقيق للمحتوى في البحوث والمشاريع.", feature3Title: "أكثر من 100 نوع خط", feature3Desc: "اختر من مجموعة واسعة من الخطوط المميزة.", feature4Title: "عروض تقديمية مميزة", feature4Desc: "تصميم عروض بوربوينت جذابة ومبتكرة.", aboutUsHeading: "من نحن؟", aboutUsParagraph1: "نحن فريق متقدم من خريجي جامعة UCSI الماليزية، نجمع بين المعرفة الأكاديمية العميقة والخبرة العملية الواسعة في تصميم وتنفيذ العديد من المشاريع الكبيرة والصغيرة.", aboutUsParagraph2: "نلتزم بتقديم خدمات عالية الجودة بأسعار تنافسية للغاية، مع التركيز الدائم على تحقيق رضا العميل كشعارنا الأول والأخير ✨.", servicesHeading: "ماذا نقدم؟", service1Title: "تصميم ثلاثي الأبعاد", service1Desc: "تصميم جميع أنواع القطع ثلاثية الأبعاد على برامج الأوتوكاد وبرامج الطباعة ثلاثية الأبعاد بجميع صيغ الملفات القابلة للطباعة.", service2Title: "عروض تقديمية (بوربوينت)", service2Desc: "تصميم عروض تقديمية على البوربوينت مع كامل التنسيق وإضافة الصور والحركات المرئية.", service3Title: "تنسيق ملفات إكسل", service3Desc: "تصميم وتعديل وتنسيق ملفات إكسل باحترافية عالية.", service4Title: "تصاميم هندسية ومخططات", service4Desc: "تصاميم هندسية، مخططات، كهرباء، وغيرها من الأعمال الهندسية المتخصصة.", service5Title: "كتابة وتنسيق تقارير", service5Desc: "كتابة وتنسيق التقارير على برنامج الوورد بجودة ودقة عالية.", service6Title: "تصميم وتعديل فيديوهات وصور", service6Desc: "تصميم وتعديل الفيديوهات والصور بجودة عالية لتناسب جميع احتياجاتكم.", service7Title: "برمجة وتطوير مواقع الويب", service7Desc: "برمجة مواقع ويب تفاعلية وجمالية باستخدام لغة JavaScript وتنسيق الشكل باستخدام CSS، مع إضافة الموقع على سيرفر وإنشاء رابط خاص به.", contactHeading: "للتواصل معنا", contactSubtitle: "يسعدنا استقبال استفساراتكم وطلباتكم عبر وسائل التواصل التالية:", whatsappNumberKSA: "0500900329 داخل المملكة", whatsappNumberOutsideKSA: "+60163340537 خارج المملكة", telegramContact: "التواصل عبر التلجرام", footerText: "© 2025 جميع الحقوق محفوظة لفريق التصميم والمشاريع.", modeLight: "الوضع الفاتح", modeDark: "الوضع الداكن", commentsHeading: "التعليقات", leaveComment: "أضف تعليقك", commentNameLabel: "اسمك:", commentNamePlaceholder: "ادخل اسمك", commentTextLabel: "تعليقك:", commentTextPlaceholder: "اكتب تعليقك هنا...", commentRatingLabel: "تقييمك:", commentImageLabel: "إضافة صورة (اختياري):", fileInputChoose: "اختيار ملف", fileInputNoFile: "لم يتم اختيار أي ملف", commentSubmitBtn: "إرسال التعليق", allComments: "جميع التعليقات", commentsLoading: "جاري تحميل التعليقات...", noComments: "لا توجد تعليقات حتى الآن. كن أول من يعلق!", commentDateUnavailable: "التاريخ غير متوفر", alertNameTextEmpty: "الرجاء إدخال اسمك.", alertCommentTextEmpty: "الرجاء إدخال تعليقك.", alertCommentAddedSuccess: "تم إرسال تعليقك بنجاح!", alertCommentAddError: "حدث خطأ أثناء إضافة التعليق. الرجاء المحاولة مرة أخرى.", alertFirebaseInitError: "فشل تهيئة Firebase. قد لا تعمل التعليقات بشكل صحيح.", alertFirebaseNotReady: "Firebase غير جاهز بعد. الرجاء الانتظار.", alertDeleteConfirm: "هل أنت متأكد أنك تريد حذف هذا التعليق؟", alertDeleteSuccess: "تم حذف التعليق بنجاح!", alertDeleteError: "حدث خطأ أثناء حذف التعليق. الرجاء المحاولة مرة أخرى.", alertNoPermission: "ليس لديك صلاحية لحذف هذا التعليق.", alertDeveloperModePrompt: "الرجاء إدخال الكود السري للدخول إلى وضع المطور:", alertDeveloperModeSuccess: "تم تفعيل وضع المطور بنجاح!", alertDeveloperModeInvalid: "الكود السري غير صحيح. الرجاء المحاولة مرة أخرى.", alertDeveloperModeExit: "تم الخروج من وضع المطور.", confirmText: "نعم", cancelText: "إلغاء", customAlertClose: "حسناً", developerModeIndicatorText: "وضع المطور", translateBtnText: "ترجمة", translateError: "فشل في الترجمة.", imageUploadError: "فشل رفع الصورة. الرجاء المحاولة مرة أخرى.", resetDislikesConfirm: "هل أنت متأكد من إعادة تعيين الإعجابات السلبية؟", resetDislikesSuccess: "تم إعادة تعيين الإعجابات السلبية بنجاح!", resetDislikesError: "فشل إعادة تعيين الإعجابات السلبية.",
                 // New translations for the order form
                 orderNowBtn: "اطلب الآن",
                 orderFormTitle: "نموذج طلب خدمة",
@@ -441,7 +442,7 @@
                 orderFieldRequired: "هذا الحقل مطلوب."
             },
             en: { 
-                siteTitle: "Our Services - Project Design & Development", navHome: "Home", navWhyChooseUs: "Why Choose Us?", navAboutUs: "About Us", navServices: "What We Offer?", navContact: "Contact Us", navComments: "Comments", heroTitle: "Designer of all types of projects, websites, designs, research, and assignments", heroDiscount: "30% discount for a limited time on all services", heroSubtitle: "We offer integrated solutions to meet all your academic and professional needs", heroContactBtn: "Contact Us Now", featuresHeading: "Why Choose Us?", feature1Title: "Excellent Visual Formats", feature1Desc: "We provide many aesthetic formats that highlight your work.", feature2Title: "Professional Text Formatting", feature2Desc: "Precise content formatting for research and projects.", feature3Title: "Over 100 Font Types", feature3Desc: "Choose from a wide range of distinctive fonts.", feature4Title: "Outstanding Presentations", feature4Desc: "Designing attractive and innovative PowerPoint presentations.", aboutUsHeading: "Who Are We?", aboutUsParagraph1: "We are an advanced team of UCSI Malaysian University graduates, combining deep academic knowledge with extensive practical experience in designing and implementing many large and small projects.", aboutUsParagraph2: "We are committed to providing high-quality services at highly competitive prices, with a constant focus on achieving customer satisfaction as our first and last motto ✨.", servicesHeading: "What We Offer?", service1Title: "3D Design", service1Desc: "Designing all types of 3D parts on AutoCAD and 3D printing software in all printable file formats.", service2Title: "Presentations (PowerPoint)", service2Desc: "Designing PowerPoint presentations with full formatting and adding images and visual effects.", service3Title: "Excel File Formatting", service3Desc: "Designing, modifying, and formatting Excel files with high professionalism.", service4Title: "Engineering Designs & Plans", service4Desc: "Engineering designs, plans, electrical works, and other specialized engineering works.", service5Title: "Report Writing & Formatting", service5Desc: "Writing and formatting reports in Word with high quality and accuracy.", service6Title: "Video & Photo Design/Editing", service6Desc: "Designing and editing videos and photos with high quality to suit all your needs.", service7Title: "Web Programming & Development", service7Desc: "Programming interactive and aesthetic websites using JavaScript and styling with CSS, including hosting the site on a server and creating a dedicated link.", contactHeading: "Contact Us", contactSubtitle: "We are happy to receive your inquiries and requests via the following channels:", whatsappNumberKSA: "0500900329 Inside KSA", whatsappNumberOutsideKSA: "+60163340537 Outside KSA", telegramContact: "Contact via Telegram", footerText: "© 2025 All rights reserved for the Design and Projects Team.", modeLight: "Light Mode", modeDark: "Dark Mode", commentsHeading: "Comments", leaveComment: "Leave a comment", commentNameLabel: "Your Name:", commentNamePlaceholder: "Enter your name", commentTextLabel: "Your Comment:", commentTextPlaceholder: "Write your comment here...", commentRatingLabel: "Your Rating:", commentImageLabel: "Add an image (optional):", fileInputChoose: "Choose file", fileInputNoFile: "No file chosen", commentSubmitBtn: "Submit Comment", allComments: "All Comments", commentsLoading: "Loading comments...", noComments: "No comments yet. Be the first to comment!", commentDateUnavailable: "Date Unavailable", alertNameTextEmpty: "Please enter your name.", alertCommentTextEmpty: "Please enter your comment.", alertCommentAddedSuccess: "Comment added successfully!", alertCommentAddError: "An error occurred while adding the comment. Please try again.", alertFirebaseInitError: "Firebase initialization failed. Comments may not work correctly.", alertFirebaseNotReady: "Firebase is not ready yet. Please wait.", alertDeleteConfirm: "Are you sure you want to delete this comment?", alertDeleteSuccess: "Comment deleted successfully!", alertDeleteError: "An error occurred while deleting the comment. Please try again.", alertNoPermission: "You do not have permission to delete this comment.", alertDeveloperModePrompt: "Please enter the secret code to enter developer mode:", alertDeveloperModeSuccess: "Developer mode activated successfully!", alertDeveloperModeInvalid: "Incorrect secret code. Please try again.", alertDeveloperModeExit: "Exited developer mode.", confirmText: "Yes", cancelText: "Cancel", customAlertClose: "OK", developerModeIndicatorText: "Developer Mode", translateBtnText: "Translate", translateError: "Translation failed.", imageUploadError: "Image upload failed. Please try again.", resetDislikesConfirm: "Are you sure you want to reset the dislikes?", resetDislikesSuccess: "Dislikes reset successfully!", resetDislikesError: "Failed to reset dislikes.",
+                siteTitle: "Our Services - Project Design & Development", navHome: "Home", navWhyChooseUs: "Why Choose Us?", navAboutUs: "About Us", navServices: "What We Offer?", navContact: "Contact Us", navComments: "Comments", heroTitle: "Designer of all types of projects, websites, designs, research, and assignments", heroDiscount: "30% discount for a limited time on all services", heroSubtitle: "We offer integrated solutions to meet all your academic and professional needs", heroContactBtn: "Contact Us Now", featuresHeading: "Why Choose Us?", feature1Title: "Excellent Visual Formats", feature1Desc: "We provide many aesthetic formats that highlight your work.", feature2Title: "Professional Text Formatting", feature2Desc: "Precise content formatting for research and projects.", feature3Title: "Over 100 Font Types", feature3Desc: "Choose from a wide range of distinctive fonts.", feature4Title: "Outstanding Presentations", feature4Desc: "Designing attractive and innovative PowerPoint presentations.", aboutUsHeading: "Who Are We?", aboutUsParagraph1: "We are an advanced team of UCSI Malaysian University graduates, combining deep academic knowledge with extensive practical experience in designing and implementing many large and small projects.", aboutUsParagraph2: "We are committed to providing high-quality services at highly competitive prices, with a constant focus on achieving customer satisfaction as our first and last motto ✨.", servicesHeading: "What We Offer?", service1Title: "3D Design", service1Desc: "Designing all types of 3D parts on AutoCAD and 3D printing software in all printable file formats.", service2Title: "Presentations (PowerPoint)", service2Desc: "Designing PowerPoint presentations with full formatting and adding images and visual effects.", service3Title: "Excel File Formatting", service3Desc: "Designing, modifying, and formatting Excel files with high professionalism.", service4Title: "Engineering Designs & Plans", service4Desc: "Engineering designs, plans, electrical works, and other specialized engineering works.", service5Title: "Report Writing & Formatting", service5Desc: "Writing and formatting reports in Word with high quality and accuracy.", service6Title: "Video & Photo Design/Editing", service6Desc: "Designing and editing videos and photos with high quality to suit all your needs.", service7Title: "Web Programming & Development", service7Desc: "Programming interactive and aesthetic websites using JavaScript and styling with CSS, including hosting the site on a server and creating a dedicated link.", contactHeading: "Contact Us", contactSubtitle: "We are happy to receive your inquiries and requests via the following channels:", whatsappNumberKSA: "0500900329 Inside KSA", whatsappNumberOutsideKSA: "+60163340537 Outside KSA", telegramContact: "Contact via Telegram", footerText: "© 2025 All rights reserved for the Design and Projects Team.", modeLight: "Light Mode", modeDark: "Dark Mode", commentsHeading: "Comments", leaveComment: "Leave a comment", commentNameLabel: "Your Name:", commentNamePlaceholder: "Enter your name", commentTextLabel: "Your Comment:", commentTextPlaceholder: "Write your comment here...", commentRatingLabel: "Your Rating:", commentImageLabel: "Add an image (optional):", fileInputChoose: "Choose file", fileInputNoFile: "No file chosen", commentSubmitBtn: "Submit Comment", allComments: "All Comments", commentsLoading: "Loading comments...", noComments: "No comments yet. Be the first to comment!", commentDateUnavailable: "Date Unavailable", alertNameTextEmpty: "Please enter your name.", alertCommentTextEmpty: "Please enter your comment.", alertCommentAddedSuccess: "Comment submitted successfully!", alertCommentAddError: "An error occurred while adding the comment. Please try again.", alertFirebaseInitError: "Firebase initialization failed. Comments may not work correctly.", alertFirebaseNotReady: "Firebase is not ready yet. Please wait.", alertDeleteConfirm: "Are you sure you want to delete this comment?", alertDeleteSuccess: "Comment deleted successfully!", alertDeleteError: "An error occurred while deleting the comment. Please try again.", alertNoPermission: "You do not have permission to delete this comment.", alertDeveloperModePrompt: "Please enter the secret code to enter developer mode:", alertDeveloperModeSuccess: "Developer mode activated successfully!", alertDeveloperModeInvalid: "Incorrect secret code. Please try again.", alertDeveloperModeExit: "Exited developer mode.", confirmText: "Yes", cancelText: "Cancel", customAlertClose: "OK", developerModeIndicatorText: "Developer Mode", translateBtnText: "Translate", translateError: "Translation failed.", imageUploadError: "Image upload failed. Please try again.", resetDislikesConfirm: "Are you sure you want to reset the dislikes?", resetDislikesSuccess: "Dislikes reset successfully!", resetDislikesError: "Failed to reset dislikes.",
                 // New translations for the order form
                 orderNowBtn: "Order Now",
                 orderFormTitle: "Service Request Form",
@@ -815,63 +816,78 @@
         }
         
         const commentTextCache = new Map();
-
-        async function translateComment(commentText, originalText) {
-            const targetLang = { ar: 'ar', en: 'en', zh: 'zh' }[currentLang] || 'en';
+        
+        async function translateComment(commentText, originalText, targetLang) {
+            if (!originalText) return;
             if (commentText.dataset.lang === targetLang) {
-                commentText.textContent = originalText;
-                commentText.dataset.lang = '';
-                return;
+                return; // Already translated to this language
             }
-
             if (commentTextCache.has(`${originalText}-${targetLang}`)) {
                 commentText.textContent = commentTextCache.get(`${originalText}-${targetLang}`);
                 commentText.dataset.lang = targetLang;
                 return;
             }
 
+            const fallbackTranslation = {
+                'en': 'Translation failed. Please try again later.',
+                'ar': 'فشل في الترجمة. الرجاء المحاولة لاحقاً.',
+                'zh': '翻译失败。请稍后再试。'
+            };
+
             const prompt = `Translate the following text to the ${targetLang} language. Provide only the translated text, without any additional explanatory phrases like "Here is the translation:":\n\n${originalText}`;
             commentText.textContent = `${translations[currentLang].commentsLoading}...`;
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-                });
 
-                if (!response.ok) {
-                    const errorBody = await response.json();
-                    console.error("Translation API request failed:", response.status, errorBody);
-                    throw new Error(`API request failed with status ${response.status}`);
-                }
+            // Use an exponential backoff retry strategy for the API call
+            const maxRetries = 3;
+            let currentRetry = 0;
+            let successful = false;
 
-                const result = await response.json();
-                
-                if (result.candidates && result.candidates.length > 0 && result.candidates[0].content?.parts?.[0]?.text) {
-                     const translatedText = result.candidates[0].content.parts[0].text;
-                     commentText.textContent = translatedText.trim();
-                     commentText.dataset.lang = targetLang;
-                     commentTextCache.set(`${originalText}-${targetLang}`, translatedText.trim());
-                } else {
-                    console.error("Invalid response from translation API:", result);
-                    if (result.candidates?.[0]?.finishReason === 'SAFETY') {
-                         console.error("Translation blocked due to safety settings.");
+            while (currentRetry < maxRetries && !successful) {
+                try {
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${GEMINI_API_KEY}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                    });
+
+                    if (!response.ok) {
+                        const errorBody = await response.json();
+                        console.error("Translation API request failed:", response.status, errorBody);
+                        throw new Error(`API request failed with status ${response.status}`);
                     }
-                    throw new Error("Invalid or blocked API response.");
-                }
 
-            } catch (e) {
-                console.error("Error during translation:", e);
-                commentText.textContent = translations[currentLang].translateError;
+                    const result = await response.json();
+                    
+                    if (result.candidates && result.candidates.length > 0 && result.candidates[0].content?.parts?.[0]?.text) {
+                        const translatedText = result.candidates[0].content.parts[0].text;
+                        commentText.textContent = translatedText.trim();
+                        commentText.dataset.lang = targetLang;
+                        commentTextCache.set(`${originalText}-${targetLang}`, translatedText.trim());
+                        successful = true;
+                    } else {
+                        console.error("Invalid response from translation API:", result);
+                        commentText.textContent = fallbackTranslation[targetLang];
+                        successful = true;
+                    }
+
+                } catch (e) {
+                    console.error("Error during translation attempt:", currentRetry + 1, e);
+                    if (currentRetry < maxRetries - 1) {
+                        await new Promise(res => setTimeout(res, (2 ** currentRetry) * 1000));
+                    } else {
+                        commentText.textContent = translations[currentLang].translateError;
+                    }
+                }
+                currentRetry++;
             }
         }
         
         async function translateAllComments() {
-             const comments = document.querySelectorAll('#commentsList [data-comment-text-id]');
-             for (const commentTextElement of comments) {
+            const comments = document.querySelectorAll('#commentsList [data-comment-text-id]');
+            for (const commentTextElement of comments) {
                 const originalText = commentTextElement.dataset.originalText;
                 if (originalText) {
-                    await translateComment(commentTextElement, originalText);
+                    await translateComment(commentTextElement, originalText, currentLang);
                 }
             }
         }
