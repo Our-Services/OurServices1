@@ -181,6 +181,56 @@
         #submitOrderBtn:hover, #submitOrderBtn:active {
             background-color: #047857; /* darker green for hover and active states */
         }
+
+        .custom-file-input {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            cursor: pointer;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            background-color: #f8fafc;
+            color: #334155;
+            border: 1px solid #e2e8f0;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            text-align: center;
+        }
+        .custom-file-input:hover {
+            background-color: #e2e8f0;
+            border-color: #cbd5e0;
+        }
+        .custom-file-input input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        body.dark .custom-file-input {
+            background-color: #334155;
+            color: #e2e8f0;
+            border-color: #475569;
+        }
+        body.dark .custom-file-input:hover {
+            background-color: #4a5568;
+            border-color: #64748b;
+        }
+        
+        .device-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        body.dark .device-info {
+            color: #94a3b8;
+        }
+
     </style>
 </head>
 <body class="font-sans antialiased">
@@ -240,6 +290,13 @@
                     <label for="orderMessage" class="block text-sm font-medium" data-lang-key="orderMessageLabel">تفاصيل المشروع:</label>
                     <textarea id="orderMessage" name="details" rows="5" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600" data-lang-key="orderMessagePlaceholder" placeholder="اشرح متطلبات مشروعك بالتفصيل..." required></textarea>
                 </div>
+                <div>
+                    <label for="orderFiles" class="block text-sm font-medium" data-lang-key="orderFilesLabel">إضافة ملفات (اختياري):</label>
+                    <div class="relative mt-1">
+                        <input type="file" id="orderFiles" name="files" multiple accept="image/*,video/*,application/pdf,.doc,.docx" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                        <div class="custom-file-input"><span id="orderFileInputText" data-lang-key="fileInputChoose">اختيار ملف</span></div>
+                    </div>
+                </div>
                 <button type="submit" id="submitOrderBtn" class="btn-primary w-full" data-lang-key="orderSubmitBtn">تقديم الطلب</button>
             </form>
         </div>
@@ -258,7 +315,7 @@
                         <li data-lang="ar">العربية</li>
                         <li data-lang="en">English</li>
                         <li data-lang="zh">中文</li>
-                    </ul>
+                    </ul-tag>
                 </div>
                 <button id="darkModeToggle" aria-label="Toggle dark mode">
                     <svg class="dark-mode-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path id="darkModeIconPath" d="M12 3a9 9 0 109 9c0-.46-.04-.92-.12-1.36a5.999 5.999 0 01-8.588-8.588C12.92 3.04 12.46 3 12 3z"/></svg>
@@ -444,6 +501,8 @@
         const otherServiceField = document.getElementById('otherServiceField');
         const otherServiceText = document.getElementById('otherServiceText');
         const submitOrderBtn = document.getElementById('submitOrderBtn');
+        const orderFilesInput = document.getElementById('orderFiles');
+        const orderFileInputText = document.getElementById('orderFileInputText');
         
         async function initFirebase() {
             try {
@@ -485,6 +544,7 @@
                 orderServiceOtherPlaceholder: "اكتب الخدمة المخصصة هنا...",
                 orderMessageLabel: "تفاصيل المشروع:",
                 orderMessagePlaceholder: "اشرح متطلبات مشروعك بالتفصيل...",
+                orderFilesLabel: "إضافة ملفات (اختياري):", // Added translation
                 orderSubmitBtn: "تقديم الطلب",
                 orderSuccess: "شكراً لك! تم استلام طلبك بنجاح. سنتواصل معك في أقرب وقت ممكن.",
                 orderError: "حدث خطأ أثناء إرسال طلبك. الرجاء المحاولة مرة أخرى.",
@@ -508,6 +568,7 @@
                 orderServiceOtherPlaceholder: "Write your custom service here...",
                 orderMessageLabel: "Project Details:",
                 orderMessagePlaceholder: "Explain your project requirements in detail...",
+                orderFilesLabel: "Add files (optional):",
                 orderSubmitBtn: "Submit Request",
                 orderSuccess: "Thank you! Your request has been received successfully. We will contact you as soon as possible.",
                 orderError: "An error occurred while submitting your request. Please try again.",
@@ -531,6 +592,7 @@
                 orderServiceOtherPlaceholder: "在此处填写您的定制服务...",
                 orderMessageLabel: "项目详情：",
                 orderMessagePlaceholder: "详细说明您的项目要求...",
+                orderFilesLabel: "添加文件（可选）：",
                 orderSubmitBtn: "提交请求",
                 orderSuccess: "谢谢！您的请求已成功接收。我们会尽快与您联系。",
                 orderError: "提交请求时发生错误。请重试。",
@@ -785,8 +847,25 @@
                 }
             }
 
+            // Get device info before submitting the comment
+            const { device, browser, deviceName } = getDeviceInfo();
+
             try {
-                await addDoc(collection(db, `artifacts/${appId}/public/data/comments`), { name: commentName, text: commentText, rating, imageUrl, timestamp: serverTimestamp(), userId, likes: 0, dislikes: 0, likedBy: [], dislikedBy: [] });
+                await addDoc(collection(db, `artifacts/${appId}/public/data/comments`), {
+                    name: commentName,
+                    text: commentText,
+                    rating,
+                    imageUrl,
+                    timestamp: serverTimestamp(),
+                    userId,
+                    likes: 0,
+                    dislikes: 0,
+                    likedBy: [],
+                    dislikedBy: [],
+                    device,
+                    browser,
+                    deviceName
+                });
                 commentForm.reset();
                 imagePreview.classList.add('hidden');
                 fileInputText.textContent = translations[currentLang].fileInputChoose;
@@ -807,6 +886,71 @@
             return `<div class="star-rating">${starsHTML}</div>`;
         }
         
+        function getDeviceIcon(device) {
+            if (device === 'Desktop') {
+                return `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-monitor"><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>`;
+            } else if (device === 'Tablet') {
+                return `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tablet"><rect width="18" height="14" x="3" y="5" rx="2"/><path d="M7 19h10"/></svg>`;
+            } else if (device === 'Mobile') {
+                return `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>`;
+            }
+            return '';
+        }
+
+        // Updated getDeviceInfo function
+        function getDeviceInfo() {
+            const userAgent = navigator.userAgent;
+            let device = "Desktop";
+            let browser = "Unknown";
+            let os = "Unknown OS";
+            let deviceModel = "";
+
+            if (/(tablet|ipad|playbook)|(android(?!.*mobile))|(kindle)|(silk)|(gt\-p)|(sm\-t)/i.test(userAgent)) {
+                device = "Tablet";
+            } else if (/(Mobi|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini)/i.test(userAgent)) {
+                device = "Mobile";
+            }
+
+            if (userAgent.indexOf("Chrome") !== -1 && userAgent.indexOf("Edg") === -1) {
+                browser = "Chrome";
+            } else if (userAgent.indexOf("Firefox") !== -1) {
+                browser = "Firefox";
+            } else if (userAgent.indexOf("Safari") !== -1 && userAgent.indexOf("Chrome") === -1) {
+                browser = "Safari";
+            } else if (userAgent.indexOf("Edge") !== -1) {
+                browser = "Edge";
+            } else if (userAgent.indexOf("Opera") !== -1 || userAgent.indexOf("OPR") !== -1) {
+                browser = "Opera";
+            }
+
+            if (userAgent.indexOf("Win") !== -1) os = "Windows";
+            if (userAgent.indexOf("Mac") !== -1) os = "MacOS";
+            if (userAgent.indexOf("Linux") !== -1) os = "Linux";
+            if (userAgent.indexOf("Android") !== -1) os = "Android";
+            if (userAgent.indexOf("like Mac") !== -1) os = "iOS";
+            if (userAgent.match(/iPhone/i)) {
+                const iphoneModel = userAgent.match(/iPhone\s(.*?);/i);
+                if (iphoneModel && iphoneModel[1]) {
+                    deviceModel = `iPhone ${iphoneModel[1].replace(';','')}`;
+                } else {
+                    deviceModel = 'iPhone';
+                }
+            } else if (userAgent.match(/iPad/i)) {
+                deviceModel = 'iPad';
+            } else if (userAgent.match(/Android/i)) {
+                const androidModel = userAgent.match(/Android\s[0-9.]+;\s([^;)]*)/i);
+                if (androidModel && androidModel[1]) {
+                    deviceModel = androidModel[1];
+                } else {
+                    deviceModel = 'Android Device';
+                }
+            }
+            
+            const deviceName = deviceModel ? `${os} - ${deviceModel}` : `${os} - ${device}`;
+
+            return { device, browser, deviceName };
+        }
+
         async function handleReaction(commentId, reactionType) {
             if (!isAuthReady) { showAlert("alertFirebaseNotReady"); return; }
             const commentRef = doc(db, `artifacts/${appId}/public/data/comments`, commentId);
@@ -869,7 +1013,7 @@
         async function translateComment(commentText, originalText, targetLang) {
             if (!originalText) return;
             if (commentText.dataset.lang === targetLang) {
-                return; // Already translated to this language
+                return;
             }
             if (commentTextCache.has(`${originalText}-${targetLang}`)) {
                 commentText.textContent = commentTextCache.get(`${originalText}-${targetLang}`);
@@ -886,7 +1030,6 @@
             const prompt = `Translate the following text to the ${targetLang} language. Provide only the translated text, without any additional explanatory phrases like "Here is the translation:":\n\n${originalText}`;
             commentText.textContent = `${translations[currentLang].commentsLoading}...`;
 
-            // Use an exponential backoff retry strategy for the API call
             const maxRetries = 3;
             let currentRetry = 0;
             let successful = false;
@@ -962,6 +1105,14 @@
                     const originalText = comment.text;
                     const commentDate = comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString(currentLang) : translations[currentLang].commentDateUnavailable;
                     
+                    const deviceInfoHTML = isDeveloperMode && comment.deviceName ?
+                    `<div class="device-info mt-1">
+                        ${getDeviceIcon(comment.device)}
+                        <span class="text-xs text-gray-500 dark:text-gray-400">
+                            ${comment.deviceName || comment.device || 'Unknown Device'} - ${comment.browser || 'Unknown Browser'}
+                        </span>
+                    </div>` : '';
+
                     commentElement.innerHTML = `
                         <div class="flex items-start justify-between mb-2 gap-4">
                             <div class="flex items-center gap-3">
@@ -976,6 +1127,7 @@
                                     </button>` : ''}
                             </div>
                         </div>
+                        ${deviceInfoHTML}
                         <p class="text-gray-900 dark:text-gray-200 mt-1" data-comment-text-id="${commentId}" data-original-text="${originalText}">${comment.text}</p>
                         ${comment.imageUrl ? `<img src="${comment.imageUrl}" alt="Comment Image" class="mt-4 comment-image" onclick="window.showFullImage('${comment.imageUrl}')">` : ''}
                         <div class="comment-actions">
@@ -1049,6 +1201,7 @@
             orderModal.classList.remove('active');
             orderForm.reset();
             otherServiceField.classList.add('hidden');
+            orderFileInputText.textContent = translations[currentLang].fileInputChoose;
         }
 
         heroOrderNowBtn.addEventListener('click', showOrderModal);
@@ -1070,10 +1223,19 @@
             }
         });
 
+        orderFilesInput.addEventListener('change', (e) => {
+            const files = e.target.files;
+            if (files.length > 0) {
+                const fileNames = Array.from(files).map(file => file.name).join(', ');
+                orderFileInputText.textContent = fileNames.length > 30 ? fileNames.substring(0, 27) + '...' : fileNames;
+            } else {
+                orderFileInputText.textContent = translations[currentLang].fileInputChoose;
+            }
+        });
+
         orderForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // Show a loading indicator (optional but good for UX)
             submitOrderBtn.disabled = true;
             submitOrderBtn.textContent = '...إرسال';
 
