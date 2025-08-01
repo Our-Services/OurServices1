@@ -66,8 +66,6 @@
         body.dark .language-dropdown-menu li:hover { background-color: #4a5568; }
 
         /* Comment & UI Styles */
-        .translate-btn { background-color: #6366f1; color: white; padding: 0.25rem 0.75rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; transition: background-color 0.2s ease; cursor: pointer; border: none; }
-        .translate-btn:hover { background-color: #4f46e5; }
         #customAlertModal { transition: opacity 0.3s ease; }
         #customAlertModal.hidden { opacity: 0; pointer-events: none; }
         #customAlertModal .modal-buttons { display: flex; flex-direction: column; justify-content: center; gap: 1rem; margin-top: 1rem; }
@@ -143,8 +141,8 @@
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
-        .btn-order-now:hover {
-            background-color: #059669; /* green-600 */
+        .btn-order-now:hover, .btn-order-now:active {
+            background-color: #047857; /* A darker green for hover/active state */
             transform: translateY(-2px);
         }
 
@@ -158,7 +156,7 @@
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
-        .nav-link.order-now-btn:hover {
+        .nav-link.order-now-btn:hover, .nav-link.order-now-btn:active {
             background-color: #059669;
             color: white;
             transform: translateY(-2px);
@@ -174,6 +172,14 @@
         body.dark .order-form-container {
             background-color: #2d3748; /* Dark gray background */
             color: #e2e8f0; /* Light text for dark mode */
+        }
+
+        /* Specific styling for the form submit button in the modal */
+        #submitOrderBtn {
+            background-color: #10B981; /* green-500 */
+        }
+        #submitOrderBtn:hover, #submitOrderBtn:active {
+            background-color: #047857; /* darker green for hover and active states */
         }
     </style>
 </head>
@@ -199,40 +205,40 @@
                 </svg>
             </button>
             <h2 class="text-2xl font-bold text-center mb-6 text-indigo-700 dark:text-indigo-400" data-lang-key="orderFormTitle">نموذج طلب خدمة</h2>
-            <form id="orderForm" class="space-y-4">
+            <form id="orderForm" action="https://formspree.io/f/xrbllnal" method="POST" class="space-y-4">
                 <div>
                     <label for="orderName" class="block text-sm font-medium" data-lang-key="orderNameLabel">الاسم الكامل:</label>
-                    <input type="text" id="orderName" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600" data-lang-key="orderNamePlaceholder" placeholder="الاسم الكامل" required>
+                    <input type="text" id="orderName" name="الاسم الكامل" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600" data-lang-key="orderNamePlaceholder" placeholder="الاسم الكامل" required>
                 </div>
                 <div>
                     <label for="orderEmail" class="block text-sm font-medium" data-lang-key="orderEmailLabel">البريد الإلكتروني:</label>
-                    <input type="email" id="orderEmail" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600" data-lang-key="orderEmailPlaceholder" placeholder="yourname@example.com" required>
+                    <input type="email" id="orderEmail" name="البريد الإلكتروني" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600" data-lang-key="orderEmailPlaceholder" placeholder="yourname@example.com" required>
                 </div>
                 <div>
                     <label for="orderPhone" class="block text-sm font-medium" data-lang-key="orderPhoneLabel">رقم الهاتف:</label>
-                    <input type="tel" id="orderPhone" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600" data-lang-key="orderPhonePlaceholder" placeholder="+966 50 123 4567" required>
+                    <input type="tel" id="orderPhone" name="رقم الهاتف" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600" data-lang-key="orderPhonePlaceholder" placeholder="+966 50 123 4567" required>
                 </div>
                 <div>
                     <label for="orderService" class="block text-sm font-medium" data-lang-key="orderServiceLabel">نوع الخدمة المطلوبة:</label>
-                    <select id="orderService" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600">
+                    <select id="orderService" name="نوع الخدمة" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600">
                         <option value="" data-lang-key="orderServiceSelect" disabled selected>اختر خدمة...</option>
-                        <option value="3D Design" data-lang-key="service1Title">تصميم ثلاثي الأبعاد</option>
-                        <option value="Presentations" data-lang-key="service2Title">عروض تقديمية (بوربوينت)</option>
-                        <option value="Excel Formatting" data-lang-key="service3Title">تنسيق ملفات إكسل</option>
-                        <option value="Engineering Designs" data-lang-key="service4Title">تصاميم هندسية ومخططات</option>
-                        <option value="Report Writing" data-lang-key="service5Title">كتابة وتنسيق تقارير</option>
-                        <option value="Video/Photo Editing" data-lang-key="service6Title">تصميم وتعديل فيديوهات وصور</option>
-                        <option value="Web Development" data-lang-key="service7Title">برمجة وتطوير مواقع الويب</option>
-                        <option value="Other" data-lang-key="orderServiceOther">أخرى...</option>
+                        <option value="تصميم ثلاثي الأبعاد" data-lang-key="service1Title">تصميم ثلاثي الأبعاد</option>
+                        <option value="عروض تقديمية (بوربوينت)" data-lang-key="service2Title">عروض تقديمية (بوربوينت)</option>
+                        <option value="تنسيق ملفات إكسل" data-lang-key="service3Title">تنسيق ملفات إكسل</option>
+                        <option value="تصاميم هندسية ومخططات" data-lang-key="service4Title">تصاميم هندسية ومخططات</option>
+                        <option value="كتابة وتنسيق تقارير" data-lang-key="service5Title">كتابة وتنسيق تقارير</option>
+                        <option value="تصميم وتعديل فيديوهات وصور" data-lang-key="service6Title">تصميم وتعديل فيديوهات وصور</option>
+                        <option value="برمجة وتطوير مواقع الويب" data-lang-key="service7Title">برمجة وتطوير مواقع الويب</option>
+                        <option value="أخرى" data-lang-key="orderServiceOther">أخرى...</option>
                     </select>
                 </div>
                 <div id="otherServiceField" class="hidden">
                     <label for="otherServiceText" class="block text-sm font-medium" data-lang-key="orderServiceOtherLabel">الرجاء تحديد الخدمة المطلوبة:</label>
-                    <input type="text" id="otherServiceText" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600" data-lang-key="orderServiceOtherPlaceholder" placeholder="اكتب الخدمة المخصصة هنا..." required>
+                    <input type="text" id="otherServiceText" name="الخدمة الأخرى" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600" data-lang-key="orderServiceOtherPlaceholder" placeholder="اكتب الخدمة المخصصة هنا...">
                 </div>
                 <div>
                     <label for="orderMessage" class="block text-sm font-medium" data-lang-key="orderMessageLabel">تفاصيل المشروع:</label>
-                    <textarea id="orderMessage" rows="5" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600" data-lang-key="orderMessagePlaceholder" placeholder="اشرح متطلبات مشروعك بالتفصيل..." required></textarea>
+                    <textarea id="orderMessage" name="تفاصيل المشروع" rows="5" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600" data-lang-key="orderMessagePlaceholder" placeholder="اشرح متطلبات مشروعك بالتفصيل..." required></textarea>
                 </div>
                 <button type="submit" id="submitOrderBtn" class="btn-primary w-full" data-lang-key="orderSubmitBtn">تقديم الطلب</button>
             </form>
@@ -1055,7 +1061,7 @@
         });
 
         orderServiceSelect.addEventListener('change', (e) => {
-            if (e.target.value === 'Other') {
+            if (e.target.value === 'أخرى') {
                 otherServiceField.classList.remove('hidden');
                 otherServiceText.setAttribute('required', 'required');
             } else {
@@ -1066,37 +1072,41 @@
 
         orderForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            if (!isAuthReady) { showAlert("alertFirebaseNotReady"); return; }
             
-            const orderName = document.getElementById('orderName').value.trim();
-            const orderEmail = document.getElementById('orderEmail').value.trim();
-            const orderPhone = document.getElementById('orderPhone').value.trim();
-            const orderService = orderServiceSelect.value;
-            const otherService = otherServiceText.value.trim();
-            const orderMessage = document.getElementById('orderMessage').value.trim();
+            // Show a loading indicator (optional but good for UX)
+            submitOrderBtn.disabled = true;
+            submitOrderBtn.textContent = '...إرسال';
 
-            if (!orderName || !orderEmail || !orderPhone || !orderService || (!orderMessage && orderService !== 'Other') || (orderService === 'Other' && !otherService)) {
-                showAlert("orderFieldRequired");
-                return;
-            }
+            const formData = new FormData(orderForm);
 
             try {
-                const serviceToSave = orderService === 'Other' ? otherService : orderService;
-
-                await addDoc(collection(db, `artifacts/${appId}/public/data/orders`), {
-                    name: orderName,
-                    email: orderEmail,
-                    phone: orderPhone,
-                    service: serviceToSave,
-                    details: orderMessage,
-                    timestamp: serverTimestamp()
+                const response = await fetch(orderForm.action, {
+                    method: orderForm.method,
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
                 });
 
-                showAlert("orderSuccess");
-                hideOrderModal();
+                if (response.ok) {
+                    showAlert("orderSuccess");
+                    hideOrderModal();
+                } else {
+                    const data = await response.json();
+                    if (data.errors) {
+                        console.error('Formspree errors:', data.errors);
+                        showAlert("orderError");
+                    } else {
+                        console.error('Formspree error:', data);
+                        showAlert("orderError");
+                    }
+                }
             } catch (err) {
-                console.error("Error submitting order: ", err);
+                console.error("Error submitting form: ", err);
                 showAlert("orderError");
+            } finally {
+                submitOrderBtn.disabled = false;
+                submitOrderBtn.textContent = translations[currentLang].orderSubmitBtn;
             }
         });
 
