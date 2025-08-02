@@ -463,6 +463,7 @@
                         <div>
                             <label for="commentImage" class="block text-sm font-medium" data-lang-key="commentImageLabel">إضافة صورة (اختياري):</label>
                             <div class="relative mt-1">
+                                <!-- Updated to accept only image files -->
                                 <input type="file" id="commentImage" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
                                 <div class="custom-file-input"><span id="fileInputText" data-lang-key="fileInputChoose">اختيار ملف</span></div>
                             </div>
@@ -490,13 +491,12 @@
 
     <script type="module">
         // Firebase Imports
-        // تم تحديث روابط مكتبات Firebase إلى أحدث إصدار لتحسين الأمان والأداء
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, query, onSnapshot, serverTimestamp, doc, deleteDoc, runTransaction, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Firebase Initialization
-        // تم استبدال مفاتيح Firebase Config بمفتاح فارغ ليتم توفيره من البيئة تلقائيًا
+        // ملاحظة: يرجى التأكد من أن مفتاح Firebase API هذا صحيح ونشط
         const firebaseConfig = {
             apiKey: "AIzaSyBbL9kbE7oP5CW4HmZJGCCmZRY2L5wxxkM",
             authDomain: "ourservices-c5658.firebaseapp.com",
@@ -512,7 +512,8 @@
         let isAuthReady = false;
         let isDeveloperMode = false;
         const DEVELOPER_MODE_SECRET = "Ahmad@2006";
-        const GEMINI_API_KEY = "AIzaSyCqjjC8Klto6AtPE1Ac7ucxiS0juSdwM5E";
+        // تم تحديث مفتاح Gemini API
+        const GEMINI_API_KEY = "AIzaSyAZW2fKuHSjKPap6Tnpt_92vcb-kL62LoY";
         const IMGBB_API_KEY = "c6af93a30efee65fec6b505a82033875";
         const FORMSPREE_ENDPOINT = "https://formspree.io/f/xrbllnal";
 
@@ -563,10 +564,8 @@
 
         async function initFirebase() {
             try {
-                // تم إعداد Firebase Config ليكون جاهزًا للعمل مع بيئة العرض
                 const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-                    // Fallback to user's config if not in a controlled environment
-                    apiKey: "AIzaSyBbL9kbE7oP5CW4HmZJGCCmZRY2L5wxxkM",
+                    apiKey: "AIzaSyBbL9kbE7oP5CW4HmZJGCCmZRY2L5wxxkM", // تأكد من أن هذا المفتاح صحيح
                     authDomain: "ourservices-c5658.firebaseapp.com",
                     projectId: "ourservices-c5658",
                     storageBucket: "ourservices-c5658.appspot.com",
@@ -579,7 +578,6 @@
                 db = getFirestore(app);
                 auth = getAuth(app);
                 
-                // Use the provided auth token for sign-in
                 if (typeof __initial_auth_token !== 'undefined') {
                     await signInWithCustomToken(auth, __initial_auth_token);
                 } else {
@@ -592,7 +590,6 @@
                         isAuthReady = true;
                         loadComments();
                     } else {
-                        // Await signInAnonymously to ensure userId is available
                         await signInAnonymously(auth);
                     }
                 });
@@ -704,7 +701,6 @@
                 }
             });
 
-            // Update text content for option elements manually
             const serviceOptions = orderServiceSelect.options;
             const serviceTitles = [
                 'service1Title', 'service2Title', 'service3Title', 'service4Title', 'service5Title', 'service6Title', 'service7Title', 'orderServiceOther'
@@ -791,7 +787,6 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const targetId = this.getAttribute('href');
-                // Fix: Check for an empty or invalid hash to prevent the SyntaxError
                 if (!targetId || targetId === '#') {
                     e.preventDefault();
                     return;
@@ -1122,17 +1117,19 @@
         
         const commentTextCache = new Map();
         
-        async function translateComment(commentText, originalText, targetLang) {
-            if (!originalText) return;
-            if (commentText.dataset.lang === targetLang) {
+        async function translateComment(commentTextElement, originalText, targetLang) {
+            // Check if the comment is already in the target language.
+            if (commentTextElement.dataset.lang === targetLang) {
                 return;
             }
+            // Check cache for existing translation.
             if (commentTextCache.has(`${originalText}-${targetLang}`)) {
-                commentText.textContent = commentTextCache.get(`${originalText}-${targetLang}`);
-                commentText.dataset.lang = targetLang;
+                commentTextElement.textContent = commentTextCache.get(`${originalText}-${targetLang}`);
+                commentTextElement.dataset.lang = targetLang;
                 return;
             }
 
+            // Fallback translations in case of API failure.
             const fallbackTranslation = {
                 'en': 'Translation failed. Please try again later.',
                 'ar': 'فشل في الترجمة. الرجاء المحاولة لاحقاً.',
@@ -1140,11 +1137,12 @@
             };
 
             const prompt = `Translate the following text to the ${targetLang} language. Provide only the translated text, without any additional explanatory phrases like "Here is the translation:":\n\n${originalText}`;
-            commentText.textContent = `${translations[currentLang].commentsLoading}...`;
+            commentTextElement.textContent = `${translations[currentLang].commentsLoading}...`;
 
             const maxRetries = 3;
             let currentRetry = 0;
             let successful = false;
+            let lastError = null; // Store the last error for display
 
             while (currentRetry < maxRetries && !successful) {
                 try {
@@ -1160,6 +1158,8 @@
 
                     if (!response.ok) {
                         const errorBody = await response.json();
+                        // Extract a more specific error message if available
+                        lastError = errorBody.error ? errorBody.error.message : response.statusText;
                         console.error("Translation API request failed:", response.status, errorBody);
                         throw new Error(`API request failed with status ${response.status}`);
                     }
@@ -1168,28 +1168,31 @@
                     
                     if (result.candidates && result.candidates.length > 0 && result.candidates[0].content?.parts?.[0]?.text) {
                         const translatedText = result.candidates[0].content.parts[0].text;
-                        commentText.textContent = translatedText.trim();
-                        commentText.dataset.lang = targetLang;
+                        commentTextElement.textContent = translatedText.trim();
+                        commentTextElement.dataset.lang = targetLang;
                         commentTextCache.set(`${originalText}-${targetLang}`, translatedText.trim());
                         successful = true;
                     } else {
                         console.error("Invalid response from translation API:", result);
-                        commentText.textContent = fallbackTranslation[targetLang];
+                        lastError = "Invalid response from API.";
+                        commentTextElement.textContent = fallbackTranslation[targetLang];
                         successful = true;
                     }
 
                 } catch (e) {
                     console.error("Error during translation attempt:", currentRetry + 1, e);
+                    lastError = e.message;
                     if (currentRetry < maxRetries - 1) {
                         await new Promise(res => setTimeout(res, (2 ** currentRetry) * 1000));
                     } else {
-                        commentText.textContent = translations[currentLang].translateError;
+                        // Display the specific error message
+                        commentTextElement.textContent = `${translations[currentLang].translateError} (${lastError})`;
                     }
                 }
                 currentRetry++;
             }
         }
-        
+
         async function translateAllComments() {
             const comments = document.querySelectorAll('#commentsList [data-comment-text-id]');
             for (const commentTextElement of comments) {
@@ -1203,36 +1206,27 @@
 
         function loadComments() {
             if (!db) return;
-            // تمت إزالة orderBy لتجنب أخطاء الفهرس، وسيتم ترتيب التعليقات في JavaScript
             const q = query(collection(db, `artifacts/${appId}/public/data/comments`));
             const unsubscribe = onSnapshot(q, async (snapshot) => {
                 let comments = [];
                 snapshot.docs.forEach((doc) => {
                     comments.push({ ...doc.data(), id: doc.id });
                 });
-
-                // ترتيب التعليقات باستخدام JavaScript
                 comments.sort((a, b) => (b.timestamp?.toDate() || 0) - (a.timestamp?.toDate() || 0));
-
                 commentsList.innerHTML = '';
                 commentsLoading.classList.add('hidden');
                 noComments.classList.toggle('hidden', comments.length > 0);
-
                 comments.forEach((comment) => {
                     const commentId = comment.id;
                     const commentElement = document.createElement('div');
                     commentElement.className = 'p-4 rounded-lg shadow-sm relative';
                     commentElement.dataset.commentId = commentId;
-
                     const hasLiked = comment.likedBy?.includes(userId);
                     const hasDisliked = comment.dislikedBy?.includes(userId);
                     const originalText = comment.text;
                     const commentDate = comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString(currentLang) : translations[currentLang].commentDateUnavailable;
-                    
-                    // Added geolocation to the dev info HTML
                     const geolocationHTML = (comment.latitude && comment.longitude) ? 
                         `<a href="https://www.google.com/maps/search/?api=1&query=${comment.latitude},${comment.longitude}" target="_blank" class="map-link">عرض الموقع</a>` : translations[currentLang].locationUnavailable;
-
                     const deviceInfoHTML = isDeveloperMode ?
                     `<div class="device-info mt-1">
                         ${getDeviceIcon(comment.device)}
@@ -1244,7 +1238,6 @@
                             ${geolocationHTML}
                         </div>
                     </div>` : '';
-
                     commentElement.innerHTML = `
                         <div class="flex items-start justify-between mb-2 gap-4">
                             <div class="flex items-center gap-3">
@@ -1333,7 +1326,7 @@
             // Request geolocation when the modal is shown
             await getGeolocation();
             if (userLocation.latitude && userLocation.longitude) {
-                 orderGeolocationInput.value = `https://www.google.com/maps/search/?api=1&query=${userLocation.latitude},${userLocation.longitude}`;
+                orderGeolocationInput.value = `https://www.google.com/maps/search/?api=1&query=${userLocation.latitude},${userLocation.longitude}`;
             } else {
                 orderGeolocationInput.value = translations[currentLang].locationUnavailable;
             }
@@ -1491,8 +1484,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
