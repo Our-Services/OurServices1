@@ -505,7 +505,7 @@
 
         // Firebase Initialization
         const firebaseConfig = {
-            apiKey: "AIzaSyBbL9kbE7oP5CW4HmZJGCCmZRY2L5wxxkM", // تأكد من أن هذا المفتاح صحيح
+            apiKey: "AIzaSyBbL9kbE7oP5CW4HmZJGCCmZRY2L5wxxkM",
             authDomain: "ourservices-c5658.firebaseapp.com",
             projectId: "ourservices-c5658",
             storageBucket: "ourservices-c5658.appspot.com",
@@ -1067,7 +1067,7 @@
         }
 
         async function handleReaction(commentId, reactionType) {
-            if (!isAuthReady) { showAlert("alertFirebaseNotReady"); return; }
+            if (!isAuthReady) { showAlert(translations[currentLang].alertFirebaseNotReady); return; }
             const commentRef = doc(db, `artifacts/${appId}/public/data/comments`, commentId);
             try {
                 await runTransaction(db, async (transaction) => {
@@ -1099,13 +1099,14 @@
         }
         
         async function resetDislikes(commentId) {
-            showAlert("resetDislikesConfirm", 'confirm', async (confirmed) => {
+            if (!isDeveloperMode) { showAlert(translations[currentLang].alertNoPermission); return; }
+            showAlert(translations[currentLang].resetDislikesConfirm, 'confirm', async (confirmed) => {
                 if (confirmed) {
                     const commentRef = doc(db, `artifacts/${appId}/public/data/comments`, commentId);
                     try {
                         await runTransaction(db, async (t) => t.update(commentRef, { dislikes: 0, dislikedBy: [] }));
-                        showAlert("resetDislikesSuccess");
-                    } catch (e) { console.error("Error resetting dislikes:", e); showAlert("resetDislikesError"); }
+                        showAlert(translations[currentLang].resetDislikesSuccess);
+                    } catch (e) { console.error("Error resetting dislikes:", e); showAlert(translations[currentLang].resetDislikesError); }
                 }
             });
         }
@@ -1119,8 +1120,8 @@
                         await updateDoc(doc(db, `artifacts/${appId}/public/data/comments`, commentId), {
                             isHidden: true
                         });
-                        showAlert("تم إخفاء التعليق بنجاح.");
-                    } catch (e) { console.error("Error hiding comment: ", e); showAlert("alertDeleteError"); }
+                        showAlert(translations[currentLang].alertDeleteSuccess);
+                    } catch (e) { console.error("Error hiding comment: ", e); showAlert(translations[currentLang].alertDeleteError); }
                 }
             });
         }
@@ -1132,10 +1133,10 @@
                 await updateDoc(doc(db, `artifacts/${appId}/public/data/comments`, commentId), {
                     isHidden: false
                 });
-                showAlert("تم إظهار التعليق بنجاح.");
+                showAlert(translations[currentLang].alertUnhideSuccess);
             } catch (e) {
                 console.error("Error unhiding comment: ", e);
-                showAlert("حدث خطأ أثناء إظهار التعليق. الرجاء المحاولة مرة أخرى.");
+                showAlert(translations[currentLang].alertUnhideError);
             }
         }
         
@@ -1262,11 +1263,17 @@
                     
                     // تحديد الأزرار بناءً على حالة التعليق ووضع المطور
                     let actionButtonsHTML = '';
-                    if (isDeveloperMode && comment.isHidden) {
-                         actionButtonsHTML += `<button class="text-green-500 hover:text-green-700 p-1 rounded-full focus:outline-none ml-1" data-action="unhide" aria-label="Unhide">
+                    if (isDeveloperMode) {
+                        if (comment.isHidden) {
+                            actionButtonsHTML += `<button class="text-green-500 hover:text-green-700 p-1 rounded-full focus:outline-none ml-1" data-action="unhide" aria-label="Unhide">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                                                 </button>`;
-                    } else if (userId === comment.userId || isDeveloperMode) {
+                        } else {
+                            actionButtonsHTML += `<button class="text-red-500 hover:text-red-700 p-1 rounded-full focus:outline-none ml-1" data-action="hide" aria-label="Hide">
+                                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1zm2 3a1 1 0 011-1h2a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+                                                </button>`;
+                        }
+                    } else if (userId === comment.userId) {
                          actionButtonsHTML += `<button class="text-red-500 hover:text-red-700 p-1 rounded-full focus:outline-none ml-1" data-action="hide" aria-label="Hide">
                                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1zm2 3a1 1 0 011-1h2a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
                                                 </button>`;
