@@ -408,7 +408,7 @@
             <div class="max-w-6xl mx-auto">
                 <h2 class="section-heading text-center mb-12" data-lang-key="featuresHeading">لماذا تختارنا؟</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m1.636 6.364l.707-.707M6 21v-1m6.364-1.636l-.707-.707M12 21h-1m-4.636-1.636l-.707.707M3 12h1m-.707-6.364l.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707"/></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature1Title">تنسيقات شكل رائعة</h3><p class="text-gray-600" data-lang-key="feature1Desc">نقدم العديد من التنسيقات الجمالية التي تبرز عملك.</p></div>
+                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m1.636 6.364l.707-.707M6 21v-1m6.364-1.636l-.707-.707M12 21h-1m-4.636-1.636l-.707.707M3 12h1m-.707-6.364l.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707"/></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature1Title">تنسيقات شكل رائعة </h3><p class="text-gray-600" data-lang-key="feature1Desc">نقدم العديد من التنسيقات الجمالية التي تبرز عملك.</p></div>
                     <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature2Title">تنسيق كلام احترافي</h3><p class="text-gray-600" data-lang-key="feature2Desc">تنسيق دقيق للمحتوى في البحوث والمشاريع.</p></div>
                     <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature3Title">أكثر من 100 نوع خط</h3><p class="text-gray-600" data-lang-key="feature3Desc">اختر من مجموعة واسعة من الخطوط المميزة.</p></div>
                     <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m-4 8h4m10-8h4m-4 8h4M7 12h10l4-8H3l4 8zm0 0v8a2 2 0 002 2h6a2 2 0 002-2v-8m-12 4h.01M17 12h.01"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature4Title">عروض تقديمية مميزة</h3><p class="text-gray-600" data-lang-key="feature4Desc">تصميم عروض بوربوينت جذابة ومبتكرة.</p></div>
@@ -1351,17 +1351,18 @@
         fullImageModal.addEventListener('click', () => fullImageModal.classList.remove('active'));
 
         // Order Form Logic
-        async function showOrderModal() {
+        function showOrderModal() {
             orderModal.classList.add('active');
             // Request geolocation when the modal is shown
-            await getGeolocation();
-            if (userLocation.latitude && userLocation.longitude) {
-                orderGeolocationInput.value = `https://www.google.com/maps/search/?api=1&query=${userLocation.latitude},${userLocation.longitude}`;
-            } else {
-                orderGeolocationInput.value = translations[currentLang].locationUnavailable;
-            }
-            // New: Get IP address when the modal is shown and set it
-            orderIpAddressInput.value = await getIPAddress();
+            getGeolocation().then(() => {
+                if (userLocation.latitude && userLocation.longitude) {
+                    orderGeolocationInput.value = `https://www.google.com/maps/search/?api=1&query=${userLocation.latitude},${userLocation.longitude}`;
+                } else {
+                    orderGeolocationInput.value = translations[currentLang].locationUnavailable;
+                }
+            });
+            // IP is now fetched on form submission, not here, to avoid race conditions.
+            orderIpAddressInput.value = '';
         }
         
         function hideOrderModal() {
@@ -1434,10 +1435,25 @@
             
             submitOrderBtn.disabled = true;
             submitOrderBtn.textContent = '...إرسال';
-
-            const formData = new FormData(orderForm);
             
-            // Remove the original 'files' field
+            // New: Fetch IP address right before submission to ensure it's up-to-date
+            const ipAddress = await getIPAddress();
+            const { device, browser, deviceName } = getDeviceInfo();
+            
+            const formData = new FormData(orderForm);
+
+            // Append IP and other data
+            formData.append('ip_address', ipAddress);
+            formData.append('device_name', deviceName);
+            formData.append('browser', browser);
+
+            if (userLocation.latitude && userLocation.longitude) {
+                formData.append('location_link', `https://www.google.com/maps/search/?api=1&query=${userLocation.latitude},${userLocation.longitude}`);
+            } else {
+                formData.append('location_link', translations[currentLang].locationUnavailable);
+            }
+            
+            // Remove the original 'files' field from FormData and re-append image URLs
             formData.delete('files');
 
             let uploadedImageUrls = [];
@@ -1465,20 +1481,6 @@
                 }
             }
             
-            const { device, browser, deviceName } = getDeviceInfo();
-
-            // Add device, location, and IP info to form data
-            formData.append('device_name', deviceName);
-            formData.append('browser', browser);
-            if (userLocation.latitude && userLocation.longitude) {
-                // Ensure a link is passed if coordinates are available
-                formData.append('location_link', `https://www.google.com/maps/search/?api=1&query=${userLocation.latitude},${userLocation.longitude}`);
-            } else {
-                // Pass the translated "Location unavailable" message if not available
-                formData.append('location_link', translations[currentLang].locationUnavailable);
-            }
-            // The IP address is already set in the hidden input field when the modal is opened.
-
             try {
                 const response = await fetch(FORMSPREE_ENDPOINT, {
                     method: orderForm.method,
