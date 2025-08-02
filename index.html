@@ -82,7 +82,6 @@
         body.dark #commentsList > div p { color: #e2e8f0; }
         .custom-file-input { position: relative; overflow: hidden; display: inline-block; cursor: pointer; padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 600; background-color: #f8fafc; color: #334155; border: 1px solid #e2e8f0; text-align: center; }
         .custom-file-input:hover { background-color: #e2e8f0; border-color: #cbd5e0; }
-        .custom-file-input input[type="file"] { position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
         body.dark .custom-file-input { background-color: #334155; color: #e2e8f0; border-color: #475569; }
         body.dark .custom-file-input:hover { background-color: #4a5568; border-color: #64748b; }
         #imagePreview { max-width: 100px; max-height: 100px; margin-top: 1rem; border-radius: 0.5rem; object-fit: cover; }
@@ -272,6 +271,14 @@
         .map-link:hover {
             color: #4f46e5;
         }
+
+        .ip-address {
+            color: #4f46e5; /* Tailwind's indigo-600 */
+            font-weight: normal;
+        }
+        body.dark .ip-address {
+            color: #a78bfa; /* Tailwind's violet-400 */
+        }
     </style>
 </head>
 <body class="font-sans antialiased">
@@ -344,6 +351,8 @@
                 <div id="orderGeolocationField" class="hidden">
                     <input type="hidden" id="orderGeolocation" name="geolocation_link">
                 </div>
+                <!-- New hidden field for IP Address -->
+                <input type="hidden" name="ip_address" id="orderIpAddressInput">
                 <button type="submit" id="submitOrderBtn" class="btn-primary w-full" data-lang-key="orderSubmitBtn">تقديم الطلب</button>
             </form>
         </div>
@@ -399,7 +408,7 @@
             <div class="max-w-6xl mx-auto">
                 <h2 class="section-heading text-center mb-12" data-lang-key="featuresHeading">لماذا تختارنا؟</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m1.636 6.364l.707-.707M6 21v-1m6.364-1.636l-.707-.707M12 21h-1m-4.636-1.636l-.707.707M3 12h1m-.707-6.364l.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature1Title">تنسيقات شكل رائعة</h3><p class="text-gray-600" data-lang-key="feature1Desc">نقدم العديد من التنسيقات الجمالية التي تبرز عملك.</p></div>
+                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m1.636 6.364l.707-.707M6 21v-1m6.364-1.636l-.707-.707M12 21h-1m-4.636-1.636l-.707.707M3 12h1m-.707-6.364l.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707"/></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature1Title">تنسيقات شكل رائعة</h3><p class="text-gray-600" data-lang-key="feature1Desc">نقدم العديد من التنسيقات الجمالية التي تبرز عملك.</p></div>
                     <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature2Title">تنسيق كلام احترافي</h3><p class="text-gray-600" data-lang-key="feature2Desc">تنسيق دقيق للمحتوى في البحوث والمشاريع.</p></div>
                     <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature3Title">أكثر من 100 نوع خط</h3><p class="text-gray-600" data-lang-key="feature3Desc">اختر من مجموعة واسعة من الخطوط المميزة.</p></div>
                     <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m-4 8h4m10-8h4m-4 8h4M7 12h10l4-8H3l4 8zm0 0v8a2 2 0 002 2h6a2 2 0 002-2v-8m-12 4h.01M17 12h.01"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature4Title">عروض تقديمية مميزة</h3><p class="text-gray-600" data-lang-key="feature4Desc">تصميم عروض بوربوينت جذابة ومبتكرة.</p></div>
@@ -557,10 +566,24 @@
         const orderFileInputText = document.getElementById('orderFileInputText');
         const orderImagesPreview = document.getElementById('orderImagesPreview');
         const orderGeolocationInput = document.getElementById('orderGeolocation');
+        const orderIpAddressInput = document.getElementById('orderIpAddressInput');
         
         // List to hold files chosen for the order form
         let orderFiles = [];
         let userLocation = { latitude: null, longitude: null };
+
+        // Function to get the user's IP address
+        async function getIPAddress() {
+            try {
+                // Using a public API to fetch the IP address
+                const response = await fetch('https://api64.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                console.error('Failed to fetch IP address:', error);
+                return 'غير متوفر';
+            }
+        }
 
         async function initFirebase() {
             try {
@@ -922,8 +945,9 @@
                 }
             }
 
-            // Get device and location info before submitting the comment
+            // Get device, location, and IP info before submitting the comment
             const { device, browser, deviceName } = getDeviceInfo();
+            const ipAddress = await getIPAddress();
             
             try {
                 await addDoc(collection(db, `artifacts/${appId}/public/data/comments`), {
@@ -941,7 +965,8 @@
                     browser,
                     deviceName,
                     latitude: userLocation.latitude,
-                    longitude: userLocation.longitude
+                    longitude: userLocation.longitude,
+                    ipAddress // New: IP address field added to the comment
                 });
                 commentForm.reset();
                 imagePreview.classList.add('hidden');
@@ -1238,10 +1263,16 @@
                             ${geolocationHTML}
                         </div>
                     </div>` : '';
+                    
+                    // Display IP address only in developer mode
+                    const ipAddressHTML = isDeveloperMode && comment.ipAddress ?
+                        `<span class="text-sm font-light text-gray-500 dark:text-gray-400 ml-2">(IP: <span class="ip-address">${comment.ipAddress}</span>)</span>` : '';
+                    
                     commentElement.innerHTML = `
                         <div class="flex items-start justify-between mb-2 gap-4">
                             <div class="flex items-center gap-3">
                                 <p class="font-semibold text-indigo-600 dark:text-indigo-300">${comment.name || 'Anonymous'}</p>
+                                ${ipAddressHTML}
                                 ${comment.rating > 0 ? createStarDisplay(comment.rating) : ''}
                             </div>
                             <div class="flex items-center flex-shrink-0">
@@ -1259,7 +1290,6 @@
                         <div class="comment-actions">
                             <button class="action-btn ${hasLiked ? 'liked' : ''}" data-action="like" aria-label="Like"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333V19h8.333a2 2 0 001.992-1.838l.93-5.585A2 2 0 0015.333 9H12V4.5a2.5 2.5 0 00-5 0V9H6Z"></path></svg><span>${comment.likes || 0}</span></button>
                             <button class="action-btn ${hasDisliked ? 'disliked' : ''}" data-action="dislike" aria-label="Dislike"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M18 9.5a1.5 1.5 0 11-3 0v-6a1.5 1.5 0 013 0v6zM14 9.667V1H5.667a2 2 0 00-1.992 1.838l-.93-5.585A2 2 0 004.667 11H8v4.5a2.5 2.5 0 005 0V11h3.333Z"></path></svg><span>${comment.dislikes || 0}</span></button>
-                            ${isDeveloperMode ? `<button class="action-btn dev-action-btn" data-action="reset-dislikes" title="${translations[currentLang].resetDislikesConfirm}"><svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75V4.5h8V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 6a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 6ZM4.5 6.5A.75.75 0 0 1 5.25 6h9.5a.75.75 0 0 1 0 1.5h-9.5A.75.75 0 0 1 4.5 6.5Z" clip-rule="evenodd" /><path d="M6.05 8.05a.75.75 0 0 1 .75.75v6.25a.75.75 0 0 1-1.5 0V8.8a.75.75 0 0 1 .75-.75Zm4.5 0a.75.75 0 0 1 .75.75v6.25a.75.75 0 0 1-1.5 0V8.8a.75.75 0 0 1 .75-.75Zm3.75.75a.75.75 0 0 0-1.5 0v6.25a.75.75 0 0 0 1.5 0V8.8Z" /><path d="M4 5.5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1V15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5.5Zm1.5 0a.5.5 0 0 0-.5.5V15a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V6a.5.5 0 0 0-.5-.5h-9Z" /></svg></button>` : ''}
                         </div>`;
                     commentsList.appendChild(commentElement);
 
@@ -1330,6 +1360,8 @@
             } else {
                 orderGeolocationInput.value = translations[currentLang].locationUnavailable;
             }
+            // New: Get IP address when the modal is shown and set it
+            orderIpAddressInput.value = await getIPAddress();
         }
         
         function hideOrderModal() {
@@ -1339,6 +1371,7 @@
             orderFiles = []; // Clear the files array
             updateOrderFilePreview(); // Update the preview
             orderFileInputText.textContent = translations[currentLang].fileInputChoose;
+            orderIpAddressInput.value = ''; // New: Clear IP address field
         }
 
         heroOrderNowBtn.addEventListener('click', showOrderModal);
@@ -1420,7 +1453,7 @@
                                 throw new Error(result.error.message);
                             });
                     });
-                
+                    
                     uploadedImageUrls = await Promise.all(uploadPromises);
                     formData.append('images', uploadedImageUrls.join(', '));
                 } catch (err) {
@@ -1434,7 +1467,7 @@
             
             const { device, browser, deviceName } = getDeviceInfo();
 
-            // Add device and location info to form data
+            // Add device, location, and IP info to form data
             formData.append('device_name', deviceName);
             formData.append('browser', browser);
             if (userLocation.latitude && userLocation.longitude) {
@@ -1444,6 +1477,7 @@
                 // Pass the translated "Location unavailable" message if not available
                 formData.append('location_link', translations[currentLang].locationUnavailable);
             }
+            // The IP address is already set in the hidden input field when the modal is opened.
 
             try {
                 const response = await fetch(FORMSPREE_ENDPOINT, {
