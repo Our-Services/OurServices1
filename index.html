@@ -272,6 +272,14 @@
         .map-link:hover {
             color: #4f46e5;
         }
+        
+        /* إضافة نمط جديد للتعليقات المخفية */
+        .comment-hidden {
+            opacity: 0.5;
+            background-color: #ef44441a;
+            border: 1px dashed #ef4444;
+            transition: all 0.3s ease;
+        }
     </style>
 </head>
 <body class="font-sans antialiased">
@@ -493,12 +501,11 @@
         // Firebase Imports
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, onSnapshot, serverTimestamp, doc, deleteDoc, runTransaction, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, query, onSnapshot, serverTimestamp, doc, updateDoc, deleteDoc, runTransaction, arrayUnion, arrayRemove, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Firebase Initialization
-        // ملاحظة: يرجى التأكد من أن مفتاح Firebase API هذا صحيح ونشط
         const firebaseConfig = {
-            apiKey: "AIzaSyBbL9kbE7oP5CW4HmZJGCCmZRY2L5wxxkM",
+            apiKey: "AIzaSyBbL9kbE7oP5CW4HmZJGCCmZRY2L5wxxkM", // تأكد من أن هذا المفتاح صحيح
             authDomain: "ourservices-c5658.firebaseapp.com",
             projectId: "ourservices-c5658",
             storageBucket: "ourservices-c5658.appspot.com",
@@ -512,10 +519,10 @@
         let isAuthReady = false;
         let isDeveloperMode = false;
         const DEVELOPER_MODE_SECRET = "Ahmad@2006";
-        // تم تحديث مفتاح Gemini API
         const GEMINI_API_KEY = "AIzaSyAZW2fKuHSjKPap6Tnpt_92vcb-kL62LoY";
         const IMGBB_API_KEY = "c6af93a30efee65fec6b505a82033875";
         const FORMSPREE_ENDPOINT = "https://formspree.io/f/xrbllnal";
+        const DEVELOPER_UID = "YOUR_DEVELOPER_UID"; // استبدل هذا بمعرف المستخدم الخاص بك
 
         // DOM Elements
         const customAlertModal = document.getElementById('customAlertModal');
@@ -565,7 +572,7 @@
         async function initFirebase() {
             try {
                 const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-                    apiKey: "AIzaSyBbL9kbE7oP5CW4HmZJGCCmZRY2L5wxxkM", // تأكد من أن هذا المفتاح صحيح
+                    apiKey: "AIzaSyBbL9kbE7oP5CW4HmZJGCCmZRY2L5wxxkM",
                     authDomain: "ourservices-c5658.firebaseapp.com",
                     projectId: "ourservices-c5658",
                     storageBucket: "ourservices-c5658.appspot.com",
@@ -601,7 +608,7 @@
         
         const translations = {
             ar: { 
-                siteTitle: "خدمتنا - تصميم وتطوير المشاريع", navHome: "الرئيسية", navWhyChooseUs: "لماذا تختارنا؟", navAboutUs: "من نحن؟", navServices: "ماذا نقدم؟", navContact: "تواصل معنا", navComments: "التعليقات", heroTitle: "مصممون جميع أنواع المشاريع والمواقع والتصاميم والبحوث والواجبات", heroDiscount: "خصم 30% لفترة محدودة على كامل الخدمات", heroSubtitle: "نقدم لكم حلولاً متكاملة لتلبية جميع احتياجاتكم الأكاديمية والمهنية", heroContactBtn: "تواصل معنا الآن", featuresHeading: "لماذا تختارنا؟", feature1Title: "تنسيقات شكل رائعة", feature1Desc: "نقدم العديد من التنسيقات الجمالية التي تبرز عملك.", feature2Title: "تنسيق كلام احترافي", feature2Desc: "تنسيق دقيق للمحتوى في البحوث والمشاريع.", feature3Title: "أكثر من 100 نوع خط", feature3Desc: "اختر من مجموعة واسعة من الخطوط المميزة.", feature4Title: "عروض تقديمية مميزة", feature4Desc: "تصميم عروض بوربوينت جذابة ومبتكرة.", aboutUsHeading: "من نحن؟", aboutUsParagraph1: "نحن فريق متقدم من خريجي جامعة UCSI الماليزية، نجمع بين المعرفة الأكاديمية العميقة والخبرة العملية الواسعة في تصميم وتنفيذ العديد من المشاريع الكبيرة والصغيرة.", aboutUsParagraph2: "نلتزم بتقديم خدمات عالية الجودة بأسعار تنافسية للغاية، مع التركيز الدائم على تحقيق رضا العميل كشعارنا الأول والأخير ✨.", servicesHeading: "ماذا نقدم؟", service1Title: "تصميم ثلاثي الأبعاد", service1Desc: "تصميم جميع أنواع القطع ثلاثية الأبعاد على برامج الأوتوكاد وبرامج الطباعة ثلاثية الأبعاد بجميع صيغ الملفات القابلة للطباعة.", service2Title: "عروض تقديمية (بوربوينت)", service2Desc: "تصميم عروض تقديمية على البوربوينت مع كامل التنسيق وإضافة الصور والحركات المرئية.", service3Title: "تنسيق ملفات إكسل", service3Desc: "تصميم وتعديل وتنسيق ملفات إكسل باحترافية عالية.", service4Title: "تصاميم هندسية ومخططات", service4Desc: "تصاميم هندسية، مخططات، كهرباء، وغيرها من الأعمال الهندسية المتخصصة.", service5Title: "كتابة وتنسيق تقارير", service5Desc: "كتابة وتنسيق التقارير على برنامج الوورد بجودة ودقة عالية.", service6Title: "تصميم وتعديل فيديوهات وصور", service6Desc: "تصميم وتعديل الفيديوهات والصور بجودة عالية لتناسب جميع احتياجاتكم.", service7Title: "برمجة وتطوير مواقع الويب", service7Desc: "برمجة مواقع ويب تفاعلية وجمالية باستخدام لغة JavaScript وتنسيق الشكل باستخدام CSS، مع إضافة الموقع على سيرفر وإنشاء رابط خاص به.", contactHeading: "للتواصل معنا", contactSubtitle: "يسعدنا استقبال استفساراتكم وطلباتكم عبر وسائل التواصل التالية:", whatsappNumberKSA: "0500900329 داخل المملكة", whatsappNumberOutsideKSA: "+60163340537 خارج المملكة", telegramContact: "التواصل عبر التلجرام", footerText: "© 2025 جميع الحقوق محفوظة لفريق التصميم والمشاريع.", modeLight: "الوضع الفاتح", modeDark: "الوضع الداكن", commentsHeading: "التعليقات", leaveComment: "أضف تعليقك", commentNameLabel: "اسمك:", commentNamePlaceholder: "ادخل اسمك", commentTextLabel: "تعليقك:", commentTextPlaceholder: "اكتب تعليقك هنا...", commentRatingLabel: "تقييمك:", commentImageLabel: "إضافة صورة (اختياري):", fileInputChoose: "اختيار ملف", fileInputNoFile: "لم يتم اختيار أي ملف", commentSubmitBtn: "إرسال التعليق", allComments: "جميع التعليقات", commentsLoading: "جاري تحميل التعليقات...", noComments: "لا توجد تعليقات حتى الآن. كن أول من يعلق!", commentDateUnavailable: "التاريخ غير متوفر", alertNameTextEmpty: "الرجاء إدخال اسمك.", alertCommentTextEmpty: "الرجاء إدخال تعليقك.", alertCommentAddedSuccess: "تم إرسال تعليقك بنجاح!", alertCommentAddError: "حدث خطأ أثناء إضافة التعليق. الرجاء المحاولة مرة أخرى.", alertFirebaseInitError: "فشل تهيئة Firebase. قد لا تعمل التعليقات بشكل صحيح.", alertFirebaseNotReady: "Firebase غير جاهز بعد. الرجاء الانتظار.", alertDeleteConfirm: "هل أنت متأكد أنك تريد حذف هذا التعليق؟", alertDeleteSuccess: "تم حذف التعليق بنجاح!", alertDeleteError: "حدث خطأ أثناء حذف التعليق. الرجاء المحاولة مرة أخرى.", alertNoPermission: "ليس لديك صلاحية لحذف هذا التعليق.", alertDeveloperModePrompt: "الرجاء إدخال الكود السري للدخول إلى وضع المطور:", alertDeveloperModeSuccess: "تم تفعيل وضع المطور بنجاح!", alertDeveloperModeInvalid: "الكود السري غير صحيح. الرجاء المحاولة مرة أخرى.", alertDeveloperModeExit: "تم الخروج من وضع المطور.", confirmText: "نعم", cancelText: "إلغاء", customAlertClose: "حسناً", developerModeIndicatorText: "وضع المطور", translateBtnText: "ترجمة", translateError: "فشل في الترجمة.", imageUploadError: "فشل رفع الصورة. الرجاء المحاولة مرة أخرى.", resetDislikesConfirm: "هل أنت متأكد من إعادة تعيين الإعجابات السلبية؟", resetDislikesSuccess: "تم إعادة تعيين الإعجابات السلبية بنجاح!", resetDislikesError: "فشل إعادة تعيين الإعجابات السلبية.",
+                siteTitle: "خدمتنا - تصميم وتطوير المشاريع", navHome: "الرئيسية", navWhyChooseUs: "لماذا تختارنا؟", navAboutUs: "من نحن؟", navServices: "ماذا نقدم؟", navContact: "تواصل معنا", navComments: "التعليقات", heroTitle: "مصممون جميع أنواع المشاريع والمواقع والتصاميم والبحوث والواجبات", heroDiscount: "خصم 30% لفترة محدودة على كامل الخدمات", heroSubtitle: "نقدم لكم حلولاً متكاملة لتلبية جميع احتياجاتكم الأكاديمية والمهنية", heroContactBtn: "تواصل معنا الآن", featuresHeading: "لماذا تختارنا؟", feature1Title: "تنسيقات شكل رائعة", feature1Desc: "نقدم العديد من التنسيقات الجمالية التي تبرز عملك.", feature2Title: "تنسيق كلام احترافي", feature2Desc: "تنسيق دقيق للمحتوى في البحوث والمشاريع.", feature3Title: "أكثر من 100 نوع خط", feature3Desc: "اختر من مجموعة واسعة من الخطوط المميزة.", feature4Title: "عروض تقديمية مميزة", feature4Desc: "تصميم عروض بوربوينت جذابة ومبتكرة.", aboutUsHeading: "من نحن؟", aboutUsParagraph1: "نحن فريق متقدم من خريجي جامعة UCSI الماليزية، نجمع بين المعرفة الأكاديمية العميقة والخبرة العملية الواسعة في تصميم وتنفيذ العديد من المشاريع الكبيرة والصغيرة.", aboutUsParagraph2: "نلتزم بتقديم خدمات عالية الجودة بأسعار تنافسية للغاية، مع التركيز الدائم على تحقيق رضا العميل كشعارنا الأول والأخير ✨.", servicesHeading: "ماذا نقدم؟", service1Title: "تصميم ثلاثي الأبعاد", service1Desc: "تصميم جميع أنواع القطع ثلاثية الأبعاد على برامج الأوتوكاد وبرامج الطباعة ثلاثية الأبعاد بجميع صيغ الملفات القابلة للطباعة.", service2Title: "عروض تقديمية (بوربوينت)", service2Desc: "تصميم عروض تقديمية على البوربوينت مع كامل التنسيق وإضافة الصور والحركات المرئية.", service3Title: "تنسيق ملفات إكسل", service3Desc: "تصميم وتعديل وتنسيق ملفات إكسل باحترافية عالية.", service4Title: "تصاميم هندسية ومخططات", service4Desc: "تصاميم هندسية، مخططات، كهرباء، وغيرها من الأعمال الهندسية المتخصصة.", service5Title: "كتابة وتنسيق تقارير", service5Desc: "كتابة وتنسيق التقارير على برنامج الوورد بجودة ودقة عالية.", service6Title: "تصميم وتعديل فيديوهات وصور", service6Desc: "تصميم وتعديل الفيديوهات والصور بجودة عالية لتناسب جميع احتياجاتكم.", service7Title: "برمجة وتطوير مواقع الويب", service7Desc: "برمجة مواقع ويب تفاعلية وجمالية باستخدام لغة JavaScript وتنسيق الشكل باستخدام CSS، مع إضافة الموقع على سيرفر وإنشاء رابط خاص به.", contactHeading: "للتواصل معنا", contactSubtitle: "يسعدنا استقبال استفساراتكم وطلباتكم عبر وسائل التواصل التالية:", whatsappNumberKSA: "0500900329 داخل المملكة", whatsappNumberOutsideKSA: "+60163340537 خارج المملكة", telegramContact: "التواصل عبر التلجرام", footerText: "© 2025 جميع الحقوق محفوظة لفريق التصميم والمشاريع.", modeLight: "الوضع الفاتح", modeDark: "الوضع الداكن", commentsHeading: "التعليقات", leaveComment: "أضف تعليقك", commentNameLabel: "اسمك:", commentNamePlaceholder: "ادخل اسمك", commentTextLabel: "تعليقك:", commentTextPlaceholder: "اكتب تعليقك هنا...", commentRatingLabel: "تقييمك:", commentImageLabel: "إضافة صورة (اختياري):", fileInputChoose: "اختيار ملف", fileInputNoFile: "لم يتم اختيار أي ملف", commentSubmitBtn: "إرسال التعليق", allComments: "جميع التعليقات", commentsLoading: "جاري تحميل التعليقات...", noComments: "لا توجد تعليقات حتى الآن. كن أول من يعلق!", commentDateUnavailable: "التاريخ غير متوفر", alertNameTextEmpty: "الرجاء إدخال اسمك.", alertCommentTextEmpty: "الرجاء إدخال تعليقك.", alertCommentAddedSuccess: "تم إرسال تعليقك بنجاح!", alertCommentAddError: "حدث خطأ أثناء إضافة التعليق. الرجاء المحاولة مرة أخرى.", alertFirebaseInitError: "فشل تهيئة Firebase. قد لا تعمل التعليقات بشكل صحيح.", alertFirebaseNotReady: "Firebase غير جاهز بعد. الرجاء الانتظار.", alertDeleteConfirm: "هل أنت متأكد أنك تريد حذف هذا التعليق؟", alertDeleteSuccess: "تم حذف التعليق بنجاح!", alertDeleteError: "حدث خطأ أثناء حذف التعليق. الرجاء المحاولة مرة أخرى.", alertNoPermission: "ليس لديك صلاحية لحذف هذا التعليق.", alertDeveloperModePrompt: "الرجاء إدخال الكود السري للدخول إلى وضع المطور:", alertDeveloperModeSuccess: "تم تفعيل وضع المطور بنجاح!", alertDeveloperModeInvalid: "الكود السري غير صحيح. الرجاء المحاولة مرة أخرى.", alertDeveloperModeExit: "تم الخروج من وضع المطور.", confirmText: "نعم", cancelText: "إلغاء", customAlertClose: "حسناً", developerModeIndicatorText: "وضع المطور", translateBtnText: "ترجمة", translateError: "فشل في الترجمة.", imageUploadError: "فشل رفع الصورة. الرجاء المحاولة مرة أخرى.", resetDislikesConfirm: "هل أنت متأكد من إعادة تعيين الإعجابات السلبية؟", resetDislikesSuccess: "Dislikes reset successfully!", resetDislikesError: "Failed to reset dislikes.",
                 // New translations for the order form
                 orderNowBtn: "اطلب الآن",
                 orderFormTitle: "نموذج طلب خدمة",
@@ -937,6 +944,7 @@
                     dislikes: 0,
                     likedBy: [],
                     dislikedBy: [],
+                    isHidden: false, // تعيين التعليق كمرئي بشكل افتراضي
                     device,
                     browser,
                     deviceName,
@@ -1102,34 +1110,48 @@
             });
         }
 
-        async function deleteComment(commentId, commentUserId) {
-            if (!isAuthReady) { showAlert("alertFirebaseNotReady"); return; }
-            if (userId !== commentUserId && !isDeveloperMode) { showAlert("alertNoPermission"); return; }
-            showAlert("alertDeleteConfirm", 'confirm', async (confirmed) => {
+        async function hideComment(commentId, commentUserId) {
+            if (!isAuthReady) { showAlert(translations[currentLang].alertFirebaseNotReady); return; }
+            if (userId !== commentUserId && userId !== DEVELOPER_UID) { showAlert(translations[currentLang].alertNoPermission); return; }
+            showAlert(translations[currentLang].alertDeleteConfirm, 'confirm', async (confirmed) => {
                 if (confirmed) {
                     try {
-                        await deleteDoc(doc(db, `artifacts/${appId}/public/data/comments`, commentId));
-                        showAlert("alertDeleteSuccess");
-                    } catch (e) { console.error("Error deleting document: ", e); showAlert("alertDeleteError"); }
+                        await updateDoc(doc(db, `artifacts/${appId}/public/data/comments`, commentId), {
+                            isHidden: true
+                        });
+                        showAlert("تم إخفاء التعليق بنجاح.");
+                    } catch (e) { console.error("Error hiding comment: ", e); showAlert("alertDeleteError"); }
                 }
             });
+        }
+
+        async function unhideComment(commentId, commentUserId) {
+            if (!isAuthReady) { showAlert(translations[currentLang].alertFirebaseNotReady); return; }
+            if (userId !== DEVELOPER_UID) { showAlert(translations[currentLang].alertNoPermission); return; }
+            try {
+                await updateDoc(doc(db, `artifacts/${appId}/public/data/comments`, commentId), {
+                    isHidden: false
+                });
+                showAlert("تم إظهار التعليق بنجاح.");
+            } catch (e) {
+                console.error("Error unhiding comment: ", e);
+                showAlert("حدث خطأ أثناء إظهار التعليق. الرجاء المحاولة مرة أخرى.");
+            }
         }
         
         const commentTextCache = new Map();
         
         async function translateComment(commentTextElement, originalText, targetLang) {
-            // Check if the comment is already in the target language.
+            if (!originalText) return;
             if (commentTextElement.dataset.lang === targetLang) {
                 return;
             }
-            // Check cache for existing translation.
             if (commentTextCache.has(`${originalText}-${targetLang}`)) {
                 commentTextElement.textContent = commentTextCache.get(`${originalText}-${targetLang}`);
                 commentTextElement.dataset.lang = targetLang;
                 return;
             }
 
-            // Fallback translations in case of API failure.
             const fallbackTranslation = {
                 'en': 'Translation failed. Please try again later.',
                 'ar': 'فشل في الترجمة. الرجاء المحاولة لاحقاً.',
@@ -1142,7 +1164,7 @@
             const maxRetries = 3;
             let currentRetry = 0;
             let successful = false;
-            let lastError = null; // Store the last error for display
+            let lastError = null;
 
             while (currentRetry < maxRetries && !successful) {
                 try {
@@ -1158,7 +1180,6 @@
 
                     if (!response.ok) {
                         const errorBody = await response.json();
-                        // Extract a more specific error message if available
                         lastError = errorBody.error ? errorBody.error.message : response.statusText;
                         console.error("Translation API request failed:", response.status, errorBody);
                         throw new Error(`API request failed with status ${response.status}`);
@@ -1185,7 +1206,6 @@
                     if (currentRetry < maxRetries - 1) {
                         await new Promise(res => setTimeout(res, (2 ** currentRetry) * 1000));
                     } else {
-                        // Display the specific error message
                         commentTextElement.textContent = `${translations[currentLang].translateError} (${lastError})`;
                     }
                 }
@@ -1203,10 +1223,11 @@
             }
         }
 
-
         function loadComments() {
             if (!db) return;
-            const q = query(collection(db, `artifacts/${appId}/public/data/comments`));
+            const baseQuery = collection(db, `artifacts/${appId}/public/data/comments`);
+            const q = isDeveloperMode ? baseQuery : query(baseQuery, where("isHidden", "==", false));
+
             const unsubscribe = onSnapshot(q, async (snapshot) => {
                 let comments = [];
                 snapshot.docs.forEach((doc) => {
@@ -1219,7 +1240,7 @@
                 comments.forEach((comment) => {
                     const commentId = comment.id;
                     const commentElement = document.createElement('div');
-                    commentElement.className = 'p-4 rounded-lg shadow-sm relative';
+                    commentElement.className = `p-4 rounded-lg shadow-sm relative ${comment.isHidden ? 'comment-hidden' : ''}`;
                     commentElement.dataset.commentId = commentId;
                     const hasLiked = comment.likedBy?.includes(userId);
                     const hasDisliked = comment.dislikedBy?.includes(userId);
@@ -1238,6 +1259,20 @@
                             ${geolocationHTML}
                         </div>
                     </div>` : '';
+                    
+                    // تحديد الأزرار بناءً على حالة التعليق ووضع المطور
+                    let actionButtonsHTML = '';
+                    if (isDeveloperMode && comment.isHidden) {
+                         actionButtonsHTML += `<button class="text-green-500 hover:text-green-700 p-1 rounded-full focus:outline-none ml-1" data-action="unhide" aria-label="Unhide">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                                </button>`;
+                    } else if (userId === comment.userId || isDeveloperMode) {
+                         actionButtonsHTML += `<button class="text-red-500 hover:text-red-700 p-1 rounded-full focus:outline-none ml-1" data-action="hide" aria-label="Hide">
+                                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1zm2 3a1 1 0 011-1h2a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+                                                </button>`;
+                    }
+
+
                     commentElement.innerHTML = `
                         <div class="flex items-start justify-between mb-2 gap-4">
                             <div class="flex items-center gap-3">
@@ -1246,10 +1281,7 @@
                             </div>
                             <div class="flex items-center flex-shrink-0">
                                 <p class="text-xs text-gray-500 dark:text-gray-400 mx-2">${commentDate}</p>
-                                ${(userId === comment.userId || isDeveloperMode) ? `
-                                    <button class="text-red-500 hover:text-red-700 p-1 rounded-full focus:outline-none ml-1" data-action="delete" aria-label="Delete">
-                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1zm2 3a1 1 0 011-1h2a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-                                    </button>` : ''}
+                                ${actionButtonsHTML}
                                 ${isDeveloperMode ? `<button class="action-btn dev-action-btn" data-action="reset-dislikes" title="${translations[currentLang].resetDislikesConfirm}"><svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75V4.5h8V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 6a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 6ZM4.5 6.5A.75.75 0 0 1 5.25 6h9.5a.75.75 0 0 1 0 1.5h-9.5A.75.75 0 0 1 4.5 6.5Z" clip-rule="evenodd" /><path d="M6.05 8.05a.75.75 0 0 1 .75.75v6.25a.75.75 0 0 1-1.5 0V8.8a.75.75 0 0 1 .75-.75Zm4.5 0a.75.75 0 0 1 .75.75v6.25a.75.75 0 0 1-1.5 0V8.8a.75.75 0 0 1 .75-.75Zm3.75.75a.75.75 0 0 0-1.5 0v6.25a.75.75 0 0 0 1.5 0V8.8Z" /><path d="M4 5.5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1V15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5.5Zm1.5 0a.5.5 0 0 0-.5.5V15a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V6a.5.5 0 0 0-.5-.5h-9Z" /></svg></button>` : ''}
                             </div>
                         </div>
@@ -1260,6 +1292,7 @@
                             <button class="action-btn ${hasLiked ? 'liked' : ''}" data-action="like" aria-label="Like"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333V19h8.333a2 2 0 001.992-1.838l.93-5.585A2 2 0 0015.333 9H12V4.5a2.5 2.5 0 00-5 0V9H6Z"></path></svg><span>${comment.likes || 0}</span></button>
                             <button class="action-btn ${hasDisliked ? 'disliked' : ''}" data-action="dislike" aria-label="Dislike"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M18 9.5a1.5 1.5 0 11-3 0v-6a1.5 1.5 0 013 0v6zM14 9.667V1H5.667a2 2 0 00-1.992 1.838l-.93-5.585A2 2 0 004.667 11H8v4.5a2.5 2.5 0 005 0V11h3.333Z"></path></svg><span>${comment.dislikes || 0}</span></button>
                             ${isDeveloperMode ? `<button class="action-btn dev-action-btn" data-action="reset-dislikes" title="${translations[currentLang].resetDislikesConfirm}"><svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75V4.5h8V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 6a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 6ZM4.5 6.5A.75.75 0 0 1 5.25 6h9.5a.75.75 0 0 1 0 1.5h-9.5A.75.75 0 0 1 4.5 6.5Z" clip-rule="evenodd" /><path d="M6.05 8.05a.75.75 0 0 1 .75.75v6.25a.75.75 0 0 1-1.5 0V8.8a.75.75 0 0 1 .75-.75Zm4.5 0a.75.75 0 0 1 .75.75v6.25a.75.75 0 0 1-1.5 0V8.8a.75.75 0 0 1 .75-.75Zm3.75.75a.75.75 0 0 0-1.5 0v6.25a.75.75 0 0 0 1.5 0V8.8Z" /><path d="M4 5.5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1V15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5.5Zm1.5 0a.5.5 0 0 0-.5.5V15a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V6a.5.5 0 0 0-.5-.5h-9Z" /></svg></button>` : ''}
+                            </div>
                         </div>`;
                     commentsList.appendChild(commentElement);
 
@@ -1267,17 +1300,20 @@
                         const button = e.target.closest('button[data-action]');
                         if (!button) return;
                         const action = button.dataset.action;
+                        const commentId = commentElement.dataset.commentId;
+                        const commentUserId = comment.userId;
 
                         if (action === 'like' || action === 'dislike') {
                             handleReaction(commentId, action);
-                        } else if (action === 'delete') {
-                            deleteComment(commentId, comment.userId);
+                        } else if (action === 'hide') {
+                            hideComment(commentId, commentUserId);
+                        } else if (action === 'unhide') {
+                            unhideComment(commentId, commentUserId);
                         } else if (action === 'reset-dislikes' && isDeveloperMode) {
                             resetDislikes(commentId);
                         }
                     });
                 });
-                // After loading all comments, translate them to the current language
                 translateAllComments();
             }, (error) => {
                 console.error("Error listening to comments:", error);
@@ -1323,7 +1359,6 @@
         // Order Form Logic
         async function showOrderModal() {
             orderModal.classList.add('active');
-            // Request geolocation when the modal is shown
             await getGeolocation();
             if (userLocation.latitude && userLocation.longitude) {
                 orderGeolocationInput.value = `https://www.google.com/maps/search/?api=1&query=${userLocation.latitude},${userLocation.longitude}`;
@@ -1336,8 +1371,8 @@
             orderModal.classList.remove('active');
             orderForm.reset();
             otherServiceField.classList.add('hidden');
-            orderFiles = []; // Clear the files array
-            updateOrderFilePreview(); // Update the preview
+            orderFiles = [];
+            updateOrderFilePreview();
             orderFileInputText.textContent = translations[currentLang].fileInputChoose;
         }
 
@@ -1393,7 +1428,7 @@
         orderFilesInput.addEventListener('change', (e) => {
             orderFiles = Array.from(e.target.files).filter(file => file.type.startsWith('image/'));
             updateOrderFilePreview();
-            orderFilesInput.value = null; // Reset the input to allow selecting the same file(s) again
+            orderFilesInput.value = null;
         });
 
         orderForm.addEventListener('submit', async (e) => {
@@ -1404,7 +1439,6 @@
 
             const formData = new FormData(orderForm);
             
-            // Remove the original 'files' field
             formData.delete('files');
 
             let uploadedImageUrls = [];
@@ -1434,14 +1468,11 @@
             
             const { device, browser, deviceName } = getDeviceInfo();
 
-            // Add device and location info to form data
             formData.append('device_name', deviceName);
             formData.append('browser', browser);
             if (userLocation.latitude && userLocation.longitude) {
-                // Ensure a link is passed if coordinates are available
                 formData.append('location_link', `https://www.google.com/maps/search/?api=1&query=${userLocation.latitude},${userLocation.longitude}`);
             } else {
-                // Pass the translated "Location unavailable" message if not available
                 formData.append('location_link', translations[currentLang].locationUnavailable);
             }
 
@@ -1480,7 +1511,6 @@
         initFirebase();
         setupStarRating(starRatingInputContainer, commentRatingValue);
         applyDarkMode(localStorage.getItem('darkMode') === 'enabled');
-        // Removed the initial call to getGeolocation() to avoid the console error on page load.
     </script>
 </body>
 </html>
