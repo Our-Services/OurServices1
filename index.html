@@ -29,7 +29,7 @@
         .hamburger-icon.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
         .hamburger-icon.open span:nth-child(2) { opacity: 0; }
         .hamburger-icon.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
-
+        
         /* Dark Mode Styles */
         body.dark { background-color: #1a202c; color: #e2e8f0; }
         body.dark .navbar { background-color: rgba(26, 32, 44, 0.95); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
@@ -85,10 +85,10 @@
         body.dark .custom-file-input { background-color: #334155; color: #e2e8f0; border-color: #475569; }
         body.dark .custom-file-input:hover { background-color: #4a5568; border-color: #64748b; }
         #imagePreview { max-width: 100px; max-height: 100px; margin-top: 1rem; border-radius: 0.5rem; object-fit: cover; }
-        #comments input[type="text"], #comments textarea, #developerPasswordInput, #orderForm input[type="text"], #orderForm input[type="email"], #orderForm input[type="tel"], #orderForm select, #orderForm textarea { background-color: #f6f7ff; color: #1a202c; border-color: #e2e8f0; }
-        #comments input[type="text"]::placeholder, #comments textarea::placeholder, #developerPasswordInput::placeholder, #orderForm input::placeholder, #orderForm textarea::placeholder { color: #64748b; }
-        body.dark #comments input[type="text"], body.dark #comments textarea, body.dark #developerPasswordInput, body.dark #orderForm input, body.dark #orderForm select, body.dark #orderForm textarea { background-color: #334155; color: #e2e8f0; border-color: #475569; }
-        body.dark #comments input[type="text"]::placeholder, body.dark #comments textarea::placeholder, body.dark #developerPasswordInput::placeholder, body.dark #orderForm input::placeholder, body.dark #orderForm textarea::placeholder { color: #94a3b8; }
+        #comments input[type="text"], #comments textarea, #developerPasswordInput, #orderForm input[type="text"], #orderForm input[type="email"], #orderForm input[type="tel"], #orderForm select, #orderForm textarea, #orderTrackInput { background-color: #f6f7ff; color: #1a202c; border-color: #e2e8f0; }
+        #comments input[type="text"]::placeholder, #comments textarea::placeholder, #developerPasswordInput::placeholder, #orderForm input::placeholder, #orderForm textarea::placeholder, #orderTrackInput::placeholder { color: #64748b; }
+        body.dark #comments input[type="text"], body.dark #comments textarea, body.dark #developerPasswordInput, body.dark #orderForm input, body.dark #orderForm select, body.dark #orderForm textarea, body.dark #orderTrackInput { background-color: #334155; color: #e2e8f0; border-color: #475569; }
+        body.dark #comments input[type="text"]::placeholder, body.dark #comments textarea::placeholder, body.dark #developerPasswordInput::placeholder, body.dark #orderForm input::placeholder, body.dark #orderForm textarea::placeholder, body.dark #orderTrackInput::placeholder { color: #94a3b8; }
         
         @media (max-width: 767px) {
             .hamburger-icon { display: flex; }
@@ -279,10 +279,88 @@
         body.dark .ip-address {
             color: #a78bfa; /* Tailwind's violet-400 */
         }
+
+        /* Order Tracking and Developer Mode Styles */
+        .progress-container {
+            position: relative;
+            margin-top: 2rem;
+            padding: 0 10px;
+        }
+        .progress-steps-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+            z-index: 2;
+        }
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 1;
+        }
+        .progress-label {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            word-break: break-all;
+            line-height: 1.2;
+            color: #64748b;
+        }
+        .progress-label.active {
+            color: #10b981;
+        }
+        body.dark .progress-label {
+            color: #a0aec0;
+        }
+        body.dark .progress-label.active {
+            color: #10b981;
+        }
+        #track-order-section {
+            /* إضافة لون خلفية صريح للوضع الفاتح */
+            background-color: #f8fafc;
+        }
+        body.dark #track-order-section {
+            background-color: #1a202c;
+        }
+        .order-preview-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .order-preview-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .order-preview-image:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Updated styles for Developer Dashboard to be horizontally scrollable */
+        .dev-order-list {
+            display: flex;
+            overflow-x: auto;
+            gap: 1.5rem;
+            padding: 1rem;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+        .dev-order-list .card {
+            min-width: 320px; /* Adjust as needed */
+            flex-shrink: 0;
+            scroll-snap-align: start;
+            padding: 1.5rem;
+        }
     </style>
 </head>
 <body class="font-sans antialiased">
 
+    <!-- Custom Alert Modal (No changes) -->
     <div id="customAlertModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[2000] hidden">
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
             <p id="customAlertMessage" class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4"></p>
@@ -290,11 +368,12 @@
         </div>
     </div>
 
+    <!-- Full Image Modal (No changes) -->
     <div id="fullImageModal">
         <img id="fullImage" src="#" alt="Full size comment image">
     </div>
 
-    <!-- Order Now Modal -->
+    <!-- Order Now Modal (No changes) -->
     <div id="orderModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[3000] hidden">
         <div class="order-form-container p-8 rounded-xl shadow-2xl max-w-lg w-full m-4 relative">
             <button id="closeOrderModal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors duration-200">
@@ -303,6 +382,7 @@
                 </svg>
             </button>
             <h2 class="text-2xl font-bold text-center mb-6 text-indigo-700 dark:text-indigo-400" data-lang-key="orderFormTitle">نموذج طلب خدمة</h2>
+            <!-- Updated action and method for formspree -->
             <form id="orderForm" action="https://formspree.io/f/xrbllnal" method="POST" class="space-y-4">
                 <div>
                     <label for="orderName" class="block text-sm font-medium" data-lang-key="orderNameLabel">الاسم الكامل:</label>
@@ -353,42 +433,59 @@
                 </div>
                 <!-- New hidden field for IP Address -->
                 <input type="hidden" name="ip_address" id="orderIpAddressInput">
+                <!-- Add a hidden input to hold the full formatted message for Formspree -->
+                <input type="hidden" name="formspree_message" id="formspreeMessage">
                 <button type="submit" id="submitOrderBtn" class="btn-primary w-full" data-lang-key="orderSubmitBtn">تقديم الطلب</button>
             </form>
         </div>
     </div>
 
+    <!-- Order Submitted Modal -->
+    <div id="orderSubmittedModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[3000] hidden">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-2xl max-w-md w-full m-4 text-center">
+            <svg class="mx-auto h-16 w-16 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <h3 class="mt-4 text-2xl font-bold text-gray-900 dark:text-white" data-lang-key="orderSuccess">تم استلام طلبك بنجاح!</h3>
+            <p class="mt-2 text-gray-600 dark:text-gray-400" data-lang-key="orderIdMessage">الرجاء الاحتفاظ برقم طلبك لتتبع حالته:</p>
+            <p id="submittedOrderId" class="mt-4 text-4xl font-extrabold text-indigo-600 dark:text-indigo-400 select-all"></p>
+            <button id="closeOrderSubmittedModal" class="mt-6 px-6 py-2 btn-primary" data-lang-key="customAlertClose">حسناً</button>
+        </div>
+    </div>
+
+
+    <!-- Navbar -->
     <nav class="navbar py-4 px-6">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <a href="#hero" class="text-2xl font-bold text-indigo-700" data-lang-key="siteTitle">خدمتنا</a>
             <div class="flex items-center gap-4 sm:gap-6">
-                <div class="language-dropdown-container">
-                    <button id="languageDropdownButton" class="language-dropdown-button" aria-label="Toggle language dropdown">
-                        <svg class="language-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1s-1 .45-1 1v3h-1c-.9 0-1.64.58-1.9 1.39-.77-2.31-1.04-4.83-.5-7.44h6.89c.54 2.61.27 5.13-.5 7.44zM12 4.07c3.95.49 7 3.85 7 7.93 0 .62-.08 1.21-.21 1.79L15 9V8c0-1.1-.9-2-2-2H9v-.93c.71-.1 1.45-.17 2.21-.17.76 0 1.5.07 2.21.17z"/></svg>
-                        <span id="currentLanguageText">AR</span>
-                    </button>
-                    <!-- Fixed HTML tag from <ul-tag> to <ul> -->
-                    <ul id="languageDropdownMenu" class="language-dropdown-menu">
-                        <li data-lang="ar">العربية</li>
-                        <li data-lang="en">English</li>
-                        <li data-lang="zh">中文</li>
-                    </ul>
-                </div>
-                <button id="darkModeToggle" aria-label="Toggle dark mode">
-                    <svg class="dark-mode-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path id="darkModeIconPath" d="M12 3a9 9 0 109 9c0-.46-.04-.92-.12-1.36a5.999 5.999 0 01-8.588-8.588C12.92 3.04 12.46 3 12 3z"/></svg>
-                </button>
-                <div class="hamburger-icon md:hidden" id="hamburger"><span></span><span></span><span></span></div>
-                <div class="nav-links-container hidden md:flex gap-6" id="navLinks">
+                <!-- Navigation Links and icons combined into one flex container -->
+                <div class="nav-links-container hidden md:flex items-center gap-4 sm:gap-6" id="navLinks">
                     <a href="#hero" class="nav-link" data-lang-key="navHome">الرئيسية</a>
                     <a href="#features" class="nav-link" data-lang-key="navWhyChooseUs">لماذا تختارنا؟</a>
                     <a href="#about-us" class="nav-link" data-lang-key="navAboutUs">من نحن؟</a>
                     <a href="#services" class="nav-link" data-lang-key="navServices">ماذا نقدم؟</a>
-                    <!-- Re-added "Contact Us" link to navbar -->
                     <a href="#contact" class="nav-link" data-lang-key="navContact">تواصل معنا</a>
                     <a href="#comments" class="nav-link" data-lang-key="navComments">التعليقات</a>
-                    <!-- Changed "Order Now" to a button to prevent JS error -->
-                    <button id="orderNowNavBtn" class="nav-link text-white bg-indigo-500 hover:bg-indigo-600 rounded-lg px-4 py-2" data-lang-key="orderNowBtn">اطلب الآن</button>
+                    <a href="#track-order-section" class="nav-link" data-lang-key="navTrackOrder">تتبع طلبك</a>
+                    <button id="orderNowNavBtn" class="nav-link order-now-btn" data-lang-key="orderNowBtn">اطلب الآن</button>
+                    <!-- Language Dropdown -->
+                    <div class="language-dropdown-container">
+                        <button id="languageDropdownButton" class="language-dropdown-button" aria-label="Toggle language dropdown">
+                            <svg class="language-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1s-1 .45-1 1v3h-1c-.9 0-1.64.58-1.9 1.39-.77-2.31-1.04-4.83-.5-7.44h6.89c.54 2.61.27 5.13-.5 7.44zM12 4.07c3.95.49 7 3.85 7 7.93 0 .62-.08 1.21-.21 1.79L15 9V8c0-1.1-.9-2-2-2H9v-.93c.71-.1 1.45-.17 2.21-.17.76 0 1.5.07 2.21.17z"/></svg>
+                            <span id="currentLanguageText">AR</span>
+                        </button>
+                        <ul id="languageDropdownMenu" class="language-dropdown-menu">
+                            <li data-lang="ar">العربية</li>
+                            <li data-lang="en">English</li>
+                            <li data-lang="zh">中文</li>
+                        </ul>
+                    </div>
+                    <!-- Dark Mode Toggle -->
+                    <button id="darkModeToggle" aria-label="Toggle dark mode">
+                        <svg class="dark-mode-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path id="darkModeIconPath" d="M12 3a9 9 0 109 9c0-.46-.04-.92-.12-1.36a5.999 5.999 0 01-8.588-8.588C12.92 3.04 12.46 3 12 3z"/></svg>
+                    </button>
                 </div>
+                <!-- Mobile Hamburger Menu -->
+                <div class="hamburger-icon md:hidden" id="hamburger"><span></span><span></span><span></span></div>
             </div>
         </div>
     </nav>
@@ -404,11 +501,12 @@
     </header>
 
     <main>
+        <!-- Features Section (No changes) -->
         <section id="features" class="py-16 px-4">
             <div class="max-w-6xl mx-auto">
                 <h2 class="section-heading text-center mb-12" data-lang-key="featuresHeading">لماذا تختارنا؟</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m1.636 6.364l.707-.707M6 21v-1m6.364-1.636l-.707-.707M12 21h-1m-4.636-1.636l-.707.707M3 12h1m-.707-6.364l.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707"/></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature1Title">تنسيقات شكل رائعة </h3><p class="text-gray-600" data-lang-key="feature1Desc">نقدم العديد من التنسيقات الجمالية التي تبرز عملك.</p></div>
+                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m1.636 6.364l.707-.707M6 21v-1m6.364-1.636l-.707-.707M12 21h-1m-4.636-1.636l-.707.707M3 12h1m-.707-6.364l.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707"/></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature1Title">تنسيقات شكل رائعة </h3><p class="text-gray-600" data-lang-key="feature1Desc">نقدم العديد من التنسيقات الجمالية التي تبرز عملك.</p></div>
                     <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature2Title">تنسيق كلام احترافي</h3><p class="text-gray-600" data-lang-key="feature2Desc">تنسيق دقيق للمحتوى في البحوث والمشاريع.</p></div>
                     <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature3Title">أكثر من 100 نوع خط</h3><p class="text-gray-600" data-lang-key="feature3Desc">اختر من مجموعة واسعة من الخطوط المميزة.</p></div>
                     <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m-4 8h4m10-8h4m-4 8h4M7 12h10l4-8H3l4 8zm0 0v8a2 2 0 002 2h6a2 2 0 002-2v-8m-12 4h.01M17 12h.01"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature4Title">عروض تقديمية مميزة</h3><p class="text-gray-600" data-lang-key="feature4Desc">تصميم عروض بوربوينت جذابة ومبتكرة.</p></div>
@@ -416,6 +514,7 @@
             </div>
         </section>
 
+        <!-- About Us Section (No changes) -->
         <section id="about-us" class="py-16 px-4 bg-white">
             <div class="max-w-6xl mx-auto text-center">
                 <h2 class="section-heading mb-12" data-lang-key="aboutUsHeading">من نحن؟ </h2>
@@ -423,6 +522,7 @@
                     <p class="text-lg md:text-xl leading-relaxed text-gray-700" data-lang-key="aboutUsParagraph1">نحن فريق متقدم من خريجي جامعة UCSI الماليزية، نجمع بين المعرفة الأكاديمية العميقة والخبرة العملية الواسعة في تصميم وتنفيذ العديد من المشاريع الكبيرة والصغيرة.</p></div>
         </section>
 
+        <!-- Services Section (No changes) -->
         <section id="services" class="py-16 px-4">
             <div class="max-w-6xl mx-auto">
                 <h2 class="section-heading text-center mb-12" data-lang-key="servicesHeading">ماذا نقدم؟</h2>
@@ -438,6 +538,58 @@
             </div>
         </section>
 
+        <!-- New: Order Tracking Section -->
+        <section id="track-order-section" class="py-16 px-4 bg-gray-100 dark:bg-gray-900">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="section-heading mb-12" data-lang-key="trackOrderHeading">تتبع طلبك</h2>
+                <div class="card p-8">
+                    <p class="text-lg md:text-xl mb-6 text-gray-700 dark:text-gray-300" data-lang-key="trackOrderSubtitle">أدخل رقم طلبك المكون من 6 أرقام لتتبع حالته.</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <input type="text" id="orderTrackInput" placeholder="أدخل رقم الطلب هنا..." class="w-full sm:w-2/3 md:w-1/2 p-3 rounded-lg shadow-sm border-gray-300 dark:border-gray-600 text-center" data-lang-key="trackOrderInputPlaceholder" pattern="\d{6}" title="الرجاء إدخال رقم مكون من 6 أرقام" required>
+                        <button id="trackOrderBtn" class="btn-primary w-full sm:w-1/3 md:w-auto" data-lang-key="trackOrderBtn">تتبع</button>
+                    </div>
+                    <!-- Order Status Display Area -->
+                    <div id="orderStatusDisplay" class="mt-8 hidden">
+                        <h3 class="text-xl font-semibold mb-4 text-indigo-600 dark:text-indigo-400" data-lang-key="orderStatusTitle">حالة الطلب: <span id="displayedOrderId"></span></h3>
+                        <div class="progress-container">
+                            <canvas id="progressBarCanvas" width="800" height="80" class="w-full"></canvas>
+                            <div class="progress-steps-container">
+                                <div class="progress-step" data-step="1">
+                                    <span class="progress-label" data-lang-key="status1">بانتظار الموافقة</span>
+                                </div>
+                                <div class="progress-step" data-step="2">
+                                    <span class="progress-label" data-lang-key="status2">قيد التنفيذ</span>
+                                </div>
+                                <div class="progress-step" data-step="3">
+                                    <span class="progress-label" data-lang-key="status3">معاينة المشروع</span>
+                                </div>
+                                <div class="progress-step" data-step="4">
+                                    <span class="progress-label" data-lang-key="status4">بانتظار الدفع</span>
+                                </div>
+                                <div class="progress-step" data-step="5">
+                                    <span class="progress-label" data-lang-key="status5">اكتمل</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="orderPreviewImages" class="order-preview-images mt-6"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Developer Mode Section -->
+        <section id="developer-dashboard" class="py-16 px-4 bg-gray-100 dark:bg-gray-900 hidden">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="section-heading text-center mb-12" data-lang-key="devDashboardHeading">لوحة تحكم المطور</h2>
+                <!-- Modified layout for horizontal scrolling -->
+                <div class="dev-order-list" id="devOrdersList">
+                    <p id="devLoadingText" class="text-center text-gray-500 dark:text-gray-400 col-span-full" data-lang-key="devLoading">جاري تحميل الطلبات...</p>
+                    <p id="noOrders" class="text-center text-gray-500 dark:text-gray-400 col-span-full hidden" data-lang-key="noOrders">لا توجد طلبات حتى الآن.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section (No changes) -->
         <section id="contact" class="py-16 px-4 bg-gray-100">
             <div class="max-w-4xl mx-auto text-center">
                 <h2 class="section-heading mb-12" data-lang-key="contactHeading">للتواصل معنا</h2>
@@ -450,6 +602,7 @@
             </div>
         </section>
 
+        <!-- Comments Section (No changes) -->
         <section id="comments" class="py-16 px-4">
             <div class="max-w-4xl mx-auto">
                 <h2 class="section-heading text-center mb-12" data-lang-key="commentsHeading">التعليقات</h2>
@@ -502,11 +655,11 @@
         // Firebase Imports
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, onSnapshot, serverTimestamp, doc, deleteDoc, runTransaction, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, query, onSnapshot, serverTimestamp, doc, deleteDoc, runTransaction, arrayUnion, arrayRemove, getDoc, where, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Firebase Initialization
-        // ملاحظة: يرجى التأكد من أن مفتاح Firebase API هذا صحيح ونشط
-        const firebaseConfig = {
+        // ملاحظة: سيتم توفير متغيرات البيئة تلقائيًا بواسطة نظام Canvas
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
             apiKey: "AIzaSyBbL9kbE7oP5CW4HmZJGCCmZRY2L5wxxkM",
             authDomain: "ourservices-c5658.firebaseapp.com",
             projectId: "ourservices-c5658",
@@ -521,10 +674,9 @@
         let isAuthReady = false;
         let isDeveloperMode = false;
         const DEVELOPER_MODE_SECRET = "Ahmad@2006";
-        // تم تحديث مفتاح Gemini API
-        const GEMINI_API_KEY = "AIzaSyAZW2fKuHSjKPap6Tnpt_92vcb-kL62LoY";
         const IMGBB_API_KEY = "c6af93a30efee65fec6b505a82033875";
         const FORMSPREE_ENDPOINT = "https://formspree.io/f/xrbllnal";
+
 
         // DOM Elements
         const customAlertModal = document.getElementById('customAlertModal');
@@ -554,7 +706,9 @@
         
         // New Order Form Elements
         const orderModal = document.getElementById('orderModal');
+        const orderSubmittedModal = document.getElementById('orderSubmittedModal');
         const closeOrderModal = document.getElementById('closeOrderModal');
+        const closeOrderSubmittedModal = document.getElementById('closeOrderSubmittedModal');
         const heroOrderNowBtn = document.getElementById('heroOrderNowBtn');
         const orderNowNavBtn = document.getElementById('orderNowNavBtn');
         const orderForm = document.getElementById('orderForm');
@@ -567,6 +721,22 @@
         const orderImagesPreview = document.getElementById('orderImagesPreview');
         const orderGeolocationInput = document.getElementById('orderGeolocation');
         const orderIpAddressInput = document.getElementById('orderIpAddressInput');
+        const formspreeMessage = document.getElementById('formspreeMessage');
+
+        // New Order Tracking Elements
+        const trackOrderInput = document.getElementById('orderTrackInput');
+        const trackOrderBtn = document.getElementById('trackOrderBtn');
+        const orderStatusDisplay = document.getElementById('orderStatusDisplay');
+        const displayedOrderId = document.getElementById('displayedOrderId');
+        const progressBarCanvas = document.getElementById('progressBarCanvas');
+        const progressStepsLabels = document.querySelectorAll('.progress-step');
+        const orderPreviewImages = document.getElementById('orderPreviewImages');
+
+        // New Developer Mode Elements
+        const developerDashboard = document.getElementById('developer-dashboard');
+        const devOrdersList = document.getElementById('devOrdersList');
+        const devLoadingText = document.getElementById('devLoadingText');
+        const noOrders = document.getElementById('noOrders');
         
         // List to hold files chosen for the order form
         let orderFiles = [];
@@ -614,6 +784,10 @@
                         userId = user.uid;
                         isAuthReady = true;
                         loadComments();
+                        // أضفنا استدعاء جديد لتحميل الطلبات في وضع المطور
+                        if (isDeveloperMode) {
+                            loadDevOrders();
+                        }
                     } else {
                         await signInAnonymously(auth);
                     }
@@ -624,9 +798,10 @@
             }
         }
         
+        // كائن الترجمات المحدث مع إضافة نصوص جديدة لنظام تتبع الطلبات
         const translations = {
-            ar: { 
-                siteTitle: "خدمتنا - تصميم وتطوير المشاريع", navHome: "الرئيسية", navWhyChooseUs: "لماذا تختارنا؟", navAboutUs: "من نحن؟", navServices: "ماذا نقدم؟", navContact: "تواصل معنا", navComments: "التعليقات", heroTitle: "مصممون جميع أنواع المشاريع والمواقع والتصاميم والبحوث والواجبات", heroDiscount: "خصم 30% لفترة محدودة على كامل الخدمات", heroSubtitle: "نقدم لكم حلولاً متكاملة لتلبية جميع احتياجاتكم الأكاديمية والمهنية", heroContactBtn: "تواصل معنا الآن", featuresHeading: "لماذا تختارنا؟", feature1Title: "تنسيقات شكل رائعة", feature1Desc: "نقدم العديد من التنسيقات الجمالية التي تبرز عملك.", feature2Title: "تنسيق كلام احترافي", feature2Desc: "تنسيق دقيق للمحتوى في البحوث والمشاريع.", feature3Title: "أكثر من 100 نوع خط", feature3Desc: "اختر من مجموعة واسعة من الخطوط المميزة.", feature4Title: "عروض تقديمية مميزة", feature4Desc: "تصميم عروض بوربوينت جذابة ومبتكرة.", aboutUsHeading: "من نحن؟", aboutUsParagraph1: "نحن فريق متقدم من خريجي جامعة UCSI الماليزية، نجمع بين المعرفة الأكاديمية العميقة والخبرة العملية الواسعة في تصميم وتنفيذ العديد من المشاريع الكبيرة والصغيرة.", aboutUsParagraph2: "نلتزم بتقديم خدمات عالية الجودة بأسعار تنافسية للغاية، مع التركيز الدائم على تحقيق رضا العميل كشعارنا الأول والأخير ✨.", servicesHeading: "ماذا نقدم؟", service1Title: "تصميم ثلاثي الأبعاد", service1Desc: "تصميم جميع أنواع القطع ثلاثية الأبعاد على برامج الأوتوكاد وبرامج الطباعة ثلاثية الأبعاد بجميع صيغ الملفات القابلة للطباعة.", service2Title: "عروض تقديمية (بوربوينت)", service2Desc: "تصميم عروض تقديمية على البوربوينت مع كامل التنسيق وإضافة الصور والحركات المرئية.", service3Title: "تنسيق ملفات إكسل", service3Desc: "تصميم وتعديل وتنسيق ملفات إكسل باحترافية عالية.", service4Title: "تصاميم هندسية ومخططات", service4Desc: "تصاميم هندسية، مخططات، كهرباء، وغيرها من الأعمال الهندسية المتخصصة.", service5Title: "كتابة وتنسيق تقارير", service5Desc: "كتابة وتنسيق التقارير على برنامج الوورد بجودة ودقة عالية.", service6Title: "تصميم وتعديل فيديوهات وصور", service6Desc: "تصميم وتعديل الفيديوهات والصور بجودة عالية لتناسب جميع احتياجاتكم.", service7Title: "برمجة وتطوير مواقع الويب", service7Desc: "برمجة مواقع ويب تفاعلية وجمالية باستخدام لغة JavaScript وتنسيق الشكل باستخدام CSS، مع إضافة الموقع على سيرفر وإنشاء رابط خاص به.", contactHeading: "للتواصل معنا", contactSubtitle: "يسعدنا استقبال استفساراتكم وطلباتكم عبر وسائل التواصل التالية:", whatsappNumberKSA: "0500900329 داخل المملكة", whatsappNumberOutsideKSA: "+60163340537 خارج المملكة", telegramContact: "التواصل عبر التلجرام", footerText: "© 2025 جميع الحقوق محفوظة لفريق التصميم والمشاريع.", modeLight: "الوضع الفاتح", modeDark: "الوضع الداكن", commentsHeading: "التعليقات", leaveComment: "أضف تعليقك", commentNameLabel: "اسمك:", commentNamePlaceholder: "ادخل اسمك", commentTextLabel: "تعليقك:", commentTextPlaceholder: "اكتب تعليقك هنا...", commentRatingLabel: "تقييمك:", commentImageLabel: "إضافة صورة (اختياري):", fileInputChoose: "اختيار ملف", fileInputNoFile: "لم يتم اختيار أي ملف", commentSubmitBtn: "إرسال التعليق", allComments: "جميع التعليقات", commentsLoading: "جاري تحميل التعليقات...", noComments: "لا توجد تعليقات حتى الآن. كن أول من يعلق!", commentDateUnavailable: "التاريخ غير متوفر", alertNameTextEmpty: "الرجاء إدخال اسمك.", alertCommentTextEmpty: "الرجاء إدخال تعليقك.", alertCommentAddedSuccess: "تم إرسال تعليقك بنجاح!", alertCommentAddError: "حدث خطأ أثناء إضافة التعليق. الرجاء المحاولة مرة أخرى.", alertFirebaseInitError: "فشل تهيئة Firebase. قد لا تعمل التعليقات بشكل صحيح.", alertFirebaseNotReady: "Firebase غير جاهز بعد. الرجاء الانتظار.", alertDeleteConfirm: "هل أنت متأكد أنك تريد حذف هذا التعليق؟", alertDeleteSuccess: "تم حذف التعليق بنجاح!", alertDeleteError: "حدث خطأ أثناء حذف التعليق. الرجاء المحاولة مرة أخرى.", alertNoPermission: "ليس لديك صلاحية لحذف هذا التعليق.", alertDeveloperModePrompt: "الرجاء إدخال الكود السري للدخول إلى وضع المطور:", alertDeveloperModeSuccess: "تم تفعيل وضع المطور بنجاح!", alertDeveloperModeInvalid: "الكود السري غير صحيح. الرجاء المحاولة مرة أخرى.", alertDeveloperModeExit: "تم الخروج من وضع المطور.", confirmText: "نعم", cancelText: "إلغاء", customAlertClose: "حسناً", developerModeIndicatorText: "وضع المطور", translateBtnText: "ترجمة", translateError: "فشل في الترجمة.", imageUploadError: "فشل رفع الصورة. الرجاء المحاولة مرة أخرى.", resetDislikesConfirm: "هل أنت متأكد من إعادة تعيين الإعجابات السلبية؟", resetDislikesSuccess: "تم إعادة تعيين الإعجابات السلبية بنجاح!", resetDislikesError: "فشل إعادة تعيين الإعجابات السلبية.",
+            ar: {  
+                siteTitle: "خدمتنا - تصميم وتطوير المشاريع", navHome: "الرئيسية", navWhyChooseUs: "لماذا تختارنا؟", navAboutUs: "من نحن؟", navServices: "ماذا نقدم؟", navContact: "تواصل معنا", navComments: "التعليقات", navTrackOrder: "تتبع طلبك", heroTitle: "مصممون جميع أنواع المشاريع والمواقع والتصاميم والبحوث والواجبات", heroDiscount: "خصم 30% لفترة محدودة على كامل الخدمات", heroSubtitle: "نقدم لكم حلولاً متكاملة لتلبية جميع احتياجاتكم الأكاديمية والمهنية", heroContactBtn: "تواصل معنا الآن", featuresHeading: "لماذا تختارنا؟", feature1Title: "تنسيقات شكل رائعة", feature1Desc: "نقدم العديد من التنسيقات الجمالية التي تبرز عملك.", feature2Title: "تنسيق كلام احترافي", feature2Desc: "تنسيق دقيق للمحتوى في البحوث والمشاريع.", feature3Title: "أكثر من 100 نوع خط", feature3Desc: "اختر من مجموعة واسعة من الخطوط المميزة.", feature4Title: "عروض تقديمية مميزة", feature4Desc: "تصميم عروض بوربوينت جذابة ومبتكرة.", aboutUsHeading: "من نحن؟", aboutUsParagraph1: "نحن فريق متقدم من خريجي جامعة UCSI الماليزية، نجمع بين المعرفة الأكاديمية العميقة والخبرة العملية الواسعة في تصميم وتنفيذ العديد من المشاريع الكبيرة والصغيرة.", aboutUsParagraph2: "نلتزم بتقديم خدمات عالية الجودة بأسعار تنافسية للغاية، مع التركيز الدائم على تحقيق رضا العميل كشعارنا الأول والأخير ✨.", servicesHeading: "ماذا نقدم؟", service1Title: "تصميم ثلاثي الأبعاد", service1Desc: "تصميم جميع أنواع القطع ثلاثية الأبعاد على برامج الأوتوكاد وبرامج الطباعة ثلاثية الأبعاد بجميع صيغ الملفات القابلة للطباعة.", service2Title: "عروض تقديمية (بوربوينت)", service2Desc: "تصميم عروض تقديمية على البوربوينت مع كامل التنسيق وإضافة الصور والحركات المرئية.", service3Title: "تنسيق ملفات إكسل", service3Desc: "تصميم وتعديل وتنسيق ملفات إكسل باحترافية عالية.", service4Title: "تصاميم هندسية ومخططات", service4Desc: "تصاميم هندسية، مخططات، كهرباء، وغيرها من الأعمال الهندسية المتخصصة.", service5Title: "كتابة وتنسيق تقارير", service5Desc: "كتابة وتنسيق التقارير على برنامج الوورد بجودة ودقة عالية.", service6Title: "تصميم وتعديل فيديوهات وصور", service6Desc: "تصميم وتعديل الفيديوهات والصور بجودة عالية لتناسب جميع احتياجاتكم.", service7Title: "برمجة وتطوير مواقع الويب", service7Desc: "برمجة مواقع ويب تفاعلية وجمالية باستخدام لغة JavaScript وتنسيق الشكل باستخدام CSS، مع إضافة الموقع على سيرفر وإنشاء رابط خاص به.", contactHeading: "للتواصل معنا", contactSubtitle: "يسعدنا استقبال استفساراتكم وطلباتكم عبر وسائل التواصل التالية:", whatsappNumberKSA: "0500900329 داخل المملكة", whatsappNumberOutsideKSA: "+60163340537 خارج المملكة", telegramContact: "التواصل عبر التلجرام", footerText: "© 2025 جميع الحقوق محفوظة لفريق التصميم والمشاريع.", modeLight: "الوضع الفاتح", modeDark: "الوضع الداكن", commentsHeading: "التعليقات", leaveComment: "أضف تعليقك", commentNameLabel: "اسمك:", commentNamePlaceholder: "ادخل اسمك", commentTextLabel: "تعليقك:", commentTextPlaceholder: "اكتب تعليقك هنا...", commentRatingLabel: "تقييمك:", commentImageLabel: "إضافة صورة (اختياري):", fileInputChoose: "اختيار ملف", fileInputNoFile: "لم يتم اختيار أي ملف", commentSubmitBtn: "إرسال التعليق", allComments: "جميع التعليقات", commentsLoading: "جاري تحميل التعليقات...", noComments: "لا توجد تعليقات حتى الآن. كن أول من يعلق!", commentDateUnavailable: "التاريخ غير متوفر", alertNameTextEmpty: "الرجاء إدخال اسمك.", alertCommentTextEmpty: "الرجاء إدخال تعليقك.", alertCommentAddedSuccess: "تم إرسال تعليقك بنجاح!", alertCommentAddError: "حدث خطأ أثناء إضافة التعليق. الرجاء المحاولة مرة أخرى.", alertFirebaseInitError: "فشل تهيئة Firebase. قد لا تعمل التعليقات بشكل صحيح.", alertFirebaseNotReady: "Firebase غير جاهز بعد. الرجاء الانتظار.", alertDeleteConfirm: "هل أنت متأكد أنك تريد حذف هذا التعليق؟", alertDeleteSuccess: "تم حذف التعليق بنجاح!", alertDeleteError: "حدث خطأ أثناء حذف التعليق. الرجاء المحاولة مرة أخرى.", alertNoPermission: "ليس لديك صلاحية لحذف هذا التعليق.", alertDeveloperModePrompt: "الرجاء إدخال الكود السري للدخول إلى وضع المطور:", alertDeveloperModeSuccess: "تم تفعيل وضع المطور بنجاح!", alertDeveloperModeInvalid: "الكود السري غير صحيح. الرجاء المحاولة مرة أخرى.", alertDeveloperModeExit: "تم الخروج من وضع المطور.", confirmText: "نعم", cancelText: "إلغاء", customAlertClose: "حسناً", developerModeIndicatorText: "وضع المطور", translateBtnText: "ترجمة", translateError: "فشل في الترجمة.", imageUploadError: "فشل رفع الصورة. الرجاء المحاولة مرة أخرى.", resetDislikesConfirm: "هل أنت متأكد من إعادة تعيين الإعجابات السلبية؟", resetDislikesSuccess: "تم إعادة تعيين الإعجابات السلبية بنجاح!", resetDislikesError: "فشل إعادة تعيين الإعجابات السلبية.",
                 // New translations for the order form
                 orderNowBtn: "اطلب الآن",
                 orderFormTitle: "نموذج طلب خدمة",
@@ -645,13 +820,44 @@
                 orderMessagePlaceholder: "اشرح متطلبات مشروعك بالتفصيل...",
                 orderFilesLabel: "إضافة صور (اختياري):", // Added translation
                 orderSubmitBtn: "تقديم الطلب",
-                orderSuccess: "شكراً لك! تم استلام طلبك بنجاح. سنتواصل معك في أقرب وقت ممكن.",
+                orderSuccess: "شكراً لك! تم استلام طلبك بنجاح.",
+                orderIdMessage: "الرجاء الاحتفاظ برقم طلبك لتتبع حالته:",
                 orderError: "حدث خطأ أثناء إرسال طلبك. الرجاء المحاولة مرة أخرى.",
                 orderFieldRequired: "This field is required.",
-                locationUnavailable: "الموقع غير متوفر"
+                locationUnavailable: "الموقع غير متوفر",
+
+                // New translations for order tracking
+                navTrackOrder: "تتبع طلبك",
+                trackOrderHeading: "تتبع طلبك",
+                trackOrderSubtitle: "أدخل رقم طلبك المكون من 6 أرقام لتتبع حالته.",
+                trackOrderInputPlaceholder: "أدخل رقم الطلب هنا...",
+                trackOrderBtn: "تتبع",
+                orderStatusTitle: "حالة الطلب:",
+                status1: "بانتظار الموافقة",
+                status2: "قيد التنفيذ",
+                status3: "معاينة المشروع",
+                status4: "بانتظار الدفع",
+                status5: "اكتمل",
+                orderNotFound: "لم يتم العثور على طلب بهذا الرقم.",
+                orderTrackError: "حدث خطأ أثناء تتبع الطلب. الرجاء المحاولة مرة أخرى.",
+                orderPreviewImagesTitle: "صور معاينة للمشروع:",
+                
+                // New translations for developer dashboard
+                devDashboardHeading: "لوحة تحكم المطور",
+                devLoading: "جاري تحميل الطلبات...",
+                noOrders: "لا توجد طلبات حتى الآن.",
+                devOrderId: "رقم الطلب:",
+                devOrderUser: "العميل:",
+                devOrderStatus: "الحالة:",
+                devActions: "الإجراءات:",
+                devUpdateStatus: "تحديث الحالة",
+                devUploadImages: "رفع صور",
+                devImagesLabel: "صور المعاينة:",
+                devNoImages: "لا توجد صور معاينة بعد.",
+                devOrderDate: "تاريخ الطلب:",
             },
-            en: { 
-                siteTitle: "Our Services - Project Design & Development", navHome: "Home", navWhyChooseUs: "Why Choose Us?", navAboutUs: "About Us", navServices: "What We Offer?", navContact: "Contact Us", navComments: "Comments", heroTitle: "Designers of all types of projects, websites, designs, research, and assignments", heroDiscount: "30% discount for a limited time on all services", heroSubtitle: "We offer integrated solutions to meet all your academic and professional needs", heroContactBtn: "Contact Us Now", featuresHeading: "Why Choose Us?", feature1Title: "Excellent Visual Formats", feature1Desc: "We provide many aesthetic formats that highlight your work.", feature2Title: "Professional Text Formatting", feature2Desc: "Precise content formatting for research and projects.", feature3Title: "Over 100 Font Types", feature3Desc: "Choose from a wide range of distinctive fonts.", feature4Title: "Outstanding Presentations", feature4Desc: "Designing attractive and innovative PowerPoint presentations.", aboutUsHeading: "Who Are We?", aboutUsParagraph1: "We are an advanced team of UCSI Malaysian University graduates, combining deep academic knowledge with extensive practical experience in designing and implementing many large and small projects.", aboutUsParagraph2: "We are committed to providing high-quality services at highly competitive prices, with a constant focus on achieving customer satisfaction as our first and last motto ✨.", servicesHeading: "What We Offer?", service1Title: "3D Design", service1Desc: "Designing all types of 3D parts on AutoCAD and 3D printing software in all printable file formats.", service2Title: "Presentations (PowerPoint)", service2Desc: "Designing PowerPoint presentations with full formatting and adding images and visual effects.", service3Title: "Excel File Formatting", service3Desc: "Designing, modifying, and formatting Excel files with high professionalism.", service4Title: "Engineering Designs & Plans", service4Desc: "Engineering designs, plans, electrical works, and other specialized engineering works.", service5Title: "Report Writing & Formatting", service5Desc: "Writing and formatting reports in Word with high quality and accuracy.", service6Title: "Video & Photo Design/Editing", service6Desc: "Designing and editing videos and photos with high quality to suit all your needs.", service7Title: "Web Programming & Development", service7Desc: "Programming interactive and aesthetic websites using JavaScript and styling with CSS, including hosting the site on a server and creating a dedicated link.", contactHeading: "Contact Us", contactSubtitle: "We are happy to receive your inquiries and requests via the following channels:", whatsappNumberKSA: "0500900329 Inside KSA", whatsappNumberOutsideKSA: "+60163340537 Outside KSA", telegramContact: "Contact via Telegram", footerText: "© 2025 All rights reserved for the Design and Projects Team.", modeLight: "Light Mode", modeDark: "Dark Mode", commentsHeading: "Comments", leaveComment: "Leave a comment", commentNameLabel: "Your Name:", commentNamePlaceholder: "Enter your name", commentTextLabel: "Your Comment:", commentTextPlaceholder: "Write your comment here...", commentRatingLabel: "Your Rating:", commentImageLabel: "Add an image (optional):", fileInputChoose: "Choose file", fileInputNoFile: "No file chosen", commentSubmitBtn: "Submit Comment", allComments: "All Comments", commentsLoading: "Loading comments...", noComments: "No comments yet. Be the first to comment!", commentDateUnavailable: "Date Unavailable", alertNameTextEmpty: "Please enter your name.", alertCommentTextEmpty: "Please enter your comment.", alertCommentAddedSuccess: "Comment submitted successfully!", alertCommentAddError: "An error occurred while adding the comment. Please try again.", alertFirebaseInitError: "Firebase initialization failed. Comments may not work correctly.", alertFirebaseNotReady: "Firebase is not ready yet. Please wait.", alertDeleteConfirm: "Are you sure you want to delete this comment?", alertDeleteSuccess: "Comment deleted successfully!", alertDeleteError: "An error occurred while deleting the comment. Please try again.", alertNoPermission: "You do not have permission to delete this comment.", alertDeveloperModePrompt: "Please enter the secret code to enter developer mode:", alertDeveloperModeSuccess: "Developer mode activated successfully!", alertDeveloperModeInvalid: "Incorrect secret code. Please try again.", alertDeveloperModeExit: "Exited developer mode.", confirmText: "Yes", cancelText: "Cancel", customAlertClose: "OK", developerModeIndicatorText: "Developer Mode", translateBtnText: "Translate", translateError: "Translation failed.", imageUploadError: "Image upload failed. Please try again.", resetDislikesConfirm: "Are you sure you want to reset the dislikes?", resetDislikesSuccess: "Dislikes reset successfully!", resetDislikesError: "Failed to reset dislikes.",
+            en: {  
+                siteTitle: "Our Services - Project Design & Development", navHome: "Home", navWhyChooseUs: "Why Choose Us?", navAboutUs: "About Us", navServices: "What We Offer?", navContact: "Contact Us", navComments: "Comments", navTrackOrder: "Track Your Order", heroTitle: "Designers of all types of projects, websites, designs, research, and assignments", heroDiscount: "30% discount for a limited time on all services", heroSubtitle: "We offer integrated solutions to meet all your academic and professional needs", heroContactBtn: "Contact Us Now", featuresHeading: "Why Choose Us?", feature1Title: "Excellent Visual Formats", feature1Desc: "We provide many aesthetic formats that highlight your work.", feature2Title: "Professional Text Formatting", feature2Desc: "Precise content formatting for research and projects.", feature3Title: "Over 100 Font Types", feature3Desc: "Choose from a wide range of distinctive fonts.", feature4Title: "Outstanding Presentations", feature4Desc: "Designing attractive and innovative PowerPoint presentations.", aboutUsHeading: "Who Are We?", aboutUsParagraph1: "We are an advanced team of UCSI Malaysian University graduates, combining deep academic knowledge with extensive practical experience in designing and implementing many large and small projects.", aboutUsParagraph2: "We are committed to providing high-quality services at highly competitive prices, with a constant focus on achieving customer satisfaction as our first and last motto ✨.", servicesHeading: "What We Offer?", service1Title: "3D Design", service1Desc: "Designing all types of 3D parts on AutoCAD and 3D printing software in all printable file formats.", service2Title: "Presentations (PowerPoint)", service2Desc: "Designing PowerPoint presentations with full formatting and adding images and visual effects.", service3Title: "Excel File Formatting", service3Desc: "Designing, modifying, and formatting Excel files with high professionalism.", service4Title: "Engineering Designs & Plans", service4Desc: "Engineering designs, plans, electrical works, and other specialized engineering works.", service5Title: "Report Writing & Formatting", service5Desc: "Writing and formatting reports in Word with high quality and accuracy.", service6Title: "Video & Photo Design/Editing", service6Desc: "Designing and editing videos and photos with high quality to suit all your needs.", service7Title: "Web Programming & Development", service7Desc: "Programming interactive and aesthetic websites using JavaScript and styling with CSS, including hosting the site on a server and creating a dedicated link.", contactHeading: "Contact Us", contactSubtitle: "We are happy to receive your inquiries and requests via the following channels:", whatsappNumberKSA: "0500900329 Inside KSA", whatsappNumberOutsideKSA: "+60163340537 Outside KSA", telegramContact: "Contact via Telegram", footerText: "© 2025 All rights reserved for the Design and Projects Team.", modeLight: "Light Mode", modeDark: "Dark Mode", commentsHeading: "Comments", leaveComment: "Leave a comment", commentNameLabel: "Your Name:", commentNamePlaceholder: "Enter your name", commentTextLabel: "Your Comment:", commentTextPlaceholder: "Write your comment here...", commentRatingLabel: "Your Rating:", commentImageLabel: "Add an image (optional):", fileInputChoose: "Choose file", fileInputNoFile: "No file chosen", commentSubmitBtn: "Submit Comment", allComments: "All Comments", commentsLoading: "Loading comments...", noComments: "No comments yet. Be the first to comment!", commentDateUnavailable: "Date Unavailable", alertNameTextEmpty: "Please enter your name.", alertCommentTextEmpty: "Please enter your comment.", alertCommentAddedSuccess: "Comment submitted successfully!", alertCommentAddError: "An error occurred while adding the comment. Please try again.", alertFirebaseInitError: "Firebase initialization failed. Comments may not work correctly.", alertFirebaseNotReady: "Firebase is not ready yet. Please wait.", alertDeleteConfirm: "Are you sure you want to delete this comment?", alertDeleteSuccess: "Comment deleted successfully!", alertDeleteError: "An error occurred while deleting the comment. Please try again.", alertNoPermission: "You do not have permission to delete this comment.", alertDeveloperModePrompt: "Please enter the secret code to enter developer mode:", alertDeveloperModeSuccess: "Developer mode activated successfully!", alertDeveloperModeInvalid: "Incorrect secret code. Please try again.", alertDeveloperModeExit: "Exited developer mode.", confirmText: "Yes", cancelText: "Cancel", customAlertClose: "OK", developerModeIndicatorText: "Developer Mode", translateBtnText: "Translate", translateError: "Translation failed.", imageUploadError: "Image upload failed. Please try again.", resetDislikesConfirm: "Are you sure you want to reset the dislikes?", resetDislikesSuccess: "Dislikes reset successfully!", resetDislikesError: "Failed to reset dislikes.",
                 // New translations for the order form
                 orderNowBtn: "Order Now",
                 orderFormTitle: "Service Request Form",
@@ -670,35 +876,41 @@
                 orderMessagePlaceholder: "Explain your project requirements in detail...",
                 orderFilesLabel: "Add images (optional):",
                 orderSubmitBtn: "Submit Request",
-                orderSuccess: "Thank you! Your request has been received successfully. We will contact you as soon as possible.",
+                orderSuccess: "Thank you! Your request has been received successfully.",
+                orderIdMessage: "Please save your order ID to track its status:",
                 orderError: "An error occurred while submitting your request. Please try again.",
                 orderFieldRequired: "This field is required.",
-                locationUnavailable: "Location unavailable"
-            },
-            zh: { 
-                siteTitle: "我们的服务 - 项目设计与开发", navHome: "首页", navWhyChooseUs: "为什么选择我们？", navAboutUs: "关于我们", navServices: "我们提供什么？", navContact: "联系我们", navComments: "评论", heroTitle: "各类项目、网站、设计、研究和作业的设计师", heroDiscount: "所有服务限时30%折扣", heroSubtitle: "我们提供全面的解决方案，满足您所有的学术和专业需求", heroContactBtn: "立即联系我们", featuresHeading: "为什么选择我们？", feature1Title: "出色的视觉格式", feature1Desc: "我们提供多种美观的格式，突出您的作品。", feature2Title: "专业的文本格式", feature2Desc: "研究和项目内容的精确格式化。", feature3Title: "超过100种字体", feature3Desc: "从各种独特的字体中选择。", feature4Title: "出色的演示文稿", feature4Desc: "设计有吸引力且创新的PowerPoint演示文稿。", aboutUsHeading: "我们是谁？", aboutUsParagraph1: "我们是一支由马来西亚UCSI大学毕业生组成的先进团队，结合了深厚的学术知识和丰富的实践经验，在设计和实施许多大型和小型项目方面。", aboutUsParagraph2: "我们致力于以极具竞争力的价格提供高质量的服务，始终将客户满意度作为我们的首要宗旨✨。", servicesHeading: "我们提供什么？", service1Title: "3D设计", service1Desc: "使用AutoCAD和3D打印软件设计所有类型的3D零件，支持所有可打印文件格式。", service2Title: "演示文稿（PowerPoint）", service2Desc: "设计PowerPoint演示文稿，包括完整的格式设置、图片和视觉效果。", service3Title: "Excel文件格式化", service3Desc: "高专业地设计、修改和格式化Excel文件。", service4Title: "工程设计与规划", service4Desc: "工程设计、规划、电气工程及其他专业工程工作。", service5Title: "报告撰写与格式化", service5Desc: "高质量、高精度地撰写和格式化Word报告。", service6Title: "视频和照片设计/编辑", service6Desc: "高质量地设计和编辑视频和照片，以满足您的所有需求。", service7Title: "网站编程与开发", service7Desc: "使用JavaScript编程交互式和美观的网站，并使用CSS进行样式设置，包括将网站托管到服务器并创建专用链接。", contactHeading: "联系我们", contactSubtitle: "我们很高高兴通过以下方式接收您的咨询和请求：", whatsappNumberKSA: "0500900329 沙特阿拉伯境内", whatsappNumberOutsideKSA: "+60163340537 沙特阿拉伯境外", telegramContact: "通过Telegram联系", footerText: "© 2025 所有权利由设计与项目团队保留。", modeLight: "浅色模式", modeDark: "深色模式", commentsHeading: "评论", leaveComment: "发表评论", commentNameLabel: "您的姓名：", commentNamePlaceholder: "输入您的姓名", commentTextLabel: "您的评论：", commentTextPlaceholder: "在此处撰写您的评论...", commentRatingLabel: "您的评分：", commentImageLabel: "添加图片（可选）：", fileInputChoose: "选择文件", fileInputNoFile: "未选择任何文件", commentSubmitBtn: "提交评论", allComments: "所有评论", commentsLoading: "正在加载评论...", noComments: "暂无评论。成为第一个评论的人！", commentDateUnavailable: "日期不可用", alertNameTextEmpty: "请输入您的姓名。", alertCommentTextEmpty: "请输入您的评论。", alertCommentAddedSuccess: "评论添加成功！", alertCommentAddError: "添加评论时发生错误。请重试。", alertFirebaseInitError: "Firebase初始化失败。评论可能无法正常工作。", alertFirebaseNotReady: "Firebase尚未准备好。请稍候。", alertDeleteConfirm: "您确定要删除此评论吗？", alertDeleteSuccess: "评论删除成功！", alertDeleteError: "删除评论时发生错误。请重试。", alertNoPermission: "您没有权限删除此评论。", alertDeveloperModePrompt: "请输入密码进入开发者模式：", alertDeveloperModeSuccess: "开发者模式已成功激活！", alertDeveloperModeInvalid: "密码不正确。请重试。", alertDeveloperModeExit: "已退出开发者模式。", confirmText: "是", cancelText: "取消", customAlertClose: "确定", developerModeIndicatorText: "开发者模式", translateBtnText: "翻译", translateError: "翻译失败。", imageUploadError: "图片上传失败。请重试。", resetDislikesConfirm: "您确定要重置“不喜欢”吗？", resetDislikesSuccess: "“不喜欢”已成功重置！", resetDislikesError: "重置“不喜欢”失败。",
-                // New translations for the order form
-                orderNowBtn: "立即订购",
-                orderFormTitle: "服务请求表",
-                orderNameLabel: "全名：",
-                orderNamePlaceholder: "全名",
-                orderEmailLabel: "电子邮件地址：",
-                orderEmailPlaceholder: "yourname@example.com",
-                orderPhoneLabel: "电话号码：",
-                orderPhonePlaceholder: "+966 50 123 4567",
-                orderServiceLabel: "请求的服务：",
-                orderServiceSelect: "选择服务...",
-                orderServiceOther: "其他...",
-                orderServiceOtherLabel: "请注明所需的服务：",
-                orderServiceOtherPlaceholder: "在此处填写您的定制服务...",
-                orderMessageLabel: "项目详情：",
-                orderMessagePlaceholder: "详细说明您的项目要求...",
-                orderFilesLabel: "添加图片（可选）：",
-                orderSubmitBtn: "提交请求",
-                orderSuccess: "Thank you! Your request has been received successfully. We will contact you as soon as possible.",
-                orderError: "An error occurred while submitting your request. Please try again.",
-                orderFieldRequired: "This field is required.",
-                locationUnavailable: "位置不可用"
+                locationUnavailable: "Location unavailable",
+
+                // New translations for order tracking
+                navTrackOrder: "Track Your Order",
+                trackOrderHeading: "Track Your Order",
+                trackOrderSubtitle: "Enter your 6-digit order ID to check its status.",
+                trackOrderInputPlaceholder: "Enter Order ID here...",
+                trackOrderBtn: "Track",
+                orderStatusTitle: "Order Status:",
+                status1: "Awaiting Approval",
+                status2: "In Progress",
+                status3: "Project Preview",
+                status4: "Awaiting Payment",
+                status5: "Completed",
+                orderNotFound: "Order with this ID was not found.",
+                orderTrackError: "An error occurred while tracking the order. Please try again.",
+                orderPreviewImagesTitle: "Project Preview Images:",
+                
+                // New translations for developer dashboard
+                devDashboardHeading: "Developer Dashboard",
+                devLoading: "Loading orders...",
+                noOrders: "No orders have been placed yet.",
+                devOrderId: "Order ID:",
+                devOrderUser: "Client:",
+                devOrderStatus: "Status:",
+                devActions: "Actions:",
+                devUpdateStatus: "Update Status",
+                devUploadImages: "Upload Images",
+                devImagesLabel: "Preview Images:",
+                devNoImages: "No preview images yet.",
+                devOrderDate: "Order Date:",
             }
         };
 
@@ -784,6 +996,7 @@
                         developerModeIndicator.style.display = 'block';
                         updateDeveloperModeIndicatorText();
                         loadComments();
+                        loadDevOrders(); // New: Load orders in dev mode
                     } else {
                         showAlert("alertDeveloperModeInvalid");
                     }
@@ -947,7 +1160,6 @@
                 }
             }
 
-            // Get device, location, and IP info before submitting the comment
             const { device, browser, deviceName } = getDeviceInfo();
             const ipAddress = await getIPAddress();
             
@@ -968,7 +1180,7 @@
                     deviceName,
                     latitude: userLocation.latitude,
                     longitude: userLocation.longitude,
-                    ipAddress // New: IP address field added to the comment
+                    ipAddress
                 });
                 commentForm.reset();
                 imagePreview.classList.add('hidden');
@@ -996,12 +1208,11 @@
             } else if (device === 'Tablet') {
                 return `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tablet"><rect width="18" height="14" x="3" y="5" rx="2"/><path d="M7 19h10"/></svg>`;
             } else if (device === 'Mobile') {
-                return `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>`;
+                return `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucude-smartphone"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>`;
             }
             return '';
         }
 
-        // Updated getDeviceInfo function
         function getDeviceInfo() {
             const userAgent = navigator.userAgent;
             let device = "Desktop";
@@ -1099,14 +1310,14 @@
                     const hasDisliked = dislikedBy.includes(userId);
 
                     if (reactionType === 'like') {
-                        if (hasLiked) { transaction.update(commentRef, { likes: likes - 1, likedBy: arrayRemove(userId) }); } 
+                        if (hasLiked) { transaction.update(commentRef, { likes: likes - 1, likedBy: arrayRemove(userId) }); }  
                         else {
                             const updates = { likes: likes + 1, likedBy: arrayUnion(userId) };
                             if (hasDisliked) { updates.dislikes = dislikes - 1; updates.dislikedBy = arrayRemove(userId); }
                             transaction.update(commentRef, updates);
                         }
                     } else if (reactionType === 'dislike') {
-                        if (hasDisliked) { transaction.update(commentRef, { dislikes: dislikes - 1, dislikedBy: arrayRemove(userId) }); } 
+                        if (hasDisliked) { transaction.update(commentRef, { dislikes: dislikes - 1, dislikedBy: arrayRemove(userId) }); }  
                         else {
                             const updates = { dislikes: dislikes + 1, dislikedBy: arrayUnion(userId) };
                             if (hasLiked) { updates.likes = likes - 1; updates.likedBy = arrayRemove(userId); }
@@ -1144,93 +1355,6 @@
         
         const commentTextCache = new Map();
         
-        async function translateComment(commentTextElement, originalText, targetLang) {
-            // Check if the comment is already in the target language.
-            if (commentTextElement.dataset.lang === targetLang) {
-                return;
-            }
-            // Check cache for existing translation.
-            if (commentTextCache.has(`${originalText}-${targetLang}`)) {
-                commentTextElement.textContent = commentTextCache.get(`${originalText}-${targetLang}`);
-                commentTextElement.dataset.lang = targetLang;
-                return;
-            }
-
-            // Fallback translations in case of API failure.
-            const fallbackTranslation = {
-                'en': 'Translation failed. Please try again later.',
-                'ar': 'فشل في الترجمة. الرجاء المحاولة لاحقاً.',
-                'zh': '翻译失败。请稍后再试。'
-            };
-
-            const prompt = `Translate the following text to the ${targetLang} language. Provide only the translated text, without any additional explanatory phrases like "Here is the translation:":\n\n${originalText}`;
-            commentTextElement.textContent = `${translations[currentLang].commentsLoading}...`;
-
-            const maxRetries = 3;
-            let currentRetry = 0;
-            let successful = false;
-            let lastError = null; // Store the last error for display
-
-            while (currentRetry < maxRetries && !successful) {
-                try {
-                    const apiKey = GEMINI_API_KEY;
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-                    const payload = { contents: [{ parts: [{ text: prompt }] }] };
-
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        const errorBody = await response.json();
-                        // Extract a more specific error message if available
-                        lastError = errorBody.error ? errorBody.error.message : response.statusText;
-                        console.error("Translation API request failed:", response.status, errorBody);
-                        throw new Error(`API request failed with status ${response.status}`);
-                    }
-
-                    const result = await response.json();
-                    
-                    if (result.candidates && result.candidates.length > 0 && result.candidates[0].content?.parts?.[0]?.text) {
-                        const translatedText = result.candidates[0].content.parts[0].text;
-                        commentTextElement.textContent = translatedText.trim();
-                        commentTextElement.dataset.lang = targetLang;
-                        commentTextCache.set(`${originalText}-${targetLang}`, translatedText.trim());
-                        successful = true;
-                    } else {
-                        console.error("Invalid response from translation API:", result);
-                        lastError = "Invalid response from API.";
-                        commentTextElement.textContent = fallbackTranslation[targetLang];
-                        successful = true;
-                    }
-
-                } catch (e) {
-                    console.error("Error during translation attempt:", currentRetry + 1, e);
-                    lastError = e.message;
-                    if (currentRetry < maxRetries - 1) {
-                        await new Promise(res => setTimeout(res, (2 ** currentRetry) * 1000));
-                    } else {
-                        // Display the specific error message
-                        commentTextElement.textContent = `${translations[currentLang].translateError} (${lastError})`;
-                    }
-                }
-                currentRetry++;
-            }
-        }
-
-        async function translateAllComments() {
-            const comments = document.querySelectorAll('#commentsList [data-comment-text-id]');
-            for (const commentTextElement of comments) {
-                const originalText = commentTextElement.dataset.originalText;
-                if (originalText) {
-                    await translateComment(commentTextElement, originalText, currentLang);
-                }
-            }
-        }
-
-
         function loadComments() {
             if (!db) return;
             const q = query(collection(db, `artifacts/${appId}/public/data/comments`));
@@ -1252,7 +1376,7 @@
                     const hasDisliked = comment.dislikedBy?.includes(userId);
                     const originalText = comment.text;
                     const commentDate = comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString(currentLang) : translations[currentLang].commentDateUnavailable;
-                    const geolocationHTML = (comment.latitude && comment.longitude) ? 
+                    const geolocationHTML = (comment.latitude && comment.longitude) ?  
                         `<a href="https://www.google.com/maps/search/?api=1&query=${comment.latitude},${comment.longitude}" target="_blank" class="map-link">عرض الموقع</a>` : translations[currentLang].locationUnavailable;
                     const deviceInfoHTML = isDeveloperMode ?
                     `<div class="device-info mt-1">
@@ -1266,7 +1390,6 @@
                         </div>
                     </div>` : '';
                     
-                    // Display IP address only in developer mode
                     const ipAddressHTML = (isDeveloperMode && comment.ipAddress && comment.ipAddress !== 'غير متوفر') ?
                         `<span class="text-sm font-light text-gray-500 dark:text-gray-400 ml-2">(IP: <span class="ip-address">${comment.ipAddress}</span>)</span>` : '';
                     
@@ -1309,8 +1432,6 @@
                         }
                     });
                 });
-                // After loading all comments, translate them to the current language
-                translateAllComments();
             }, (error) => {
                 console.error("Error listening to comments:", error);
                 commentsLoading.textContent = translations[currentLang].alertCommentAddError;
@@ -1344,6 +1465,8 @@
             developerModeIndicator.style.display = 'none';
             showAlert("alertDeveloperModeExit");
             loadComments();
+            // Hide developer dashboard when exiting dev mode
+            developerDashboard.classList.add('hidden');
         });
         
         window.showFullImage = (imageUrl) => {
@@ -1355,7 +1478,6 @@
         // Order Form Logic
         function showOrderModal() {
             orderModal.classList.add('active');
-            // Request geolocation when the modal is shown
             getGeolocation().then(() => {
                 if (userLocation.latitude && userLocation.longitude) {
                     orderGeolocationInput.value = `https://www.google.com/maps/search/?api=1&query=${userLocation.latitude},${userLocation.longitude}`;
@@ -1363,20 +1485,24 @@
                     orderGeolocationInput.value = translations[currentLang].locationUnavailable;
                 }
             });
-            // IP is now fetched on form submission, not here, to avoid race conditions.
-            orderIpAddressInput.value = '';
         }
         
         function hideOrderModal() {
             orderModal.classList.remove('active');
             orderForm.reset();
             otherServiceField.classList.add('hidden');
-            orderFiles = []; // Clear the files array
-            updateOrderFilePreview(); // Update the preview
+            orderFiles = [];
+            updateOrderFilePreview();
             orderFileInputText.textContent = translations[currentLang].fileInputChoose;
-            orderIpAddressInput.value = ''; // New: Clear IP address field
+            orderIpAddressInput.value = '';
         }
 
+        // New function to show the "Order Submitted" modal
+        function showOrderSubmittedModal(orderId) {
+            document.getElementById('submittedOrderId').textContent = orderId;
+            orderSubmittedModal.classList.remove('hidden');
+        }
+        
         heroOrderNowBtn.addEventListener('click', showOrderModal);
         orderNowNavBtn.addEventListener('click', showOrderModal);
         closeOrderModal.addEventListener('click', hideOrderModal);
@@ -1384,6 +1510,13 @@
             if (e.target === orderModal) {
                 hideOrderModal();
             }
+        });
+
+        // New event listener for the close button on the new modal
+        closeOrderSubmittedModal.addEventListener('click', () => {
+            orderSubmittedModal.classList.add('hidden');
+            // Do not clear the track input so user can easily track their order
+            // orderTrackInput.value = document.getElementById('submittedOrderId').textContent;
         });
 
         orderServiceSelect.addEventListener('change', (e) => {
@@ -1429,35 +1562,20 @@
         orderFilesInput.addEventListener('change', (e) => {
             orderFiles = Array.from(e.target.files).filter(file => file.type.startsWith('image/'));
             updateOrderFilePreview();
-            orderFilesInput.value = null; // Reset the input to allow selecting the same file(s) again
+            orderFilesInput.value = null;
         });
 
+        // Updated Order Form Submission logic to use both Formspree and Firestore
         orderForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            if (!isAuthReady) { showAlert("alertFirebaseNotReady"); return; }
             
             submitOrderBtn.disabled = true;
             submitOrderBtn.textContent = '...إرسال';
             
-            // New: Fetch IP address right before submission to ensure it's up-to-date
             const ipAddress = await getIPAddress();
             const { device, browser, deviceName } = getDeviceInfo();
             
-            const formData = new FormData(orderForm);
-
-            // Append IP and other data
-            formData.append('ip_address', ipAddress);
-            formData.append('device_name', deviceName);
-            formData.append('browser', browser);
-
-            if (userLocation.latitude && userLocation.longitude) {
-                formData.append('location_link', `https://www.google.com/maps/search/?api=1&query=${userLocation.latitude},${userLocation.longitude}`);
-            } else {
-                formData.append('location_link', translations[currentLang].locationUnavailable);
-            }
-            
-            // Remove the original 'files' field from FormData and re-append image URLs
-            formData.delete('files');
-
             let uploadedImageUrls = [];
             if (orderFiles.length > 0) {
                 try {
@@ -1473,7 +1591,6 @@
                     });
                     
                     uploadedImageUrls = await Promise.all(uploadPromises);
-                    formData.append('images', uploadedImageUrls.join(', '));
                 } catch (err) {
                     console.error("Image upload failed:", err);
                     showAlert("imageUploadError");
@@ -1482,29 +1599,68 @@
                     return;
                 }
             }
+
+            // Generate a random 6-digit order ID
+            const orderId = Math.floor(100000 + Math.random() * 900000);
             
+            // Prepare a message string to be sent via Formspree
+            const formspreeMessageText = `
+                New Order Received!
+                Order ID: ${orderId}
+                Name: ${orderForm.elements['name'].value}
+                Email: ${orderForm.elements['email'].value}
+                Phone: ${orderForm.elements['phone'].value}
+                Service: ${orderForm.elements['service'].value === 'أخرى' ? orderForm.elements['other_service'].value : orderForm.elements['service'].value}
+                Details: ${orderForm.elements['details'].value}
+                Images: ${uploadedImageUrls.join(', ') || 'N/A'}
+                IP Address: ${ipAddress}
+                Device: ${deviceName}
+                Geolocation: ${userLocation.latitude && userLocation.longitude ? `https://www.google.com/maps/search/?api=1&query=${userLocation.latitude},${userLocation.longitude}` : 'N/A'}
+            `;
+            formspreeMessage.value = formspreeMessageText;
+
+            // Create a FormData object for Formspree
+            const formspreeFormData = new FormData(orderForm);
+            formspreeFormData.append('_subject', `New Order Request - ID: ${orderId}`);
+
             try {
-                const response = await fetch(FORMSPREE_ENDPOINT, {
-                    method: orderForm.method,
-                    body: formData,
+                // First, send the email via Formspree
+                const formspreeResponse = await fetch(FORMSPREE_ENDPOINT, {
+                    method: 'POST',
+                    body: formspreeFormData,
                     headers: {
                         'Accept': 'application/json'
                     }
                 });
 
-                if (response.ok) {
-                    showAlert("orderSuccess");
-                    hideOrderModal();
-                } else {
-                    const data = await response.json();
-                    if (data.errors) {
-                        console.error('Formspree errors:', data.errors);
-                        showAlert("orderError");
-                    } else {
-                        console.error('Formspree error:', data);
-                        showAlert("orderError");
-                    }
+                if (!formspreeResponse.ok) {
+                    throw new Error("Formspree submission failed.");
                 }
+
+                // If Formspree is successful, then add the order to Firestore
+                const orderData = {
+                    orderId: String(orderId),
+                    userId,
+                    name: orderForm.elements['name'].value,
+                    email: orderForm.elements['email'].value,
+                    phone: orderForm.elements['phone'].value,
+                    service: orderForm.elements['service'].value === 'أخرى' ? orderForm.elements['other_service'].value : orderForm.elements['service'].value,
+                    details: orderForm.elements['details'].value,
+                    images: uploadedImageUrls,
+                    status: 1, // 1: Awaiting Approval, 2: In Progress, 3: Preview, 4: Awaiting Payment, 5: Completed
+                    timestamp: serverTimestamp(),
+                    ipAddress,
+                    device,
+                    browser,
+                    deviceName,
+                    latitude: userLocation.latitude,
+                    longitude: userLocation.longitude,
+                    previewImages: [],
+                };
+                await addDoc(collection(db, `artifacts/${appId}/public/data/orders`), orderData);
+
+                hideOrderModal();
+                showOrderSubmittedModal(orderId);
             } catch (err) {
                 console.error("Error submitting form: ", err);
                 showAlert("orderError");
@@ -1514,11 +1670,248 @@
             }
         });
 
+        // Order Tracking Logic for Users
+        trackOrderBtn.addEventListener('click', async () => {
+            const orderNumber = trackOrderInput.value.trim();
+            if (orderNumber.length !== 6 || isNaN(orderNumber)) {
+                showAlert("orderNotFound");
+                return;
+            }
+            if (!isAuthReady) { showAlert("alertFirebaseNotReady"); return; }
+
+            orderStatusDisplay.classList.add('hidden');
+            const q = query(collection(db, `artifacts/${appId}/public/data/orders`), where('orderId', '==', orderNumber));
+            
+            // Listen for real-time updates on this specific order
+            onSnapshot(q, (snapshot) => {
+                if (snapshot.empty) {
+                    showAlert("orderNotFound");
+                    return;
+                }
+                const order = snapshot.docs[0].data();
+                drawProgressBar(order.status);
+                displayOrderStatus(order);
+            }, (error) => {
+                console.error("Error tracking order:", error);
+                showAlert("orderTrackError");
+            });
+        });
+
+        // New function to draw the progress bar using Canvas
+        function drawProgressBar(currentStatus) {
+            const canvas = progressBarCanvas;
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            const numSteps = 5;
+            const circleRadius = 15;
+            const horizontalPadding = 50; // Padding from the edges of the canvas
+            const stepSpacing = (width - horizontalPadding * 2) / (numSteps - 1);
+            const lineY = height / 2.5;
+
+            // Clear the canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            const isDarkMode = body.classList.contains('dark');
+            const inactiveColor = isDarkMode ? '#4a5568' : '#e2e8f0';
+            const activeColor = '#10b981';
+
+            // Draw inactive line (from right to left)
+            ctx.beginPath();
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = inactiveColor;
+            ctx.moveTo(width - horizontalPadding, lineY);
+            ctx.lineTo(horizontalPadding, lineY);
+            ctx.stroke();
+
+            // Draw active line (from right to left)
+            ctx.beginPath();
+            ctx.strokeStyle = activeColor;
+            ctx.lineWidth = 4;
+            ctx.moveTo(width - horizontalPadding, lineY);
+            // Calculate the end point of the green line (from right to left)
+            const endX = width - horizontalPadding - (currentStatus - 1) * stepSpacing;
+            ctx.lineTo(endX, lineY);
+            ctx.stroke();
+
+            // Draw circles and numbers
+            for (let i = 0; i < numSteps; i++) {
+                // Calculate position from right to left
+                const x = width - horizontalPadding - i * stepSpacing;
+                const y = lineY;
+                const stepNumber = i + 1;
+                const isCurrent = stepNumber === currentStatus;
+                const isActive = stepNumber <= currentStatus;
+
+                // Draw outer shadow for active circle
+                if (isCurrent) {
+                    ctx.beginPath();
+                    ctx.arc(x, y, circleRadius + 2, 0, 2 * Math.PI);
+                    ctx.fillStyle = 'rgba(16, 185, 129, 0.5)';
+                    ctx.fill();
+                }
+
+                // Draw circle
+                ctx.beginPath();
+                ctx.arc(x, y, circleRadius, 0, 2 * Math.PI);
+                ctx.fillStyle = isActive ? activeColor : inactiveColor;
+                ctx.fill();
+
+                // Draw number
+                ctx.fillStyle = isActive ? 'white' : (isDarkMode ? '#cbd5e0' : '#64748b');
+                ctx.font = 'bold 16px Inter, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(stepNumber, x, y);
+            }
+        }
+        
+        function displayOrderStatus(order) {
+            orderStatusDisplay.classList.remove('hidden');
+            displayedOrderId.textContent = order.orderId;
+            const currentStatus = order.status;
+            
+            // Re-draw the canvas bar
+            drawProgressBar(currentStatus);
+
+            progressStepsLabels.forEach(step => {
+                const stepNumber = parseInt(step.dataset.step, 10);
+                const label = step.querySelector('.progress-label');
+                
+                label.classList.toggle('active', stepNumber === currentStatus);
+            });
+            
+            // Display preview images if status is 'Preview' (status 3) or higher
+            orderPreviewImages.innerHTML = '';
+            // New condition to show images from status 3 onwards
+            if (currentStatus >= 3 && order.previewImages && order.previewImages.length > 0) {
+                orderPreviewImages.classList.remove('hidden');
+                order.previewImages.forEach(imageUrl => {
+                    const img = document.createElement('img');
+                    img.src = imageUrl;
+                    img.alt = translations[currentLang].orderPreviewImagesTitle;
+                    img.className = 'order-preview-image';
+                    img.onclick = () => window.showFullImage(imageUrl);
+                    orderPreviewImages.appendChild(img);
+                });
+            } else {
+                orderPreviewImages.classList.add('hidden');
+            }
+        }
+        
+        // Developer Dashboard Logic
+        function loadDevOrders() {
+            if (!isAuthReady || !isDeveloperMode) {
+                developerDashboard.classList.add('hidden');
+                return;
+            }
+            developerDashboard.classList.remove('hidden');
+            const q = query(collection(db, `artifacts/${appId}/public/data/orders`));
+            
+            onSnapshot(q, (snapshot) => {
+                let orders = [];
+                snapshot.docs.forEach((doc) => {
+                    orders.push({ ...doc.data(), id: doc.id });
+                });
+                orders.sort((a, b) => (b.timestamp?.toDate() || 0) - (a.timestamp?.toDate() || 0));
+                
+                devOrdersList.innerHTML = '';
+                devLoadingText.classList.add('hidden');
+                noOrders.classList.toggle('hidden', orders.length > 0);
+
+                orders.forEach(order => {
+                    const orderDate = order.timestamp ? new Date(order.timestamp.toDate()).toLocaleString() : 'N/A';
+                    const orderElement = document.createElement('div');
+                    orderElement.className = 'card space-y-4';
+                    orderElement.innerHTML = `
+                        <div>
+                            <h4 class="font-bold text-lg text-indigo-500" data-lang-key="devOrderId">${translations[currentLang].devOrderId}</h4>
+                            <span class="text-xl font-bold">${order.orderId}</span>
+                        </div>
+                        <p><strong data-lang-key="devOrderUser">${translations[currentLang].devOrderUser}</strong> ${order.name}</p>
+                        <p><strong data-lang-key="devOrderDate">${translations[currentLang].devOrderDate}</strong> ${orderDate}</p>
+                        <p><strong data-lang-key="orderServiceLabel">${translations[currentLang].orderServiceLabel}</strong> ${order.service}</p>
+                        <p class="text-gray-600 dark:text-gray-400"><strong>${translations[currentLang].orderMessageLabel}</strong> ${order.details}</p>
+                        <div class="flex items-center gap-2">
+                            <strong data-lang-key="devOrderStatus">${translations[currentLang].devOrderStatus}</strong>
+                            <select id="status-select-${order.id}" class="rounded-md shadow-sm p-1 dark:bg-gray-700">
+                                <option value="1" ${order.status === 1 ? 'selected' : ''}>${translations[currentLang].status1}</option>
+                                <option value="2" ${order.status === 2 ? 'selected' : ''}>${translations[currentLang].status2}</option>
+                                <option value="3" ${order.status === 3 ? 'selected' : ''}>${translations[currentLang].status3}</option>
+                                <option value="4" ${order.status === 4 ? 'selected' : ''}>${translations[currentLang].status4}</option>
+                                <option value="5" ${order.status === 5 ? 'selected' : ''}>${translations[currentLang].status5}</option>
+                            </select>
+                        </div>
+                        <div>
+                            <strong data-lang-key="devImagesLabel">${translations[currentLang].devImagesLabel}</strong>
+                            <div id="dev-preview-${order.id}" class="grid grid-cols-3 gap-2 mt-2">
+                                ${order.previewImages && order.previewImages.length > 0 ? order.previewImages.map(img => `<img src="${img}" class="w-16 h-16 object-cover rounded-md cursor-pointer" onclick="window.showFullImage('${img}')">`).join('') : `<p class="text-sm italic">${translations[currentLang].devNoImages}</p>`}
+                            </div>
+                            <div class="mt-4">
+                                <label class="custom-file-input">
+                                    <span data-lang-key="devUploadImages">${translations[currentLang].devUploadImages}</span>
+                                    <input type="file" id="dev-image-upload-${order.id}" accept="image/*">
+                                </label>
+                                <div id="dev-upload-indicator-${order.id}" class="mt-2 text-sm text-gray-500 hidden">...جاري الرفع</div>
+                            </div>
+                        </div>
+                    `;
+                    devOrdersList.appendChild(orderElement);
+
+                    // Update status listener
+                    document.getElementById(`status-select-${order.id}`).addEventListener('change', async (e) => {
+                        try {
+                            const newStatus = parseInt(e.target.value, 10);
+                            const orderRef = doc(db, `artifacts/${appId}/public/data/orders`, order.id);
+                            await updateDoc(orderRef, { status: newStatus });
+                        } catch (err) {
+                            console.error("Failed to update order status:", err);
+                        }
+                    });
+
+                    // Image upload listener
+                    document.getElementById(`dev-image-upload-${order.id}`).addEventListener('change', async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+
+                        const uploadIndicator = document.getElementById(`dev-upload-indicator-${order.id}`);
+                        uploadIndicator.classList.remove('hidden');
+
+                        const formData = new FormData();
+                        formData.append("image", file);
+                        try {
+                            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: formData });
+                            const result = await res.json();
+                            if (result.success) {
+                                const imageUrl = result.data.url;
+                                const orderRef = doc(db, `artifacts/${appId}/public/data/orders`, order.id);
+                                await updateDoc(orderRef, { previewImages: arrayUnion(imageUrl) });
+                                showAlert("imageUploadSuccess");
+                            } else {
+                                throw new Error(result.error.message);
+                            }
+                        } catch (err) {
+                            console.error("Developer image upload failed:", err);
+                            showAlert("imageUploadError");
+                        } finally {
+                            uploadIndicator.classList.add('hidden');
+                        }
+                    });
+                });
+            }, (error) => {
+                console.error("Error listening to dev orders:", error);
+                devLoadingText.textContent = "فشل تحميل الطلبات.";
+                devLoadingText.classList.remove('hidden');
+            });
+        }
+
         // Initial setup
-        initFirebase();
-        setupStarRating(starRatingInputContainer, commentRatingValue);
-        applyDarkMode(localStorage.getItem('darkMode') === 'enabled');
-        // Removed the initial call to getGeolocation() to avoid the console error on page load.
+        window.onload = function() {
+            initFirebase();
+            setupStarRating(starRatingInputContainer, commentRatingValue);
+            applyDarkMode(localStorage.getItem('darkMode') === 'enabled');
+            setLanguage(currentLang);
+        }
     </script>
 </body>
 </html>
