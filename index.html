@@ -16,7 +16,8 @@
         .card { background-color: white; border-radius: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); padding: 2rem; transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease; }
         .card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
         .btn-primary { background-color: #6366f1; color: white; padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 600; transition: background-color 0.3s ease, transform 0.2s ease; }
-        .btn-primary:hover { background-color: #4f46e5; transform: translateY(-2px); }
+        .btn-primary:hover:not(:disabled) { background-color: #4f46e5; transform: translateY(-2px); }
+        .btn-primary:disabled { background-color: #a5b4fc; cursor: not-allowed; }
         .btn-danger { background-color: #ef4444; color: white; padding: 0.5rem 1rem; border-radius: 0.75rem; font-weight: 600; transition: background-color 0.3s ease; }
         .btn-danger:hover { background-color: #dc2626; }
         .contact-link { display: inline-flex; align-items: center; background-color: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 600; transition: background-color 0.3s ease, transform 0.2s ease; }
@@ -45,6 +46,8 @@
         body.dark .hamburger-icon span { background-color: #e2e8f0; }
         body.dark .nav-links-container { background-color: rgba(26, 32, 44, 0.98); }
         body.dark .hero-section .bg-yellow-400 { background-color: #f6ad55; color: #1a202c; }
+        #developer-dashboard { background-color: #f8fafc; }
+        body.dark #developer-dashboard { background-color: #1a202c; }
         body.dark #about-us { background-color: #2d3748; }
         body.dark #contact { background-color: #1a202c; }
         body.dark #comments { background-color: #1a202c; }
@@ -87,10 +90,24 @@
         body.dark .custom-file-input { background-color: #334155; color: #e2e8f0; border-color: #475569; }
         body.dark .custom-file-input:hover { background-color: #4a5568; border-color: #64748b; }
         #imagePreview { max-width: 100px; max-height: 100px; margin-top: 1rem; border-radius: 0.5rem; object-fit: cover; }
-        #comments input[type="text"], #comments textarea, #developerPasswordInput, #orderForm input[type="text"], #orderForm input[type="email"], #orderForm input[type="tel"], #orderForm select, #orderForm textarea, #orderTrackInput, .dev-price-input { background-color: #f6f7ff; color: #1a202c; border-color: #e2e8f0; }
-        #comments input[type="text"]::placeholder, #comments textarea::placeholder, #developerPasswordInput::placeholder, #orderForm input::placeholder, #orderForm textarea::placeholder, #orderTrackInput::placeholder, .dev-price-input::placeholder { color: #64748b; }
-        body.dark #comments input[type="text"], body.dark #comments textarea, body.dark #developerPasswordInput, body.dark #orderForm input, body.dark #orderForm select, body.dark #orderForm textarea, body.dark #orderTrackInput, body.dark .dev-price-input { background-color: #334155; color: #e2e8f0; border-color: #475569; }
-        body.dark #comments input[type="text"]::placeholder, body.dark #comments textarea::placeholder, body.dark #developerPasswordInput::placeholder, body.dark #orderForm input::placeholder, body.dark #orderForm textarea::placeholder, body.dark #orderTrackInput::placeholder, body.dark .dev-price-input::placeholder { color: #94a3b8; }
+        
+        /* UPDATED: Input field styling for better visibility */
+        #comments input[type="text"], #comments textarea, #developerPasswordInput, #orderForm input, #orderForm select, #orderForm textarea, #orderTrackInput, #developer-dashboard input, #developer-dashboard select {
+            background-color: #f1f5f9; /* Light mode background */
+            color: #1e293b; /* Light mode text */
+            border-color: #e2e8f0;
+        }
+        #comments input[type="text"]::placeholder, #comments textarea::placeholder, #developerPasswordInput::placeholder, #orderForm input::placeholder, #orderForm textarea::placeholder, #orderTrackInput::placeholder, #developer-dashboard input::placeholder {
+            color: #64748b;
+        }
+        body.dark #comments input[type="text"], body.dark #comments textarea, body.dark #developerPasswordInput, body.dark #orderForm input, body.dark #orderForm select, body.dark #orderForm textarea, body.dark #orderTrackInput, body.dark #developer-dashboard input, body.dark #developer-dashboard select {
+            background-color: #334155; /* Dark mode background */
+            color: #e2e8f0; /* Dark mode text */
+            border-color: #475569;
+        }
+        body.dark #comments input[type="text"]::placeholder, body.dark #comments textarea::placeholder, body.dark #developerPasswordInput::placeholder, body.dark #orderForm input::placeholder, body.dark #orderForm textarea::placeholder, body.dark #orderTrackInput::placeholder, body.dark #developer-dashboard input::placeholder {
+            color: #94a3b8;
+        }
         
         @media (max-width: 767px) {
             .hamburger-icon { display: flex; }
@@ -180,28 +197,14 @@
         #submitOrderBtn {
             background-color: #10B981; /* green-500 */
         }
-        #submitOrderBtn:hover, #submitOrderBtn:active {
+        #submitOrderBtn:hover:not(:disabled), #submitOrderBtn:active {
             background-color: #047857; /* darker green for hover and active states */
         }
+        #submitOrderBtn:disabled {
+            background-color: #6ee7b7;
+            cursor: not-allowed;
+        }
 
-        .custom-file-input {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-            cursor: pointer;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            background-color: #f8fafc;
-            color: #334155;
-            border: 1px solid #e2e8f0;
-            transition: background-color 0.2s ease, border-color 0.2s ease;
-            text-align: center;
-        }
-        .custom-file-input:hover {
-            background-color: #e2e8f0;
-            border-color: #cbd5e0;
-        }
         .custom-file-input input[type="file"] {
             position: absolute;
             left: 0;
@@ -210,15 +213,6 @@
             cursor: pointer;
             width: 100%;
             height: 100%;
-        }
-        body.dark .custom-file-input {
-            background-color: #334155;
-            color: #e2e8f0;
-            border-color: #475569;
-        }
-        body.dark .custom-file-input:hover {
-            background-color: #4a5568;
-            border-color: #64748b;
         }
         
         .device-info {
@@ -405,30 +399,29 @@
 
     <!-- Order Now Modal (No changes) -->
     <div id="orderModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[3000] hidden">
-        <div class="order-form-container p-8 rounded-xl shadow-2xl max-w-lg w-full m-4 relative">
+        <div class="order-form-container p-8 rounded-xl shadow-2xl max-w-lg w-full m-4 relative overflow-y-auto max-h-screen">
             <button id="closeOrderModal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
             <h2 class="text-2xl font-bold text-center mb-6 text-indigo-700 dark:text-indigo-400" data-lang-key="orderFormTitle">نموذج طلب خدمة</h2>
-            <!-- Updated action and method for formspree -->
-            <form id="orderForm" action="https://formspree.io/f/xrbllnal" method="POST" class="space-y-4">
+            <form id="orderForm" class="space-y-4">
                 <div>
                     <label for="orderName" class="block text-sm font-medium" data-lang-key="orderNameLabel">الاسم الكامل:</label>
-                    <input type="text" id="orderName" name="name" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600" data-lang-key="orderNamePlaceholder" placeholder="الاسم الكامل" required>
+                    <input type="text" id="orderName" name="name" class="mt-1 block w-full rounded-md shadow-sm" data-lang-key="orderNamePlaceholder" placeholder="الاسم الكامل" required>
                 </div>
                 <div>
                     <label for="orderEmail" class="block text-sm font-medium" data-lang-key="orderEmailLabel">البريد الإلكتروني:</label>
-                    <input type="email" id="orderEmail" name="email" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600" data-lang-key="orderEmailPlaceholder" placeholder="yourname@example.com" required>
+                    <input type="email" id="orderEmail" name="email" class="mt-1 block w-full rounded-md shadow-sm" data-lang-key="orderEmailPlaceholder" placeholder="yourname@example.com" required>
                 </div>
                 <div>
                     <label for="orderPhone" class="block text-sm font-medium" data-lang-key="orderPhoneLabel">رقم الهاتف:</label>
-                    <input type="tel" id="orderPhone" name="phone" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600" data-lang-key="orderPhonePlaceholder" placeholder="+966 50 123 4567" required>
+                    <input type="tel" id="orderPhone" name="phone" class="mt-1 block w-full rounded-md shadow-sm" data-lang-key="orderPhonePlaceholder" placeholder="+966 50 123 4567" required>
                 </div>
                 <div>
                     <label for="orderService" class="block text-sm font-medium" data-lang-key="orderServiceLabel">نوع الخدمة المطلوبة:</label>
-                    <select id="orderService" name="service" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600">
+                    <select id="orderService" name="service" class="mt-1 block w-full rounded-md shadow-sm">
                         <option value="" data-lang-key="orderServiceSelect" disabled selected>اختر خدمة...</option>
                         <option value="تصميم ثلاثي الأبعاد" data-lang-key="service1Title">تصميم ثلاثي الأبعاد</option>
                         <option value="عروض تقديمية (بوربوينت)" data-lang-key="service2Title">عروض تقديمية (بوربوينت)</option>
@@ -442,30 +435,21 @@
                 </div>
                 <div id="otherServiceField" class="hidden">
                     <label for="otherServiceText" class="block text-sm font-medium" data-lang-key="orderServiceOtherLabel">الرجاء تحديد الخدمة المطلوبة:</label>
-                    <input type="text" id="otherServiceText" name="other_service" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600" data-lang-key="orderServiceOtherPlaceholder" placeholder="اكتب الخدمة المخصصة هنا...">
+                    <input type="text" id="otherServiceText" name="other_service" class="mt-1 block w-full rounded-md shadow-sm" data-lang-key="orderServiceOtherPlaceholder" placeholder="اكتب الخدمة المخصصة هنا...">
                 </div>
                 <div>
                     <label for="orderMessage" class="block text-sm font-medium" data-lang-key="orderMessageLabel">تفاصيل المشروع:</label>
-                    <textarea id="orderMessage" name="details" rows="5" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 dark:border-gray-600" data-lang-key="orderMessagePlaceholder" placeholder="اشرح متطلبات مشروعك بالتفصيل..." required></textarea>
+                    <textarea id="orderMessage" name="details" rows="5" class="mt-1 block w-full rounded-md shadow-sm" data-lang-key="orderMessagePlaceholder" placeholder="اشرح متطلبات مشروعك بالتفصيل..." required></textarea>
                 </div>
                 <div>
                     <label for="orderFiles" class="block text-sm font-medium" data-lang-key="orderFilesLabel">إضافة صور (اختياري):</label>
                     <div class="relative mt-1">
-                        <!-- Updated to accept only image files -->
-                        <input type="file" id="orderFiles" name="files" multiple accept="image/jpeg,image/png,image/gif,image/jpg" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                         <input type="file" id="orderFiles" multiple accept="image/jpeg,image/png,image/gif,image/jpg" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
                         <div class="custom-file-input"><span id="orderFileInputText" data-lang-key="fileInputChoose">اختيار صور</span></div>
                     </div>
                     <div id="orderImagesPreview" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 mt-4"></div>
                 </div>
-                <!-- Geolocation field for the order form -->
-                <div id="orderGeolocationField" class="hidden">
-                    <input type="hidden" id="orderGeolocation" name="geolocation_link">
-                </div>
-                <!-- New hidden field for IP Address -->
-                <input type="hidden" name="ip_address" id="orderIpAddressInput">
-                <!-- Add a hidden input to hold the full formatted message for Formspree -->
-                <input type="hidden" name="formspree_message" id="formspreeMessage">
-                <button type="submit" id="submitOrderBtn" class="btn-primary w-full" data-lang-key="orderSubmitBtn">تقديم الطلب</button>
+                <button type="submit" id="submitOrderBtn" class="btn-primary w-full !bg-green-500 hover:!bg-green-700" data-lang-key="orderSubmitBtn">تقديم الطلب</button>
             </form>
         </div>
     </div>
@@ -536,10 +520,10 @@
             <div class="max-w-6xl mx-auto">
                 <h2 class="section-heading text-center mb-12" data-lang-key="featuresHeading">لماذا تختارنا؟</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m1.636 6.364l.707-.707M6 21v-1m6.364-1.636l-.707-.707M12 21h-1m-4.636-1.636l-.707.707M3 12h1m-.707-6.364l.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707"/></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature1Title">تنسيقات شكل رائعة </h3><p class="text-gray-600" data-lang-key="feature1Desc">نقدم العديد من التنسيقات الجمالية التي تبرز عملك.</p></div>
-                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature2Title">تنسيق كلام احترافي</h3><p class="text-gray-600" data-lang-key="feature2Desc">تنسيق دقيق للمحتوى في البحوث والمشاريع.</p></div>
-                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature3Title">أكثر من 100 نوع خط</h3><p class="text-gray-600" data-lang-key="feature3Desc">اختر من مجموعة واسعة من الخطوط المميزة.</p></div>
-                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m-4 8h4m10-8h4m-4 8h4M7 12h10l4-8H3l4 8zm0 0v8a2 2 0 002 2h6a2 2 0 002-2v-8m-12 4h.01M17 12h.01"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature4Title">عروض تقديمية مميزة</h3><p class="text-gray-600" data-lang-key="feature4Desc">تصميم عروض بوربوينت جذابة ومبتكرة.</p></div>
+                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m1.636 6.364l.707-.707M6 21v-1m6.364-1.636l-.707-.707M12 21h-1m-4.636-1.636l-.707.707M3 12h1m-.707-6.364l.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707"/></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature1Title">تنسيقات شكل رائعة </h3><p data-lang-key="feature1Desc">نقدم العديد من التنسيقات الجمالية التي تبرز عملك.</p></div>
+                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature2Title">تنسيق كلام احترافي</h3><p data-lang-key="feature2Desc">تنسيق دقيق للمحتوى في البحوث والمشاريع.</p></div>
+                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature3Title">أكثر من 100 نوع خط</h3><p data-lang-key="feature3Desc">اختر من مجموعة واسعة من الخطوط المميزة.</p></div>
+                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m-4 8h4m10-8h4m-4 8h4M7 12h10l4-8H3l4 8zm0 0v8a2 2 0 002 2h6a2 2 0 002-2v-8m-12 4h.01M17 12h.01"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature4Title">عروض تقديمية مميزة</h3><p data-lang-key="feature4Desc">تصميم عروض بوربوينت جذابة ومبتكرة.</p></div>
                 </div>
             </div>
         </section>
@@ -549,7 +533,7 @@
             <div class="max-w-6xl mx-auto text-center">
                 <h2 class="section-heading mb-12" data-lang-key="aboutUsHeading">من نحن؟ </h2>
                 <div class="card p-8 md:p-12">
-                    <p class="text-lg md:text-xl leading-relaxed text-gray-700" data-lang-key="aboutUsParagraph1">نحن فريق متقدم من خريجي جامعة UCSI الماليزية، نجمع بين المعرفة الأكاديمية العميقة والخبرة العملية الواسعة في تصميم وتنفيذ العديد من المشاريع الكبيرة والصغيرة.</p></div>
+                    <p class="text-lg md:text-xl leading-relaxed" data-lang-key="aboutUsParagraph1">نحن فريق متقدم من خريجي جامعة UCSI الماليزية، نجمع بين المعرفة الأكاديمية العميقة والخبرة العملية الواسعة في تصميم وتنفيذ العديد من المشاريع الكبيرة والصغيرة.</p></div>
         </section>
 
         <!-- Services Section (No changes) -->
@@ -557,13 +541,13 @@
             <div class="max-w-6xl mx-auto">
                 <h2 class="section-heading text-center mb-12" data-lang-key="servicesHeading">ماذا نقدم؟</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service1Title">تصميم ثلاثي الأبعاد</h3><p class="text-gray-600" data-lang-key="service1Desc">تصميم جميع أنواع القطع ثلاثية الأبعاد على برامج الأوتوكاد وبرامج الطباعة ثلاثية الأبعاد بجميع صيغ الملفات القابلة للطباعة.</p></div>
-                    <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service2Title">عروض تقديمية (بوربوينت)</h3><p class="text-gray-600" data-lang-key="service2Desc">تصميم عروض تقديمية على البوربوينت مع كامل التنسيق وإضافة الصور والحركات المرئية.</p></div>
-                    <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service3Title">تنسيق ملفات إكسل</h3><p class="text-gray-600" data-lang-key="service3Desc">تصميم وتعديل وتنسيق ملفات إكسل باحترافية عالية.</p></div>
-                    <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service4Title">تصاميم هندسية ومخططات</h3><p class="text-gray-600" data-lang-key="service4Desc">تصاميم هندسية، مخططات، كهرباء، وغيرها من الأعمال الهندسية المتخصصة.</p></div>
-                    <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service5Title">كتابة وتنسيق تقارير</h3><p class="text-gray-600" data-lang-key="service5Desc">كتابة وتنسيق التقارير على برنامج الوورد بجودة ودقة عالية.</p></div>
-                    <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service6Title">تصميم وتعديل فيديوهات وصور</h3><p class="text-gray-600" data-lang-key="service6Desc">تصميم وتعديل الفيديوهات والصور بجودة عالية لتناسب جميع احتياجاتكم.</p></div>
-                    <div class="card lg:col-span-3"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service7Title">برمجة وتطوير مواقع الويب</h3><p class="text-gray-600" data-lang-key="service7Desc">برمجة مواقع ويب تفاعلية وجمالية باستخدام لغة JavaScript وتنسيق الشكل باستخدام CSS، مع إضافة الموقع على سيرفر وإنشاء رابط خاص به.</p></div>
+                    <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service1Title">تصميم ثلاثي الأبعاد</h3><p data-lang-key="service1Desc">تصميم جميع أنواع القطع ثلاثية الأبعاد على برامج الأوتوكاد وبرامج الطباعة ثلاثية الأبعاد بجميع صيغ الملفات القابلة للطباعة.</p></div>
+                    <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service2Title">عروض تقديمية (بوربوينت)</h3><p data-lang-key="service2Desc">تصميم عروض تقديمية على البوربوينت مع كامل التنسيق وإضافة الصور والحركات المرئية.</p></div>
+                    <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service3Title">تنسيق ملفات إكسل</h3><p data-lang-key="service3Desc">تصميم وتعديل وتنسيق ملفات إكسل باحترافية عالية.</p></div>
+                    <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service4Title">تصاميم هندسية ومخططات</h3><p data-lang-key="service4Desc">تصاميم هندسية، مخططات، كهرباء، وغيرها من الأعمال الهندسية المتخصصة.</p></div>
+                    <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service5Title">كتابة وتنسيق تقارير</h3><p data-lang-key="service5Desc">كتابة وتنسيق التقارير على برنامج الوورد بجودة ودقة عالية.</p></div>
+                    <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service6Title">تصميم وتعديل فيديوهات وصور</h3><p data-lang-key="service6Desc">تصميم وتعديل الفيديوهات والصور بجودة عالية لتناسب جميع احتياجاتكم.</p></div>
+                    <div class="card lg:col-span-3"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service7Title">برمجة وتطوير مواقع الويب</h3><p data-lang-key="service7Desc">برمجة مواقع ويب تفاعلية وجمالية باستخدام لغة JavaScript وتنسيق الشكل باستخدام CSS، مع إضافة الموقع على سيرفر وإنشاء رابط خاص به.</p></div>
                 </div>
             </div>
         </section>
@@ -573,9 +557,9 @@
             <div class="max-w-4xl mx-auto text-center">
                 <h2 class="section-heading mb-12" data-lang-key="trackOrderHeading">تتبع طلبك</h2>
                 <div class="card p-8">
-                    <p class="text-lg md:text-xl mb-6 text-gray-700 dark:text-gray-300" data-lang-key="trackOrderSubtitle">أدخل رقم طلبك المكون من 6 أرقام لتتبع حالته.</p>
+                    <p class="text-lg md:text-xl mb-6" data-lang-key="trackOrderSubtitle">أدخل رقم طلبك المكون من 6 أرقام لتتبع حالته.</p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <input type="text" id="orderTrackInput" placeholder="أدخل رقم الطلب هنا..." class="w-full sm:w-2/3 md:w-1/2 p-3 rounded-lg shadow-sm border-gray-300 dark:border-gray-600 text-center" data-lang-key="trackOrderInputPlaceholder" pattern="\d{6}" title="الرجاء إدخال رقم مكون من 6 أرقام" required>
+                        <input type="text" id="orderTrackInput" placeholder="أدخل رقم الطلب هنا..." class="w-full sm:w-2/3 md:w-1/2 p-3 rounded-lg shadow-sm" data-lang-key="trackOrderInputPlaceholder" pattern="\d{6}" title="الرجاء إدخال رقم مكون من 6 أرقام" required>
                         <button id="trackOrderBtn" class="btn-primary w-full sm:w-1/3 md:w-auto" data-lang-key="trackOrderBtn">تتبع</button>
                     </div>
                     <!-- Order Status Display Area -->
@@ -613,7 +597,7 @@
         </section>
 
         <!-- Developer Mode Section -->
-        <section id="developer-dashboard" class="py-16 px-4 bg-gray-100 dark:bg-gray-900 hidden">
+        <section id="developer-dashboard" class="py-16 px-4 hidden">
             <div class="max-w-6xl mx-auto">
                 <h2 class="section-heading text-center mb-12" data-lang-key="devDashboardHeading">لوحة تحكم المطور</h2>
                 <!-- Modified layout for horizontal scrolling -->
@@ -660,7 +644,6 @@
                         <div>
                             <label for="commentImage" class="block text-sm font-medium" data-lang-key="commentImageLabel">إضافة صورة (اختياري):</label>
                             <div class="relative mt-1">
-                                <!-- Updated to accept only image files -->
                                 <input type="file" id="commentImage" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
                                 <div class="custom-file-input"><span id="fileInputText" data-lang-key="fileInputChoose">اختيار ملف</span></div>
                             </div>
@@ -690,7 +673,7 @@
         // Firebase Imports
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, onSnapshot, serverTimestamp, doc, deleteDoc, runTransaction, arrayUnion, arrayRemove, getDoc, where, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, query, onSnapshot, serverTimestamp, doc, deleteDoc, runTransaction, arrayUnion, arrayRemove, getDoc, where, updateDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Firebase Initialization
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
@@ -708,6 +691,7 @@
         let isAuthReady = false;
         let isDeveloperMode = false;
         const DEVELOPER_MODE_SECRET = "Ahmad@2006";
+        const SUPER_SECRET_CODE = "Ahmad@2006"; // The new secret code
         const IMGBB_API_KEY = "c6af93a30efee65fec6b505a82033875";
         const FORMSPREE_ENDPOINT = "https://formspree.io/f/xrbllnal";
 
@@ -754,9 +738,6 @@
         const orderFilesInput = document.getElementById('orderFiles');
         const orderFileInputText = document.getElementById('orderFileInputText');
         const orderImagesPreview = document.getElementById('orderImagesPreview');
-        const orderGeolocationInput = document.getElementById('orderGeolocation');
-        const orderIpAddressInput = document.getElementById('orderIpAddressInput');
-        const formspreeMessage = document.getElementById('formspreeMessage');
 
         // Order Tracking Elements
         const trackOrderInput = document.getElementById('orderTrackInput');
@@ -826,25 +807,28 @@
         
         const translations = {
             ar: {  
-                siteTitle: "خدمتنا - تصميم وتطوير المشاريع", navHome: "الرئيسية", navWhyChooseUs: "لماذا تختارنا؟", navAboutUs: "من نحن؟", navServices: "ماذا نقدم؟", navContact: "تواصل معنا", navComments: "التعليقات", navTrackOrder: "تتبع طلبك", heroTitle: "مصممون جميع أنواع المشاريع والمواقع والتصاميم والبحوث والواجبات", heroDiscount: "خصم 30% لفترة محدودة على كامل الخدمات", heroSubtitle: "نقدم لكم حلولاً متكاملة لتلبية جميع احتياجاتكم الأكاديمية والمهنية", featuresHeading: "لماذا تختارنا؟", feature1Title: "تنسيقات شكل رائعة", feature1Desc: "نقدم العديد من التنسيقات الجمالية التي تبرز عملك.", feature2Title: "تنسيق كلام احترافي", feature2Desc: "تنسيق دقيق للمحتوى في البحوث والمشاريع.", feature3Title: "أكثر من 100 نوع خط", feature3Desc: "اختر من مجموعة واسعة من الخطوط المميزة.", feature4Title: "عروض تقديمية مميزة", feature4Desc: "تصميم عروض بوربوينت جذابة ومبتكرة.", aboutUsHeading: "من نحن؟", aboutUsParagraph1: "نحن فريق متقدم من خريجي جامعة UCSI الماليزية، نجمع بين المعرفة الأكاديمية العميقة والخبرة العملية الواسعة في تصميم وتنفيذ العديد من المشاريع الكبيرة والصغيرة.", servicesHeading: "ماذا نقدم؟", service1Title: "تصميم ثلاثي الأبعاد", service1Desc: "تصميم جميع أنواع القطع ثلاثية الأبعاد على برامج الأوتوكاد وبرامج الطباعة ثلاثية الأبعاد بجميع صيغ الملفات القابلة للطباعة.", service2Title: "عروض تقديمية (بوربوينت)", service2Desc: "تصميم عروض تقديمية على البوربوينت مع كامل التنسيق وإضافة الصور والحركات المرئية.", service3Title: "تنسيق ملفات إكسل", service3Desc: "تصميم وتعديل وتنسيق ملفات إكسل باحترافية عالية.", service4Title: "تصاميم هندسية ومخططات", service4Desc: "تصاميم هندسية، مخططات، كهرباء، وغيرها من الأعمال الهندسية المتخصصة.", service5Title: "كتابة وتنسيق تقارير", service5Desc: "كتابة وتنسيق التقارير على برنامج الوورد بجودة ودقة عالية.", service6Title: "تصميم وتعديل فيديوهات وصور", service6Desc: "تصميم وتعديل الفيديوهات والصور بجودة عالية لتناسب جميع احتياجاتكم.", service7Title: "برمجة وتطوير مواقع الويب", service7Desc: "برمجة مواقع ويب تفاعلية وجمالية باستخدام لغة JavaScript وتنسيق الشكل باستخدام CSS، مع إضافة الموقع على سيرفر وإنشاء رابط خاص به.", contactHeading: "للتواصل معنا", contactSubtitle: "يسعدنا استقبال استفساراتكم وطلباتكم عبر وسائل التواصل التالية:", whatsappNumberKSA: "0500900329 داخل المملكة", whatsappNumberOutsideKSA: "+60163340537 خارج المملكة", telegramContact: "التواصل عبر التلجرام", footerText: "© 2025 جميع الحقوق محفوظة لفريق التصميم والمشاريع.", modeLight: "الوضع الفاتح", modeDark: "الوضع الداكن", commentsHeading: "التعليقات", leaveComment: "أضف تعليقك", commentNameLabel: "اسمك:", commentNamePlaceholder: "ادخل اسمك", commentTextLabel: "تعليقك:", commentTextPlaceholder: "اكتب تعليقك هنا...", commentRatingLabel: "تقييمك:", commentImageLabel: "إضافة صورة (اختياري):", fileInputChoose: "اختيار ملف", commentSubmitBtn: "إرسال التعليق", allComments: "جميع التعليقات", commentsLoading: "جاري تحميل التعليقات...", noComments: "لا توجد تعليقات حتى الآن. كن أول من يعلق!", alertNameTextEmpty: "الرجاء إدخال اسمك.", alertCommentTextEmpty: "الرجاء إدخال تعليقك.", alertCommentAddedSuccess: "تم إرسال تعليقك بنجاح!", alertDeleteConfirm: "هل أنت متأكد أنك تريد حذف هذا التعليق؟", confirmText: "نعم", cancelText: "إلغاء", customAlertClose: "حسناً", developerModeIndicatorText: "وضع المطور", imageUploadError: "فشل رفع الصورة. الرجاء المحاولة مرة أخرى.",
-                orderNowBtn: "اطلب الآن", orderFormTitle: "نموذج طلب خدمة", orderNameLabel: "الاسم الكامل:", orderNamePlaceholder: "الاسم الكامل", orderEmailLabel: "البريد الإلكتروني:", orderEmailPlaceholder: "yourname@example.com", orderPhoneLabel: "رقم الهاتف:", orderPhonePlaceholder: "+966 50 123 4567", orderServiceLabel: "نوع الخدمة المطلوبة:", orderServiceSelect: "اختر خدمة...", orderServiceOther: "أخرى...", orderServiceOtherLabel: "الرجاء تحديد الخدمة المطلوبة:", orderServiceOtherPlaceholder: "اكتب الخدمة المخصصة هنا...", orderMessageLabel: "تفاصيل المشروع:", orderMessagePlaceholder: "اشرح متطلبات مشروعك بالتفصيل...", orderFilesLabel: "إضافة صور (اختياري):", orderSubmitBtn: "تقديم الطلب", orderSuccess: "تم استلام طلبك بنجاح!", orderIdMessage: "الرجاء الاحتفاظ برقم طلبك لتتبع حالته:", orderError: "حدث خطأ أثناء إرسال طلبك. الرجاء المحاولة مرة أخرى.", locationUnavailable: "الموقع غير متوفر",
+                siteTitle: "خدمتنا - تصميم وتطوير المشاريع", navHome: "الرئيسية", navWhyChooseUs: "لماذا تختارنا؟", navAboutUs: "من نحن؟", navServices: "ماذا نقدم؟", navContact: "تواصل معنا", navComments: "التعليقات", navTrackOrder: "تتبع طلبك", heroTitle: "مصممون جميع أنواع المشاريع والمواقع والتصاميم والبحوث والواجبات", heroDiscount: "خصم 30% لفترة محدودة على كامل الخدمات", heroSubtitle: "نقدم لكم حلولاً متكاملة لتلبية جميع احتياجاتكم الأكاديمية والمهنية", featuresHeading: "لماذا تختارنا؟", feature1Title: "تنسيقات شكل رائعة", feature1Desc: "نقدم العديد من التنسيقات الجمالية التي تبرز عملك.", feature2Title: "تنسيق كلام احترافي", feature2Desc: "تنسيق دقيق للمحتوى في البحوث والمشاريع.", feature3Title: "أكثر من 100 نوع خط", feature3Desc: "اختر من مجموعة واسعة من الخطوط المميزة.", feature4Title: "عروض تقديمية مميزة", feature4Desc: "تصميم عروض بوربوينت جذابة ومبتكرة.", aboutUsHeading: "من نحن؟", aboutUsParagraph1: "نحن فريق متقدم من خريجي جامعة UCSI الماليزية، نجمع بين المعرفة الأكاديمية العميقة والخبرة العملية الواسعة في تصميم وتنفيذ العديد من المشاريع الكبيرة والصغيرة.", servicesHeading: "ماذا نقدم؟", service1Title: "تصميم ثلاثي الأبعاد", service1Desc: "تصميم جميع أنواع القطع ثلاثية الأبعاد على برامج الأوتوكاد وبرامج الطباعة ثلاثية الأبعاد بجميع صيغ الملفات القابلة للطباعة.", service2Title: "عروض تقديمية (بوربوينت)", service2Desc: "تصميم عروض تقديمية على البوربوينت مع كامل التنسيق وإضافة الصور والحركات المرئية.", service3Title: "تنسيق ملفات إكسل", service3Desc: "تصميم وتعديل وتنسيق ملفات إكسل باحترافية عالية.", service4Title: "تصاميم هندسية ومخططات", service4Desc: "تصاميم هندسية، مخططات، كهرباء، وغيرها من الأعمال الهندسية المتخصصة.", service5Title: "كتابة وتنسيق تقارير", service5Desc: "كتابة وتنسيق التقارير على برنامج الوورد بجودة ودقة عالية.", service6Title: "تصميم وتعديل فيديوهات وصور", service6Desc: "تصميم وتعديل الفيديوهات والصور بجودة عالية لتناسب جميع احتياجاتكم.", service7Title: "برمجة وتطوير مواقع الويب", service7Desc: "برمجة مواقع ويب تفاعلية وجمالية باستخدام لغة JavaScript وتنسيق الشكل باستخدام CSS، مع إضافة الموقع على سيرفر وإنشاء رابط خاص به.", contactHeading: "للتواصل معنا", contactSubtitle: "يسعدنا استقبال استفساراتكم وطلباتكم عبر وسائل التواصل التالية:", whatsappNumberKSA: "0500900329 داخل المملكة", whatsappNumberOutsideKSA: "+60163340537 خارج المملكة", telegramContact: "التواصل عبر التلجرام", footerText: "© 2025 جميع الحقوق محفوظة لفريق التصميم والمشاريع.", modeLight: "الوضع الفاتح", modeDark: "الوضع الداكن", commentsHeading: "التعليقات", leaveComment: "أضف تعليقك", commentNameLabel: "اسمك:", commentNamePlaceholder: "ادخل اسمك", commentTextLabel: "تعليقك:", commentTextPlaceholder: "اكتب تعليقك هنا...", commentRatingLabel: "تقييمك:", commentImageLabel: "إضافة صورة (اختياري):", fileInputChoose: "اختيار ملف", commentSubmitBtn: "إرسال التعليق", allComments: "جميع التعليقات", commentsLoading: "جاري تحميل التعليقات...", noComments: "لا توجد تعليقات حتى الآن. كن أول من يعلق!", alertNameTextEmpty: "الرجاء إدخال اسمك.", alertCommentTextEmpty: "الرجاء إدخال تعليقك.", alertCommentAddedSuccess: "تم إرسال تعليقك بنجاح!", alertDeleteConfirm: "هل أنت متأكد أنك تريد حذف هذا التعليق؟", confirmText: "نعم", cancelText: "إلغاء", customAlertClose: "حسناً", developerModeIndicatorText: "وضع المطور", imageUploadError: "فشل رفع الصورة. الرجاء المحاولة مرة أخرى.", commentSending: "جاري الإرسال...",
+                orderNowBtn: "اطلب الآن", orderFormTitle: "نموذج طلب خدمة", orderNameLabel: "الاسم الكامل:", orderNamePlaceholder: "الاسم الكامل", orderEmailLabel: "البريد الإلكتروني:", orderEmailPlaceholder: "yourname@example.com", orderPhoneLabel: "رقم الهاتف:", orderPhonePlaceholder: "+966 50 123 4567", orderServiceLabel: "نوع الخدمة المطلوبة:", orderServiceSelect: "اختر خدمة...", orderServiceOther: "أخرى...", orderServiceOtherLabel: "الرجاء تحديد الخدمة المطلوبة:", orderServiceOtherPlaceholder: "اكتب الخدمة المخصصة هنا...", orderMessageLabel: "تفاصيل المشروع:", orderMessagePlaceholder: "اشرح متطلبات مشروعك بالتفصيل...", orderFilesLabel: "إضافة صور (اختياري):", orderSubmitBtn: "تقديم الطلب", orderSuccess: "تم استلام طلبك بنجاح!", orderIdMessage: "الرجاء الاحتفاظ برقم طلبك لتتبع حالته:", orderError: "حدث خطأ أثناء إرسال طلبك. الرجاء المحاولة مرة أخرى.", locationUnavailable: "الموقع غير متوفر", orderSubmitting: "جاري تقديم الطلب...",
                 navTrackOrder: "تتبع طلبك", trackOrderHeading: "تتبع طلبك", trackOrderSubtitle: "أدخل رقم طلبك المكون من 6 أرقام لتتبع حالته.", trackOrderInputPlaceholder: "أدخل رقم الطلب هنا...", trackOrderBtn: "تتبع", orderStatusTitle: "حالة الطلب:", status0: "مرفوض", status1: "بانتظار الموافقة", status2: "قيد التنفيذ", status3: "معاينة المشروع", status4: "بانتظار الدفع", status5: "اكتمل", orderNotFound: "لم يتم العثور على طلب بهذا الرقم.", orderTrackError: "حدث خطأ أثناء تتبع الطلب. الرجاء المحاولة مرة أخرى.", orderPreviewImagesTitle: "صور معاينة للمشروع:",
                 devDashboardHeading: "لوحة تحكم المطور", devLoading: "جاري تحميل الطلبات...", devOrderId: "رقم الطلب:", devOrderUser: "العميل:", devOrderStatus: "الحالة:", devActions: "الإجراءات:", devUpdateStatus: "تحديث الحالة", devUploadImages: "رفع صور", devImagesLabel: "صور المعاينة:", devNoImages: "لا توجد صور معاينة بعد.", devOrderDate: "تاريخ الطلب:",
-                devRejectOrder: "رفض الطلب", devSavePrices: "حفظ الأسعار", devEstimatedPrice: "السعر التقديري", devFinalPrice: "السعر النهائي", devCurrency: "العملة", devRejectionReasonPrompt: "الرجاء إدخال سبب الرفض (اختياري):", orderRejected: "تم رفض طلبك", orderRejectedReason: "السبب:", estimatedPriceLabel: "السعر التقديري:", finalPriceLabel: "السعر النهائي:", pricesUpdatedSuccess: "تم تحديث الأسعار بنجاح!", pricesUpdatedError: "فشل تحديث الأسعار.", orderRejectedSuccess: "تم رفض الطلب بنجاح.", orderRejectedError: "فشل رفض الطلب."
+                devRejectOrder: "رفض الطلب", devSavePrices: "حفظ الأسعار", devEstimatedPrice: "السعر التقديري", devFinalPrice: "السعر النهائي", devCurrency: "العملة", devRejectionReasonPrompt: "الرجاء إدخال سبب الرفض (اختياري):", orderRejected: "تم رفض طلبك", orderRejectedReason: "السبب:", estimatedPriceLabel: "السعر التقديري:", finalPriceLabel: "السعر النهائي:", pricesUpdatedSuccess: "تم تحديث الأسعار بنجاح!", pricesUpdatedError: "فشل تحديث الأسعار.", orderRejectedSuccess: "تم رفض الطلب بنجاح.", orderRejectedError: "فشل رفض الطلب.", devDeleteOrder: "حذف الطلب", alertDeleteOrderConfirm: "هل أنت متأكد أنك تريد حذف هذا الطلب؟ سيتم حذفه نهائياً.", alertDeleteOrderSuccess: "تم حذف الطلب بنجاح.", alertDeleteOrderError: "فشل حذف الطلب.",
+                alertDeveloperModePrompt: "الرجاء إدخال الرمز السري للمطور.", promptSuperSecret: "الرجاء إدخال الرمز السري الخاص لإنشاء رمز جديد.", alertWrongSuperSecret: "الرمز السري الخاص غير صحيح.", oneTimeCodeGenerated: "تم إنشاء رمز الدخول لمرة واحدة:", alertOneTimeCodeError: "حدث خطأ أثناء إنشاء الرمز.", alertInvalidOrUsedCode: "الرمز المدخل غير صالح أو تم استخدامه مسبقًا.", alertWrongDevCode: "الرمز المدخل غير صحيح."
             },
             en: {  
-                siteTitle: "Our Services - Project Design & Development", navHome: "Home", navWhyChooseUs: "Why Choose Us?", navAboutUs: "About Us", navServices: "What We Offer?", navContact: "Contact Us", navComments: "Comments", navTrackOrder: "Track Your Order", heroTitle: "Designers of all types of projects, websites, designs, research, and assignments", heroDiscount: "30% discount for a limited time on all services", heroSubtitle: "We offer integrated solutions to meet all your academic and professional needs", featuresHeading: "Why Choose Us?", feature1Title: "Excellent Visual Formats", feature1Desc: "We provide many aesthetic formats that highlight your work.", feature2Title: "Professional Text Formatting", feature2Desc: "Precise content formatting for research and projects.", feature3Title: "Over 100 Font Types", feature3Desc: "Choose from a wide range of distinctive fonts.", feature4Title: "Outstanding Presentations", feature4Desc: "Designing attractive and innovative PowerPoint presentations.", aboutUsHeading: "Who Are We?", aboutUsParagraph1: "We are an advanced team of UCSI Malaysian University graduates, combining deep academic knowledge with extensive practical experience in designing and implementing many large and small projects.", servicesHeading: "What We Offer?", service1Title: "3D Design", service1Desc: "Designing all types of 3D parts on AutoCAD and 3D printing software in all printable file formats.", service2Title: "Presentations (PowerPoint)", service2Desc: "Designing PowerPoint presentations with full formatting and adding images and visual effects.", service3Title: "Excel File Formatting", service3Desc: "Designing, modifying, and formatting Excel files with high professionalism.", service4Title: "Engineering Designs & Plans", service4Desc: "Engineering designs, plans, electrical works, and other specialized engineering works.", service5Title: "Report Writing & Formatting", service5Desc: "Writing and formatting reports in Word with high quality and accuracy.", service6Title: "Video & Photo Design/Editing", service6Desc: "Designing and editing videos and photos with high quality to suit all your needs.", service7Title: "Web Programming & Development", service7Desc: "Programming interactive and aesthetic websites using JavaScript and styling with CSS, including hosting the site on a server and creating a dedicated link.", contactHeading: "Contact Us", contactSubtitle: "We are happy to receive your inquiries and requests via the following channels:", whatsappNumberKSA: "0500900329 Inside KSA", whatsappNumberOutsideKSA: "+60163340537 Outside KSA", telegramContact: "Contact via Telegram", footerText: "© 2025 All rights reserved for the Design and Projects Team.", modeLight: "Light Mode", modeDark: "Dark Mode", commentsHeading: "Comments", leaveComment: "Leave a comment", commentNameLabel: "Your Name:", commentNamePlaceholder: "Enter your name", commentTextLabel: "Your Comment:", commentTextPlaceholder: "Write your comment here...", commentRatingLabel: "Your Rating:", commentImageLabel: "Add an image (optional):", fileInputChoose: "Choose file", commentSubmitBtn: "Submit Comment", allComments: "All Comments", commentsLoading: "Loading comments...", noComments: "No comments yet. Be the first to comment!", alertNameTextEmpty: "Please enter your name.", alertCommentTextEmpty: "Please enter your comment.", alertCommentAddedSuccess: "Comment submitted successfully!", alertDeleteConfirm: "Are you sure you want to delete this comment?", confirmText: "Yes", cancelText: "Cancel", customAlertClose: "OK", developerModeIndicatorText: "Developer Mode", imageUploadError: "Image upload failed. Please try again.",
-                orderNowBtn: "Order Now", orderFormTitle: "Service Request Form", orderNameLabel: "Full Name:", orderNamePlaceholder: "Full Name", orderEmailLabel: "Email Address:", orderEmailPlaceholder: "yourname@example.com", orderPhoneLabel: "Phone Number:", orderPhonePlaceholder: "+966 50 123 4567", orderServiceLabel: "Requested Service:", orderServiceSelect: "Select a service...", orderServiceOther: "Other...", orderServiceOtherLabel: "Please specify the requested service:", orderServiceOtherPlaceholder: "Write your custom service here...", orderMessageLabel: "Project Details:", orderMessagePlaceholder: "Explain your project requirements in detail...", orderFilesLabel: "Add images (optional):", orderSubmitBtn: "Submit Request", orderSuccess: "Thank you! Your request has been received successfully.", orderIdMessage: "Please save your order ID to track its status:", orderError: "An error occurred while submitting your request. Please try again.", locationUnavailable: "Location unavailable",
+                siteTitle: "Our Services - Project Design & Development", navHome: "Home", navWhyChooseUs: "Why Choose Us?", navAboutUs: "About Us", navServices: "What We Offer?", navContact: "Contact Us", navComments: "Comments", navTrackOrder: "Track Your Order", heroTitle: "Designers of all types of projects, websites, designs, research, and assignments", heroDiscount: "30% discount for a limited time on all services", heroSubtitle: "We offer integrated solutions to meet all your academic and professional needs", featuresHeading: "Why Choose Us?", feature1Title: "Excellent Visual Formats", feature1Desc: "We provide many aesthetic formats that highlight your work.", feature2Title: "Professional Text Formatting", feature2Desc: "Precise content formatting for research and projects.", feature3Title: "Over 100 Font Types", feature3Desc: "Choose from a wide range of distinctive fonts.", feature4Title: "Outstanding Presentations", feature4Desc: "Designing attractive and innovative PowerPoint presentations.", aboutUsHeading: "Who Are We?", aboutUsParagraph1: "We are an advanced team of UCSI Malaysian University graduates, combining deep academic knowledge with extensive practical experience in designing and implementing many large and small projects.", servicesHeading: "What We Offer?", service1Title: "3D Design", service1Desc: "Designing all types of 3D parts on AutoCAD and 3D printing software in all printable file formats.", service2Title: "Presentations (PowerPoint)", service2Desc: "Designing PowerPoint presentations with full formatting and adding images and visual effects.", service3Title: "Excel File Formatting", service3Desc: "Designing, modifying, and formatting Excel files with high professionalism.", service4Title: "Engineering Designs & Plans", service4Desc: "Engineering designs, plans, electrical works, and other specialized engineering works.", service5Title: "Report Writing & Formatting", service5Desc: "Writing and formatting reports in Word with high quality and accuracy.", service6Title: "Video & Photo Design/Editing", service6Desc: "Designing and editing videos and photos with high quality to suit all your needs.", service7Title: "Web Programming & Development", service7Desc: "Programming interactive and aesthetic websites using JavaScript and styling with CSS, including hosting the site on a server and creating a dedicated link.", contactHeading: "Contact Us", contactSubtitle: "We are happy to receive your inquiries and requests via the following channels:", whatsappNumberKSA: "0500900329 Inside KSA", whatsappNumberOutsideKSA: "+60163340537 Outside KSA", telegramContact: "Contact via Telegram", footerText: "© 2025 All rights reserved for the Design and Projects Team.", modeLight: "Light Mode", modeDark: "Dark Mode", commentsHeading: "Comments", leaveComment: "Leave a comment", commentNameLabel: "Your Name:", commentNamePlaceholder: "Enter your name", commentTextLabel: "Your Comment:", commentTextPlaceholder: "Write your comment here...", commentRatingLabel: "Your Rating:", commentImageLabel: "Add an image (optional):", fileInputChoose: "Choose file", commentSubmitBtn: "Submit Comment", allComments: "All Comments", commentsLoading: "Loading comments...", noComments: "No comments yet. Be the first to comment!", alertNameTextEmpty: "Please enter your name.", alertCommentTextEmpty: "Please enter your comment.", alertCommentAddedSuccess: "Comment submitted successfully!", alertDeleteConfirm: "Are you sure you want to delete this comment?", confirmText: "Yes", cancelText: "Cancel", customAlertClose: "OK", developerModeIndicatorText: "Developer Mode", imageUploadError: "Image upload failed. Please try again.", commentSending: "Sending...",
+                orderNowBtn: "Order Now", orderFormTitle: "Service Request Form", orderNameLabel: "Full Name:", orderNamePlaceholder: "Full Name", orderEmailLabel: "Email Address:", orderEmailPlaceholder: "yourname@example.com", orderPhoneLabel: "Phone Number:", orderPhonePlaceholder: "+966 50 123 4567", orderServiceLabel: "Requested Service:", orderServiceSelect: "Select a service...", orderServiceOther: "Other...", orderServiceOtherLabel: "Please specify the requested service:", orderServiceOtherPlaceholder: "Write your custom service here...", orderMessageLabel: "Project Details:", orderMessagePlaceholder: "Explain your project requirements in detail...", orderFilesLabel: "Add images (optional):", orderSubmitBtn: "Submit Request", orderSuccess: "Thank you! Your request has been received successfully.", orderIdMessage: "Please save your order ID to track its status:", orderError: "An error occurred while submitting your request. Please try again.", locationUnavailable: "Location unavailable", orderSubmitting: "Submitting order...",
                 navTrackOrder: "Track Your Order", trackOrderHeading: "Track Your Order", trackOrderSubtitle: "Enter your 6-digit order ID to check its status.", trackOrderInputPlaceholder: "Enter Order ID here...", trackOrderBtn: "Track", orderStatusTitle: "Order Status:", status0: "Rejected", status1: "Awaiting Approval", status2: "In Progress", status3: "Project Preview", status4: "Awaiting Payment", status5: "Completed", orderNotFound: "Order with this ID was not found.", orderTrackError: "An error occurred while tracking the order. Please try again.", orderPreviewImagesTitle: "Project Preview Images:",
                 devDashboardHeading: "Developer Dashboard", devLoading: "Loading orders...", noOrders: "No orders have been placed yet.", devOrderId: "Order ID:", devOrderUser: "Client:", devOrderStatus: "Status:", devActions: "Actions:", devUpdateStatus: "Update Status", devUploadImages: "Upload Images", devImagesLabel: "Preview Images:", devNoImages: "No preview images yet.", devOrderDate: "Order Date:",
-                devRejectOrder: "Reject Order", devSavePrices: "Save Prices", devEstimatedPrice: "Est. Price", devFinalPrice: "Final Price", devCurrency: "Currency", devRejectionReasonPrompt: "Please enter the reason for rejection (optional):", orderRejected: "Your order has been rejected", orderRejectedReason: "Reason:", estimatedPriceLabel: "Estimated Price:", finalPriceLabel: "Final Price:", pricesUpdatedSuccess: "Prices updated successfully!", pricesUpdatedError: "Failed to update prices.", orderRejectedSuccess: "Order rejected successfully.", orderRejectedError: "Failed to reject order."
+                devRejectOrder: "Reject Order", devSavePrices: "Save Prices", devEstimatedPrice: "Est. Price", devFinalPrice: "Final Price", devCurrency: "Currency", devRejectionReasonPrompt: "Please enter the reason for rejection (optional):", orderRejected: "Your order has been rejected", orderRejectedReason: "Reason:", estimatedPriceLabel: "Estimated Price:", finalPriceLabel: "Final Price:", pricesUpdatedSuccess: "Prices updated successfully!", pricesUpdatedError: "Failed to update prices.", orderRejectedSuccess: "Order rejected successfully.", orderRejectedError: "Failed to reject order.", devDeleteOrder: "Delete Order", alertDeleteOrderConfirm: "Are you sure you want to delete this order? This action is permanent.", alertDeleteOrderSuccess: "Order deleted successfully.", alertDeleteOrderError: "Failed to delete order.",
+                alertDeveloperModePrompt: "Please enter the developer secret code.", promptSuperSecret: "Please enter the super secret code to generate a new code.", alertWrongSuperSecret: "Incorrect super secret code.", oneTimeCodeGenerated: "Your one-time access code is:", alertOneTimeCodeError: "Error generating the code.", alertInvalidOrUsedCode: "The entered code is invalid or has already been used.", alertWrongDevCode: "The entered code is incorrect."
             },
             zh: {
-                siteTitle: "我们的服务 - 项目设计与开发", navHome: "主页", navWhyChooseUs: "为什么选择我们？", navAboutUs: "关于我们", navServices: "我们提供什么？", navContact: "联系我们", navComments: "评论", navTrackOrder: "追踪您的订单", heroTitle: "各种项目、网站、设计、研究和作业的设计者", heroDiscount: "所有服务限时30%折扣", heroSubtitle: "我们提供全面的解决方案，满足您所有的学术和专业需求", featuresHeading: "为什么选择我们？", feature1Title: "出色的视觉格式", feature1Desc: "我们提供多种美观的格式，突出您的作品。", feature2Title: "专业的文本排版", feature2Desc: "为研究和项目提供精确的内容排版。", feature3Title: "超过100种字体", feature3Desc: "从多种独特的字体中进行选择。", feature4Title: "出色的演示文稿", feature4Desc: "设计引人入胜、富有创意的PowerPoint演示文稿。", aboutUsHeading: "我们是谁？", aboutUsParagraph1: "我们是一支由马来西亚UCSI大学毕业生组成的优秀团队，将深厚的学术知识与广泛的项目设计和实施实践经验相结合。", servicesHeading: "我们提供什么？", service1Title: "3D设计", service1Desc: "使用AutoCAD和3D打印软件设计各种类型的3D部件，支持所有可打印文件格式。", service2Title: "演示文稿 (PowerPoint)", service2Desc: "设计带有完整格式、图像和视觉效果的PowerPoint演示文稿。", service3Title: "Excel文件排版", service3Desc: "以高专业水平设计、修改和排版Excel文件。", service4Title: "工程设计与图纸", service4Desc: "工程设计、平面图、电气工程以及其他专业工程作业。", service5Title: "报告撰写与排版", service5Desc: "以高质量和高准确度撰写和排版Word报告。", service6Title: "视频与照片设计/编辑", service6Desc: "设计和编辑高质量的视频和照片，以满足您的所有需求。", service7Title: "网站编程与开发", service7Desc: "使用JavaScript编程交互式和美观的网站，使用CSS进行样式设计，并托管在服务器上并创建专用链接。", contactHeading: "联系我们", contactSubtitle: "我们很乐意通过以下渠道接收您的咨询和请求:", whatsappNumberKSA: "0500900329 (沙特境内)", whatsappNumberOutsideKSA: "+60163340537 (沙特境外)", telegramContact: "通过Telegram联系", footerText: "© 2025 设计与项目团队保留所有权利。", modeLight: "浅色模式", modeDark: "深色模式", commentsHeading: "评论", leaveComment: "发表评论", commentNameLabel: "您的姓名：", commentNamePlaceholder: "输入您的姓名", commentTextLabel: "您的评论：", commentTextPlaceholder: "在此处写下您的评论...", commentRatingLabel: "您的评分：", commentImageLabel: "添加图片（可选）：", fileInputChoose: "选择文件", commentSubmitBtn: "提交评论", allComments: "所有评论", commentsLoading: "正在加载评论...", noComments: "暂无评论。成为第一个发表评论的人吧！", alertNameTextEmpty: "请输入您的姓名。", alertCommentTextEmpty: "请输入您的评论。", alertCommentAddedSuccess: "评论提交成功！", alertDeleteConfirm: "您确定要删除这条评论吗？", confirmText: "是", cancelText: "取消", customAlertClose: "确定", developerModeIndicatorText: "开发者模式", imageUploadError: "图片上传失败。请重试。",
-                orderNowBtn: "立即下单", orderFormTitle: "服务请求表", orderNameLabel: "全名：", orderNamePlaceholder: "全名", orderEmailLabel: "电子邮件地址：", orderEmailPlaceholder: "yourname@example.com", orderPhoneLabel: "电话号码：", orderPhonePlaceholder: "+966 50 123 4567", orderServiceLabel: "所需服务：", orderServiceSelect: "选择一项服务...", orderServiceOther: "其他...", orderServiceOtherLabel: "请指定所需的服务：", orderServiceOtherPlaceholder: "在此处写下您的自定义服务...", orderMessageLabel: "项目详情：", orderMessagePlaceholder: "详细解释您的项目要求...", orderFilesLabel: "添加图片（可选）：", orderSubmitBtn: "提交申请", orderSuccess: "谢谢！您的请求已成功接收。", orderIdMessage: "请保存您的订单号以跟踪其状态：", orderError: "提交请求时出错。请重试。", locationUnavailable: "位置不可用",
+                siteTitle: "我们的服务 - 项目设计与开发", navHome: "主页", navWhyChooseUs: "为什么选择我们？", navAboutUs: "关于我们", navServices: "我们提供什么？", navContact: "联系我们", navComments: "评论", navTrackOrder: "追踪您的订单", heroTitle: "各种项目、网站、设计、研究和作业的设计者", heroDiscount: "所有服务限时30%折扣", heroSubtitle: "我们提供全面的解决方案，满足您所有的学术和专业需求", featuresHeading: "为什么选择我们？", feature1Title: "出色的视觉格式", feature1Desc: "我们提供多种美观的格式，突出您的作品。", feature2Title: "专业的文本排版", feature2Desc: "为研究和项目提供精确的内容排版。", feature3Title: "超过100种字体", feature3Desc: "从多种独特的字体中进行选择。", feature4Title: "出色的演示文稿", feature4Desc: "设计引人入胜、富有创意的PowerPoint演示文稿。", aboutUsHeading: "我们是谁？", aboutUsParagraph1: "我们是一支由马来西亚UCSI大学毕业生组成的优秀团队，将深厚的学术知识与广泛的项目设计和实施实践经验相结合。", servicesHeading: "我们提供什么？", service1Title: "3D设计", service1Desc: "使用AutoCAD和3D打印软件设计各种类型的3D部件，支持所有可打印文件格式。", service2Title: "演示文稿 (PowerPoint)", service2Desc: "设计带有完整格式、图像和视觉效果的PowerPoint演示文稿。", service3Title: "Excel文件排版", service3Desc: "以高专业水平设计、修改和排版Excel文件。", service4Title: "工程设计与图纸", service4Desc: "工程设计、平面图、电气工程以及其他专业工程作业。", service5Title: "报告撰写与排版", service5Desc: "以高质量和高准确度撰写和排版Word报告。", service6Title: "视频与照片设计/编辑", service6Desc: "设计和编辑高质量的视频和照片，以满足您的所有需求。", service7Title: "网站编程与开发", service7Desc: "使用JavaScript编程交互式和美观的网站，使用CSS进行样式设计，并托管在服务器上并创建专用链接。", contactHeading: "联系我们", contactSubtitle: "我们很乐意通过以下渠道接收您的咨询和请求:", whatsappNumberKSA: "0500900329 (沙特境内)", whatsappNumberOutsideKSA: "+60163340537 (沙特境外)", telegramContact: "通过Telegram联系", footerText: "© 2025 设计与项目团队保留所有权利。", modeLight: "浅色模式", modeDark: "深色模式", commentsHeading: "评论", leaveComment: "发表评论", commentNameLabel: "您的姓名：", commentNamePlaceholder: "输入您的姓名", commentTextLabel: "您的评论：", commentTextPlaceholder: "在此处写下您的评论...", commentRatingLabel: "您的评分：", commentImageLabel: "添加图片（可选）：", fileInputChoose: "选择文件", commentSubmitBtn: "提交评论", allComments: "所有评论", commentsLoading: "正在加载评论...", noComments: "暂无评论。成为第一个发表评论的人吧！", alertNameTextEmpty: "请输入您的姓名。", alertCommentTextEmpty: "请输入您的评论。", alertCommentAddedSuccess: "评论提交成功！", alertDeleteConfirm: "您确定要删除这条评论吗？", confirmText: "是", cancelText: "取消", customAlertClose: "确定", developerModeIndicatorText: "开发者模式", imageUploadError: "图片上传失败。请重试。", commentSending: "发送中...",
+                orderNowBtn: "立即下单", orderFormTitle: "服务请求表", orderNameLabel: "全名：", orderNamePlaceholder: "全名", orderEmailLabel: "电子邮件地址：", orderEmailPlaceholder: "yourname@example.com", orderPhoneLabel: "电话号码：", orderPhonePlaceholder: "+966 50 123 4567", orderServiceLabel: "所需服务：", orderServiceSelect: "选择一项服务...", orderServiceOther: "其他...", orderServiceOtherLabel: "请指定所需的服务：", orderServiceOtherPlaceholder: "在此处写下您的自定义服务...", orderMessageLabel: "项目详情：", orderMessagePlaceholder: "详细解释您的项目要求...", orderFilesLabel: "添加图片（可选）：", orderSubmitBtn: "提交申请", orderSuccess: "谢谢！您的请求已成功接收。", orderIdMessage: "请保存您的订单号以跟踪其状态：", orderError: "提交请求时出错。请重试。", locationUnavailable: "位置不可用", orderSubmitting: "正在提交订单...",
                 navTrackOrder: "追踪您的订单", trackOrderHeading: "追踪您的订单", trackOrderSubtitle: "输入您的6位订单号以查看其状态。", trackOrderInputPlaceholder: "在此处输入订单号...", trackOrderBtn: "追踪", orderStatusTitle: "订单状态：", status0: "已拒绝", status1: "等待批准", status2: "处理中", status3: "项目预览", status4: "等待付款", status5: "已完成", orderNotFound: "未找到该订单号的订单。", orderTrackError: "追踪订单时出错。请重试。", orderPreviewImagesTitle: "项目预览图片：",
                 devDashboardHeading: "开发者面板", devLoading: "正在加载订单...", noOrders: "尚未下订单。", devOrderId: "订单号：", devOrderUser: "客户：", devOrderStatus: "状态：", devActions: "操作：", devUpdateStatus: "更新状态", devUploadImages: "上传图片", devImagesLabel: "预览图片：", devNoImages: "暂无预览图片。", devOrderDate: "下单日期：",
-                devRejectOrder: "拒绝订单", devSavePrices: "保存价格", devEstimatedPrice: "估价", devFinalPrice: "最终价格", devCurrency: "货币", devRejectionReasonPrompt: "请输入拒绝原因（可选）：", orderRejected: "您的订单已被拒绝", orderRejectedReason: "原因：", estimatedPriceLabel: "估价：", finalPriceLabel: "最终价格：", pricesUpdatedSuccess: "价格更新成功！", pricesUpdatedError: "价格更新失败。", orderRejectedSuccess: "订单拒绝成功。", orderRejectedError: "拒绝订单失败。"
+                devRejectOrder: "拒绝订单", devSavePrices: "保存价格", devEstimatedPrice: "估价", devFinalPrice: "最终价格", devCurrency: "货币", devRejectionReasonPrompt: "请输入拒绝原因（可选）：", orderRejected: "您的订单已被拒绝", orderRejectedReason: "原因：", estimatedPriceLabel: "估价：", finalPriceLabel: "最终价格：", pricesUpdatedSuccess: "价格更新成功！", pricesUpdatedError: "价格更新失败。", orderRejectedSuccess: "订单拒绝成功。", orderRejectedError: "拒绝订单失败。", devDeleteOrder: "删除订单", alertDeleteOrderConfirm: "您确定要删除此订单吗？此操作是永久性的。", alertDeleteOrderSuccess: "订单已成功删除。", alertDeleteOrderError: "删除订单失败。",
+                alertDeveloperModePrompt: "请输入开发者密码。", promptSuperSecret: "请输入超级密码以生成新代码。", alertWrongSuperSecret: "超级密码不正确。", oneTimeCodeGenerated: "您的一次性访问代码是：", alertOneTimeCodeError: "生成代码时出错。", alertInvalidOrUsedCode: "输入的代码无效或已被使用。", alertWrongDevCode: "输入的代码不正确。"
             }
         };
 
@@ -929,7 +913,14 @@
 
         function showAlert(messageKey, type = 'alert', options = {}) {
             const { onConfirm, promptInput = null } = options;
-            customAlertMessage.textContent = translations[currentLang][messageKey] || messageKey;
+            
+            // Handle cases where a full message is passed instead of a key
+            let messageText = translations[currentLang][messageKey] || messageKey;
+            if (options.extraText) {
+                messageText += ` ${options.extraText}`;
+            }
+
+            customAlertMessage.textContent = messageText;
             customAlertButtons.innerHTML = '';
             customAlertInputs.innerHTML = '';
 
@@ -1083,48 +1074,61 @@
             e.preventDefault();
             if (!isAuthReady) { showAlert("alertFirebaseNotReady"); return; }
 
-            const commentName = document.getElementById('commentName').value.trim();
-            const commentText = document.getElementById('commentText').value.trim();
-            const rating = parseInt(commentRatingValue.value, 10);
-            const commentImageFile = commentImageInput.files[0];
+            const submitBtn = commentForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = translations[currentLang].commentSending;
 
-            if (!commentName) { showAlert('alertNameTextEmpty'); return; }
-            if (!commentText) { showAlert('alertCommentTextEmpty'); return; }
-
-            let imageUrl = null;
-            if (commentImageFile) {
-                const formData = new FormData();
-                formData.append("image", commentImageFile);
-                try {
-                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: formData });
-                    const result = await res.json();
-                    if (result.success) imageUrl = result.data.url;
-                    else throw new Error(result.error.message);
-                } catch (err) {
-                    console.error("Image upload failed:", err);
-                    showAlert("imageUploadError");
-                    return;
-                }
-            }
-
-            const { device, browser, deviceName } = getDeviceInfo();
-            const ipAddress = await getIPAddress();
-            
             try {
+                const commentName = document.getElementById('commentName').value.trim();
+                const commentText = document.getElementById('commentText').value.trim();
+                const rating = parseInt(commentRatingValue.value, 10);
+                const commentImageFile = commentImageInput.files[0];
+
+                if (!commentName) { showAlert('alertNameTextEmpty'); return; }
+                if (!commentText) { showAlert('alertCommentTextEmpty'); return; }
+
+                let imageUrl = null;
+                if (commentImageFile) {
+                    const formData = new FormData();
+                    formData.append("image", commentImageFile);
+                    try {
+                        const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: formData });
+                        const result = await res.json();
+                        if (result.success) {
+                            imageUrl = result.data.url;
+                        } else {
+                            throw new Error(result.error.message);
+                        }
+                    } catch (err) {
+                        console.error("Image upload failed:", err);
+                        showAlert("imageUploadError");
+                        return; // Stop submission if image upload fails
+                    }
+                }
+
+                const { device, browser, deviceName } = getDeviceInfo();
+                const ipAddress = await getIPAddress();
+                
                 await addDoc(collection(db, `artifacts/${appId}/public/data/comments`), {
                     name: commentName, text: commentText, rating, imageUrl, timestamp: serverTimestamp(), userId,
                     likes: 0, dislikes: 0, likedBy: [], dislikedBy: [],
                     device, browser, deviceName, latitude: userLocation.latitude, longitude: userLocation.longitude, ipAddress
                 });
+                
                 commentForm.reset();
                 imagePreview.classList.add('hidden');
                 fileInputText.textContent = translations[currentLang].fileInputChoose;
                 commentRatingValue.value = "0";
                 setupStarRating(starRatingInputContainer, commentRatingValue);
                 showAlert("alertCommentAddedSuccess");
+
             } catch (err) {
                 console.error("Error adding comment: ", err);
                 showAlert("alertCommentAddError");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
             }
         });
         
@@ -1257,7 +1261,7 @@
                             </div>
                         </div>
                         ${deviceInfoHTML}
-                        <p class="comment-text-display text-gray-900 dark:text-gray-200 mt-1" data-original-text="${comment.text}">${comment.text}</p>
+                        <p class="comment-text-display mt-1" data-original-text="${comment.text}">${comment.text}</p>
                         ${comment.imageUrl ? `<img src="${comment.imageUrl}" alt="Comment Image" class="mt-4 comment-image" onclick="window.showFullImage('${comment.imageUrl}')">` : ''}
                         <div class="comment-actions">
                             <button class="action-btn ${comment.likedBy?.includes(userId) ? 'liked' : ''}" data-action="like"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333V19h8.333a2 2 0 001.992-1.838l.93-5.585A2 2 0 0015.333 9H12V4.5a2.5 2.5 0 00-5 0V9H6Z"></path></svg><span>${comment.likes || 0}</span></button>
@@ -1276,27 +1280,121 @@
             }, (error) => console.error("Error listening to comments:", error));
         }
         
+        // NEW: Developer Mode Logic
         let footerClickCount = 0, lastFooterClickTime = 0;
-        footerCopyright.addEventListener('click', () => {
-            const now = Date.now();
-            if (now - lastFooterClickTime < 3000) footerClickCount++; else footerClickCount = 1;
-            lastFooterClickTime = now;
-            if (footerClickCount === 5) {
-                footerClickCount = 0;
-                showAlert("alertDeveloperModePrompt", 'confirm', {
-                    promptInput: { type: 'password', placeholder: 'Secret Code...' },
-                    onConfirm: (confirmed, value) => {
-                        if (confirmed && value === DEVELOPER_MODE_SECRET) {
-                            isDeveloperMode = true;
-                            developerModeIndicator.style.display = 'block';
-                            updateDeveloperModeIndicatorText();
-                            loadComments();
-                            loadDevOrders();
+        let devModeExtraClickCount = 0, lastDevModeExtraClickTime = 0;
+
+        function enableDeveloperMode() {
+            isDeveloperMode = true;
+            developerDashboard.classList.remove('hidden');
+            developerModeIndicator.style.display = 'block';
+            updateDeveloperModeIndicatorText();
+            loadComments();
+            loadDevOrders();
+        }
+
+        function promptForDeveloperMode() {
+            showAlert("alertDeveloperModePrompt", 'confirm', {
+                promptInput: { type: 'password', placeholder: 'Secret Code...' },
+                onConfirm: async (confirmed, value) => {
+                    if (!confirmed || !value) return;
+
+                    // 1. Check main secret
+                    if (value === DEVELOPER_MODE_SECRET) {
+                        enableDeveloperMode();
+                        return;
+                    }
+
+                    // 2. Check for one-time code
+                    if (/^\d{6}$/.test(value)) {
+                        const codesRef = collection(db, `artifacts/${appId}/public/data/oneTimeDevCodes`);
+                        const q = query(codesRef, where("code", "==", value), where("used", "==", false));
+                        
+                        try {
+                            const querySnapshot = await getDocs(q);
+                            if (!querySnapshot.empty) {
+                                const codeDoc = querySnapshot.docs[0];
+                                await updateDoc(doc(db, `artifacts/${appId}/public/data/oneTimeDevCodes`, codeDoc.id), {
+                                    used: true,
+                                    usedAt: serverTimestamp(),
+                                    usedBy: userId
+                                });
+                                enableDeveloperMode();
+                            } else {
+                                showAlert("alertInvalidOrUsedCode");
+                            }
+                        } catch (err) {
+                            console.error("Error verifying one-time code:", err);
+                            showAlert("alertInvalidOrUsedCode");
+                        }
+                    } else {
+                        showAlert("alertWrongDevCode");
+                    }
+                }
+            });
+        }
+
+        async function generateAndShowOneTimeCode() {
+            const oneTimeCode = String(Math.floor(100000 + Math.random() * 900000));
+            try {
+                const codesCollection = collection(db, `artifacts/${appId}/public/data/oneTimeDevCodes`);
+                await addDoc(codesCollection, {
+                    code: oneTimeCode,
+                    used: false,
+                    createdAt: serverTimestamp()
+                });
+                showAlert("oneTimeCodeGenerated", 'alert', { extraText: oneTimeCode });
+            } catch (error) {
+                console.error("Error generating one-time code:", error);
+                showAlert("alertOneTimeCodeError");
+            }
+        }
+        
+        function promptForSuperSecretCode() {
+            showAlert("promptSuperSecret", 'confirm', {
+                promptInput: { type: 'password', placeholder: 'Super Secret Code...' },
+                onConfirm: async (confirmed, value) => {
+                    if (confirmed) {
+                        if (value === SUPER_SECRET_CODE) {
+                            await generateAndShowOneTimeCode();
+                        } else {
+                            showAlert("alertWrongSuperSecret");
                         }
                     }
-                });
+                }
+            });
+        }
+
+        footerCopyright.addEventListener('click', () => {
+            const now = Date.now();
+            if (isDeveloperMode) {
+                // Logic for generating one-time code when already in dev mode
+                if (now - lastDevModeExtraClickTime < 5000) {
+                    devModeExtraClickCount++;
+                } else {
+                    devModeExtraClickCount = 1;
+                }
+                lastDevModeExtraClickTime = now;
+
+                if (devModeExtraClickCount === 4) {
+                    devModeExtraClickCount = 0;
+                    promptForSuperSecretCode();
+                }
+            } else {
+                // Existing logic for entering developer mode
+                if (now - lastFooterClickTime < 3000) {
+                    footerClickCount++;
+                } else {
+                    footerClickCount = 1;
+                }
+                lastFooterClickTime = now;
+                if (footerClickCount === 5) {
+                    footerClickCount = 0;
+                    promptForDeveloperMode();
+                }
             }
         });
+
 
         function updateDeveloperModeIndicatorText() {
             if (developerModeIndicator) developerModeIndicator.textContent = translations[currentLang].developerModeIndicatorText;
@@ -1339,9 +1437,18 @@
         orderModal.addEventListener('click', (e) => { if (e.target === orderModal) hideOrderModal(); });
         closeOrderSubmittedModal.addEventListener('click', () => orderSubmittedModal.classList.add('hidden'));
 
+        // UPDATED: Logic for showing/hiding "other service" field
         orderServiceSelect.addEventListener('change', (e) => {
-            otherServiceField.classList.toggle('hidden', e.target.value !== 'أخرى');
-            otherServiceText.toggleAttribute('required', e.target.value === 'أخرى');
+            const selectedOption = e.target.options[e.target.selectedIndex];
+            const langKey = selectedOption.getAttribute('data-lang-key');
+
+            if (langKey === 'orderServiceOther') {
+                otherServiceField.classList.remove('hidden');
+                otherServiceText.required = true;
+            } else {
+                otherServiceField.classList.add('hidden');
+                otherServiceText.required = false;
+            }
         });
         
         function updateOrderFilePreview() {
@@ -1374,8 +1481,9 @@
             e.preventDefault();
             if (!isAuthReady) { showAlert("alertFirebaseNotReady"); return; }
             
+            const originalBtnText = submitOrderBtn.textContent;
             submitOrderBtn.disabled = true;
-            submitOrderBtn.textContent = 'Submitting...';
+            submitOrderBtn.textContent = translations[currentLang].orderSubmitting;
             
             const ipAddress = await getIPAddress();
             const { device, browser, deviceName } = getDeviceInfo();
@@ -1394,7 +1502,7 @@
                     console.error("Image upload failed:", err);
                     showAlert("imageUploadError");
                     submitOrderBtn.disabled = false;
-                    submitOrderBtn.textContent = translations[currentLang].orderSubmitBtn;
+                    submitOrderBtn.textContent = originalBtnText;
                     return;
                 }
             }
@@ -1402,10 +1510,13 @@
             const orderId = String(Math.floor(100000 + Math.random() * 900000));
             
             try {
+                const serviceValue = orderForm.elements['service'].value;
+                const finalService = serviceValue === 'أخرى' ? orderForm.elements['other_service'].value : serviceValue;
+                
                 const orderData = {
                     orderId, userId,
                     name: orderForm.elements['name'].value, email: orderForm.elements['email'].value, phone: orderForm.elements['phone'].value,
-                    service: orderForm.elements['service'].value === 'أخرى' ? orderForm.elements['other_service'].value : orderForm.elements['service'].value,
+                    service: finalService,
                     details: orderForm.elements['details'].value, images: uploadedImageUrls,
                     status: 1, // 1: Awaiting Approval
                     timestamp: serverTimestamp(), ipAddress, device, browser, deviceName,
@@ -1413,14 +1524,37 @@
                     previewImages: [], estimatedPrice: null, finalPrice: null, currency: null, rejectionReason: null,
                 };
                 await addDoc(collection(db, `artifacts/${appId}/public/data/orders`), orderData);
+
+                // Now, submit to Formspree
+                const formspreeData = new FormData();
+                formspreeData.append('Order ID', orderId);
+                formspreeData.append('Name', orderData.name);
+                formspreeData.append('Email', orderData.email);
+                formspreeData.append('Phone', orderData.phone);
+                formspreeData.append('Service', orderData.service);
+                formspreeData.append('Details', orderData.details);
+                formspreeData.append('Image URLs', uploadedImageUrls.join('\n'));
+                formspreeData.append('IP Address', ipAddress);
+                formspreeData.append('Device Info', `${device} - ${browser} (${deviceName})`);
+                if(userLocation.latitude && userLocation.longitude) {
+                    formspreeData.append('Location Link', `https://www.google.com/maps/search/?api=1&query=${userLocation.latitude},${userLocation.longitude}`);
+                }
+
+                await fetch(FORMSPREE_ENDPOINT, {
+                    method: 'POST',
+                    body: formspreeData,
+                    headers: { 'Accept': 'application/json' }
+                });
+
                 hideOrderModal();
                 showOrderSubmittedModal(orderId);
+
             } catch (err) {
                 console.error("Error submitting form: ", err);
                 showAlert("orderError");
             } finally {
                 submitOrderBtn.disabled = false;
-                submitOrderBtn.textContent = translations[currentLang].orderSubmitBtn;
+                submitOrderBtn.textContent = originalBtnText;
             }
         });
 
@@ -1433,7 +1567,7 @@
             orderStatusDisplay.classList.add('hidden');
             const q = query(collection(db, `artifacts/${appId}/public/data/orders`), where('orderId', '==', orderNumber));
             
-            onSnapshot(q, (snapshot) => {
+            const unsubscribe = onSnapshot(q, (snapshot) => {
                 if (snapshot.empty) {
                     showAlert("orderNotFound");
                     return;
@@ -1597,7 +1731,7 @@
                         
                         <div class="flex items-center gap-2">
                             <strong>${translations[currentLang].devOrderStatus}</strong>
-                            <select id="status-select-${order.id}" class="rounded-md shadow-sm p-1 dark:bg-gray-700 flex-grow">
+                            <select id="status-select-${order.id}" class="rounded-md shadow-sm p-1 flex-grow">
                                 <option value="0" ${order.status === 0 ? 'selected' : ''}>${translations[currentLang].status0}</option>
                                 <option value="1" ${order.status === 1 ? 'selected' : ''}>${translations[currentLang].status1}</option>
                                 <option value="2" ${order.status === 2 ? 'selected' : ''}>${translations[currentLang].status2}</option>
@@ -1612,13 +1746,12 @@
                                 <input type="number" id="est-price-${order.id}" value="${order.estimatedPrice || ''}" placeholder="${translations[currentLang].devEstimatedPrice}" class="dev-price-input w-1/2 p-2 rounded-md">
                                 <input type="number" id="final-price-${order.id}" value="${order.finalPrice || ''}" placeholder="${translations[currentLang].devFinalPrice}" class="dev-price-input w-1/2 p-2 rounded-md">
                             </div>
-                            <select id="currency-${order.id}" class="w-full rounded-md shadow-sm p-2 dark:bg-gray-700">
+                            <select id="currency-${order.id}" class="w-full rounded-md shadow-sm p-2">
                                 <option value="" ${!order.currency ? 'selected' : ''}>${translations[currentLang].devCurrency}</option>
                                 <option value="MYR" ${order.currency === 'MYR' ? 'selected' : ''}>رينغت ماليزي (MYR)</option>
                                 <option value="EGP" ${order.currency === 'EGP' ? 'selected' : ''}>جنيه مصري (EGP)</option>
                                 <option value="SAR" ${order.currency === 'SAR' ? 'selected' : ''}>ريال سعودي (SAR)</option>
                             </select>
-                            <button id="save-prices-${order.id}" class="btn-primary w-full text-sm py-2">${translations[currentLang].devSavePrices}</button>
                         </div>
 
                         <div>
@@ -1630,6 +1763,10 @@
                                 <label class="custom-file-input text-sm"><span data-lang-key="devUploadImages">${translations[currentLang].devUploadImages}</span><input type="file" id="dev-image-upload-${order.id}" accept="image/*"></label>
                                 <div id="dev-upload-indicator-${order.id}" class="mt-2 text-sm text-gray-500 hidden">...Uploading</div>
                             </div>
+                        </div>
+                        <div class="flex flex-col gap-2 mt-4 border-t pt-4">
+                            <button id="save-prices-${order.id}" class="btn-primary w-full text-sm py-2">${translations[currentLang].devSavePrices}</button>
+                            <button id="delete-order-${order.id}" class="btn-danger w-full text-sm py-2">${translations[currentLang].devDeleteOrder}</button>
                         </div>
                     `;
                     devOrdersList.appendChild(orderElement);
@@ -1677,6 +1814,9 @@
                             showAlert("pricesUpdatedError");
                         }
                     });
+                    
+                    // Delete order listener
+                    document.getElementById(`delete-order-${order.id}`).addEventListener('click', () => deleteOrder(order.id));
 
                     // Image upload listener
                     document.getElementById(`dev-image-upload-${order.id}`).addEventListener('change', async (e) => {
@@ -1703,6 +1843,24 @@
                 console.error("Error listening to dev orders:", error);
                 devLoadingText.textContent = "Failed to load orders.";
                 devLoadingText.classList.remove('hidden');
+            });
+        }
+        
+        async function deleteOrder(orderId) {
+            if (!isDeveloperMode) return;
+            const orderDocRef = doc(db, `artifacts/${appId}/public/data/orders`, orderId);
+            showAlert("alertDeleteOrderConfirm", 'confirm', {
+                onConfirm: async (confirmed) => {
+                    if (confirmed) {
+                        try {
+                            await deleteDoc(orderDocRef);
+                            showAlert("alertDeleteOrderSuccess");
+                        } catch (e) {
+                            console.error("Error deleting order: ", e);
+                            showAlert("alertDeleteOrderError");
+                        }
+                    }
+                }
             });
         }
 
