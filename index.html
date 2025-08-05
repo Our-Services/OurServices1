@@ -361,7 +361,7 @@
 <body class="font-sans antialiased">
 
     <!-- Custom Alert Modal (No changes) -->
-    <div id="customAlertModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[2000] hidden">
+    <div id="customAlertModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-content: center; z-[2000] hidden">
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
             <p id="customAlertMessage" class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4"></p>
             <div id="customAlertButtons" class="modal-buttons"></div>
@@ -374,7 +374,7 @@
     </div>
 
     <!-- Order Now Modal (No changes) -->
-    <div id="orderModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[3000] hidden">
+    <div id="orderModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-content: center; z-[3000] hidden">
         <div class="order-form-container p-8 rounded-xl shadow-2xl max-w-lg w-full m-4 relative">
             <button id="closeOrderModal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -441,7 +441,7 @@
     </div>
 
     <!-- Order Submitted Modal -->
-    <div id="orderSubmittedModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[3000] hidden">
+    <div id="orderSubmittedModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-content: center; z-[3000] hidden">
         <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-2xl max-w-md w-full m-4 text-center">
             <svg class="mx-auto h-16 w-16 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             <h3 class="mt-4 text-2xl font-bold text-gray-900 dark:text-white" data-lang-key="orderSuccess">تم استلام طلبك بنجاح!</h3>
@@ -531,7 +531,7 @@
                     <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service2Title">عروض تقديمية (بوربوينت)</h3><p class="text-gray-600" data-lang-key="service2Desc">تصميم عروض تقديمية على البوربوينت مع كامل التنسيق وإضافة الصور والحركات المرئية.</p></div>
                     <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service3Title">تنسيق ملفات إكسل</h3><p class="text-gray-600" data-lang-key="service3Desc">تصميم وتعديل وتنسيق ملفات إكسل باحترافية عالية.</p></div>
                     <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service4Title">تصاميم هندسية ومخططات</h3><p class="text-gray-600" data-lang-key="service4Desc">تصاميم هندسية، مخططات، كهرباء، وغيرها من الأعمال الهندسية المتخصصة.</p></div>
-                    <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service5Title">كتابة وتنسيق تقارير</h3><p class="text-gray-600" data-lang-key="service5Desc">كتابة وتنسيق التقارير على برنامج الوورد بجودة ودقة عالية.</p></div>
+                    <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service5Title">كتابة وتنسيق تقارير</h3><p class="text-gray-600" data-lang-key="service55Desc">كتابة وتنسيق التقارير على برنامج الوورد بجودة ودقة عالية.</p></div>
                     <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service6Title">تصميم وتعديل فيديوهات وصور</h3><p class="text-gray-600" data-lang-key="service6Desc">تصميم وتعديل الفيديوهات والصور بجودة عالية لتناسب جميع احتياجاتكم.</p></div>
                     <div class="card lg:col-span-3"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service7Title">برمجة وتطوير مواقع الويب</h3><p class="text-gray-600" data-lang-key="service7Desc">برمجة مواقع ويب تفاعلية وجمالية باستخدام لغة JavaScript وتنسيق الشكل باستخدام CSS، مع إضافة الموقع على سيرفر وإنشاء رابط خاص به.</p></div>
                 </div>
@@ -552,7 +552,8 @@
                     <div id="orderStatusDisplay" class="mt-8 hidden">
                         <h3 class="text-xl font-semibold mb-4 text-indigo-600 dark:text-indigo-400" data-lang-key="orderStatusTitle">حالة الطلب: <span id="displayedOrderId"></span></h3>
                         <div class="progress-container">
-                            <canvas id="progressBarCanvas" width="800" height="80" class="w-full"></canvas>
+                            <!-- Updated canvas width to 800 -->
+                            <canvas id="progressBarCanvas" width="800" height="70" class="w-full"></canvas>
                             <div class="progress-steps-container">
                                 <div class="progress-step" data-step="1">
                                     <span class="progress-label" data-lang-key="status1">بانتظار الموافقة</span>
@@ -660,7 +661,8 @@
         // Firebase Initialization
         // ملاحظة: سيتم توفير متغيرات البيئة تلقائيًا بواسطة نظام Canvas
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-            apiKey: "AIzaSyBbL9kbE7oP5CW4HmZJGCCmZRY2L5wxxkM",
+            // Original Firebase API key
+            apiKey: "AIzaSyBbL9kbE7oP5CW4HmZJGCCmZRY2L5wxxkM", 
             authDomain: "ourservices-c5658.firebaseapp.com",
             projectId: "ourservices-c5658",
             storageBucket: "ourservices-c5658.appspot.com",
@@ -760,7 +762,8 @@
         async function initFirebase() {
             try {
                 const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-                    apiKey: "AIzaSyBbL9kbE7oP5CW4HmZJGCCmZRY2L5wxxkM", // تأكد من أن هذا المفتاح صحيح
+                    // Original Firebase API key
+                    apiKey: "AIzaSyBbL9kbE7oP5CW4HmZJGCCmZRY2L5wxxkM", 
                     authDomain: "ourservices-c5658.firebaseapp.com",
                     projectId: "ourservices-c5658",
                     storageBucket: "ourservices-c5658.appspot.com",
@@ -911,11 +914,167 @@
                 devImagesLabel: "Preview Images:",
                 devNoImages: "No preview images yet.",
                 devOrderDate: "Order Date:",
+            },
+            zh: {
+                siteTitle: "我们的服务 - 项目设计与开发", navHome: "主页", navWhyChooseUs: "为什么选择我们？", navAboutUs: "关于我们", navServices: "我们提供什么？", navContact: "联系我们", navComments: "评论", navTrackOrder: "追踪您的订单", heroTitle: "各种项目、网站、设计、研究和作业的设计者", heroDiscount: "所有服务限时30%折扣", heroSubtitle: "我们提供全面的解决方案，满足您所有的学术和专业需求", heroContactBtn: "立即联系我们", featuresHeading: "为什么选择我们？", feature1Title: "出色的视觉格式", feature1Desc: "我们提供多种美观的格式，突出您的作品。", feature2Title: "专业的文本排版", feature2Desc: "为研究和项目提供精确的内容排版。", feature3Title: "超过100种字体", feature3Desc: "从多种独特的字体中进行选择。", feature4Title: "出色的演示文稿", feature4Desc: "设计引人入胜、富有创意的PowerPoint演示文稿。", aboutUsHeading: "我们是谁？", aboutUsParagraph1: "我们是一支由马来西亚UCSI大学毕业生组成的优秀团队，将深厚的学术知识与广泛的项目设计和实施实践经验相结合。", aboutUsParagraph2: "我们致力于以极具竞争力的价格提供高质量的服务，并始终将客户满意度作为我们的首要宗旨✨。", servicesHeading: "我们提供什么？", service1Title: "3D设计", service1Desc: "使用AutoCAD和3D打印软件设计各种类型的3D部件，支持所有可打印文件格式。", service2Title: "演示文稿 (PowerPoint)", service2Desc: "设计带有完整格式、图像和视觉效果的PowerPoint演示文稿。", service3Title: "Excel文件排版", service3Desc: "以高专业水平设计、修改和排版Excel文件。", service4Title: "工程设计与图纸", service4Desc: "工程设计、平面图、电气工程以及其他专业工程作业。", service5Title: "报告撰写与排版", service5Desc: "以高质量和高准确度撰写和排版Word报告。", service6Title: "视频与照片设计/编辑", service6Desc: "设计和编辑高质量的视频和照片，以满足您的所有需求。", service7Title: "网站编程与开发", service7Desc: "使用JavaScript编程交互式和美观的网站，使用CSS进行样式设计，并托管在服务器上并创建专用链接。", contactHeading: "联系我们", contactSubtitle: "我们很乐عبال استفساراتكم وطلباتكم عبر وسائل التواصل التالية:", whatsappNumberKSA: "0500900329 (沙特境内)", whatsappNumberOutsideKSA: "+60163340537 (沙وت境外)", telegramContact: "通过Telegram联系", footerText: "© 2025 设计与项目团队保留所有权利。", modeLight: "浅色模式", modeDark: "深色模式", commentsHeading: "评论", leaveComment: "发表评论", commentNameLabel: "您的姓名：", commentNamePlaceholder: "输入您的姓名", commentTextLabel: "您的评论：", commentTextPlaceholder: "在此处写下您的评论...", commentRatingLabel: "您的评分：", commentImageLabel: "添加图片（可选）：", fileInputChoose: "选择文件", fileInputNoFile: "未选择任何文件", commentSubmitBtn: "提交评论", allComments: "所有评论", commentsLoading: "正在加载评论...", noComments: "暂无评论。成为第一个发表评论的人吧！", commentDateUnavailable: "日期不可用", alertNameTextEmpty: "请输入您的姓名。", alertCommentTextEmpty: "请输入您的评论。", alertCommentAddedSuccess: "评论提交成功！", alertCommentAddError: "添加评论时出错。请重试。", alertFirebaseInitError: "Firebase初始化失败。评论可能无法正常工作。", alertFirebaseNotReady: "Firebase尚未准备好。请稍候。", alertDeleteConfirm: "您确定要删除这条评论吗？", alertDeleteSuccess: "评论删除成功！", alertDeleteError: "删除评论时出错。请重试。", alertNoPermission: "您没有删除此评论的权限。", alertDeveloperModePrompt: "请输入密令以进入开发者模式：", alertDeveloperModeSuccess: "开发者模式已成功激活！", alertDeveloperModeInvalid: "密令不正确。请重试。", alertDeveloperModeExit: "已退出开发者模式。", confirmText: "是", cancelText: "取消", customAlertClose: "确定", developerModeIndicatorText: "开发者模式", translateBtnText: "翻译", translateError: "翻译失败。", imageUploadError: "图片上传失败。请重试。", resetDislikesConfirm: "您确定要重置所有点踩吗？", resetDislikesSuccess: "点踩已成功重置！", resetDislikesError: "重置点踩失败。",
+                // New translations for the order form
+                orderNowBtn: "立即下单",
+                orderFormTitle: "服务请求表",
+                orderNameLabel: "全名：",
+                orderNamePlaceholder: "全名",
+                orderEmailLabel: "电子邮件地址：",
+                orderEmailPlaceholder: "yourname@example.com",
+                orderPhoneLabel: "电话号码：",
+                orderPhonePlaceholder: "+966 50 123 4567",
+                orderServiceLabel: "所需服务：",
+                orderServiceSelect: "选择一项服务...",
+                orderServiceOther: "其他...",
+                orderServiceOtherLabel: "请指定所需的服务：",
+                orderServiceOtherPlaceholder: "在此处写下您的自定义服务...",
+                orderMessageLabel: "项目详情：",
+                orderMessagePlaceholder: "详细解释您的项目要求...",
+                orderFilesLabel: "添加图片（可选）：",
+                orderSubmitBtn: "提交申请",
+                orderSuccess: "谢谢！您的请求已成功接收。",
+                orderIdMessage: "请保存您的订单号以跟踪其状态：",
+                orderError: "提交请求时出错。请重试。",
+                orderFieldRequired: "此字段为必填项。",
+                locationUnavailable: "位置不可用",
+
+                // New translations for order tracking
+                navTrackOrder: "追踪您的订单",
+                trackOrderHeading: "追踪您的订单",
+                trackOrderSubtitle: "输入您的6位订单号以查看其状态。",
+                trackOrderInputPlaceholder: "在此处输入订单号...",
+                trackOrderBtn: "追踪",
+                orderStatusTitle: "订单状态：",
+                status1: "等待批准",
+                status2: "处理中",
+                status3: "项目预览",
+                status4: "等待付款",
+                status5: "已完成",
+                orderNotFound: "未找到该订单号的订单。",
+                orderTrackError: "追踪订单时出错。请重试。",
+                orderPreviewImagesTitle: "项目预览图片：",
+                
+                // New translations for developer dashboard
+                devDashboardHeading: "开发者面板",
+                devLoading: "正在加载订单...",
+                noOrders: "尚未下订单。",
+                devOrderId: "订单号：",
+                devOrderUser: "客户：",
+                devOrderStatus: "状态：",
+                devActions: "操作：",
+                devUpdateStatus: "更新状态",
+                devUploadImages: "上传图片",
+                devImagesLabel: "预览图片：",
+                devNoImages: "暂无预览图片。",
+                devOrderDate: "下单日期：",
             }
         };
 
         let currentLang = localStorage.getItem('lang') || 'ar';
         const htmlElement = document.documentElement;
+
+        // Map to store translated comment texts to avoid redundant API calls
+        const commentTextCache = new Map(); // Key: "originalText_targetLang", Value: "translatedText"
+
+        /**
+         * Translates text using the Gemini API with exponential backoff.
+         * @param {string} text The text to translate.
+         * @param {string} targetLang The target language code (e.g., 'en', 'zh', 'ar').
+         * @returns {Promise<string>} The translated text or the original text if translation fails.
+         */
+        async function translateText(text, targetLang) {
+            if (!text) return text; // No translation needed for empty text
+
+            const cacheKey = `${text}_${targetLang}`;
+            const cachedTranslation = commentTextCache.get(cacheKey);
+            if (cachedTranslation) {
+                return cachedTranslation;
+            }
+
+            let retries = 0;
+            const maxRetries = 5;
+            const baseDelay = 1000; // 1 second
+
+            while (retries < maxRetries) {
+                try {
+                    // Modified prompt to request concise translation
+                    const prompt = `Translate the following text to ${targetLang}. Provide only the translation, no extra explanations or analysis, and keep it as concise as possible:\n\n${text}`;
+                    let chatHistory = [];
+                    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                    const payload = { contents: chatHistory };
+                    // Use the provided API key for Gemini API calls
+                    const apiKey = "AIzaSyAQUGqUp7KMjs9q2jrIR8BQ3xH9hollWrQ"; 
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        if (response.status === 429) { // Too Many Requests
+                            const delay = baseDelay * Math.pow(2, retries) + Math.random() * 1000; // Add jitter
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                            retries++;
+                            continue;
+                        } else if (response.status === 403) { // Forbidden - API Key issue
+                            console.error(`Translation API call failed with 403 Forbidden. This usually means the API key is invalid or lacks permissions. Please check your Canvas environment's API key configuration or contact support.`);
+                            return text; // Return original text immediately for 403
+                        }
+                        throw new Error(`API error: ${response.status} ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const translatedText = result.candidates[0].content.parts[0].text;
+                        console.log(`Translation successful for: "${text}" to "${targetLang}" -> "${translatedText}"`);
+                        commentTextCache.set(cacheKey, translatedText); // Cache the translation
+                        return translatedText;
+                    } else {
+                        console.error(`Translation failed for: "${text}" to "${targetLang}". Invalid API response:`, result);
+                        throw new Error("Invalid API response structure.");
+                    }
+                } catch (error) {
+                    console.error(`Translation API call failed for "${text}" to "${targetLang}":`, error);
+                    retries++;
+                    if (retries >= maxRetries) {
+                        console.error("Max retries reached. Translation failed.");
+                        return text; // Return original text on ultimate failure
+                    }
+                    const delay = baseDelay * Math.pow(2, retries) + Math.random() * 1000; // Add jitter
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+            return text; // Fallback if all retries fail
+        }
+
+        /**
+         * Updates the displayed comments with translations based on the current language.
+         */
+        async function updateCommentTranslations() {
+            const commentElements = commentsList.querySelectorAll('[data-comment-id]'); // Select the outer div
+            for (const commentDiv of commentElements) {
+                const commentTextP = commentDiv.querySelector('.comment-text-display'); // Select the specific <p> tag
+                if (commentTextP) {
+                    const originalText = commentTextP.getAttribute('data-original-text');
+                    if (originalText) {
+                        // Display a temporary "Translating..." message
+                        commentTextP.textContent = translations[currentLang].commentsLoading; // Use the loading translation
+
+                        const translatedText = await translateText(originalText, currentLang);
+                        
+                        // Update with translated text or original if translation failed
+                        commentTextP.textContent = translatedText;
+                    }
+                }
+            }
+        }
 
         function setLanguage(lang) {
             currentLang = lang;
@@ -927,12 +1086,22 @@
                 const key = element.getAttribute('data-lang-key');
                 const translation = translations[currentLang]?.[key] || translations.en[key];
                 if (translation) {
-                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA' || element.tagName === 'SELECT') {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
                         element.placeholder = translation;
-                        if (element.tagName === 'SELECT' && element.options[0]) {
-                            element.options[0].textContent = translation;
+                    } else if (element.tagName === 'SELECT') {
+                         // Find the option with the matching data-lang-key and update its text
+                        for (let i = 0; i < element.options.length; i++) {
+                            const option = element.options[i];
+                            const optionKey = option.getAttribute('data-lang-key');
+                            if (optionKey === key) {
+                                option.textContent = translation;
+                            }
                         }
-                    } else {
+                    }
+                    else if (element.tagName === 'TITLE') {
+                        document.title = translation;
+                    } 
+                    else {
                         element.textContent = translation;
                     }
                 }
@@ -951,7 +1120,16 @@
             document.getElementById('currentLanguageText').textContent = lang.toUpperCase();
             updateModeIndicatorText();
             updateDeveloperModeIndicatorText();
-            loadComments();
+            updateCommentTranslations(); // Trigger comment translation
+            
+            // Re-draw progress bar if it's visible and an order is being tracked
+            if (orderStatusDisplay.classList.contains('active') || !orderStatusDisplay.classList.contains('hidden')) {
+                const orderNumber = trackOrderInput.value.trim();
+                if (orderNumber.length === 6 && !isNaN(orderNumber)) {
+                    // Re-trigger the tracking to redraw the bar with correct direction
+                    trackOrderBtn.click();
+                }
+            }
         }
 
         function showAlert(messageKey, type = 'alert', onConfirm = null) {
@@ -996,7 +1174,8 @@
                         developerModeIndicator.style.display = 'block';
                         updateDeveloperModeIndicatorText();
                         loadComments();
-                        loadDevOrders(); // New: Load orders in dev mode
+                        // New: Load orders in dev mode
+                        loadDevOrders();
                     } else {
                         showAlert("alertDeveloperModeInvalid");
                     }
@@ -1277,19 +1456,15 @@
                             resolve(userLocation);
                         },
                         (error) => {
-                            let errorMessage = "Geolocation permission denied or location is unavailable.";
-                            if (error.code === error.PERMISSION_DENIED) {
-                                errorMessage = "Geolocation permission was denied by the user or disabled by a permissions policy.";
-                            } else if (error.message) {
-                                errorMessage = `Geolocation error: ${error.message}`;
-                            }
-                            console.error(errorMessage);
+                            // This part of the code was causing the console error
+                            // We remove the console.error to make the flow smoother when the user denies permission
+                            // The app already handles a null location gracefully
                             userLocation = { latitude: null, longitude: null };
                             resolve(userLocation);
                         }
                     );
                 } else {
-                    console.log("Geolocation is not supported by this browser.");
+                    // Geolocation is not supported by this browser.
                     userLocation = { latitude: null, longitude: null };
                     resolve(userLocation);
                 }
@@ -1353,8 +1528,6 @@
             });
         }
         
-        const commentTextCache = new Map();
-        
         function loadComments() {
             if (!db) return;
             const q = query(collection(db, `artifacts/${appId}/public/data/comments`));
@@ -1367,14 +1540,14 @@
                 commentsList.innerHTML = '';
                 commentsLoading.classList.add('hidden');
                 noComments.classList.toggle('hidden', comments.length > 0);
-                comments.forEach((comment) => {
+                for (const comment of comments) { // Use for...of for async operations
                     const commentId = comment.id;
                     const commentElement = document.createElement('div');
                     commentElement.className = 'p-4 rounded-lg shadow-sm relative';
                     commentElement.dataset.commentId = commentId;
                     const hasLiked = comment.likedBy?.includes(userId);
                     const hasDisliked = comment.dislikedBy?.includes(userId);
-                    const originalText = comment.text;
+                    const originalText = comment.text; // Store original text
                     const commentDate = comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString(currentLang) : translations[currentLang].commentDateUnavailable;
                     const geolocationHTML = (comment.latitude && comment.longitude) ?  
                         `<a href="https://www.google.com/maps/search/?api=1&query=${comment.latitude},${comment.longitude}" target="_blank" class="map-link">عرض الموقع</a>` : translations[currentLang].locationUnavailable;
@@ -1410,7 +1583,7 @@
                             </div>
                         </div>
                         ${deviceInfoHTML}
-                        <p class="text-gray-900 dark:text-gray-200 mt-1" data-comment-text-id="${commentId}" data-original-text="${originalText}">${comment.text}</p>
+                        <p class="comment-text-display text-gray-900 dark:text-gray-200 mt-1" data-original-text="${originalText}">${originalText}</p>
                         ${comment.imageUrl ? `<img src="${comment.imageUrl}" alt="Comment Image" class="mt-4 comment-image" onclick="window.showFullImage('${comment.imageUrl}')">` : ''}
                         <div class="comment-actions">
                             <button class="action-btn ${hasLiked ? 'liked' : ''}" data-action="like" aria-label="Like"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333V19h8.333a2 2 0 001.992-1.838l.93-5.585A2 2 0 0015.333 9H12V4.5a2.5 2.5 0 00-5 0V9H6Z"></path></svg><span>${comment.likes || 0}</span></button>
@@ -1431,7 +1604,9 @@
                             resetDislikes(commentId);
                         }
                     });
-                });
+                }
+                // After all comments are loaded, trigger translation for the current language
+                updateCommentTranslations();
             }, (error) => {
                 console.error("Error listening to comments:", error);
                 commentsLoading.textContent = translations[currentLang].alertCommentAddError;
@@ -1462,11 +1637,10 @@
         
         developerModeIndicator.addEventListener('click', () => {
             isDeveloperMode = false;
+            developerDashboard.classList.add('hidden');
             developerModeIndicator.style.display = 'none';
             showAlert("alertDeveloperModeExit");
             loadComments();
-            // Hide developer dashboard when exiting dev mode
-            developerDashboard.classList.add('hidden');
         });
         
         window.showFullImage = (imageUrl) => {
@@ -1701,6 +1875,15 @@
         function drawProgressBar(currentStatus) {
             const canvas = progressBarCanvas;
             const ctx = canvas.getContext('2d');
+            
+            // Make canvas width responsive
+            const containerWidth = canvas.parentElement.clientWidth;
+            // Ensure a minimum width for visibility, but don't exceed 800px
+            canvas.width = Math.max(containerWidth - 40, 300); // Subtract padding from container
+            if (canvas.width > 800) {
+                canvas.width = 800;
+            }
+            
             const width = canvas.width;
             const height = canvas.height;
             const numSteps = 5;
@@ -1715,29 +1898,34 @@
             const isDarkMode = body.classList.contains('dark');
             const inactiveColor = isDarkMode ? '#4a5568' : '#e2e8f0';
             const activeColor = '#10b981';
+            const isRTL = htmlElement.dir === 'rtl';
 
-            // Draw inactive line (from right to left)
+            // Draw inactive line
             ctx.beginPath();
             ctx.lineWidth = 4;
             ctx.strokeStyle = inactiveColor;
-            ctx.moveTo(width - horizontalPadding, lineY);
-            ctx.lineTo(horizontalPadding, lineY);
+            ctx.moveTo(isRTL ? width - horizontalPadding : horizontalPadding, lineY);
+            ctx.lineTo(isRTL ? horizontalPadding : width - horizontalPadding, lineY);
             ctx.stroke();
 
-            // Draw active line (from right to left)
+            // Draw active line
             ctx.beginPath();
             ctx.strokeStyle = activeColor;
             ctx.lineWidth = 4;
-            ctx.moveTo(width - horizontalPadding, lineY);
-            // Calculate the end point of the green line (from right to left)
-            const endX = width - horizontalPadding - (currentStatus - 1) * stepSpacing;
-            ctx.lineTo(endX, lineY);
+            if (isRTL) {
+                ctx.moveTo(width - horizontalPadding, lineY);
+                const endX = width - horizontalPadding - (currentStatus - 1) * stepSpacing;
+                ctx.lineTo(endX, lineY);
+            } else { // LTR
+                ctx.moveTo(horizontalPadding, lineY);
+                const endX = horizontalPadding + (currentStatus - 1) * stepSpacing;
+                ctx.lineTo(endX, lineY);
+            }
             ctx.stroke();
 
             // Draw circles and numbers
             for (let i = 0; i < numSteps; i++) {
-                // Calculate position from right to left
-                const x = width - horizontalPadding - i * stepSpacing;
+                const x = isRTL ? (width - horizontalPadding - i * stepSpacing) : (horizontalPadding + i * stepSpacing);
                 const y = lineY;
                 const stepNumber = i + 1;
                 const isCurrent = stepNumber === currentStatus;
