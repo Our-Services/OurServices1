@@ -64,7 +64,7 @@
         body.dark .language-dropdown-button:hover { background-color: rgba(255, 255, 255, 0.1); }
         .language-icon { width: 24px; height: 24px; margin-right: 0.25rem; }
         .language-dropdown-menu { position: absolute; top: 100%; right: 0; background-color: white; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); min-width: 120px; z-index: 1001; overflow: hidden; display: none; }
-        body.dark .language-dropdown-menu { background-color: #2d3748; box-shadow: 0 44px 6px rgba(0, 0, 0, 0.3); }
+        body.dark .language-dropdown-menu { background-color: #2d3748; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); }
         .language-dropdown-menu.active { display: block; }
         .language-dropdown-menu li { padding: 0.75rem 1rem; cursor: pointer; color: #334155; transition: background-color 0.2s ease; }
         .language-dropdown-menu li:hover { background-color: #e2e8f0; }
@@ -91,7 +91,6 @@
         body.dark .custom-file-input:hover { background-color: #4a5568; border-color: #64748b; }
         #imagePreview { max-width: 100px; max-height: 100px; margin-top: 1rem; border-radius: 0.5rem; object-fit: cover; }
         
-        /* FIXED: Input field styling for better visibility, now includes #promptInput */
         #comments input[type="text"], #comments textarea, #developerPasswordInput, #orderForm input, #orderForm select, #orderForm textarea, #orderTrackInput, #developer-dashboard input, #developer-dashboard select, #promptInput {
             background-color: #f1f5f9; /* Light mode background */
             color: #1e293b; /* Light mode text */
@@ -150,250 +149,101 @@
         body.dark .dev-action-btn { color: #f87171; }
         .dev-action-btn:hover { opacity: 0.7; }
         
-        /* Styling for the green 'Order Now' button */
-        .btn-order-now {
-            background-color: #10B981; /* green-500 */
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        .btn-order-now:hover, .btn-order-now:active {
-            background-color: #047857; /* A darker green for hover/active state */
-            transform: translateY(-2px);
-        }
-
-        /* NEW: Styling for the blue 'Track Order' button in Hero */
-        .btn-track-order {
-            background-color: #3b82f6; /* blue-500 */
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            text-decoration: none; /* Ensure no underline for <a> tag */
-        }
-
-        .btn-track-order:hover, .btn-track-order:active {
-            background-color: #2563eb; /* A darker blue for hover/active state */
-            transform: translateY(-2px);
-        }
-
-        /* Styling for the navbar 'Order Now' button */
-        .nav-link.order-now-btn {
-            background-color: #10B981;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        .nav-link.order-now-btn:hover, .nav-link.order-now-btn:active {
-            background-color: #059669;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        /* Styling for the popup order form container */
-        .order-form-container {
-            background-color: white;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        /* Dark mode styling for the popup order form container */
-        body.dark .order-form-container {
-            background-color: #2d3748; /* Dark gray background */
-            color: #e2e8f0; /* Light text for dark mode */
-        }
-
-        /* Specific styling for the form submit button in the modal */
-        #submitOrderBtn {
-            background-color: #10B981; /* green-500 */
-        }
-        #submitOrderBtn:hover:not(:disabled), #submitOrderBtn:active {
-            background-color: #047857; /* darker green for hover and active states */
-        }
-        #submitOrderBtn:disabled {
-            background-color: #6ee7b7;
-            cursor: not-allowed;
-        }
-
-        .custom-file-input input[type="file"] {
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            cursor: pointer;
-            width: 100%;
-            height: 100%;
-        }
+        .btn-order-now { background-color: #10B981; color: white; padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 600; transition: background-color 0.3s ease, transform 0.2s ease; }
+        .btn-order-now:hover, .btn-order-now:active { background-color: #047857; transform: translateY(-2px); }
+        .btn-track-order { background-color: #3b82f6; color: white; padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 600; transition: background-color 0.3s ease, transform 0.2s ease; text-decoration: none; }
+        .btn-track-order:hover, .btn-track-order:active { background-color: #2563eb; transform: translateY(-2px); }
+        .nav-link.order-now-btn { background-color: #10B981; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 600; transition: background-color 0.3s ease, transform 0.2s ease; }
+        .nav-link.order-now-btn:hover, .nav-link.order-now-btn:active { background-color: #059669; color: white; transform: translateY(-2px); }
+        .order-form-container { background-color: white; transition: background-color 0.3s ease, color 0.3s ease; }
+        body.dark .order-form-container { background-color: #2d3748; color: #e2e8f0; }
+        #submitOrderBtn { background-color: #10B981; }
+        #submitOrderBtn:hover:not(:disabled), #submitOrderBtn:active { background-color: #047857; }
+        #submitOrderBtn:disabled { background-color: #6ee7b7; cursor: not-allowed; }
+        .custom-file-input input[type="file"] { position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
         
-        .device-info {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #64748b;
-            font-size: 0.875rem;
-        }
-
-        body.dark .device-info {
-            color: #94a3b8;
-        }
-        
-        .file-list-container {
-            margin-top: 0.5rem;
-        }
-        .file-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: #e2e8f0;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            margin-bottom: 0.5rem;
-            word-break: break-all;
-        }
-        body.dark .file-item {
-            background-color: #4a5568;
-        }
-        .file-item .file-name {
-            font-size: 0.875rem;
-            color: #334155;
-        }
-        body.dark .file-item .file-name {
-            color: #f7fafc;
-        }
-        .file-item .remove-btn {
-            color: #ef4444;
-            margin-right: 0.5rem;
-            cursor: pointer;
-        }
-        .file-item .remove-btn:hover {
-            color: #b91c1c;
-        }
-
-        .map-link {
-            text-decoration: underline;
-            color: #6366f1;
-            transition: color 0.2s ease;
-        }
-        .map-link:hover {
-            color: #4f46e5;
-        }
-
-        .ip-address {
-            color: #4f46e5; /* Tailwind's indigo-600 */
-            font-weight: normal;
-        }
-        body.dark .ip-address {
-            color: #a78bfa; /* Tailwind's violet-400 */
-        }
+        .device-info { display: flex; align-items: center; gap: 0.5rem; color: #64748b; font-size: 0.875rem; }
+        body.dark .device-info { color: #94a3b8; }
+        .file-list-container { margin-top: 0.5rem; }
+        .file-item { display: flex; align-items: center; justify-content: space-between; background-color: #e2e8f0; padding: 0.5rem; border-radius: 0.5rem; margin-bottom: 0.5rem; word-break: break-all; }
+        body.dark .file-item { background-color: #4a5568; }
+        .file-item .file-name { font-size: 0.875rem; color: #334155; }
+        body.dark .file-item .file-name { color: #f7fafc; }
+        .file-item .remove-btn { color: #ef4444; margin-right: 0.5rem; cursor: pointer; }
+        .file-item .remove-btn:hover { color: #b91c1c; }
+        .map-link { text-decoration: underline; color: #6366f1; transition: color 0.2s ease; }
+        .map-link:hover { color: #4f46e5; }
+        .ip-address { color: #4f46e5; font-weight: normal; }
+        body.dark .ip-address { color: #a78bfa; }
 
         /* Order Tracking and Developer Mode Styles */
-        .progress-container {
-            position: relative;
-            margin-top: 2rem;
-            padding: 0 10px;
-        }
-        .progress-steps-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            position: relative;
-            z-index: 2;
-        }
-        .progress-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            flex: 1;
-        }
-        .progress-label {
-            margin-top: 0.5rem;
-            font-size: 0.875rem;
-            word-break: break-all;
-            line-height: 1.2;
-            color: #64748b;
-        }
-        .progress-label.active {
-            color: #10b981;
-        }
-        .progress-label.rejected {
-            color: #ef4444;
-        }
-        body.dark .progress-label {
-            color: #a0aec0;
-        }
-        body.dark .progress-label.active {
-            color: #10b981;
-        }
-        body.dark .progress-label.rejected {
-            color: #f87171;
-        }
-        #track-order-section {
-            background-color: #f8fafc;
-        }
-        body.dark #track-order-section {
-            background-color: #1a202c;
-        }
-        .order-preview-images {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        .order-preview-image {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-        .order-preview-image:hover {
-            transform: scale(1.05);
-        }
+        .progress-container { position: relative; margin-top: 2rem; padding: 0 10px; }
+        .progress-steps-container { display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 2; }
+        .progress-step { display: flex; flex-direction: column; align-items: center; text-align: center; flex: 1; }
+        .progress-label { margin-top: 0.5rem; font-size: 0.875rem; word-break: break-all; line-height: 1.2; color: #64748b; }
+        .progress-label.active { color: #10b981; }
+        .progress-label.rejected { color: #ef4444; }
+        body.dark .progress-label { color: #a0aec0; }
+        body.dark .progress-label.active { color: #10b981; }
+        body.dark .progress-label.rejected { color: #f87171; }
+        #track-order-section { background-color: #f8fafc; }
+        body.dark #track-order-section { background-color: #1a202c; }
+        .order-preview-images, .receipt-image-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .order-preview-image, .receipt-image { width: 100px; height: 100px; object-fit: cover; border-radius: 0.5rem; cursor: pointer; transition: transform 0.2s ease; }
+        .order-preview-image:hover, .receipt-image:hover { transform: scale(1.05); }
+        .dev-order-list { display: flex; overflow-x: auto; gap: 1.5rem; padding: 1rem; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+        .dev-order-list .card { min-width: 350px; flex-shrink: 0; scroll-snap-align: start; padding: 1.5rem; }
+        .invoice-info { background-color: #eef2ff; border-left: 4px solid #6366f1; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; }
+        body.dark .invoice-info { background-color: #3730a3; border-left-color: #a78bfa; }
+        .rejection-info { background-color: #fee2e2; border-left: 4px solid #ef4444; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; }
+        body.dark .rejection-info { background-color: #7f1d1d; border-left-color: #f87171; }
+        #receiptSection { background-color: #f0fdf4; border: 1px solid #bbf7d0; margin-top: 1.5rem; padding: 1rem; border-radius: 0.75rem; }
+        body.dark #receiptSection { background-color: #166534; border-color: #22c55e; }
         
-        /* Updated styles for Developer Dashboard to be horizontally scrollable */
-        .dev-order-list {
-            display: flex;
-            overflow-x: auto;
-            gap: 1.5rem;
-            padding: 1rem;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
+        /* FIX: Dev Payment Method List Item & Accordion Button Styles */
+        #devPaymentMethodsList > div, #customerPaymentMethodsList .card {
+            background-color: #f1f5f9;
+            color: #1e293b;
         }
-        .dev-order-list .card {
-            min-width: 350px; /* Adjust as needed */
-            flex-shrink: 0;
-            scroll-snap-align: start;
-            padding: 1.5rem;
+        body.dark #devPaymentMethodsList > div, body.dark #customerPaymentMethodsList .card {
+            background-color: #334155;
+            color: #e2e8f0;
         }
-        .price-info {
-            background-color: #eef2ff;
-            border-left: 4px solid #6366f1;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-top: 1rem;
+        #customerPaymentMethodsList .card p {
+             color: #374151;
         }
-        body.dark .price-info {
-            background-color: #3730a3;
-            border-left-color: #a78bfa;
+        body.dark #customerPaymentMethodsList .card p {
+            color: #d1d5db;
         }
-        .rejection-info {
-            background-color: #fee2e2;
-            border-left: 4px solid #ef4444;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-top: 1rem;
+        #togglePaymentBtn {
+            background-color: #e5e7eb;
+            color: #1f2937;
         }
-        body.dark .rejection-info {
-            background-color: #7f1d1d;
-            border-left-color: #f87171;
+        body.dark #togglePaymentBtn {
+            background-color: #374151;
+            color: #f9fafb;
+        }
+
+
+        /* NEW: Copy Notification Style */
+        .copy-notification {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #10b981;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            pointer-events: none;
+        }
+        .copy-notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-10px);
         }
     </style>
 </head>
@@ -446,7 +296,6 @@
                         <option value="كتابة وتنسيق تقارير" data-lang-key="service5Title">كتابة وتنسيق تقارير</option>
                         <option value="تصميم وتعديل فيديوهات وصور" data-lang-key="service6Title">تصميم وتعديل فيديوهات وصور</option>
                         <option value="برمجة وتطوير مواقع الويب" data-lang-key="service7Title">برمجة وتطوير مواقع الويب</option>
-                        <!-- NEW SERVICES ADDED HERE -->
                         <option value="تصميم السيرة الذاتية (CV) الاحترافية" data-lang-key="service8Title">تصميم السيرة الذاتية (CV) الاحترافية</option>
                         <option value="كتابة خطاب التقديم (Cover Letter)" data-lang-key="service9Title">كتابة خطاب التقديم (Cover Letter)</option>
                         <option value="إعداد مشاريع التخرج" data-lang-key="service10Title">إعداد مشاريع التخرج</option>
@@ -493,7 +342,6 @@
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <a href="#hero" class="text-2xl font-bold text-indigo-700" data-lang-key="siteTitle">خدمتنا</a>
             <div class="flex items-center gap-4 sm:gap-6">
-                <!-- Navigation Links and icons combined into one flex container -->
                 <div class="nav-links-container hidden md:flex items-center gap-4 sm:gap-6" id="navLinks">
                     <a href="#hero" class="nav-link" data-lang-key="navHome">الرئيسية</a>
                     <a href="#features" class="nav-link" data-lang-key="navWhyChooseUs">لماذا تختارنا؟</a>
@@ -503,7 +351,6 @@
                     <a href="#comments" class="nav-link" data-lang-key="navComments">التعليقات</a>
                     <a href="#track-order-section" class="nav-link" data-lang-key="navTrackOrder">تتبع طلبك</a>
                     <button id="orderNowNavBtn" class="nav-link order-now-btn" data-lang-key="orderNowBtn">اطلب الآن</button>
-                    <!-- Language Dropdown -->
                     <div class="language-dropdown-container">
                         <button id="languageDropdownButton" class="language-dropdown-button" aria-label="Toggle language dropdown">
                             <svg class="language-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1s-1 .45-1 1v3h-1c-.9 0-1.64.58-1.9 1.39-.77-2.31-1.04-4.83-.5-7.44h6.89c.54 2.61.27 5.13-.5 7.44zM12 4.07c3.95.49 7 3.85 7 7.93 0 .62-.08 1.21-.21 1.79L15 9V8c0-1.1-.9-2-2-2H9v-.93c.71-.1 1.45-.17 2.21-.17.76 0 1.5.07 2.21.17z"/></svg>
@@ -515,12 +362,10 @@
                             <li data-lang="zh">中文</li>
                         </ul>
                     </div>
-                    <!-- Dark Mode Toggle -->
                     <button id="darkModeToggle" aria-label="Toggle dark mode">
                         <svg class="dark-mode-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path id="darkModeIconPath" d="M12 3a9 9 0 109 9c0-.46-.04-.92-.12-1.36a5.999 5.999 0 01-8.588-8.588C12.92 3.04 12.46 3 12 3z"/></svg>
                     </button>
                 </div>
-                <!-- Mobile Hamburger Menu -->
                 <div class="hamburger-icon md:hidden" id="hamburger"><span></span><span></span><span></span></div>
             </div>
         </div>
@@ -531,7 +376,6 @@
             <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 leading-tight" data-lang-key="heroTitle">مصممون جميع أنواع المشاريع والمواقع والتصاميم والبحوث والواجبات</h1>
             <p class="text-2xl sm:text-3xl font-light mb-8"><span class="bg-yellow-400 text-gray-900 px-4 py-2 rounded-lg shadow-lg inline-block transform -rotate-1 skew-x-2" data-lang-key="heroDiscount">خصم 30% لفترة محدودة على كامل الخدمات</span></p>
             <p class="text-lg sm:text-xl font-light mb-8" data-lang-key="heroSubtitle">نقدم لكم حلولاً متكاملة لتلبية جميع احتياجاتكم الأكاديمية والمهنية</p>
-            <!-- UPDATED: Container for hero buttons -->
             <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8">
                 <button id="heroOrderNowBtn" class="btn-order-now inline-block text-lg" data-lang-key="orderNowBtn">اطلب الآن</button>
                 <a href="#track-order-section" id="heroTrackOrderBtn" class="btn-track-order inline-block text-lg" data-lang-key="navTrackOrder">تتبع طلبك</a>
@@ -545,10 +389,35 @@
             <div class="max-w-6xl mx-auto">
                 <h2 class="section-heading text-center mb-12" data-lang-key="featuresHeading">لماذا تختارنا؟</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m1.636 6.364l.707-.707M6 21v-1m6.364-1.636l-.707-.707M12 21h-1m-4.636-1.636l-.707.707M3 12h1m-.707-6.364l.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707"/></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature1Title">تنسيقات شكل رائعة </h3><p data-lang-key="feature1Desc">نقدم العديد من التنسيقات الجمالية التي تبرز عملك.</p></div>
+                    <!-- Old Features -->
+                    <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m1.636 6.364l.707-.707M6 21v-1m6.364-1.636l-.707-.707M12 21h-1m-4.636-1.636l-.707.707M3 12h1m-.707-6.364l.707-.707M12 3v1m-6.364 1.636l-.707.707M21 12h-1m-4.636-1.636l-.707-.707M12 21v-1m6.364-1.636l-.707-.707"/></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature1Title">تنسيقات شكل رائعة </h3><p data-lang-key="feature1Desc">نقدم العديد من التنسيقات الجمالية التي تبرز عملك.</p></div>
                     <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature2Title">تنسيق كلام احترافي</h3><p data-lang-key="feature2Desc">تنسيق دقيق للمحتوى في البحوث والمشاريع.</p></div>
                     <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature3Title">أكثر من 100 نوع خط</h3><p data-lang-key="feature3Desc">اختر من مجموعة واسعة من الخطوط المميزة.</p></div>
                     <div class="card text-center"><div class="text-indigo-600 mb-4"><svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m-4 8h4m10-8h4m-4 8h4M7 12h10l4-8H3l4 8zm0 0v8a2 2 0 002 2h6a2 2 0 002-2v-8m-12 4h.01M17 12h.01"></path></svg></div><h3 class="text-xl font-semibold mb-2" data-lang-key="feature4Title">عروض تقديمية مميزة</h3><p data-lang-key="feature4Desc">تصميم عروض بوربوينت جذابة ومبتكرة.</p></div>
+                    <!-- NEW Feature 1: 24/7 Support -->
+                    <div class="card text-center">
+                        <div class="text-indigo-600 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="M12 6v6l4 2"></path></svg></div>
+                        <h3 class="text-xl font-semibold mb-2" data-lang-key="feature5Title">استجابة سريعة 24/7</h3>
+                        <p data-lang-key="feature5Desc">فريقنا متواجد على مدار الساعة للرد على استفساراتكم وتقديم الدعم الفوري لضمان سير العمل بسلاسة.</p>
+                    </div>
+                    <!-- NEW Feature 2: Precision & Edits -->
+                    <div class="card text-center">
+                        <div class="text-indigo-600 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></div>
+                        <h3 class="text-xl font-semibold mb-2" data-lang-key="feature6Title">دقة في التنفيذ وتعديلات مرنة</h3>
+                        <p data-lang-key="feature6Desc">نلتزم بأعلى معايير الدقة في تنفيذ المشاريع، مع إتاحة إمكانية التعديل لتلبية توقعاتكم بالكامل.</p>
+                    </div>
+                    <!-- NEW Feature 3: Security & Trust -->
+                    <div class="card text-center">
+                        <div class="text-indigo-600 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
+                        <h3 class="text-xl font-semibold mb-2" data-lang-key="feature7Title">أمان وموثوقية</h3>
+                        <p data-lang-key="feature7Desc">نضمن حقوقك بالكامل. لن تدفع أي مبلغ إلا بعد معاينة مشروعك والتأكد من اكتماله بالشكل المطلوب.</p>
+                    </div>
+                    <!-- NEW Feature 4: Competitive Prices -->
+                    <div class="card text-center">
+                        <div class="text-indigo-600 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></div>
+                        <h3 class="text-xl font-semibold mb-2" data-lang-key="feature8Title">أسعار تنافسية</h3>
+                        <p data-lang-key="feature8Desc">نقدم خدماتنا بأسعار تنافسية ومنخفضة، مع خصم خاص على أول طلب لك معنا لتجربة خدماتنا المميزة.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -561,33 +430,28 @@
                     <p class="text-lg md:text-xl leading-relaxed" data-lang-key="aboutUsParagraph1">نحن فريق متقدم من خريجي جامعة UCSI الماليزية، نجمع بين المعرفة الأكاديمية العميقة والخبرة العملية الواسعة في تصميم وتنفيذ العديد من المشاريع الكبيرة والصغيرة.</p></div>
         </section>
 
-        <!-- Services Section -- UPDATED -->
+        <!-- Services Section -->
         <section id="services" class="py-16 px-4">
             <div class="max-w-6xl mx-auto">
                 <h2 class="section-heading text-center mb-12" data-lang-key="servicesHeading">ماذا نقدم؟</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Existing Services -->
                     <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service1Title">تصميم ثلاثي الأبعاد</h3><p data-lang-key="service1Desc">تصميم جميع أنواع القطع ثلاثية الأبعاد على برامج الأوتوكاد وبرامج الطباعة ثلاثية الأبعاد بجميع صيغ الملفات القابلة للطباعة.</p></div>
                     <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service2Title">عروض تقديمية (بوربوينت)</h3><p data-lang-key="service2Desc">تصميم عروض تقديمية على البوربوينت مع كامل التنسيق وإضافة الصور والحركات المرئية.</p></div>
                     <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service3Title">تنسيق ملفات إكسل</h3><p data-lang-key="service3Desc">تصميم وتعديل وتنسيق ملفات إكسل باحترافية عالية.</p></div>
                     <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service4Title">تصاميم هندسية ومخططات</h3><p data-lang-key="service4Desc">تصاميم هندسية، مخططات، كهرباء، وغيرها من الأعمال الهندسية المتخصصة.</p></div>
                     <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service5Title">كتابة وتنسيق تقارير</h3><p data-lang-key="service5Desc">كتابة وتنسيق التقارير على برنامج الوورد بجودة ودقة عالية.</p></div>
                     <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service6Title">تصميم وتعديل فيديوهات وصور</h3><p data-lang-key="service6Desc">تصميم وتعديل الفيديوهات والصور بجودة عالية لتناسب جميع احتياجاتكم.</p></div>
-                    
-                    <!-- New Services -->
                     <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service8Title">تصميم السيرة الذاتية (CV)</h3><p data-lang-key="service8Desc">نصمم لك سيرة ذاتية عصرية وجذابة تبرز مهاراتك وخبراتك بأفضل طريقة، مع التركيز على متطلبات سوق العمل لزيادة فرصك في الحصول على الوظيفة.</p></div>
                     <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service9Title">كتابة خطاب التقديم</h3><p data-lang-key="service9Desc">نساعدك في صياغة خطاب تقديم مقنع وموجه بشكل خاص للوظيفة والشركة المستهدفة، مما يترك انطباعًا قويًا لدى مسؤولي التوظيف.</p></div>
                     <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service10Title">إعداد مشاريع التخرج</h3><p data-lang-key="service10Desc">نقدم الدعم الكامل في إعداد مشاريع التخرج للبكالوريوس والماجستير، بدءًا من اختيار الفكرة، مرورًا بالبحث، وانتهاءً بالكتابة والتنسيق النهائي وفقًا للمعايير الأكاديمية.</p></div>
                     <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service11Title">خدمات القبول الجامعي</h3><p data-lang-key="service11Desc">نساعدك في رحلتك الأكاديمية عبر تقديم المشورة والمساعدة في تأمين القبولات في الجامعات المختلفة، وتجهيز ملف التقديم بشكل احترافي.</p></div>
                     <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service12Title">تصميم الشعارات والهوية البصرية</h3><p data-lang-key="service12Desc">نصمم لك هوية بصرية متكاملة تبدأ من الشعار الاحترافي وتحديد الألوان والخطوط التي تعكس رؤية علامتك التجارية وتجذب انتباه جمهورك.</p></div>
-
-                    <!-- Web Dev Service -- MODIFIED -->
                     <div class="card"><h3 class="text-xl font-semibold mb-3 text-indigo-700" data-lang-key="service7Title">برمجة وتطوير مواقع الويب</h3><p data-lang-key="service7Desc">برمجة مواقع ويب تفاعلية وجمالية باستخدام لغة JavaScript وتنسيق الشكل باستخدام CSS، مع إضافة الموقع على سيرفر وإنشاء رابط خاص به.</p></div>
                 </div>
             </div>
         </section>
 
-        <!-- New: Order Tracking Section -->
+        <!-- Order Tracking Section -->
         <section id="track-order-section" class="py-16 px-4 bg-gray-100 dark:bg-gray-900">
             <div class="max-w-4xl mx-auto text-center">
                 <h2 class="section-heading mb-12" data-lang-key="trackOrderHeading">تتبع طلبك</h2>
@@ -601,13 +465,11 @@
                     <div id="orderStatusDisplay" class="mt-8 hidden">
                         <h3 class="text-xl font-semibold mb-4 text-indigo-600 dark:text-indigo-400" data-lang-key="orderStatusTitle">حالة الطلب: <span id="displayedOrderId"></span></h3>
                         
-                        <!-- Rejection Info -->
                         <div id="rejectionInfo" class="rejection-info hidden">
                             <p class="font-bold" data-lang-key="orderRejected"></p>
                             <p id="rejectionReasonText"></p>
                         </div>
                         
-                        <!-- Progress Bar -->
                         <div id="progressContainer" class="progress-container">
                             <canvas id="progressBarCanvas" width="800" height="70" class="w-full"></canvas>
                             <div class="progress-steps-container">
@@ -619,13 +481,31 @@
                             </div>
                         </div>
 
-                        <!-- Price Info -->
-                        <div id="priceInfo" class="price-info hidden">
-                            <p id="estimatedPriceText" class="text-lg"></p>
-                            <p id="finalPriceText" class="text-xl font-bold"></p>
+                        <div id="invoiceInfo" class="invoice-info hidden space-y-2 text-right">
+                            <!-- Invoice details will be populated here by JS -->
                         </div>
 
                         <div id="orderPreviewImages" class="order-preview-images mt-6"></div>
+                        
+                        <!-- NEW: Payment Methods for Customer (Accordion) -->
+                        <div id="paymentAccordion" class="mt-8 hidden">
+                            <button id="togglePaymentBtn" class="w-full text-left p-4 rounded-lg font-semibold flex justify-between items-center transition-colors hover:bg-gray-300 dark:hover:bg-gray-600">
+                                <span data-lang-key="paymentOptionsTitle">خيارات الدفع المتاحة</span>
+                                <svg id="paymentAccordionIcon" class="w-5 h-5 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                            </button>
+                            <div id="paymentMethodsContainer" class="hidden mt-4 border-t pt-4 border-gray-300 dark:border-gray-600">
+                                <p class="mb-4" data-lang-key="paymentInstruction">الرجاء تحويل المبلغ المطلوب إلى أحد الحسابات التالية وارفاق الايصال للمتابعة:</p>
+                                <div id="customerPaymentMethodsList" class="space-y-4">
+                                    <!-- Customer-facing payment methods will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- NEW: Receipt Upload Section -->
+                        <div id="receiptSection" class="hidden">
+                            <!-- Content will be populated by JS -->
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -635,10 +515,35 @@
         <section id="developer-dashboard" class="py-16 px-4 hidden">
             <div class="max-w-6xl mx-auto">
                 <h2 class="section-heading text-center mb-12" data-lang-key="devDashboardHeading">لوحة تحكم المطور</h2>
-                <!-- Modified layout for horizontal scrolling -->
                 <div class="dev-order-list" id="devOrdersList">
                     <p id="devLoadingText" class="text-center text-gray-500 dark:text-gray-400 col-span-full" data-lang-key="devLoading">جاري تحميل الطلبات...</p>
                     <p id="noOrdersText" class="text-center text-gray-500 dark:text-gray-400 col-span-full hidden" data-lang-key="noOrders">لا توجد طلبات حتى الآن.</p>
+                </div>
+            </div>
+
+            <!-- NEW: Payment Methods Management for Developer -->
+            <div class="max-w-6xl mx-auto mt-12">
+                <h3 class="section-heading text-center mb-8" data-lang-key="devPaymentMethodsHeading">إدارة طرق الدفع</h3>
+                <div class="card p-8">
+                    <form id="paymentMethodForm" class="space-y-4 md:space-y-0 md:flex md:items-end md:gap-4">
+                        <div class="flex-grow">
+                            <label for="bankNameInput" class="block text-sm font-medium" data-lang-key="devBankName">اسم البنك:</label>
+                            <input type="text" id="bankNameInput" placeholder="مثال: بنك الراجحي" class="mt-1 block w-full rounded-md shadow-sm" required>
+                        </div>
+                        <div class="flex-grow">
+                            <label for="ibanInput" class="block text-sm font-medium" data-lang-key="devIban">رقم الآيبان:</label>
+                            <input type="text" id="ibanInput" placeholder="SA..." class="mt-1 block w-full rounded-md shadow-sm" required>
+                        </div>
+                        <div class="flex-grow">
+                            <label for="phoneInput" class="block text-sm font-medium" data-lang-key="devPhoneNumber">رقم الهاتف (اختياري):</label>
+                            <input type="text" id="phoneInput" placeholder="05..." class="mt-1 block w-full rounded-md shadow-sm">
+                        </div>
+                        <button type="submit" class="btn-primary w-full md:w-auto" data-lang-key="devAddBank">إضافة بنك</button>
+                    </form>
+                    <hr class="my-6 border-gray-200 dark:border-gray-600">
+                    <div id="devPaymentMethodsList" class="space-y-4">
+                        <!-- Payment methods will be loaded here by JS -->
+                    </div>
                 </div>
             </div>
         </section>
@@ -703,6 +608,7 @@
 
     <div id="modeIndicator" class="fixed bottom-4 right-4 bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-xs font-semibold z-50">الوضع الفاتح</div>
     <div id="developerModeIndicator" class="hidden">وضع المطور</div>
+    <div id="copyNotification" class="copy-notification"></div>
 
     <script type="module">
         // Firebase Imports
@@ -726,7 +632,7 @@
         let isAuthReady = false;
         let isDeveloperMode = false;
         const DEVELOPER_MODE_SECRET = "Ahmad@2006";
-        const SUPER_SECRET_CODE = "Ahmad@2006"; // The new secret code
+        const SUPER_SECRET_CODE = "Ahmad@2006";
         const IMGBB_API_KEY = "c6af93a30efee65fec6b505a82033875";
         const FORMSPREE_ENDPOINT = "https://formspree.io/f/xrbllnal";
 
@@ -785,15 +691,26 @@
         const orderPreviewImages = document.getElementById('orderPreviewImages');
         const rejectionInfo = document.getElementById('rejectionInfo');
         const rejectionReasonText = document.getElementById('rejectionReasonText');
-        const priceInfo = document.getElementById('priceInfo');
-        const estimatedPriceText = document.getElementById('estimatedPriceText');
-        const finalPriceText = document.getElementById('finalPriceText');
-
+        const invoiceInfo = document.getElementById('invoiceInfo');
+        const receiptSection = document.getElementById('receiptSection');
+        
         // Developer Mode Elements
         const developerDashboard = document.getElementById('developer-dashboard');
         const devOrdersList = document.getElementById('devOrdersList');
         const devLoadingText = document.getElementById('devLoadingText');
         const noOrdersText = document.getElementById('noOrdersText');
+        
+        // Payment Method Elements
+        const paymentMethodForm = document.getElementById('paymentMethodForm');
+        const bankNameInput = document.getElementById('bankNameInput');
+        const ibanInput = document.getElementById('ibanInput');
+        const phoneInput = document.getElementById('phoneInput');
+        const devPaymentMethodsList = document.getElementById('devPaymentMethodsList');
+        const paymentAccordion = document.getElementById('paymentAccordion');
+        const togglePaymentBtn = document.getElementById('togglePaymentBtn');
+        const paymentMethodsContainer = document.getElementById('paymentMethodsContainer');
+        const customerPaymentMethodsList = document.getElementById('customerPaymentMethodsList');
+        const copyNotification = document.getElementById('copyNotification');
         
         let orderFiles = [];
         let userLocation = { latitude: null, longitude: null };
@@ -842,7 +759,13 @@
         
         const translations = {
             ar: {  
-                siteTitle: "خدمتنا - تصميم وتطوير المشاريع", navHome: "الرئيسية", navWhyChooseUs: "لماذا تختارنا؟", navAboutUs: "من نحن؟", navServices: "ماذا نقدم؟", navContact: "تواصل معنا", navComments: "التعليقات", navTrackOrder: "تتبع طلبك", heroTitle: "مصممون جميع أنواع المشاريع والمواقع والتصاميم والبحوث والواجبات", heroDiscount: "خصم 30% لفترة محدودة على كامل الخدمات", heroSubtitle: "نقدم لكم حلولاً متكاملة لتلبية جميع احتياجاتكم الأكاديمية والمهنية", featuresHeading: "لماذا تختارنا؟", feature1Title: "تنسيقات شكل رائعة", feature1Desc: "نقدم العديد من التنسيقات الجمالية التي تبرز عملك.", feature2Title: "تنسيق كلام احترافي", feature2Desc: "تنسيق دقيق للمحتوى في البحوث والمشاريع.", feature3Title: "أكثر من 100 نوع خط", feature3Desc: "اختر من مجموعة واسعة من الخطوط المميزة.", feature4Title: "عروض تقديمية مميزة", feature4Desc: "تصميم عروض بوربوينت جذابة ومبتكرة.", aboutUsHeading: "من نحن؟", aboutUsParagraph1: "نحن فريق متقدم من خريجي جامعة UCSI الماليزية، نجمع بين المعرفة الأكاديمية العميقة والخبرة العملية الواسعة في تصميم وتنفيذ العديد من المشاريع الكبيرة والصغيرة.", servicesHeading: "ماذا نقدم؟", service1Title: "تصميم ثلاثي الأبعاد", service1Desc: "تصميم جميع أنواع القطع ثلاثية الأبعاد على برامج الأوتوكاد وبرامج الطباعة ثلاثية الأبعاد بجميع صيغ الملفات القابلة للطباعة.", service2Title: "عروض تقديمية (بوربوينت)", service2Desc: "تصميم عروض تقديمية على البوربوينت مع كامل التنسيق وإضافة الصور والحركات المرئية.", service3Title: "تنسيق ملفات إكسل", service3Desc: "تصميم وتعديل وتنسيق ملفات إكسل باحترافية عالية.", service4Title: "تصاميم هندسية ومخططات", service4Desc: "تصاميم هندسية، مخططات، كهرباء، وغيرها من الأعمال الهندسية المتخصصة.", service5Title: "كتابة وتنسيق تقارير", service5Desc: "كتابة وتنسيق التقارير على برنامج الوورد بجودة ودقة عالية.", service6Title: "تصميم وتعديل فيديوهات وصور", service6Desc: "تصميم وتعديل الفيديوهات والصور بجودة عالية لتناسب جميع احتياجاتكم.", service7Title: "برمجة وتطوير مواقع الويب", service7Desc: "برمجة مواقع ويب تفاعلية وجمالية باستخدام لغة JavaScript وتنسيق الشكل باستخدام CSS، مع إضافة الموقع على سيرفر وإنشاء رابط خاص به.", 
+                siteTitle: "خدمتنا - تصميم وتطوير المشاريع", navHome: "الرئيسية", navWhyChooseUs: "لماذا تختارنا؟", navAboutUs: "من نحن؟", navServices: "ماذا نقدم؟", navContact: "تواصل معنا", navComments: "التعليقات", navTrackOrder: "تتبع طلبك", heroTitle: "مصممون جميع أنواع المشاريع والمواقع والتصاميم والبحوث والواجبات", heroDiscount: "خصم 30% لفترة محدودة على كامل الخدمات", heroSubtitle: "نقدم لكم حلولاً متكاملة لتلبية جميع احتياجاتكم الأكاديمية والمهنية", featuresHeading: "لماذا تختارنا؟", 
+                feature1Title: "تنسيقات شكل رائعة", feature1Desc: "نقدم العديد من التنسيقات الجمالية التي تبرز عملك.", feature2Title: "تنسيق كلام احترافي", feature2Desc: "تنسيق دقيق للمحتوى في البحوث والمشاريع.", feature3Title: "أكثر من 100 نوع خط", feature3Desc: "اختر من مجموعة واسعة من الخطوط المميزة.", feature4Title: "عروض تقديمية مميزة", feature4Desc: "تصميم عروض بوربوينت جذابة ومبتكرة.",
+                feature5Title: "استجابة سريعة 24/7", feature5Desc: "فريقنا متواجد على مدار الساعة للرد على استفساراتكم وتقديم الدعم الفوري لضمان سير العمل بسلاسة.",
+                feature6Title: "دقة في التنفيذ وتعديلات مرنة", feature6Desc: "نلتزم بأعلى معايير الدقة في تنفيذ المشاريع، مع إتاحة إمكانية التعديل لتلبية توقعاتكم بالكامل.",
+                feature7Title: "أمان وموثوقية", feature7Desc: "نضمن حقوقك بالكامل. لن تدفع أي مبلغ إلا بعد معاينة مشروعك والتأكد من اكتماله بالشكل المطلوب.",
+                feature8Title: "أسعار تنافسية", feature8Desc: "نقدم خدماتنا بأسعار تنافسية ومنخفضة، مع خصم خاص على أول طلب لك معنا لتجربة خدماتنا المميزة.",
+                aboutUsHeading: "من نحن؟", aboutUsParagraph1: "نحن فريق متقدم من خريجي جامعة UCSI الماليزية، نجمع بين المعرفة الأكاديمية العميقة والخبرة العملية الواسعة في تصميم وتنفيذ العديد من المشاريع الكبيرة والصغيرة.", servicesHeading: "ماذا نقدم؟", service1Title: "تصميم ثلاثي الأبعاد", service1Desc: "تصميم جميع أنواع القطع ثلاثية الأبعاد على برامج الأوتوكاد وبرامج الطباعة ثلاثية الأبعاد بجميع صيغ الملفات القابلة للطباعة.", service2Title: "عروض تقديمية (بوربوينت)", service2Desc: "تصميم عروض تقديمية على البوربوينت مع كامل التنسيق وإضافة الصور والحركات المرئية.", service3Title: "تنسيق ملفات إكسل", service3Desc: "تصميم وتعديل وتنسيق ملفات إكسل باحترافية عالية.", service4Title: "تصاميم هندسية ومخططات", service4Desc: "تصاميم هندسية، مخططات، كهرباء، وغيرها من الأعمال الهندسية المتخصصة.", service5Title: "كتابة وتنسيق تقارير", service5Desc: "كتابة وتنسيق التقارير على برنامج الوورد بجودة ودقة عالية.", service6Title: "تصميم وتعديل فيديوهات وصور", service6Desc: "تصميم وتعديل الفيديوهات والصور بجودة عالية لتناسب جميع احتياجاتكم.", service7Title: "برمجة وتطوير مواقع الويب", service7Desc: "برمجة مواقع ويب تفاعلية وجمالية باستخدام لغة JavaScript وتنسيق الشكل باستخدام CSS، مع إضافة الموقع على سيرفر وإنشاء رابط خاص به.", 
                 service8Title: "تصميم السيرة الذاتية (CV)", service8Desc: "نصمم لك سيرة ذاتية عصرية وجذابة تبرز مهاراتك وخبراتك بأفضل طريقة، مع التركيز على متطلبات سوق العمل لزيادة فرصك في الحصول على الوظيفة.",
                 service9Title: "كتابة خطاب التقديم", service9Desc: "نساعدك في صياغة خطاب تقديم مقنع وموجه بشكل خاص للوظيفة والشركة المستهدفة، مما يترك انطباعًا قويًا لدى مسؤولي التوظيف.",
                 service10Title: "إعداد مشاريع التخرج", service10Desc: "نقدم الدعم الكامل في إعداد مشاريع التخرج للبكالوريوس والماجستير، بدءًا من اختيار الفكرة، مرورًا بالبحث، وانتهاءً بالكتابة والتنسيق النهائي وفقًا للمعايير الأكاديمية.",
@@ -852,11 +775,24 @@
                 orderNowBtn: "اطلب الآن", orderFormTitle: "نموذج طلب خدمة", orderNameLabel: "الاسم الكامل:", orderNamePlaceholder: "الاسم الكامل", orderEmailLabel: "البريد الإلكتروني:", orderEmailPlaceholder: "yourname@example.com", orderPhoneLabel: "رقم الهاتف:", orderPhonePlaceholder: "+966 50 123 4567", orderServiceLabel: "نوع الخدمة المطلوبة:", orderServiceSelect: "اختر خدمة...", orderServiceOther: "أخرى...", orderServiceOtherLabel: "الرجاء تحديد الخدمة المطلوبة:", orderServiceOtherPlaceholder: "اكتب الخدمة المخصصة هنا...", orderMessageLabel: "تفاصيل المشروع:", orderMessagePlaceholder: "اشرح متطلبات مشروعك بالتفصيل...", orderFilesLabel: "إضافة صور (اختياري):", orderSubmitBtn: "تقديم الطلب", orderSuccess: "تم استلام طلبك بنجاح!", orderIdMessage: "الرجاء الاحتفاظ برقم طلبك لتتبع حالته:", orderError: "حدث خطأ أثناء إرسال طلبك. الرجاء المحاولة مرة أخرى.", locationUnavailable: "الموقع غير متوفر", orderSubmitting: "جاري تقديم الطلب...",
                 navTrackOrder: "تتبع طلبك", trackOrderHeading: "تتبع طلبك", trackOrderSubtitle: "أدخل رقم طلبك المكون من 6 أرقام لتتبع حالته.", trackOrderInputPlaceholder: "أدخل رقم الطلب هنا...", trackOrderBtn: "تتبع", orderStatusTitle: "حالة الطلب:", status0: "مرفوض", status1: "بانتظار الموافقة", status2: "قيد التنفيذ", status3: "معاينة المشروع", status4: "بانتظار الدفع", status5: "اكتمل", orderNotFound: "لم يتم العثور على طلب بهذا الرقم.", orderTrackError: "حدث خطأ أثناء تتبع الطلب. الرجاء المحاولة مرة أخرى.", orderPreviewImagesTitle: "صور معاينة للمشروع:",
                 devDashboardHeading: "لوحة تحكم المطور", devLoading: "جاري تحميل الطلبات...", devOrderId: "رقم الطلب:", devOrderUser: "العميل:", devOrderStatus: "الحالة:", devActions: "الإجراءات:", devUpdateStatus: "تحديث الحالة", devUploadImages: "رفع صور", devImagesLabel: "صور المعاينة:", devNoImages: "لا توجد صور معاينة بعد.", devOrderDate: "تاريخ الطلب:",
-                devRejectOrder: "رفض الطلب", devSavePrices: "حفظ الأسعار", devEstimatedPrice: "السعر التقديري", devFinalPrice: "السعر النهائي", devCurrency: "العملة", devRejectionReasonPrompt: "الرجاء إدخال سبب الرفض (اختياري):", orderRejected: "تم رفض طلبك", orderRejectedReason: "السبب:", estimatedPriceLabel: "السعر التقديري:", finalPriceLabel: "السعر النهائي:", pricesUpdatedSuccess: "تم تحديث الأسعار بنجاح!", pricesUpdatedError: "فشل تحديث الأسعار.", orderRejectedSuccess: "تم رفض الطلب بنجاح.", orderRejectedError: "فشل رفض الطلب.", devDeleteOrder: "حذف الطلب", alertDeleteOrderConfirm: "هل أنت متأكد أنك تريد حذف هذا الطلب؟ سيتم حذفه نهائياً.", alertDeleteOrderSuccess: "تم حذف الطلب بنجاح.", alertDeleteOrderError: "فشل حذف الطلب.",
-                alertDeveloperModePrompt: "الرجاء إدخال الرمز السري للمطور.", promptSuperSecret: "الرجاء إدخال الرمز السري الخاص لإنشاء رمز جديد.", alertWrongSuperSecret: "الرمز السري الخاص غير صحيح.", oneTimeCodeGenerated: "تم إنشاء رمز الدخول لمرة واحدة:", alertOneTimeCodeError: "حدث خطأ أثناء إنشاء الرمز.", alertInvalidOrUsedCode: "الرمز المدخل غير صالح أو تم استخدامه مسبقًا.", alertWrongDevCode: "الرمز المدخل غير صحيح."
+                devRejectOrder: "رفض الطلب", devSavePrices: "حفظ الأسعار", devEstimatedPrice: "السعر التقديري", devFinalPrice: "السعر النهائي", devCurrency: "العملة", devRejectionReasonPrompt: "الرجاء إدخال سبب الرفض (اختياري):", orderRejected: "تم رفض طلبك", orderRejectedReason: "السبب:", 
+                invoiceSubtotal: "المبلغ", invoiceDiscount: "الخصم", invoiceDiscountValue: "قيمة الخصم", invoiceTotal: "المبلغ الإجمالي",
+                pricesUpdatedSuccess: "تم تحديث الأسعار بنجاح!", pricesUpdatedError: "فشل تحديث الأسعار.", orderRejectedSuccess: "تم رفض الطلب بنجاح.", orderRejectedError: "فشل رفض الطلب.", devDeleteOrder: "حذف الطلب", alertDeleteOrderConfirm: "هل أنت متأكد أنك تريد حذف هذا الطلب؟ سيتم حذفه نهائياً.", alertDeleteOrderSuccess: "تم حذف الطلب بنجاح.", alertDeleteOrderError: "فشل حذف الطلب.",
+                alertDeveloperModePrompt: "الرجاء إدخال الرمز السري للمطور.", promptSuperSecret: "الرجاء إدخال الرمز السري الخاص لإنشاء رمز جديد.", alertWrongSuperSecret: "الرمز السري الخاص غير صحيح.", oneTimeCodeGenerated: "تم إنشاء رمز الدخول المؤقت:", alertOneTimeCodeError: "حدث خطأ أثناء إنشاء الرمز.", alertInvalidOrUsedCode: "الرمز المدخل غير صالح أو منتهي الصلاحية.", alertWrongDevCode: "الرمز المدخل غير صحيح.",
+                devPaymentMethodsHeading: "إدارة طرق الدفع", devBankName: "اسم البنك:", devIban: "رقم الآيبان:", devPhoneNumber: "رقم الهاتف (اختياري):", devAddBank: "إضافة بنك", paymentOptionsTitle: "خيارات الدفع المتاحة", paymentInstruction: "الرجاء تحويل المبلغ المطلوب إلى أحد الحسابات التالية وارفاق الايصال للمتابعة:", ibanCopied: "تم نسخ الآيبان بنجاح!", copyIban: "نسخ الآيبان", deleteBankConfirm: "هل أنت متأكد أنك تريد حذف هذا البنك؟", bankAddedSuccess: "تمت إضافة البنك بنجاح.", bankAddError: "خطأ في إضافة البنك.", bankDeleteSuccess: "تم حذف البنك بنجاح.", bankDeleteError: "خطأ في حذف البنك.",
+                alertFirebaseInitError: "حدث خطأ أثناء الاتصال بقاعدة البيانات. الرجاء تحديث الصفحة والمحاولة مرة أخرى.", devDiscountLabel: "الخصم (%):", devPaidVia: "تم الدفع عبر:", devSelectBank: "اختر البنك...",
+                alertDeletePreviewImageConfirm: "هل أنت متأكد أنك تريد حذف هذه الصورة؟", alertDeletePreviewImageSuccess: "تم حذف الصورة بنجاح.", alertDeletePreviewImageError: "حدث خطأ أثناء حذف الصورة.",
+                receiptTitle: "إيصال الدفع", receiptUploadPrompt: "الرجاء إرفاق صورة إيصال الدفع.", receiptUploadBtn: "رفع الإيصال", receiptChangeBtn: "تغيير الإيصال", receiptUploading: "جاري رفع الإيصال...", receiptUploadSuccess: "تم رفع الإيصال بنجاح!", receiptUploadError: "فشل رفع الإيصال.",
+                devAssignedTo: "مسؤول المشروع:", devSave: "حفظ", devAssignedToUpdated: "تم تحديث مسؤول المشروع."
             },
             en: {  
-                siteTitle: "Our Services - Project Design & Development", navHome: "Home", navWhyChooseUs: "Why Choose Us?", navAboutUs: "About Us", navServices: "What We Offer?", navContact: "Contact Us", navComments: "Comments", navTrackOrder: "Track Your Order", heroTitle: "Designers of all types of projects, websites, designs, research, and assignments", heroDiscount: "30% discount for a limited time on all services", heroSubtitle: "We offer integrated solutions to meet all your academic and professional needs", featuresHeading: "Why Choose Us?", feature1Title: "Excellent Visual Formats", feature1Desc: "We provide many aesthetic formats that highlight your work.", feature2Title: "Professional Text Formatting", feature2Desc: "Precise content formatting for research and projects.", feature3Title: "Over 100 Font Types", feature3Desc: "Choose from a wide range of distinctive fonts.", feature4Title: "Outstanding Presentations", feature4Desc: "Designing attractive and innovative PowerPoint presentations.", aboutUsHeading: "Who Are We?", aboutUsParagraph1: "We are an advanced team of UCSI Malaysian University graduates, combining deep academic knowledge with extensive practical experience in designing and implementing many large and small projects.", servicesHeading: "What We Offer?", service1Title: "3D Design", service1Desc: "Designing all types of 3D parts on AutoCAD and 3D printing software in all printable file formats.", service2Title: "Presentations (PowerPoint)", service2Desc: "Designing PowerPoint presentations with full formatting and adding images and visual effects.", service3Title: "Excel File Formatting", service3Desc: "Designing, modifying, and formatting Excel files with high professionalism.", service4Title: "Engineering Designs & Plans", service4Desc: "Engineering designs, plans, electrical works, and other specialized engineering works.", service5Title: "Report Writing & Formatting", service5Desc: "Writing and formatting reports in Word with high quality and accuracy.", service6Title: "Video & Photo Design/Editing", service6Desc: "Designing and editing videos and photos with high quality to suit all your needs.", service7Title: "Web Programming & Development", service7Desc: "Programming interactive and aesthetic websites using JavaScript and styling with CSS, including hosting the site on a server and creating a dedicated link.",
+                siteTitle: "Our Services - Project Design & Development", navHome: "Home", navWhyChooseUs: "Why Choose Us?", navAboutUs: "About Us", navServices: "What We Offer?", navContact: "Contact Us", navComments: "Comments", navTrackOrder: "Track Your Order", heroTitle: "Designers of all types of projects, websites, designs, research, and assignments", heroDiscount: "30% discount for a limited time on all services", heroSubtitle: "We offer integrated solutions to meet all your academic and professional needs", featuresHeading: "Why Choose Us?", 
+                feature1Title: "Excellent Visual Formats", feature1Desc: "We provide many aesthetic formats that highlight your work.", feature2Title: "Professional Text Formatting", feature2Desc: "Precise content formatting for research and projects.", feature3Title: "Over 100 Font Types", feature3Desc: "Choose from a wide range of distinctive fonts.", feature4Title: "Outstanding Presentations", feature4Desc: "Designing attractive and innovative PowerPoint presentations.",
+                feature5Title: "24/7 Fast Response", feature5Desc: "Our team is available around the clock to answer your inquiries and provide immediate support to ensure smooth workflow.",
+                feature6Title: "Precision & Flexible Edits", feature6Desc: "We adhere to the highest standards of precision in project execution, with the flexibility for modifications to fully meet your expectations.",
+                feature7Title: "Security & Reliability", feature7Desc: "Your rights are fully guaranteed. You won't pay anything until you preview your project and confirm its completion as required.",
+                feature8Title: "Competitive Prices", feature8Desc: "We offer our services at competitive and low prices, with a special discount on your first order to experience our premium services.",
+                aboutUsHeading: "Who Are We?", aboutUsParagraph1: "We are an advanced team of UCSI Malaysian University graduates, combining deep academic knowledge with extensive practical experience in designing and implementing many large and small projects.", servicesHeading: "What We Offer?", service1Title: "3D Design", service1Desc: "Designing all types of 3D parts on AutoCAD and 3D printing software in all printable file formats.", service2Title: "Presentations (PowerPoint)", service2Desc: "Designing PowerPoint presentations with full formatting and adding images and visual effects.", service3Title: "Excel File Formatting", service3Desc: "Designing, modifying, and formatting Excel files with high professionalism.", service4Title: "Engineering Designs & Plans", service4Desc: "Engineering designs, plans, electrical works, and other specialized engineering works.", service5Title: "Report Writing & Formatting", service5Desc: "Writing and formatting reports in Word with high quality and accuracy.", service6Title: "Video & Photo Design/Editing", service6Desc: "Designing and editing videos and photos with high quality to suit all your needs.", service7Title: "Web Programming & Development", service7Desc: "Programming interactive and aesthetic websites using JavaScript and styling with CSS, including hosting the site on a server and creating a dedicated link.",
                 service8Title: "Professional CV/Resume Design", service8Desc: "We design a modern, attractive CV that best highlights your skills and experience, focusing on job market requirements to increase your opportunities.",
                 service9Title: "Custom Cover Letter Writing", service9Desc: "We help you craft a persuasive cover letter tailored to the specific job and company, making a strong impression on hiring managers.",
                 service10Title: "Graduation Project Preparation", service10Desc: "We offer full support for bachelor's and master's graduation projects, from idea selection and research to final writing and formatting according to academic standards.",
@@ -866,11 +802,24 @@
                 orderNowBtn: "Order Now", orderFormTitle: "Service Request Form", orderNameLabel: "Full Name:", orderNamePlaceholder: "Full Name", orderEmailLabel: "Email Address:", orderEmailPlaceholder: "yourname@example.com", orderPhoneLabel: "Phone Number:", orderPhonePlaceholder: "+966 50 123 4567", orderServiceLabel: "Requested Service:", orderServiceSelect: "Select a service...", orderServiceOther: "Other...", orderServiceOtherLabel: "Please specify the requested service:", orderServiceOtherPlaceholder: "Write your custom service here...", orderMessageLabel: "Project Details:", orderMessagePlaceholder: "Explain your project requirements in detail...", orderFilesLabel: "Add images (optional):", orderSubmitBtn: "Submit Request", orderSuccess: "Thank you! Your request has been received successfully.", orderIdMessage: "Please save your order ID to track its status:", orderError: "An error occurred while submitting your request. Please try again.", locationUnavailable: "Location unavailable", orderSubmitting: "Submitting order...",
                 navTrackOrder: "Track Your Order", trackOrderHeading: "Track Your Order", trackOrderSubtitle: "Enter your 6-digit order ID to check its status.", trackOrderInputPlaceholder: "Enter Order ID here...", trackOrderBtn: "Track", orderStatusTitle: "Order Status:", status0: "Rejected", status1: "Awaiting Approval", status2: "In Progress", status3: "Project Preview", status4: "Awaiting Payment", status5: "Completed", orderNotFound: "Order with this ID was not found.", orderTrackError: "An error occurred while tracking the order. Please try again.", orderPreviewImagesTitle: "Project Preview Images:",
                 devDashboardHeading: "Developer Dashboard", devLoading: "Loading orders...", noOrders: "No orders have been placed yet.", devOrderId: "Order ID:", devOrderUser: "Client:", devOrderStatus: "Status:", devActions: "Actions:", devUpdateStatus: "Update Status", devUploadImages: "Upload Images", devImagesLabel: "Preview Images:", devNoImages: "No preview images yet.", devOrderDate: "Order Date:",
-                devRejectOrder: "Reject Order", devSavePrices: "Save Prices", devEstimatedPrice: "Est. Price", devFinalPrice: "Final Price", devCurrency: "Currency", devRejectionReasonPrompt: "Please enter the reason for rejection (optional):", orderRejected: "Your order has been rejected", orderRejectedReason: "Reason:", estimatedPriceLabel: "Estimated Price:", finalPriceLabel: "Final Price:", pricesUpdatedSuccess: "Prices updated successfully!", pricesUpdatedError: "Failed to update prices.", orderRejectedSuccess: "Order rejected successfully.", orderRejectedError: "Failed to reject order.", devDeleteOrder: "Delete Order", alertDeleteOrderConfirm: "Are you sure you want to delete this order? This action is permanent.", alertDeleteOrderSuccess: "Order deleted successfully.", alertDeleteOrderError: "Failed to delete order.",
-                alertDeveloperModePrompt: "Please enter the developer secret code.", promptSuperSecret: "Please enter the super secret code to generate a new code.", alertWrongSuperSecret: "Incorrect super secret code.", oneTimeCodeGenerated: "Your one-time access code is:", alertOneTimeCodeError: "Error generating the code.", alertInvalidOrUsedCode: "The entered code is invalid or has already been used.", alertWrongDevCode: "The entered code is incorrect."
+                devRejectOrder: "Reject Order", devSavePrices: "Save Prices", devEstimatedPrice: "Est. Price", devFinalPrice: "Final Price", devCurrency: "Currency", devRejectionReasonPrompt: "Please enter the reason for rejection (optional):", orderRejected: "Your order has been rejected", orderRejectedReason: "Reason:",
+                invoiceSubtotal: "Subtotal", invoiceDiscount: "Discount", invoiceDiscountValue: "Discount Value", invoiceTotal: "Total Amount",
+                pricesUpdatedSuccess: "Prices updated successfully!", pricesUpdatedError: "Failed to update prices.", orderRejectedSuccess: "Order rejected successfully.", orderRejectedError: "Failed to reject order.", devDeleteOrder: "Delete Order", alertDeleteOrderConfirm: "Are you sure you want to delete this order? This action is permanent.", alertDeleteOrderSuccess: "Order deleted successfully.", alertDeleteOrderError: "Failed to delete order.",
+                alertDeveloperModePrompt: "Please enter the developer secret code.", promptSuperSecret: "Please enter the super secret code to generate a new code.", alertWrongSuperSecret: "Incorrect super secret code.", oneTimeCodeGenerated: "Your temporary access code is:", alertOneTimeCodeError: "Error generating the code.", alertInvalidOrUsedCode: "The entered code is invalid or has expired.", alertWrongDevCode: "The entered code is incorrect.",
+                devPaymentMethodsHeading: "Manage Payment Methods", devBankName: "Bank Name:", devIban: "IBAN:", devPhoneNumber: "Phone Number (Optional):", devAddBank: "Add Bank", paymentOptionsTitle: "Available Payment Options", paymentInstruction: "Please transfer the required amount to one of the following accounts and attach the receipt to proceed:", ibanCopied: "IBAN copied successfully!", copyIban: "Copy IBAN", deleteBankConfirm: "Are you sure you want to delete this bank?", bankAddedSuccess: "Bank added successfully.", bankAddError: "Error adding bank.", bankDeleteSuccess: "Bank deleted successfully.", bankDeleteError: "Error deleting bank.",
+                alertFirebaseInitError: "Error connecting to the database. Please refresh the page and try again.", devDiscountLabel: "Discount (%):", devPaidVia: "Paid Via:", devSelectBank: "Select Bank...",
+                alertDeletePreviewImageConfirm: "Are you sure you want to delete this image?", alertDeletePreviewImageSuccess: "Image deleted successfully.", alertDeletePreviewImageError: "Error deleting image.",
+                receiptTitle: "Payment Receipt", receiptUploadPrompt: "Please attach the payment receipt image.", receiptUploadBtn: "Upload Receipt", receiptChangeBtn: "Change Receipt", receiptUploading: "Uploading receipt...", receiptUploadSuccess: "Receipt uploaded successfully!", receiptUploadError: "Failed to upload receipt.",
+                devAssignedTo: "Assigned To:", devSave: "Save", devAssignedToUpdated: "Project assignee updated."
             },
             zh: {
-                siteTitle: "我们的服务 - 项目设计与开发", navHome: "主页", navWhyChooseUs: "为什么选择我们？", navAboutUs: "关于我们", navServices: "我们提供什么？", navContact: "联系我们", navComments: "评论", navTrackOrder: "追踪您的订单", heroTitle: "各种项目、网站、设计、研究和作业的设计者", heroDiscount: "所有服务限时30%折扣", heroSubtitle: "我们提供全面的解决方案，满足您所有的学术和专业需求", featuresHeading: "为什么选择我们？", feature1Title: "出色的视觉格式", feature1Desc: "我们提供多种美观的格式，突出您的作品。", feature2Title: "专业的文本排版", feature2Desc: "为研究和项目提供精确的内容排版。", feature3Title: "超过100种字体", feature3Desc: "从多种独特的字体中进行选择。", feature4Title: "出色的演示文稿", feature4Desc: "设计引人入胜、富有创意的PowerPoint演示文稿。", aboutUsHeading: "我们是谁？", aboutUsParagraph1: "我们是一支由马来西亚UCSI大学毕业生组成的优秀团队，将深厚的学术知识与广泛的项目设计和实施实践经验相结合。", servicesHeading: "我们提供什么？", service1Title: "3D设计", service1Desc: "使用AutoCAD和3D打印软件设计各种类型的3D部件，支持所有可打印文件格式。", service2Title: "演示文稿 (PowerPoint)", service2Desc: "设计带有完整格式、图像和视觉效果的PowerPoint演示文稿。", service3Title: "Excel文件排版", service3Desc: "以高专业水平设计、修改和排版Excel文件。", service4Title: "工程设计与图纸", service4Desc: "工程设计、平面图、电气工程以及其他专业工程作业。", service5Title: "报告撰写与排版", service5Desc: "以高质量和高准确度撰写和排版Word报告。", service6Title: "视频与照片设计/编辑", service6Desc: "设计和编辑高质量的视频和照片，以满足您的所有需求。", service7Title: "网站编程与开发", service7Desc: "使用JavaScript编程交互式和美观的网站，使用CSS进行样式设计，并托管在服务器上并创建专用链接。",
+                siteTitle: "我们的服务 - 项目设计与开发", navHome: "主页", navWhyChooseUs: "为什么选择我们？", navAboutUs: "关于我们", navServices: "我们提供什么？", navContact: "联系我们", navComments: "评论", navTrackOrder: "追踪您的订单", heroTitle: "各种项目、网站、设计、研究和作业的设计者", heroDiscount: "所有服务限时30%折扣", heroSubtitle: "我们提供全面的解决方案，满足您所有的学术和专业需求", featuresHeading: "为什么选择我们？", 
+                feature1Title: "出色的视觉格式", feature1Desc: "我们提供多种美观的格式，突出您的作品。", feature2Title: "专业的文本排版", feature2Desc: "为研究和项目提供精确的内容排版。", feature3Title: "超过100种字体", feature3Desc: "从多种独特的字体中进行选择。", feature4Title: "出色的演示文稿", feature4Desc: "设计引人入胜、富有创意的PowerPoint演示文稿。",
+                feature5Title: "24/7 快速响应", feature5Desc: "我们的团队全天候为您解答疑问，并提供即时支持，确保工作流程顺畅。",
+                feature6Title: "精确执行与灵活修改", feature6Desc: "我们坚持最高的项目执行精度标准，并提供灵活的修改选项，以完全满足您的期望。",
+                feature7Title: "安全与可靠", feature7Desc: "您的权利得到充分保障。在您预览项目并确认其按要求完成后，才需支付任何费用。",
+                feature8Title: "有竞争力的价格", feature8Desc: "我们以具有竞争力的低价提供服务，并为您的第一份订单提供特别折扣，让您体验我们的优质服务。",
+                aboutUsHeading: "我们是谁？", aboutUsParagraph1: "我们是一支由马来西亚UCSI大学毕业生组成的优秀团队，将深厚的学术知识与广泛的项目设计和实施实践经验相结合。", servicesHeading: "我们提供什么？", service1Title: "3D设计", service1Desc: "使用AutoCAD和3D打印软件设计各种类型的3D部件，支持所有可打印文件格式。", service2Title: "演示文稿 (PowerPoint)", service2Desc: "设计带有完整格式、图像和视觉效果的PowerPoint演示文稿。", service3Title: "Excel文件排版", service3Desc: "以高专业水平设计、修改和排版Excel文件。", service4Title: "工程设计与图纸", service4Desc: "工程设计、平面图、电气工程以及其他专业工程作业。", service5Title: "报告撰写与排版", service5Desc: "以高质量和高准确度撰写和排版Word报告。", service6Title: "视频与照片设计/编辑", service6Desc: "设计和编辑高质量的视频和照片，以满足您的所有需求。", service7Title: "网站编程与开发", service7Desc: "使用JavaScript编程交互式和美观的网站，使用CSS进行样式设计，并托管在服务器上并创建专用链接。",
                 service8Title: "专业简历 (CV) 设计", service8Desc: "我们为您设计一份现代化且吸引人的简历，以最佳方式突出您的技能和经验，专注于满足就业市场要求，增加您获得工作的机会。",
                 service9Title: "定制求职信 (Cover Letter) 撰写", service9Desc: "我们帮助您撰写一封有说服力的求职信，专门针对目标职位和公司，给招聘经理留下深刻印象。",
                 service10Title: "毕业项目准备", service10Desc: "我们为学士和硕士的毕业项目提供全面支持，从选题、研究到根据学术标准进行最终撰写和排版。",
@@ -880,8 +829,15 @@
                 orderNowBtn: "立即下单", orderFormTitle: "服务请求表", orderNameLabel: "全名：", orderNamePlaceholder: "全名", orderEmailLabel: "电子邮件地址：", orderEmailPlaceholder: "yourname@example.com", orderPhoneLabel: "电话号码：", orderPhonePlaceholder: "+966 50 123 4567", orderServiceLabel: "所需服务：", orderServiceSelect: "选择一项服务...", orderServiceOther: "其他...", orderServiceOtherLabel: "请指定所需的服务：", orderServiceOtherPlaceholder: "在此处写下您的自定义服务...", orderMessageLabel: "项目详情：", orderMessagePlaceholder: "详细解释您的项目要求...", orderFilesLabel: "添加图片（可选）：", orderSubmitBtn: "提交申请", orderSuccess: "谢谢！您的请求已成功接收。", orderIdMessage: "请保存您的订单号以跟踪其状态：", orderError: "提交请求时出错。请重试。", locationUnavailable: "位置不可用", orderSubmitting: "正在提交订单...",
                 navTrackOrder: "追踪您的订单", trackOrderHeading: "追踪您的订单", trackOrderSubtitle: "输入您的6位订单号以查看其状态。", trackOrderInputPlaceholder: "在此处输入订单号...", trackOrderBtn: "追踪", orderStatusTitle: "订单状态：", status0: "已拒绝", status1: "等待批准", status2: "处理中", status3: "项目预览", status4: "等待付款", status5: "已完成", orderNotFound: "未找到该订单号的订单。", orderTrackError: "追踪订单时出错。请重试。", orderPreviewImagesTitle: "项目预览图片：",
                 devDashboardHeading: "开发者面板", devLoading: "正在加载订单...", noOrders: "尚未下订单。", devOrderId: "订单号：", devOrderUser: "客户：", devOrderStatus: "状态：", devActions: "操作：", devUpdateStatus: "更新状态", devUploadImages: "上传图片", devImagesLabel: "预览图片：", devNoImages: "暂无预览图片。", devOrderDate: "下单日期：",
-                devRejectOrder: "拒绝订单", devSavePrices: "保存价格", devEstimatedPrice: "估价", devFinalPrice: "最终价格", devCurrency: "货币", devRejectionReasonPrompt: "请输入拒绝原因（可选）：", orderRejected: "您的订单已被拒绝", orderRejectedReason: "原因：", estimatedPriceLabel: "估价：", finalPriceLabel: "最终价格：", pricesUpdatedSuccess: "价格更新成功！", pricesUpdatedError: "价格更新失败。", orderRejectedSuccess: "订单拒绝成功。", orderRejectedError: "拒绝订单失败。", devDeleteOrder: "删除订单", alertDeleteOrderConfirm: "您确定要删除此订单吗？此操作是永久性的。", alertDeleteOrderSuccess: "订单已成功删除。", alertDeleteOrderError: "删除订单失败。",
-                alertDeveloperModePrompt: "请输入开发者密码。", promptSuperSecret: "请输入超级密码以生成新代码。", alertWrongSuperSecret: "超级密码不正确。", oneTimeCodeGenerated: "您的一次性访问代码是：", alertOneTimeCodeError: "生成代码时出错。", alertInvalidOrUsedCode: "输入的代码无效或已被使用。", alertWrongDevCode: "输入的代码不正确。"
+                devRejectOrder: "拒绝订单", devSavePrices: "保存价格", devEstimatedPrice: "估价", devFinalPrice: "最终价格", devCurrency: "货币", devRejectionReasonPrompt: "请输入拒绝原因（可选）：", orderRejected: "您的订单已被拒绝", orderRejectedReason: "原因：",
+                invoiceSubtotal: "小计", invoiceDiscount: "折扣", invoiceDiscountValue: "折扣金额", invoiceTotal: "总金额",
+                pricesUpdatedSuccess: "价格更新成功！", pricesUpdatedError: "价格更新失败。", orderRejectedSuccess: "订单拒绝成功。", orderRejectedError: "拒绝订单失败。", devDeleteOrder: "删除订单", alertDeleteOrderConfirm: "您确定要删除此订单吗？此操作是永久性的。", alertDeleteOrderSuccess: "订单已成功删除。", alertDeleteOrderError: "删除订单失败。",
+                alertDeveloperModePrompt: "请输入开发者密码。", promptSuperSecret: "请输入超级密码以生成新代码。", alertWrongSuperSecret: "超级密码不正确。", oneTimeCodeGenerated: "您的一次性访问代码是：", alertOneTimeCodeError: "生成代码时出错。", alertInvalidOrUsedCode: "输入的代码无效或已过期。", alertWrongDevCode: "输入的代码不正确。",
+                devPaymentMethodsHeading: "管理支付方式", devBankName: "银行名称:", devIban: "IBAN:", devPhoneNumber: "电话号码 (可选):", devAddBank: "添加银行", paymentOptionsTitle: "可用支付选项", paymentInstruction: "请将所需金额转入以下账户之一，并附上收据以便继续操作:", ibanCopied: "IBAN 已成功复制!", copyIban: "复制 IBAN", deleteBankConfirm: "您确定要删除这家银行吗？", bankAddedSuccess: "银行添加成功。", bankAddError: "添加银行时出错。", bankDeleteSuccess: "银行删除成功。", bankDeleteError: "删除银行时出错。",
+                alertFirebaseInitError: "连接数据库时出错。请刷新页面再试。", devDiscountLabel: "折扣 (%):", devPaidVia: "支付方式:", devSelectBank: "选择银行...",
+                alertDeletePreviewImageConfirm: "您确定要删除此图片吗？", alertDeletePreviewImageSuccess: "图片已成功删除。", alertDeletePreviewImageError: "删除图片时出错。",
+                receiptTitle: "付款收据", receiptUploadPrompt: "请附上付款收据图片。", receiptUploadBtn: "上传收据", receiptChangeBtn: "更改收据", receiptUploading: "正在上传收据...", receiptUploadSuccess: "收据上传成功！", receiptUploadError: "上传收据失败。",
+                devAssignedTo: "项目负责人:", devSave: "保存", devAssignedToUpdated: "项目负责人已更新。"
             }
         };
 
@@ -946,7 +902,6 @@
             });
 
             const serviceOptions = orderServiceSelect.options;
-            // UPDATED to include new services
             const serviceTitles = ['orderServiceSelect', 'service1Title', 'service2Title', 'service3Title', 'service4Title', 'service5Title', 'service6Title', 'service7Title', 'service8Title', 'service9Title', 'service10Title', 'service11Title', 'service12Title', 'orderServiceOther'];
             serviceTitles.forEach((key, index) => {
                 if (serviceOptions[index]) {
@@ -968,7 +923,6 @@
         function showAlert(messageKey, type = 'alert', options = {}) {
             const { onConfirm, promptInput = null } = options;
             
-            // Handle cases where a full message is passed instead of a key
             let messageText = translations[currentLang][messageKey] || messageKey;
             if (options.extraText) {
                 messageText += ` ${options.extraText}`;
@@ -982,9 +936,6 @@
                 const input = document.createElement('input');
                 input.type = promptInput.type || 'text';
                 input.id = 'promptInput';
-                // The original code was adding Tailwind classes here, which is fine,
-                // but we've added a global CSS rule for #promptInput now,
-                // so we can simplify this. We'll keep the layout classes.
                 input.className = 'mt-4 block w-full rounded-md shadow-sm p-2';
                 input.placeholder = promptInput.placeholder || '';
                 customAlertInputs.appendChild(input);
@@ -1160,7 +1111,7 @@
                     } catch (err) {
                         console.error("Image upload failed:", err);
                         showAlert("imageUploadError");
-                        return; // Stop submission if image upload fails
+                        return;
                     }
                 }
 
@@ -1337,7 +1288,6 @@
             }, (error) => console.error("Error listening to comments:", error));
         }
         
-        // NEW: Developer Mode Logic
         let footerClickCount = 0, lastFooterClickTime = 0;
         let devModeExtraClickCount = 0, lastDevModeExtraClickTime = 0;
 
@@ -1348,6 +1298,7 @@
             updateDeveloperModeIndicatorText();
             loadComments();
             loadDevOrders();
+            loadPaymentMethods(); // Load payment methods for dev
         }
 
         function promptForDeveloperMode() {
@@ -1355,34 +1306,29 @@
                 promptInput: { type: 'password', placeholder: 'Secret Code...' },
                 onConfirm: async (confirmed, value) => {
                     if (!confirmed || !value) return;
-
-                    // 1. Check main secret
                     if (value === DEVELOPER_MODE_SECRET) {
                         enableDeveloperMode();
                         return;
                     }
-
-                    // 2. Check for one-time code
                     if (/^\d{6}$/.test(value)) {
                         const codesRef = collection(db, `artifacts/${appId}/public/data/oneTimeDevCodes`);
-                        const q = query(codesRef, where("code", "==", value), where("used", "==", false));
-                        
+                        const q = query(codesRef, where("code", "==", value));
                         try {
                             const querySnapshot = await getDocs(q);
                             if (!querySnapshot.empty) {
                                 const codeDoc = querySnapshot.docs[0];
-                                await updateDoc(doc(db, `artifacts/${appId}/public/data/oneTimeDevCodes`, codeDoc.id), {
-                                    used: true,
-                                    usedAt: serverTimestamp(),
-                                    usedBy: userId
-                                });
-                                enableDeveloperMode();
+                                const expiry = codeDoc.data().expiresAt.toDate();
+                                if (new Date() < expiry) {
+                                    enableDeveloperMode();
+                                } else {
+                                    showAlert("alertInvalidOrUsedCode");
+                                }
                             } else {
-                                showAlert("alertInvalidOrUsedCode");
+                                showAlert("alertWrongDevCode");
                             }
                         } catch (err) {
                             console.error("Error verifying one-time code:", err);
-                            showAlert("alertInvalidOrUsedCode");
+                            showAlert("alertWrongDevCode");
                         }
                     } else {
                         showAlert("alertWrongDevCode");
@@ -1397,8 +1343,8 @@
                 const codesCollection = collection(db, `artifacts/${appId}/public/data/oneTimeDevCodes`);
                 await addDoc(codesCollection, {
                     code: oneTimeCode,
-                    used: false,
-                    createdAt: serverTimestamp()
+                    createdAt: serverTimestamp(),
+                    expiresAt: new Date(Date.now() + 60 * 60 * 1000) // Expires in 1 hour
                 });
                 showAlert("oneTimeCodeGenerated", 'alert', { extraText: oneTimeCode });
             } catch (error) {
@@ -1425,7 +1371,6 @@
         footerCopyright.addEventListener('click', () => {
             const now = Date.now();
             if (isDeveloperMode) {
-                // Logic for generating one-time code when already in dev mode
                 if (now - lastDevModeExtraClickTime < 5000) {
                     devModeExtraClickCount++;
                 } else {
@@ -1438,14 +1383,13 @@
                     promptForSuperSecretCode();
                 }
             } else {
-                // Existing logic for entering developer mode
                 if (now - lastFooterClickTime < 3000) {
                     footerClickCount++;
                 } else {
                     footerClickCount = 1;
                 }
                 lastFooterClickTime = now;
-                if (footerClickCount === 5) {
+                if (footerClickCount === 8) { // Changed from 5 to 8
                     footerClickCount = 0;
                     promptForDeveloperMode();
                 }
@@ -1470,7 +1414,6 @@
         };
         fullImageModal.addEventListener('click', () => fullImageModal.classList.remove('active'));
 
-        // Order Form Logic
         function showOrderModal() {
             orderModal.classList.add('active');
             getGeolocation().then(loc => userLocation = loc);
@@ -1494,11 +1437,9 @@
         orderModal.addEventListener('click', (e) => { if (e.target === orderModal) hideOrderModal(); });
         closeOrderSubmittedModal.addEventListener('click', () => orderSubmittedModal.classList.add('hidden'));
 
-        // UPDATED: Logic for showing/hiding "other service" field
         orderServiceSelect.addEventListener('change', (e) => {
             const selectedOption = e.target.options[e.target.selectedIndex];
             const langKey = selectedOption.getAttribute('data-lang-key');
-
             if (langKey === 'orderServiceOther') {
                 otherServiceField.classList.remove('hidden');
                 otherServiceText.required = true;
@@ -1578,11 +1519,11 @@
                     status: 1, // 1: Awaiting Approval
                     timestamp: serverTimestamp(), ipAddress, device, browser, deviceName,
                     latitude: userLocation.latitude, longitude: userLocation.longitude,
-                    previewImages: [], estimatedPrice: null, finalPrice: null, currency: null, rejectionReason: null,
+                    previewImages: [], estimatedPrice: null, finalPrice: null, currency: null, rejectionReason: null, discount: null, paidViaBank: null,
+                    receiptUrl: null, assignedDeveloper: null // Initialize new fields
                 };
                 await addDoc(collection(db, `artifacts/${appId}/public/data/orders`), orderData);
 
-                // Now, submit to Formspree
                 const formspreeData = new FormData();
                 formspreeData.append('Order ID', orderId);
                 formspreeData.append('Name', orderData.name);
@@ -1598,9 +1539,7 @@
                 }
 
                 await fetch(FORMSPREE_ENDPOINT, {
-                    method: 'POST',
-                    body: formspreeData,
-                    headers: { 'Accept': 'application/json' }
+                    method: 'POST', body: formspreeData, headers: { 'Accept': 'application/json' }
                 });
 
                 hideOrderModal();
@@ -1615,7 +1554,6 @@
             }
         });
 
-        // Order Tracking Logic
         trackOrderBtn.addEventListener('click', async () => {
             const orderNumber = trackOrderInput.value.trim();
             if (!/^\d{6}$/.test(orderNumber)) { showAlert("orderNotFound"); return; }
@@ -1629,8 +1567,8 @@
                     showAlert("orderNotFound");
                     return;
                 }
-                const order = snapshot.docs[0].data();
-                displayOrderStatus(order);
+                const orderDoc = snapshot.docs[0];
+                displayOrderStatus(orderDoc.data(), orderDoc.id); // Pass doc ID
             }, (error) => {
                 console.error("Error tracking order:", error);
                 showAlert("orderTrackError");
@@ -1644,7 +1582,7 @@
             canvas.width = Math.max(containerWidth - 40, 300);
             const width = canvas.width;
             const height = canvas.height;
-            const numSteps = 5; // Steps 1 to 5
+            const numSteps = 5;
             const circleRadius = 15;
             const horizontalPadding = 50;
             const stepSpacing = (width - horizontalPadding * 2) / (numSteps - 1);
@@ -1657,7 +1595,6 @@
             const activeColor = '#10b981';
             const isRTL = htmlElement.dir === 'rtl';
 
-            // Draw inactive line
             ctx.beginPath();
             ctx.lineWidth = 4;
             ctx.strokeStyle = inactiveColor;
@@ -1665,7 +1602,6 @@
             ctx.lineTo(isRTL ? horizontalPadding : width - horizontalPadding, lineY);
             ctx.stroke();
 
-            // Draw active line
             if (currentStatus > 0) {
                 ctx.beginPath();
                 ctx.strokeStyle = activeColor;
@@ -1706,10 +1642,10 @@
             }
         }
         
-        function displayOrderStatus(order) {
+        function displayOrderStatus(order, orderDocId) {
             orderStatusDisplay.classList.remove('hidden');
             displayedOrderId.textContent = order.orderId;
-            const { status, rejectionReason, estimatedPrice, finalPrice, currency } = order;
+            const { status, rejectionReason, estimatedPrice, finalPrice, currency, discount, paidViaBank, receiptUrl } = order;
 
             if (status === 0) { // Rejected
                 rejectionInfo.classList.remove('hidden');
@@ -1732,13 +1668,37 @@
                 });
             }
 
-            // Display prices
-            if (estimatedPrice || finalPrice) {
-                priceInfo.classList.remove('hidden');
-                estimatedPriceText.textContent = estimatedPrice ? `${translations[currentLang].estimatedPriceLabel} ${estimatedPrice} ${currency || ''}` : '';
-                finalPriceText.textContent = finalPrice ? `${translations[currentLang].finalPriceLabel} ${finalPrice} ${currency || ''}` : '';
+            invoiceInfo.innerHTML = '';
+            if (finalPrice) {
+                invoiceInfo.classList.remove('hidden');
+                let invoiceHTML = '';
+                const currentCurrency = currency || '';
+
+                if (discount && discount > 0) {
+                    const discountAmount = (finalPrice * (discount / 100)).toFixed(2);
+                    const totalAfterDiscount = (finalPrice - discountAmount).toFixed(2);
+                    invoiceHTML = `
+                        <div class="flex justify-between"><p>${translations[currentLang].invoiceSubtotal}:</p><p>${finalPrice} ${currentCurrency}</p></div>
+                        <div class="flex justify-between text-red-500"><p>${translations[currentLang].invoiceDiscount}:</p><p>${discount}%</p></div>
+                        <div class="flex justify-between text-red-500"><p>${translations[currentLang].invoiceDiscountValue}:</p><p>-${discountAmount} ${currentCurrency}</p></div>
+                        <hr class="border-gray-400 dark:border-gray-500 my-1">
+                        <div class="flex justify-between font-bold text-lg"><p>${translations[currentLang].invoiceTotal}:</p><p>${totalAfterDiscount} ${currentCurrency}</p></div>
+                    `;
+                } else {
+                     invoiceHTML = `<div class="flex justify-between font-bold text-lg"><p>${translations[currentLang].invoiceTotal}:</p><p>${finalPrice} ${currentCurrency}</p></div>`;
+                }
+                
+                if (status === 5 && paidViaBank) {
+                    invoiceHTML += `<div class="flex justify-between text-sm mt-2"><p>${translations[currentLang].devPaidVia}:</p><p class="font-semibold">${paidViaBank}</p></div>`;
+                }
+
+                invoiceInfo.innerHTML = invoiceHTML;
+
+            } else if (estimatedPrice) {
+                invoiceInfo.classList.remove('hidden');
+                invoiceInfo.innerHTML = `<p class="text-lg">${translations[currentLang].devEstimatedPrice} ${estimatedPrice} ${currency || ''}</p>`;
             } else {
-                priceInfo.classList.add('hidden');
+                invoiceInfo.classList.add('hidden');
             }
             
             orderPreviewImages.innerHTML = '';
@@ -1754,17 +1714,178 @@
             } else {
                 orderPreviewImages.classList.add('hidden');
             }
+
+            // Show payment options accordion
+            if (order.status === 4) {
+                const q = query(collection(db, `artifacts/${appId}/public/data/paymentMethods`));
+                getDocs(q).then(snapshot => {
+                    const methods = snapshot.docs.map(doc => doc.data());
+                    if (methods.length > 0) {
+                        paymentAccordion.classList.remove('hidden');
+                        customerPaymentMethodsList.innerHTML = '';
+                        methods.forEach(method => {
+                            const methodEl = document.createElement('div');
+                            methodEl.className = 'card p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-right sm:text-left';
+                            methodEl.innerHTML = `
+                                <div>
+                                    <p class="font-bold text-lg">${method.bankName}</p>
+                                    <p class="mt-1">
+                                        <span class="font-semibold" data-lang-key="devIban">${translations[currentLang].devIban}</span>
+                                        <span class="select-all">${method.iban}</span>
+                                    </p>
+                                    ${method.phone ? `<p class="mt-1"><span class="font-semibold" data-lang-key="devPhoneNumber">${translations[currentLang].devPhoneNumber}</span> ${method.phone}</p>` : ''}
+                                </div>
+                                <button class="btn-primary w-full sm:w-auto" data-iban="${method.iban}" data-lang-key="copyIban">${translations[currentLang].copyIban}</button>
+                            `;
+                            methodEl.querySelector('button').onclick = (e) => {
+                                copyToClipboard(e.target.dataset.iban);
+                            };
+                            customerPaymentMethodsList.appendChild(methodEl);
+                        });
+                    } else {
+                        paymentAccordion.classList.add('hidden');
+                    }
+                });
+            } else {
+                paymentAccordion.classList.add('hidden');
+            }
+
+            // Show receipt upload/display section
+            if (status === 4 || status === 5) {
+                receiptSection.classList.remove('hidden');
+                receiptSection.innerHTML = ''; // Clear previous content
+
+                const title = document.createElement('h4');
+                title.className = 'font-bold text-lg mb-2';
+                title.setAttribute('data-lang-key', 'receiptTitle');
+                title.textContent = translations[currentLang].receiptTitle;
+                receiptSection.appendChild(title);
+
+                if (receiptUrl) {
+                    const receiptImageContainer = document.createElement('div');
+                    receiptImageContainer.className = 'receipt-image-container';
+                    receiptImageContainer.innerHTML = `<img src="${receiptUrl}" alt="Receipt Image" class="receipt-image" onclick="window.showFullImage('${receiptUrl}')">`;
+                    receiptSection.appendChild(receiptImageContainer);
+                    
+                    if (status === 4) { // Only allow changing receipt if status is 'Awaiting Payment'
+                        const changeBtn = document.createElement('button');
+                        changeBtn.id = `change-receipt-btn-${orderDocId}`;
+                        changeBtn.className = 'btn-primary text-sm mt-2';
+                        changeBtn.setAttribute('data-lang-key', 'receiptChangeBtn');
+                        changeBtn.textContent = translations[currentLang].receiptChangeBtn;
+                        receiptSection.appendChild(changeBtn);
+                        changeBtn.onclick = () => {
+                            document.getElementById(`receipt-upload-form-${orderDocId}`).classList.remove('hidden');
+                            changeBtn.classList.add('hidden');
+                        };
+                    }
+                }
+
+                if (status === 4) { // Show upload form only if 'Awaiting Payment'
+                    const uploadForm = document.createElement('div');
+                    uploadForm.id = `receipt-upload-form-${orderDocId}`;
+                    if(receiptUrl) uploadForm.classList.add('hidden'); // Hide if receipt already exists
+
+                    uploadForm.innerHTML = `
+                        <p class="text-sm mt-2" data-lang-key="receiptUploadPrompt">${translations[currentLang].receiptUploadPrompt}</p>
+                        <div class="relative mt-2">
+                            <input type="file" id="receipt-file-${orderDocId}" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                            <div class="custom-file-input"><span id="receipt-file-text-${orderDocId}" data-lang-key="fileInputChoose">${translations[currentLang].fileInputChoose}</span></div>
+                        </div>
+                        <button id="upload-receipt-btn-${orderDocId}" class="btn-primary w-full mt-2" data-lang-key="receiptUploadBtn" disabled>${translations[currentLang].receiptUploadBtn}</button>
+                    `;
+                    receiptSection.appendChild(uploadForm);
+
+                    const fileInput = document.getElementById(`receipt-file-${orderDocId}`);
+                    const fileText = document.getElementById(`receipt-file-text-${orderDocId}`);
+                    const uploadBtn = document.getElementById(`upload-receipt-btn-${orderDocId}`);
+
+                    fileInput.onchange = () => {
+                        if (fileInput.files.length > 0) {
+                            fileText.textContent = fileInput.files[0].name;
+                            uploadBtn.disabled = false;
+                        } else {
+                            fileText.textContent = translations[currentLang].fileInputChoose;
+                            uploadBtn.disabled = true;
+                        }
+                    };
+                    
+                    uploadBtn.onclick = () => uploadReceipt(orderDocId, fileInput.files[0]);
+                }
+
+            } else {
+                receiptSection.classList.add('hidden');
+            }
+        }
+
+        async function uploadReceipt(orderDocId, file) {
+            if (!file) return;
+            const uploadBtn = document.getElementById(`upload-receipt-btn-${orderDocId}`);
+            const originalBtnText = uploadBtn.textContent;
+            uploadBtn.disabled = true;
+            uploadBtn.textContent = translations[currentLang].receiptUploading;
+
+            const formData = new FormData();
+            formData.append("image", file);
+            try {
+                const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: formData });
+                const result = await res.json();
+                if (result.success) {
+                    const orderRef = doc(db, `artifacts/${appId}/public/data/orders`, orderDocId);
+                    await updateDoc(orderRef, { receiptUrl: result.data.url });
+                    showAlert("receiptUploadSuccess");
+                } else {
+                    throw new Error(result.error.message);
+                }
+            } catch (err) {
+                console.error("Receipt upload failed:", err);
+                showAlert("receiptUploadError");
+            } finally {
+                uploadBtn.disabled = false;
+                uploadBtn.textContent = originalBtnText;
+            }
         }
         
-        // Developer Dashboard Logic
-        function loadDevOrders() {
+        togglePaymentBtn.addEventListener('click', () => {
+            const icon = document.getElementById('paymentAccordionIcon');
+            paymentMethodsContainer.classList.toggle('hidden');
+            if (paymentMethodsContainer.classList.contains('hidden')) {
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                icon.style.transform = 'rotate(180deg)';
+            }
+        });
+
+        async function deletePreviewImage(orderId, imageUrl) {
+            showAlert("alertDeletePreviewImageConfirm", 'confirm', {
+                onConfirm: async (confirmed) => {
+                    if (confirmed) {
+                        const orderRef = doc(db, `artifacts/${appId}/public/data/orders`, orderId);
+                        try {
+                            await updateDoc(orderRef, {
+                                previewImages: arrayRemove(imageUrl)
+                            });
+                            showAlert("alertDeletePreviewImageSuccess");
+                        } catch (err) {
+                            console.error("Error deleting preview image:", err);
+                            showAlert("alertDeletePreviewImageError");
+                        }
+                    }
+                }
+            });
+        }
+
+        async function loadDevOrders() {
             if (!isAuthReady || !isDeveloperMode) {
                 developerDashboard.classList.add('hidden');
                 return;
             }
             developerDashboard.classList.remove('hidden');
-            const q = query(collection(db, `artifacts/${appId}/public/data/orders`));
             
+            const paymentMethodsSnapshot = await getDocs(query(collection(db, `artifacts/${appId}/public/data/paymentMethods`)));
+            const paymentMethods = paymentMethodsSnapshot.docs.map(doc => doc.data());
+
+            const q = query(collection(db, `artifacts/${appId}/public/data/orders`));
             onSnapshot(q, (snapshot) => {
                 let orders = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
                 orders.sort((a, b) => (b.timestamp?.toDate() || 0) - (a.timestamp?.toDate() || 0));
@@ -1777,15 +1898,36 @@
                     const orderDate = order.timestamp ? new Date(order.timestamp.toDate()).toLocaleString() : 'N/A';
                     const orderElement = document.createElement('div');
                     orderElement.className = 'card space-y-4';
+                    
+                    let paymentInfoHTML = '';
+                    if (order.status === 5) {
+                        let optionsHTML = `<option value="">${translations[currentLang].devSelectBank}</option>`;
+                        paymentMethods.forEach(method => {
+                            optionsHTML += `<option value="${method.bankName}" ${order.paidViaBank === method.bankName ? 'selected' : ''}>${method.bankName}</option>`;
+                        });
+                        paymentInfoHTML = `
+                        <div class="mt-2">
+                            <label for="paid-via-${order.id}" class="block text-sm font-medium">${translations[currentLang].devPaidVia}</label>
+                            <select id="paid-via-${order.id}" class="w-full rounded-md shadow-sm p-2 mt-1">
+                                ${optionsHTML}
+                            </select>
+                        </div>`;
+                    }
+                    
+                    const previewImagesHTML = order.previewImages?.length > 0 
+                        ? order.previewImages.map(img => `
+                            <div class="relative">
+                                <img src="${img}" class="w-16 h-16 object-cover rounded-md cursor-pointer" onclick="window.showFullImage('${img}')">
+                                <button class="delete-preview-btn absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs opacity-75 hover:opacity-100" data-order-id="${order.id}" data-image-url="${img}">&times;</button>
+                            </div>`).join('') 
+                        : `<p class="text-sm italic">${translations[currentLang].devNoImages}</p>`;
+
                     orderElement.innerHTML = `
-                        <div>
-                            <h4 class="font-bold text-lg text-indigo-500">${translations[currentLang].devOrderId} <span class="text-xl font-bold">${order.orderId}</span></h4>
-                        </div>
+                        <div><h4 class="font-bold text-lg text-indigo-500">${translations[currentLang].devOrderId} <span class="text-xl font-bold">${order.orderId}</span></h4></div>
                         <p><strong>${translations[currentLang].devOrderUser}</strong> ${order.name}</p>
                         <p><strong>${translations[currentLang].devOrderDate}</strong> ${orderDate}</p>
                         <p><strong>${translations[currentLang].orderServiceLabel}</strong> ${order.service}</p>
                         <p class="text-gray-600 dark:text-gray-400"><strong>${translations[currentLang].orderMessageLabel}</strong> ${order.details}</p>
-                        
                         <div class="flex items-center gap-2">
                             <strong>${translations[currentLang].devOrderStatus}</strong>
                             <select id="status-select-${order.id}" class="rounded-md shadow-sm p-1 flex-grow">
@@ -1797,24 +1939,34 @@
                                 <option value="5" ${order.status === 5 ? 'selected' : ''}>${translations[currentLang].status5}</option>
                             </select>
                         </div>
-
+                        <!-- Assigned Developer Section -->
+                        <div class="border-t pt-4 mt-4 space-y-2">
+                            <label for="assigned-dev-${order.id}" class="block text-sm font-medium">${translations[currentLang].devAssignedTo}</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="assigned-dev-${order.id}" value="${order.assignedDeveloper || ''}" placeholder="اسم المصمم..." class="w-full p-2 rounded-md">
+                                <button id="save-dev-${order.id}" class="btn-primary text-sm py-2 px-4">${translations[currentLang].devSave}</button>
+                            </div>
+                        </div>
                         <div class="border-t pt-4 mt-4 space-y-3">
                             <div class="flex gap-2">
-                                <input type="number" id="est-price-${order.id}" value="${order.estimatedPrice || ''}" placeholder="${translations[currentLang].devEstimatedPrice}" class="dev-price-input w-1/2 p-2 rounded-md">
-                                <input type="number" id="final-price-${order.id}" value="${order.finalPrice || ''}" placeholder="${translations[currentLang].devFinalPrice}" class="dev-price-input w-1/2 p-2 rounded-md">
+                                <input type="number" id="est-price-${order.id}" value="${order.estimatedPrice || ''}" placeholder="${translations[currentLang].devEstimatedPrice}" class="w-1/2 p-2 rounded-md">
+                                <input type="number" id="final-price-${order.id}" value="${order.finalPrice || ''}" placeholder="${translations[currentLang].devFinalPrice}" class="w-1/2 p-2 rounded-md">
                             </div>
-                            <select id="currency-${order.id}" class="w-full rounded-md shadow-sm p-2">
-                                <option value="" ${!order.currency ? 'selected' : ''}>${translations[currentLang].devCurrency}</option>
-                                <option value="MYR" ${order.currency === 'MYR' ? 'selected' : ''}>رينغت ماليزي (MYR)</option>
-                                <option value="EGP" ${order.currency === 'EGP' ? 'selected' : ''}>جنيه مصري (EGP)</option>
-                                <option value="SAR" ${order.currency === 'SAR' ? 'selected' : ''}>ريال سعودي (SAR)</option>
-                            </select>
+                            <div class="flex gap-2">
+                                <select id="currency-${order.id}" class="w-2/3 rounded-md shadow-sm p-2">
+                                    <option value="" ${!order.currency ? 'selected' : ''}>${translations[currentLang].devCurrency}</option>
+                                    <option value="MYR" ${order.currency === 'MYR' ? 'selected' : ''}>رينغت ماليزي (MYR)</option>
+                                    <option value="EGP" ${order.currency === 'EGP' ? 'selected' : ''}>جنيه مصري (EGP)</option>
+                                    <option value="SAR" ${order.currency === 'SAR' ? 'selected' : ''}>ريال سعودي (SAR)</option>
+                                </select>
+                                <input type="number" id="discount-${order.id}" value="${order.discount || ''}" placeholder="${translations[currentLang].devDiscountLabel}" class="w-1/3 p-2 rounded-md">
+                            </div>
+                            ${paymentInfoHTML}
                         </div>
-
                         <div>
                             <strong>${translations[currentLang].devImagesLabel}</strong>
                             <div id="dev-preview-${order.id}" class="grid grid-cols-3 gap-2 mt-2">
-                                ${order.previewImages?.length > 0 ? order.previewImages.map(img => `<img src="${img}" class="w-16 h-16 object-cover rounded-md cursor-pointer" onclick="window.showFullImage('${img}')">`).join('') : `<p class="text-sm italic">${translations[currentLang].devNoImages}</p>`}
+                                ${previewImagesHTML}
                             </div>
                             <div class="mt-4">
                                 <label class="custom-file-input text-sm"><span data-lang-key="devUploadImages">${translations[currentLang].devUploadImages}</span><input type="file" id="dev-image-upload-${order.id}" accept="image/*"></label>
@@ -1830,10 +1982,26 @@
 
                     const orderRef = doc(db, `artifacts/${appId}/public/data/orders`, order.id);
 
-                    // Status update listener
+                    // Event listener for saving assigned developer
+                    document.getElementById(`save-dev-${order.id}`).addEventListener('click', async () => {
+                        const devName = document.getElementById(`assigned-dev-${order.id}`).value;
+                        try {
+                            await updateDoc(orderRef, { assignedDeveloper: devName });
+                            showAlert("devAssignedToUpdated");
+                        } catch (err) { console.error("Failed to update assigned developer:", err); }
+                    });
+
+                    orderElement.querySelectorAll('.delete-preview-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const { orderId, imageUrl } = e.currentTarget.dataset;
+                            deletePreviewImage(orderId, imageUrl);
+                        });
+                    });
+
                     document.getElementById(`status-select-${order.id}`).addEventListener('change', async (e) => {
                         const newStatus = parseInt(e.target.value, 10);
-                        if (newStatus === 0) { // If rejecting
+                        if (newStatus === 0) {
                             showAlert("devRejectionReasonPrompt", 'confirm', {
                                 promptInput: { type: 'text', placeholder: 'Reason (optional)' },
                                 onConfirm: async (confirmed, reason) => {
@@ -1843,7 +2011,7 @@
                                             showAlert("orderRejectedSuccess");
                                         } catch (err) { console.error("Failed to reject order:", err); showAlert("orderRejectedError"); }
                                     } else {
-                                        e.target.value = order.status; // Revert dropdown if cancelled
+                                        e.target.value = order.status;
                                     }
                                 }
                             });
@@ -1854,28 +2022,32 @@
                         }
                     });
 
-                    // Save prices listener
+                    if (order.status === 5) {
+                        document.getElementById(`paid-via-${order.id}`).addEventListener('change', async (e) => {
+                            try {
+                                await updateDoc(orderRef, { paidViaBank: e.target.value });
+                            } catch (err) { console.error("Failed to update paid via bank:", err); }
+                        });
+                    }
+
                     document.getElementById(`save-prices-${order.id}`).addEventListener('click', async () => {
                         const estPrice = document.getElementById(`est-price-${order.id}`).value;
                         const finalPrice = document.getElementById(`final-price-${order.id}`).value;
                         const currency = document.getElementById(`currency-${order.id}`).value;
+                        const discount = document.getElementById(`discount-${order.id}`).value;
                         try {
                             await updateDoc(orderRef, {
                                 estimatedPrice: estPrice ? Number(estPrice) : null,
                                 finalPrice: finalPrice ? Number(finalPrice) : null,
-                                currency: currency || null
+                                currency: currency || null,
+                                discount: discount ? Number(discount) : null
                             });
                             showAlert("pricesUpdatedSuccess");
-                        } catch (err) {
-                            console.error("Failed to update prices:", err);
-                            showAlert("pricesUpdatedError");
-                        }
+                        } catch (err) { console.error("Failed to update prices:", err); showAlert("pricesUpdatedError"); }
                     });
                     
-                    // Delete order listener
                     document.getElementById(`delete-order-${order.id}`).addEventListener('click', () => deleteOrder(order.id));
 
-                    // Image upload listener
                     document.getElementById(`dev-image-upload-${order.id}`).addEventListener('change', async (e) => {
                         const file = e.target.files[0];
                         if (!file) return;
@@ -1920,6 +2092,88 @@
                 }
             });
         }
+        
+        // NEW: Payment Method Functions
+        function copyToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                copyNotification.textContent = translations[currentLang].ibanCopied;
+                copyNotification.classList.add('show');
+                setTimeout(() => copyNotification.classList.remove('show'), 2000);
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function loadPaymentMethods() {
+            if (!db || !isDeveloperMode) return;
+            const q = query(collection(db, `artifacts/${appId}/public/data/paymentMethods`));
+            onSnapshot(q, (snapshot) => {
+                const methods = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+                devPaymentMethodsList.innerHTML = '';
+                if (methods.length === 0) {
+                    devPaymentMethodsList.innerHTML = `<p class="text-center text-gray-500 dark:text-gray-400">لم تتم إضافة أي بنوك بعد.</p>`;
+                    return;
+                }
+                methods.forEach(method => {
+                    const methodEl = document.createElement('div');
+                    methodEl.className = 'flex items-center justify-between p-3 rounded-lg'; // Removed explicit color classes, will be handled by CSS
+                    methodEl.innerHTML = `
+                        <div>
+                            <p class="font-semibold">${method.bankName}</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 select-all">${method.iban}</p>
+                            ${method.phone ? `<p class="text-sm text-gray-500 dark:text-gray-300">${method.phone}</p>` : ''}
+                        </div>
+                        <button class="btn-danger text-xs" data-id="${method.id}">${translations[currentLang].devDeleteOrder}</button>
+                    `;
+                    methodEl.querySelector('button').onclick = () => deletePaymentMethod(method.id);
+                    devPaymentMethodsList.appendChild(methodEl);
+                });
+            });
+        }
+
+        async function addPaymentMethod(e) {
+            e.preventDefault();
+            if (!isDeveloperMode) return;
+            const bankName = bankNameInput.value.trim();
+            const iban = ibanInput.value.trim();
+            const phone = phoneInput.value.trim();
+            if (!bankName || !iban) {
+                showAlert("الرجاء ملء اسم البنك والآيبان.");
+                return;
+            }
+            try {
+                await addDoc(collection(db, `artifacts/${appId}/public/data/paymentMethods`), { bankName, iban, phone });
+                showAlert(translations[currentLang].bankAddedSuccess);
+                paymentMethodForm.reset();
+            } catch (err) {
+                console.error("Error adding payment method:", err);
+                showAlert(translations[currentLang].bankAddError);
+            }
+        }
+
+        function deletePaymentMethod(id) {
+            showAlert(translations[currentLang].deleteBankConfirm, 'confirm', {
+                onConfirm: async (confirmed) => {
+                    if (confirmed) {
+                        try {
+                            await deleteDoc(doc(db, `artifacts/${appId}/public/data/paymentMethods`, id));
+                            showAlert(translations[currentLang].bankDeleteSuccess);
+                        } catch (err) {
+                            console.error("Error deleting payment method:", err);
+                            showAlert(translations[currentLang].bankDeleteError);
+                        }
+                    }
+                }
+            });
+        }
 
         // Initial setup
         window.onload = async function() {
@@ -1928,6 +2182,7 @@
             setupStarRating(starRatingInputContainer, commentRatingValue);
             applyDarkMode(localStorage.getItem('darkMode') === 'enabled');
             setLanguage(currentLang);
+            paymentMethodForm.addEventListener('submit', addPaymentMethod);
         }
     </script>
 </body>
