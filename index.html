@@ -200,21 +200,52 @@
         #receiptSection { background-color: #f0fdf4; border: 1px solid #bbf7d0; margin-top: 1.5rem; padding: 1rem; border-radius: 0.75rem; }
         body.dark #receiptSection { background-color: #166534; border-color: #22c55e; }
         
-        /* FIX: Dev Payment Method List Item & Accordion Button Styles */
-        #devPaymentMethodsList > div, #customerPaymentMethodsList .card {
+        /* FIX & NEW: Dev & Customer Payment Method Styles */
+        #devPaymentMethodsList > div {
             background-color: #f1f5f9;
             color: #1e293b;
         }
-        body.dark #devPaymentMethodsList > div, body.dark #customerPaymentMethodsList .card {
+        body.dark #devPaymentMethodsList > div {
             background-color: #334155;
             color: #e2e8f0;
         }
-        #customerPaymentMethodsList .card p {
-             color: #374151;
+        .bank-accordion-item .accordion-header {
+            background-color: #e5e7eb;
+            color: #1f2937;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
         }
-        body.dark #customerPaymentMethodsList .card p {
-            color: #d1d5db;
+        body.dark .bank-accordion-item .accordion-header {
+            background-color: #374151;
+            color: #f9fafb;
         }
+        .bank-accordion-item .accordion-header:hover {
+            background-color: #d1d5db;
+        }
+        body.dark .bank-accordion-item .accordion-header:hover {
+            background-color: #4b5563;
+        }
+        .bank-accordion-item .accordion-body {
+            background-color: #f9fafb;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            padding: 0 1rem;
+        }
+        body.dark .bank-accordion-item .accordion-body {
+            background-color: #1f2937;
+        }
+        .bank-accordion-item .accordion-body.open {
+            max-height: 200px; /* Adjust as needed */
+            padding: 1rem;
+        }
+        .accordion-header .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        .accordion-header.open .accordion-icon {
+            transform: rotate(180deg);
+        }
+
         #togglePaymentBtn {
             background-color: #e5e7eb;
             color: #1f2937;
@@ -495,8 +526,8 @@
                             </button>
                             <div id="paymentMethodsContainer" class="hidden mt-4 border-t pt-4 border-gray-300 dark:border-gray-600">
                                 <p class="mb-4" data-lang-key="paymentInstruction">الرجاء تحويل المبلغ المطلوب إلى أحد الحسابات التالية وارفاق الايصال للمتابعة:</p>
-                                <div id="customerPaymentMethodsList" class="space-y-4">
-                                    <!-- Customer-facing payment methods will be loaded here -->
+                                <div id="customerPaymentMethodsList" class="space-y-2">
+                                    <!-- Customer-facing payment methods will be loaded here as accordions -->
                                 </div>
                             </div>
                         </div>
@@ -525,20 +556,26 @@
             <div class="max-w-6xl mx-auto mt-12">
                 <h3 class="section-heading text-center mb-8" data-lang-key="devPaymentMethodsHeading">إدارة طرق الدفع</h3>
                 <div class="card p-8">
-                    <form id="paymentMethodForm" class="space-y-4 md:space-y-0 md:flex md:items-end md:gap-4">
-                        <div class="flex-grow">
-                            <label for="bankNameInput" class="block text-sm font-medium" data-lang-key="devBankName">اسم البنك:</label>
-                            <input type="text" id="bankNameInput" placeholder="مثال: بنك الراجحي" class="mt-1 block w-full rounded-md shadow-sm" required>
+                    <form id="paymentMethodForm" class="space-y-4">
+                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+                            <div class="lg:col-span-1">
+                                <label for="bankNameInput" class="block text-sm font-medium" data-lang-key="devBankName">اسم البنك:</label>
+                                <input type="text" id="bankNameInput" placeholder="مثال: بنك الراجحي" class="mt-1 block w-full rounded-md shadow-sm" required>
+                            </div>
+                             <div class="lg:col-span-1">
+                                <label for="accountHolderNameInput" class="block text-sm font-medium" data-lang-key="devAccountHolderName">اسم المستلم:</label>
+                                <input type="text" id="accountHolderNameInput" placeholder="اسم صاحب الحساب" class="mt-1 block w-full rounded-md shadow-sm" required>
+                            </div>
+                            <div class="lg:col-span-1">
+                                <label for="ibanInput" class="block text-sm font-medium" data-lang-key="devIban">رقم الآيبان:</label>
+                                <input type="text" id="ibanInput" placeholder="SA..." class="mt-1 block w-full rounded-md shadow-sm" required>
+                            </div>
+                            <div class="lg:col-span-1">
+                                <label for="phoneInput" class="block text-sm font-medium" data-lang-key="devPhoneNumber">رقم الهاتف (اختياري):</label>
+                                <input type="text" id="phoneInput" placeholder="05..." class="mt-1 block w-full rounded-md shadow-sm">
+                            </div>
                         </div>
-                        <div class="flex-grow">
-                            <label for="ibanInput" class="block text-sm font-medium" data-lang-key="devIban">رقم الآيبان:</label>
-                            <input type="text" id="ibanInput" placeholder="SA..." class="mt-1 block w-full rounded-md shadow-sm" required>
-                        </div>
-                        <div class="flex-grow">
-                            <label for="phoneInput" class="block text-sm font-medium" data-lang-key="devPhoneNumber">رقم الهاتف (اختياري):</label>
-                            <input type="text" id="phoneInput" placeholder="05..." class="mt-1 block w-full rounded-md shadow-sm">
-                        </div>
-                        <button type="submit" class="btn-primary w-full md:w-auto" data-lang-key="devAddBank">إضافة بنك</button>
+                        <button type="submit" class="btn-primary w-full mt-4" data-lang-key="devAddBank">إضافة بنك</button>
                     </form>
                     <hr class="my-6 border-gray-200 dark:border-gray-600">
                     <div id="devPaymentMethodsList" class="space-y-4">
@@ -703,6 +740,7 @@
         // Payment Method Elements
         const paymentMethodForm = document.getElementById('paymentMethodForm');
         const bankNameInput = document.getElementById('bankNameInput');
+        const accountHolderNameInput = document.getElementById('accountHolderNameInput');
         const ibanInput = document.getElementById('ibanInput');
         const phoneInput = document.getElementById('phoneInput');
         const devPaymentMethodsList = document.getElementById('devPaymentMethodsList');
@@ -746,6 +784,7 @@
                         loadComments();
                         if (isDeveloperMode) {
                             loadDevOrders();
+                            loadPaymentMethods();
                         }
                     } else {
                         await signInAnonymously(auth);
@@ -779,7 +818,7 @@
                 invoiceSubtotal: "المبلغ", invoiceDiscount: "الخصم", invoiceDiscountValue: "قيمة الخصم", invoiceTotal: "المبلغ الإجمالي",
                 pricesUpdatedSuccess: "تم تحديث الأسعار بنجاح!", pricesUpdatedError: "فشل تحديث الأسعار.", orderRejectedSuccess: "تم رفض الطلب بنجاح.", orderRejectedError: "فشل رفض الطلب.", devDeleteOrder: "حذف الطلب", alertDeleteOrderConfirm: "هل أنت متأكد أنك تريد حذف هذا الطلب؟ سيتم حذفه نهائياً.", alertDeleteOrderSuccess: "تم حذف الطلب بنجاح.", alertDeleteOrderError: "فشل حذف الطلب.",
                 alertDeveloperModePrompt: "الرجاء إدخال الرمز السري للمطور.", promptSuperSecret: "الرجاء إدخال الرمز السري الخاص لإنشاء رمز جديد.", alertWrongSuperSecret: "الرمز السري الخاص غير صحيح.", oneTimeCodeGenerated: "تم إنشاء رمز الدخول المؤقت:", alertOneTimeCodeError: "حدث خطأ أثناء إنشاء الرمز.", alertInvalidOrUsedCode: "الرمز المدخل غير صالح أو منتهي الصلاحية.", alertWrongDevCode: "الرمز المدخل غير صحيح.",
-                devPaymentMethodsHeading: "إدارة طرق الدفع", devBankName: "اسم البنك:", devIban: "رقم الآيبان:", devPhoneNumber: "رقم الهاتف (اختياري):", devAddBank: "إضافة بنك", paymentOptionsTitle: "خيارات الدفع المتاحة", paymentInstruction: "الرجاء تحويل المبلغ المطلوب إلى أحد الحسابات التالية وارفاق الايصال للمتابعة:", ibanCopied: "تم نسخ الآيبان بنجاح!", copyIban: "نسخ الآيبان", deleteBankConfirm: "هل أنت متأكد أنك تريد حذف هذا البنك؟", bankAddedSuccess: "تمت إضافة البنك بنجاح.", bankAddError: "خطأ في إضافة البنك.", bankDeleteSuccess: "تم حذف البنك بنجاح.", bankDeleteError: "خطأ في حذف البنك.",
+                devPaymentMethodsHeading: "إدارة طرق الدفع", devBankName: "اسم البنك:", devAccountHolderName: "اسم المستلم:", devIban: "رقم الآيبان:", devPhoneNumber: "رقم الهاتف:", devAddBank: "إضافة بنك", devDeleteBank: "حذف البنك", paymentOptionsTitle: "خيارات الدفع المتاحة", paymentInstruction: "الرجاء تحويل المبلغ المطلوب إلى أحد الحسابات التالية وارفاق الايصال للمتابعة:", ibanCopied: "تم نسخ الآيبان بنجاح!", copyIban: "نسخ الآيبان", deleteBankConfirm: "هل أنت متأكد أنك تريد حذف هذا البنك؟", bankAddedSuccess: "تمت إضافة البنك بنجاح.", bankAddError: "خطأ في إضافة البنك.", bankDeleteSuccess: "تم حذف البنك بنجاح.", bankDeleteError: "خطأ في حذف البنك.",
                 alertFirebaseInitError: "حدث خطأ أثناء الاتصال بقاعدة البيانات. الرجاء تحديث الصفحة والمحاولة مرة أخرى.", devDiscountLabel: "الخصم (%):", devPaidVia: "تم الدفع عبر:", devSelectBank: "اختر البنك...",
                 alertDeletePreviewImageConfirm: "هل أنت متأكد أنك تريد حذف هذه الصورة؟", alertDeletePreviewImageSuccess: "تم حذف الصورة بنجاح.", alertDeletePreviewImageError: "حدث خطأ أثناء حذف الصورة.",
                 receiptTitle: "إيصال الدفع", receiptUploadPrompt: "الرجاء إرفاق صورة إيصال الدفع.", receiptUploadBtn: "رفع الإيصال", receiptChangeBtn: "تغيير الإيصال", receiptUploading: "جاري رفع الإيصال...", receiptUploadSuccess: "تم رفع الإيصال بنجاح!", receiptUploadError: "فشل رفع الإيصال.",
@@ -806,7 +845,7 @@
                 invoiceSubtotal: "Subtotal", invoiceDiscount: "Discount", invoiceDiscountValue: "Discount Value", invoiceTotal: "Total Amount",
                 pricesUpdatedSuccess: "Prices updated successfully!", pricesUpdatedError: "Failed to update prices.", orderRejectedSuccess: "Order rejected successfully.", orderRejectedError: "Failed to reject order.", devDeleteOrder: "Delete Order", alertDeleteOrderConfirm: "Are you sure you want to delete this order? This action is permanent.", alertDeleteOrderSuccess: "Order deleted successfully.", alertDeleteOrderError: "Failed to delete order.",
                 alertDeveloperModePrompt: "Please enter the developer secret code.", promptSuperSecret: "Please enter the super secret code to generate a new code.", alertWrongSuperSecret: "Incorrect super secret code.", oneTimeCodeGenerated: "Your temporary access code is:", alertOneTimeCodeError: "Error generating the code.", alertInvalidOrUsedCode: "The entered code is invalid or has expired.", alertWrongDevCode: "The entered code is incorrect.",
-                devPaymentMethodsHeading: "Manage Payment Methods", devBankName: "Bank Name:", devIban: "IBAN:", devPhoneNumber: "Phone Number (Optional):", devAddBank: "Add Bank", paymentOptionsTitle: "Available Payment Options", paymentInstruction: "Please transfer the required amount to one of the following accounts and attach the receipt to proceed:", ibanCopied: "IBAN copied successfully!", copyIban: "Copy IBAN", deleteBankConfirm: "Are you sure you want to delete this bank?", bankAddedSuccess: "Bank added successfully.", bankAddError: "Error adding bank.", bankDeleteSuccess: "Bank deleted successfully.", bankDeleteError: "Error deleting bank.",
+                devPaymentMethodsHeading: "Manage Payment Methods", devBankName: "Bank Name:", devAccountHolderName: "Recipient Name:", devIban: "IBAN:", devPhoneNumber: "Phone Number (Optional):", devAddBank: "Add Bank", devDeleteBank: "Delete Bank", paymentOptionsTitle: "Available Payment Options", paymentInstruction: "Please transfer the required amount to one of the following accounts and attach the receipt to proceed:", ibanCopied: "IBAN copied successfully!", copyIban: "Copy IBAN", deleteBankConfirm: "Are you sure you want to delete this bank?", bankAddedSuccess: "Bank added successfully.", bankAddError: "Error adding bank.", bankDeleteSuccess: "Bank deleted successfully.", bankDeleteError: "Error deleting bank.",
                 alertFirebaseInitError: "Error connecting to the database. Please refresh the page and try again.", devDiscountLabel: "Discount (%):", devPaidVia: "Paid Via:", devSelectBank: "Select Bank...",
                 alertDeletePreviewImageConfirm: "Are you sure you want to delete this image?", alertDeletePreviewImageSuccess: "Image deleted successfully.", alertDeletePreviewImageError: "Error deleting image.",
                 receiptTitle: "Payment Receipt", receiptUploadPrompt: "Please attach the payment receipt image.", receiptUploadBtn: "Upload Receipt", receiptChangeBtn: "Change Receipt", receiptUploading: "Uploading receipt...", receiptUploadSuccess: "Receipt uploaded successfully!", receiptUploadError: "Failed to upload receipt.",
@@ -833,7 +872,7 @@
                 invoiceSubtotal: "小计", invoiceDiscount: "折扣", invoiceDiscountValue: "折扣金额", invoiceTotal: "总金额",
                 pricesUpdatedSuccess: "价格更新成功！", pricesUpdatedError: "价格更新失败。", orderRejectedSuccess: "订单拒绝成功。", orderRejectedError: "拒绝订单失败。", devDeleteOrder: "删除订单", alertDeleteOrderConfirm: "您确定要删除此订单吗？此操作是永久性的。", alertDeleteOrderSuccess: "订单已成功删除。", alertDeleteOrderError: "删除订单失败。",
                 alertDeveloperModePrompt: "请输入开发者密码。", promptSuperSecret: "请输入超级密码以生成新代码。", alertWrongSuperSecret: "超级密码不正确。", oneTimeCodeGenerated: "您的一次性访问代码是：", alertOneTimeCodeError: "生成代码时出错。", alertInvalidOrUsedCode: "输入的代码无效或已过期。", alertWrongDevCode: "输入的代码不正确。",
-                devPaymentMethodsHeading: "管理支付方式", devBankName: "银行名称:", devIban: "IBAN:", devPhoneNumber: "电话号码 (可选):", devAddBank: "添加银行", paymentOptionsTitle: "可用支付选项", paymentInstruction: "请将所需金额转入以下账户之一，并附上收据以便继续操作:", ibanCopied: "IBAN 已成功复制!", copyIban: "复制 IBAN", deleteBankConfirm: "您确定要删除这家银行吗？", bankAddedSuccess: "银行添加成功。", bankAddError: "添加银行时出错。", bankDeleteSuccess: "银行删除成功。", bankDeleteError: "删除银行时出错。",
+                devPaymentMethodsHeading: "管理支付方式", devBankName: "银行名称:", devAccountHolderName: "收款人姓名:", devIban: "IBAN:", devPhoneNumber: "电话号码 (可选):", devAddBank: "添加银行", devDeleteBank: "删除银行", paymentOptionsTitle: "可用支付选项", paymentInstruction: "请将所需金额转入以下账户之一，并附上收据以便继续操作:", ibanCopied: "IBAN 已成功复制!", copyIban: "复制 IBAN", deleteBankConfirm: "您确定要删除这家银行吗？", bankAddedSuccess: "银行添加成功。", bankAddError: "添加银行时出错。", bankDeleteSuccess: "银行删除成功。", bankDeleteError: "删除银行时出错。",
                 alertFirebaseInitError: "连接数据库时出错。请刷新页面再试。", devDiscountLabel: "折扣 (%):", devPaidVia: "支付方式:", devSelectBank: "选择银行...",
                 alertDeletePreviewImageConfirm: "您确定要删除此图片吗？", alertDeletePreviewImageSuccess: "图片已成功删除。", alertDeletePreviewImageError: "删除图片时出错。",
                 receiptTitle: "付款收据", receiptUploadPrompt: "请附上付款收据图片。", receiptUploadBtn: "上传收据", receiptChangeBtn: "更改收据", receiptUploading: "正在上传收据...", receiptUploadSuccess: "收据上传成功！", receiptUploadError: "上传收据失败。",
@@ -1725,18 +1764,31 @@
                         customerPaymentMethodsList.innerHTML = '';
                         methods.forEach(method => {
                             const methodEl = document.createElement('div');
-                            methodEl.className = 'card p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-right sm:text-left';
+                            methodEl.className = 'bank-accordion-item overflow-hidden rounded-lg';
+                            
                             methodEl.innerHTML = `
-                                <div>
-                                    <p class="font-bold text-lg">${method.bankName}</p>
-                                    <p class="mt-1">
-                                        <span class="font-semibold" data-lang-key="devIban">${translations[currentLang].devIban}</span>
-                                        <span class="select-all">${method.iban}</span>
-                                    </p>
-                                    ${method.phone ? `<p class="mt-1"><span class="font-semibold" data-lang-key="devPhoneNumber">${translations[currentLang].devPhoneNumber}</span> ${method.phone}</p>` : ''}
+                                <div class="accordion-header p-4 flex justify-between items-center w-full text-right">
+                                    <span class="font-semibold">${method.bankName}</span>
+                                    <svg class="accordion-icon w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
                                 </div>
-                                <button class="btn-primary w-full sm:w-auto" data-iban="${method.iban}" data-lang-key="copyIban">${translations[currentLang].copyIban}</button>
+                                <div class="accordion-body space-y-3">
+                                    <div class="space-y-1">
+                                        <p><strong data-lang-key="devAccountHolderName">${translations[currentLang].devAccountHolderName}</strong> ${method.accountHolderName}</p>
+                                        <p><strong data-lang-key="devIban">${translations[currentLang].devIban}</strong> <span class="select-all">${method.iban}</span></p>
+                                        ${method.phone ? `<p><strong data-lang-key="devPhoneNumber">${translations[currentLang].devPhoneNumber}</strong> ${method.phone}</p>` : ''}
+                                    </div>
+                                    <button class="btn-primary w-full sm:w-auto text-sm" data-iban="${method.iban}" data-lang-key="copyIban">${translations[currentLang].copyIban}</button>
+                                </div>
                             `;
+                            
+                            const header = methodEl.querySelector('.accordion-header');
+                            const body = methodEl.querySelector('.accordion-body');
+                            
+                            header.addEventListener('click', () => {
+                                body.classList.toggle('open');
+                                header.classList.toggle('open');
+                            });
+
                             methodEl.querySelector('button').onclick = (e) => {
                                 copyToClipboard(e.target.dataset.iban);
                             };
@@ -2124,14 +2176,15 @@
                 }
                 methods.forEach(method => {
                     const methodEl = document.createElement('div');
-                    methodEl.className = 'flex items-center justify-between p-3 rounded-lg'; // Removed explicit color classes, will be handled by CSS
+                    methodEl.className = 'flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 rounded-lg';
                     methodEl.innerHTML = `
-                        <div>
-                            <p class="font-semibold">${method.bankName}</p>
-                            <p class="text-sm text-gray-600 dark:text-gray-400 select-all">${method.iban}</p>
-                            ${method.phone ? `<p class="text-sm text-gray-500 dark:text-gray-300">${method.phone}</p>` : ''}
+                        <div class="flex-grow">
+                            <p class="font-semibold text-lg">${method.bankName}</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">${translations[currentLang].devAccountHolderName} ${method.accountHolderName}</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 select-all mt-1">${method.iban}</p>
+                            ${method.phone ? `<p class="text-sm text-gray-500 dark:text-gray-300 mt-1">${method.phone}</p>` : ''}
                         </div>
-                        <button class="btn-danger text-xs" data-id="${method.id}">${translations[currentLang].devDeleteOrder}</button>
+                        <button class="btn-danger text-xs mt-2 sm:mt-0" data-id="${method.id}">${translations[currentLang].devDeleteBank}</button>
                     `;
                     methodEl.querySelector('button').onclick = () => deletePaymentMethod(method.id);
                     devPaymentMethodsList.appendChild(methodEl);
@@ -2143,14 +2196,16 @@
             e.preventDefault();
             if (!isDeveloperMode) return;
             const bankName = bankNameInput.value.trim();
+            const accountHolderName = accountHolderNameInput.value.trim();
             const iban = ibanInput.value.trim();
             const phone = phoneInput.value.trim();
-            if (!bankName || !iban) {
-                showAlert("الرجاء ملء اسم البنك والآيبان.");
+
+            if (!bankName || !iban || !accountHolderName) {
+                showAlert("الرجاء ملء اسم البنك واسم المستلم والآيبان.");
                 return;
             }
             try {
-                await addDoc(collection(db, `artifacts/${appId}/public/data/paymentMethods`), { bankName, iban, phone });
+                await addDoc(collection(db, `artifacts/${appId}/public/data/paymentMethods`), { bankName, accountHolderName, iban, phone });
                 showAlert(translations[currentLang].bankAddedSuccess);
                 paymentMethodForm.reset();
             } catch (err) {
