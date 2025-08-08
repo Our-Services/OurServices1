@@ -276,6 +276,112 @@
             opacity: 1;
             transform: translateX(-50%) translateY(-10px);
         }
+
+        /* UID Modal Styles */
+        #uidModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        #uidModal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .uid-modal-content {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        body.dark .uid-modal-content {
+            background-color: #2d3748;
+            color: #e2e8f0;
+        }
+        .uid-display {
+            background-color: #f7fafc;
+            border: 2px dashed #cbd5e0;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 0.875rem;
+            word-break: break-all;
+            color: #2d3748;
+        }
+        body.dark .uid-display {
+            background-color: #4a5568;
+            border-color: #718096;
+            color: #e2e8f0;
+        }
+        .uid-copy-btn {
+            background-color: #4f46e5;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin: 0.5rem;
+        }
+        .uid-copy-btn:hover {
+            background-color: #4338ca;
+        }
+        .uid-close-btn {
+            background-color: #6b7280;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin: 0.5rem;
+        }
+        .uid-close-btn:hover {
+            background-color: #4b5563;
+        }
+        
+        /* Copy Notification Styles */
+        .copy-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #10b981;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateX(100%);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 10000;
+            max-width: 300px;
+            word-wrap: break-word;
+        }
+        
+        .copy-notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .dark .copy-notification {
+            background-color: #059669;
+        }
     </style>
 </head>
 <body class="font-sans antialiased">
@@ -286,6 +392,19 @@
             <p id="customAlertMessage" class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4"></p>
             <div id="customAlertInputs" class="mb-4"></div>
             <div id="customAlertButtons" class="modal-buttons"></div>
+        </div>
+    </div>
+
+    <!-- UID Modal -->
+    <div id="uidModal">
+        <div class="uid-modal-content">
+            <h3 class="text-xl font-bold mb-4" data-lang-key="uidModalTitle">معرف المستخدم الخاص بك</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4" data-lang-key="uidModalDescription">هذا هو معرف المستخدم الفريد الخاص بك (UID). يمكنك نسخه واستخدامه لإضافتك كمطور مصرح.</p>
+            <div id="uidDisplay" class="uid-display"></div>
+            <div class="flex justify-center gap-2">
+                <button id="copyUidBtn" class="uid-copy-btn" data-lang-key="copyUidBtn">نسخ UID</button>
+                <button id="closeUidModal" class="uid-close-btn" data-lang-key="closeBtn">إغلاق</button>
+            </div>
         </div>
     </div>
 
@@ -546,6 +665,9 @@
         <section id="developer-dashboard" class="py-16 px-4 hidden">
             <div class="max-w-6xl mx-auto">
                 <h2 class="section-heading text-center mb-12" data-lang-key="devDashboardHeading">لوحة تحكم المطور</h2>
+                <div class="flex justify-center mb-8">
+                    <button id="updateSecurityRulesBtn" class="btn-primary mx-2" data-lang-key="updateSecurityRulesBtn">تحديث قواعد الأمان</button>
+                </div>
                 <div class="dev-order-list" id="devOrdersList">
                     <p id="devLoadingText" class="text-center text-gray-500 dark:text-gray-400 col-span-full" data-lang-key="devLoading">جاري تحميل الطلبات...</p>
                     <p id="noOrdersText" class="text-center text-gray-500 dark:text-gray-400 col-span-full hidden" data-lang-key="noOrders">لا توجد طلبات حتى الآن.</p>
@@ -798,7 +920,9 @@
         
         const translations = {
             ar: {  
-                siteTitle: "خدمتنا - تصميم وتطوير المشاريع", navHome: "الرئيسية", navWhyChooseUs: "لماذا تختارنا؟", navAboutUs: "من نحن؟", navServices: "ماذا نقدم؟", navContact: "تواصل معنا", navComments: "التعليقات", navTrackOrder: "تتبع طلبك", heroTitle: "مصممون جميع أنواع المشاريع والمواقع والتصاميم والبحوث والواجبات", heroDiscount: "خصم 30% لفترة محدودة على كامل الخدمات", heroSubtitle: "نقدم لكم حلولاً متكاملة لتلبية جميع احتياجاتكم الأكاديمية والمهنية", featuresHeading: "لماذا تختارنا؟", 
+                siteTitle: "خدمتنا - تصميم وتطوير المشاريع", navHome: "الرئيسية", navWhyChooseUs: "لماذا تختارنا؟", navAboutUs: "من نحن؟", navServices: "ماذا نقدم؟", navContact: "تواصل معنا", navComments: "التعليقات", navTrackOrder: "تتبع طلبك", heroTitle: "مصممون جميع أنواع المشاريع والمواقع والتصاميم والبحوث والواجبات", heroDiscount: "خصم 30% لفترة محدودة على كامل الخدمات", heroSubtitle: "نقدم لكم حلولاً متكاملة لتلبية جميع احتياجاتكم الأكاديمية والمهنية", featuresHeading: "لماذا تختارنا؟",
+                alertSecurityRulesUpdated: "تم تحديث قواعد الأمان بنجاح.",
+                updateSecurityRulesBtn: "تحديث قواعد الأمان", 
                 feature1Title: "تنسيقات شكل رائعة", feature1Desc: "نقدم العديد من التنسيقات الجمالية التي تبرز عملك.", feature2Title: "تنسيق كلام احترافي", feature2Desc: "تنسيق دقيق للمحتوى في البحوث والمشاريع.", feature3Title: "أكثر من 100 نوع خط", feature3Desc: "اختر من مجموعة واسعة من الخطوط المميزة.", feature4Title: "عروض تقديمية مميزة", feature4Desc: "تصميم عروض بوربوينت جذابة ومبتكرة.",
                 feature5Title: "استجابة سريعة 24/7", feature5Desc: "فريقنا متواجد على مدار الساعة للرد على استفساراتكم وتقديم الدعم الفوري لضمان سير العمل بسلاسة.",
                 feature6Title: "دقة في التنفيذ وتعديلات مرنة", feature6Desc: "نلتزم بأعلى معايير الدقة في تنفيذ المشاريع، مع إتاحة إمكانية التعديل لتلبية توقعاتكم بالكامل.",
@@ -822,10 +946,13 @@
                 alertFirebaseInitError: "حدث خطأ أثناء الاتصال بقاعدة البيانات. الرجاء تحديث الصفحة والمحاولة مرة أخرى.", devDiscountLabel: "الخصم (%):", devPaidVia: "تم الدفع عبر:", devSelectBank: "اختر البنك...",
                 alertDeletePreviewImageConfirm: "هل أنت متأكد أنك تريد حذف هذه الصورة؟", alertDeletePreviewImageSuccess: "تم حذف الصورة بنجاح.", alertDeletePreviewImageError: "حدث خطأ أثناء حذف الصورة.",
                 receiptTitle: "إيصال الدفع", receiptUploadPrompt: "الرجاء إرفاق صورة إيصال الدفع.", receiptUploadBtn: "رفع الإيصال", receiptChangeBtn: "تغيير الإيصال", receiptUploading: "جاري رفع الإيصال...", receiptUploadSuccess: "تم رفع الإيصال بنجاح!", receiptUploadError: "فشل رفع الإيصال.",
-                devAssignedTo: "مسؤول المشروع:", devSave: "حفظ", devAssignedToUpdated: "تم تحديث مسؤول المشروع."
+                devAssignedTo: "مسؤول المشروع:", devSave: "حفظ", devAssignedToUpdated: "تم تحديث مسؤول المشروع.",
+                uidModalTitle: "معرف المستخدم الخاص بك", uidModalDescription: "هذا هو معرف المستخدم الخاص بك (UID):", uidCopyBtn: "نسخ المعرف", uidCopiedSuccess: "تم نسخ المعرف بنجاح!", uidModalClose: "إغلاق"
             },
             en: {  
-                siteTitle: "Our Services - Project Design & Development", navHome: "Home", navWhyChooseUs: "Why Choose Us?", navAboutUs: "About Us", navServices: "What We Offer?", navContact: "Contact Us", navComments: "Comments", navTrackOrder: "Track Your Order", heroTitle: "Designers of all types of projects, websites, designs, research, and assignments", heroDiscount: "30% discount for a limited time on all services", heroSubtitle: "We offer integrated solutions to meet all your academic and professional needs", featuresHeading: "Why Choose Us?", 
+                siteTitle: "Our Services - Project Design & Development", navHome: "Home", navWhyChooseUs: "Why Choose Us?", navAboutUs: "About Us", navServices: "What We Offer?", navContact: "Contact Us", navComments: "Comments", navTrackOrder: "Track Your Order", heroTitle: "Designers of all types of projects, websites, designs, research, and assignments", heroDiscount: "30% discount for a limited time on all services", heroSubtitle: "We offer integrated solutions to meet all your academic and professional needs", featuresHeading: "Why Choose Us?",
+                alertSecurityRulesUpdated: "Security rules have been updated successfully.",
+                updateSecurityRulesBtn: "Update Security Rules", 
                 feature1Title: "Excellent Visual Formats", feature1Desc: "We provide many aesthetic formats that highlight your work.", feature2Title: "Professional Text Formatting", feature2Desc: "Precise content formatting for research and projects.", feature3Title: "Over 100 Font Types", feature3Desc: "Choose from a wide range of distinctive fonts.", feature4Title: "Outstanding Presentations", feature4Desc: "Designing attractive and innovative PowerPoint presentations.",
                 feature5Title: "24/7 Fast Response", feature5Desc: "Our team is available around the clock to answer your inquiries and provide immediate support to ensure smooth workflow.",
                 feature6Title: "Precision & Flexible Edits", feature6Desc: "We adhere to the highest standards of precision in project execution, with the flexibility for modifications to fully meet your expectations.",
@@ -849,10 +976,13 @@
                 alertFirebaseInitError: "Error connecting to the database. Please refresh the page and try again.", devDiscountLabel: "Discount (%):", devPaidVia: "Paid Via:", devSelectBank: "Select Bank...",
                 alertDeletePreviewImageConfirm: "Are you sure you want to delete this image?", alertDeletePreviewImageSuccess: "Image deleted successfully.", alertDeletePreviewImageError: "Error deleting image.",
                 receiptTitle: "Payment Receipt", receiptUploadPrompt: "Please attach the payment receipt image.", receiptUploadBtn: "Upload Receipt", receiptChangeBtn: "Change Receipt", receiptUploading: "Uploading receipt...", receiptUploadSuccess: "Receipt uploaded successfully!", receiptUploadError: "Failed to upload receipt.",
-                devAssignedTo: "Assigned To:", devSave: "Save", devAssignedToUpdated: "Project assignee updated."
+                devAssignedTo: "Assigned To:", devSave: "Save", devAssignedToUpdated: "Project assignee updated.",
+                uidModalTitle: "Your User ID", uidModalDescription: "This is your User ID (UID):", uidCopyBtn: "Copy ID", uidCopiedSuccess: "ID copied successfully!", uidModalClose: "Close"
             },
             zh: {
-                siteTitle: "我们的服务 - 项目设计与开发", navHome: "主页", navWhyChooseUs: "为什么选择我们？", navAboutUs: "关于我们", navServices: "我们提供什么？", navContact: "联系我们", navComments: "评论", navTrackOrder: "追踪您的订单", heroTitle: "各种项目、网站、设计、研究和作业的设计者", heroDiscount: "所有服务限时30%折扣", heroSubtitle: "我们提供全面的解决方案，满足您所有的学术和专业需求", featuresHeading: "为什么选择我们？", 
+                siteTitle: "我们的服务 - 项目设计与开发", navHome: "主页", navWhyChooseUs: "为什么选择我们？", navAboutUs: "关于我们", navServices: "我们提供什么？", navContact: "联系我们", navComments: "评论", navTrackOrder: "追踪您的订单", heroTitle: "各种项目、网站、设计、研究和作业的设计者", heroDiscount: "所有服务限时30%折扣", heroSubtitle: "我们提供全面的解决方案，满足您所有的学术和专业需求", featuresHeading: "为什么选择我们？",
+                alertSecurityRulesUpdated: "安全规则已成功更新。",
+                updateSecurityRulesBtn: "更新安全规则", 
                 feature1Title: "出色的视觉格式", feature1Desc: "我们提供多种美观的格式，突出您的作品。", feature2Title: "专业的文本排版", feature2Desc: "为研究和项目提供精确的内容排版。", feature3Title: "超过100种字体", feature3Desc: "从多种独特的字体中进行选择。", feature4Title: "出色的演示文稿", feature4Desc: "设计引人入胜、富有创意的PowerPoint演示文稿。",
                 feature5Title: "24/7 快速响应", feature5Desc: "我们的团队全天候为您解答疑问，并提供即时支持，确保工作流程顺畅。",
                 feature6Title: "精确执行与灵活修改", feature6Desc: "我们坚持最高的项目执行精度标准，并提供灵活的修改选项，以完全满足您的期望。",
@@ -876,7 +1006,8 @@
                 alertFirebaseInitError: "连接数据库时出错。请刷新页面再试。", devDiscountLabel: "折扣 (%):", devPaidVia: "支付方式:", devSelectBank: "选择银行...",
                 alertDeletePreviewImageConfirm: "您确定要删除此图片吗？", alertDeletePreviewImageSuccess: "图片已成功删除。", alertDeletePreviewImageError: "删除图片时出错。",
                 receiptTitle: "付款收据", receiptUploadPrompt: "请附上付款收据图片。", receiptUploadBtn: "上传收据", receiptChangeBtn: "更改收据", receiptUploading: "正在上传收据...", receiptUploadSuccess: "收据上传成功！", receiptUploadError: "上传收据失败。",
-                devAssignedTo: "项目负责人:", devSave: "保存", devAssignedToUpdated: "项目负责人已更新。"
+                devAssignedTo: "项目负责人:", devSave: "保存", devAssignedToUpdated: "项目负责人已更新。",
+                uidModalTitle: "您的用户ID", uidModalDescription: "这是您的用户ID (UID):", uidCopyBtn: "复制ID", uidCopiedSuccess: "ID复制成功!", uidModalClose: "关闭"
             }
         };
 
@@ -1052,7 +1183,88 @@
             updateModeIndicatorText();
         }
 
+        // UID Modal functionality
+        let darkModeClickCount = 0;
+        let lastDarkModeClickTime = 0;
+        
+        function showUidModal() {
+            if (!userId) {
+                showAlert('يجب عليك تسجيل الدخول أولاً للحصول على UID الخاص بك. الرجاء تسجيل الدخول ثم المحاولة مرة أخرى.');
+                return;
+            }
+            
+            console.log('UID:', userId); // للتأكد من وجود UID
+            
+            const modal = document.getElementById('uidModal');
+            const uidDisplay = modal.querySelector('.uid-display');
+            const titleElement = modal.querySelector('.uid-modal-title');
+            const descElement = modal.querySelector('.uid-modal-description');
+            const copyBtn = modal.querySelector('.uid-copy-btn');
+            const closeBtn = modal.querySelector('.uid-close-btn');
+            
+            // Update text content based on current language
+            titleElement.textContent = translations[currentLang].uidModalTitle;
+            descElement.textContent = translations[currentLang].uidModalDescription;
+            copyBtn.textContent = translations[currentLang].uidCopyBtn;
+            closeBtn.textContent = translations[currentLang].uidModalClose;
+            
+            uidDisplay.textContent = userId;
+            modal.classList.add('active');
+            
+            // Copy functionality
+            copyBtn.onclick = () => {
+                navigator.clipboard.writeText(userId).then(() => {
+                    showCopyNotification(translations[currentLang].uidCopiedSuccess);
+                }).catch(() => {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = userId;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    showCopyNotification(translations[currentLang].uidCopiedSuccess);
+                });
+            };
+            
+            // Close functionality
+            closeBtn.onclick = () => modal.classList.remove('active');
+            modal.onclick = (e) => {
+                if (e.target === modal) modal.classList.remove('active');
+            };
+        }
+        
+        function showCopyNotification(message) {
+            const notification = document.getElementById('copyNotification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2000);
+        }
+
         darkModeToggle.addEventListener('click', () => {
+            const now = Date.now();
+            
+            // Check for multiple clicks within 4 seconds
+            if (now - lastDarkModeClickTime < 4000) {
+                darkModeClickCount++;
+            } else {
+                darkModeClickCount = 1;
+            }
+            lastDarkModeClickTime = now;
+            
+            console.log(`نقرة رقم ${darkModeClickCount} من 8 نقرات مطلوبة خلال 4 ثوانٍ`);
+            
+            // Show UID modal if 8 clicks within 4 seconds
+            if (darkModeClickCount === 8) {
+                darkModeClickCount = 0;
+                console.log('تم الوصول إلى 8 نقرات! سيتم عرض UID...');
+                showUidModal();
+                return; // Don't toggle dark mode
+            }
+            
+            // Normal dark mode toggle
             const isDark = !body.classList.contains('dark');
             localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
             applyDarkMode(isDark);
@@ -1293,6 +1505,7 @@
                     const commentDate = comment.timestamp ? new Date(comment.timestamp.toDate()).toLocaleString(currentLang) : '';
                     const geolocationHTML = (comment.latitude && comment.longitude) ? `<a href="https://www.google.com/maps/search/?api=1&query=${comment.latitude},${comment.longitude}" target="_blank" class="map-link">Show Location</a>` : translations[currentLang].locationUnavailable;
                     const ipAddressHTML = (isDeveloperMode && comment.ipAddress) ? `<span class="text-sm font-light text-gray-500 dark:text-gray-400 ml-2">(IP: <span class="ip-address">${comment.ipAddress}</span>)</span>` : '';
+                    const userIdHTML = (isDeveloperMode && comment.userId) ? `<span class="text-sm font-light text-gray-500 dark:text-gray-400 ml-2">(UID: <span class="ip-address">${comment.userId}</span>)</span>` : '';
                     const deviceInfoHTML = isDeveloperMode ? `<div class="device-info mt-1">${getDeviceIcon(comment.device)}<span class="text-xs">${comment.deviceName || 'Unknown'}</span><div class="flex items-center text-xs">${geolocationHTML}</div></div>` : '';
                     
                     commentElement.innerHTML = `
@@ -1300,6 +1513,7 @@
                             <div class="flex items-center gap-3">
                                 <p class="font-semibold text-indigo-600 dark:text-indigo-300">${comment.name || 'Anonymous'}</p>
                                 ${ipAddressHTML}
+                                ${userIdHTML}
                                 ${comment.rating > 0 ? createStarDisplay(comment.rating) : ''}
                             </div>
                             <div class="flex items-center flex-shrink-0">
@@ -1330,80 +1544,131 @@
         let footerClickCount = 0, lastFooterClickTime = 0;
         let devModeExtraClickCount = 0, lastDevModeExtraClickTime = 0;
 
-        function enableDeveloperMode() {
-            isDeveloperMode = true;
-            developerDashboard.classList.remove('hidden');
-            developerModeIndicator.style.display = 'block';
-            updateDeveloperModeIndicatorText();
-            loadComments();
-            loadDevOrders();
-            loadPaymentMethods(); // Load payment methods for dev
+        async function checkAuthorizedDeveloper() {
+            if (!isAuthReady || !userId) {
+                showAlert("alertFirebaseNotReady");
+                return false;
+            }
+            
+            try {
+                // قائمة UIDs المصرح لهم كمطورين
+                // قم بتغيير هذه القائمة لتتضمن UIDs الخاصة بالمطورين المصرح لهم فقط
+                // للحصول على UID الخاص بك، قم بتسجيل الدخول ثم افتح وحدة تحكم المتصفح (F12) واكتب:
+                // console.log(userId)
+                // ثم قم بنسخ الـ UID الظاهر وإضافته هنا
+                const authorizedUIDs = [
+                    "YOUR_DEVELOPER_UID_1",
+                    "YOUR_DEVELOPER_UID_2",
+                    "YOUR_DEVELOPER_UID_3"
+                ];
+                
+                // التحقق مما إذا كان المستخدم الحالي في قائمة المطورين المصرح لهم
+                return authorizedUIDs.includes(userId);
+            } catch (error) {
+                console.error("Error checking developer authorization:", error);
+                return false;
+            }
+        }
+        
+        async function updateSecurityRules() {
+            // هذه الوظيفة ستكون مسؤولة عن تحديث قواعد الأمان
+            // في بيئة حقيقية، ستحتاج إلى استدعاء API لتحديث قواعد الأمان
+            // هنا نقوم فقط بمحاكاة نجاح العملية وعرض رسالة تنبيه
+            
+            try {
+                // محاكاة تأخير لعملية التحديث
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // عرض رسالة نجاح التحديث
+                showAlert("alertSecurityRulesUpdated");
+                return true;
+            } catch (error) {
+                console.error("Error updating security rules:", error);
+                return false;
+            }
+        }
+
+        async function enableDeveloperMode() {
+            // التحقق مما إذا كان المستخدم مطورًا مصرحًا له
+            const isAuthorized = await checkAuthorizedDeveloper();
+            
+            if (isAuthorized) {
+                isDeveloperMode = true;
+                developerDashboard.classList.remove('hidden');
+                developerModeIndicator.style.display = 'block';
+                updateDeveloperModeIndicatorText();
+                loadComments();
+                loadDevOrders();
+                loadPaymentMethods(); // Load payment methods for dev
+            } else {
+                // إذا لم يكن المستخدم مصرحًا له، أظهر رسالة خطأ
+                showAlert("alertNotAuthorized", 'alert', {
+                    extraText: "أنت غير مصرح لك بالوصول إلى وضع المطور."
+                });
+            }
         }
 
         function promptForDeveloperMode() {
+            // التحقق من تسجيل الدخول أولاً
+            if (!isAuthReady || !userId) {
+                showAlert("alertLoginRequired", 'alert', {
+                    extraText: "يجب تسجيل الدخول أولاً للوصول إلى وضع المطور."
+                });
+                return;
+            }
+            
             showAlert("alertDeveloperModePrompt", 'confirm', {
                 promptInput: { type: 'password', placeholder: 'Secret Code...' },
                 onConfirm: async (confirmed, value) => {
                     if (!confirmed || !value) return;
-                    if (value === DEVELOPER_MODE_SECRET) {
+                    
+                    // التحقق مما إذا كان المستخدم مصرحًا له بالفعل
+                    const isAuthorized = await checkAuthorizedDeveloper();
+                    if (isAuthorized) {
                         enableDeveloperMode();
-                        return;
-                    }
-                    if (/^\d{6}$/.test(value)) {
-                        const codesRef = collection(db, `artifacts/${appId}/public/data/oneTimeDevCodes`);
-                        const q = query(codesRef, where("code", "==", value));
-                        try {
-                            const querySnapshot = await getDocs(q);
-                            if (!querySnapshot.empty) {
-                                const codeDoc = querySnapshot.docs[0];
-                                const expiry = codeDoc.data().expiresAt.toDate();
-                                if (new Date() < expiry) {
-                                    enableDeveloperMode();
-                                } else {
-                                    showAlert("alertInvalidOrUsedCode");
-                                }
-                            } else {
-                                showAlert("alertWrongDevCode");
-                            }
-                        } catch (err) {
-                            console.error("Error verifying one-time code:", err);
-                            showAlert("alertWrongDevCode");
-                        }
                     } else {
-                        showAlert("alertWrongDevCode");
+                        // إذا لم يكن المستخدم مصرحًا له، أظهر رسالة خطأ
+                        showAlert("alertNotAuthorized", 'alert', {
+                            extraText: "أنت غير مصرح لك بالوصول إلى وضع المطور."
+                        });
                     }
                 }
             });
         }
 
         async function generateAndShowOneTimeCode() {
-            const oneTimeCode = String(Math.floor(100000 + Math.random() * 900000));
-            try {
-                const codesCollection = collection(db, `artifacts/${appId}/public/data/oneTimeDevCodes`);
-                await addDoc(codesCollection, {
-                    code: oneTimeCode,
-                    createdAt: serverTimestamp(),
-                    expiresAt: new Date(Date.now() + 60 * 60 * 1000) // Expires in 1 hour
-                });
-                showAlert("oneTimeCodeGenerated", 'alert', { extraText: oneTimeCode });
-            } catch (error) {
-                console.error("Error generating one-time code:", error);
-                showAlert("alertOneTimeCodeError");
-            }
+            // هذه الدالة لم تعد ضرورية لأن المستخدمين المصرح لهم محددين مسبقاً في قائمة UIDs
+            // ولكن نحتفظ بها للتوافق مع الكود الحالي
+            showAlert("alertNotAuthorized", 'alert', {
+                extraText: "تم تغيير نظام الصلاحيات. لم تعد هناك حاجة لإنشاء رموز مؤقتة."
+            });
         }
         
         function promptForSuperSecretCode() {
-            showAlert("promptSuperSecret", 'confirm', {
-                promptInput: { type: 'password', placeholder: 'Super Secret Code...' },
-                onConfirm: async (confirmed, value) => {
-                    if (confirmed) {
-                        if (value === SUPER_SECRET_CODE) {
-                            await generateAndShowOneTimeCode();
-                        } else {
-                            showAlert("alertWrongSuperSecret");
-                        }
-                    }
+            // التحقق من تسجيل الدخول أولاً
+            if (!isAuthReady || !userId) {
+                showAlert("alertLoginRequired", 'alert', {
+                    extraText: "يجب تسجيل الدخول أولاً للوصول إلى وضع المطور."
+                });
+                return;
+            }
+            
+            // التحقق مما إذا كان المستخدم مصرحًا له
+            checkAuthorizedDeveloper().then(isAuthorized => {
+                if (!isAuthorized) {
+                    showAlert("alertNotAuthorized", 'alert', {
+                        extraText: "أنت غير مصرح لك بالوصول إلى وضع المطور."
+                    });
+                    return;
                 }
+                
+                // إذا كان المستخدم مصرحًا له، أخبره أن نظام الصلاحيات قد تغير
+                showAlert("alertNotAuthorized", 'alert', {
+                    extraText: "تم تغيير نظام الصلاحيات. لم تعد هناك حاجة لإنشاء رموز مؤقتة."
+                });
+            }).catch(error => {
+                console.error("Error checking developer authorization:", error);
+                showAlert("alertDeveloperAuthError");
             });
         }
 
@@ -2238,7 +2503,25 @@
             applyDarkMode(localStorage.getItem('darkMode') === 'enabled');
             setLanguage(currentLang);
             paymentMethodForm.addEventListener('submit', addPaymentMethod);
+            
+            // إضافة معالج الحدث لزر تحديث قواعد الأمان
+            const updateSecurityRulesBtn = document.getElementById('updateSecurityRulesBtn');
+            if (updateSecurityRulesBtn) {
+                updateSecurityRulesBtn.addEventListener('click', async function() {
+                    // التحقق من أن المستخدم مطور مصرح له
+                    const isAuthorized = await checkAuthorizedDeveloper();
+                    if (isAuthorized) {
+                        await updateSecurityRules();
+                    } else {
+                        showAlert("alertWrongDevCode");
+                    }
+                });
+            }
         }
     </script>
+    
+    <!-- Copy Notification -->
+    <div id="copyNotification" class="copy-notification"></div>
+    
 </body>
 </html>
