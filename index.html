@@ -1184,8 +1184,15 @@
                 const prompt = `Translate the following text to ${targetLang}. Provide only the translation, no extra explanations or analysis, and keep it as concise as possible:\n\n${text}`;
                 const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
                 const apiKey = "AIzaSyAQUGqUp7KMjs9q2jrIR8BQ3xH9hollWrQ";
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
+                const response = await fetch(apiUrl, { 
+                    method: 'POST', 
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-goog-api-key': apiKey
+                    }, 
+                    body: JSON.stringify(payload) 
+                });
                 if (!response.ok) throw new Error(`API error: ${response.status}`);
                 const result = await response.json();
                 const translatedText = result.candidates[0].content.parts[0].text;
