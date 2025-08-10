@@ -470,6 +470,22 @@
                     </div>
                     <div id="orderImagesPreview" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 mt-4"></div>
                 </div>
+                
+                <!-- Discount Coupon Section -->
+                <div class="coupon-section">
+                    <label for="couponCode" class="block text-sm font-medium" data-lang-key="couponCodeLabel">كود الخصم/الدعوة:</label>
+                    <div class="flex gap-2 mt-1">
+                        <input type="text" id="couponCode" name="coupon_code" class="flex-1 rounded-md shadow-sm" data-lang-key="couponCodePlaceholder" placeholder="أدخل كود الخصم">
+                        <button type="button" id="applyCouponBtn" class="btn-primary px-4 py-2" data-lang-key="applyCouponBtn">تطبيق</button>
+                    </div>
+                    <div id="couponMessage" class="mt-2 text-sm hidden"></div>
+                    <div id="discountInfo" class="mt-2 p-3 bg-green-100 dark:bg-green-800 rounded-md hidden">
+                        <p class="text-green-800 dark:text-green-200 font-medium" data-lang-key="discountApplied">تم تطبيق الخصم!</p>
+                        <p class="text-green-700 dark:text-green-300"><span data-lang-key="discountPercentage">نسبة الخصم:</span> <span id="discountPercent"></span>%</p>
+                        <p class="text-green-700 dark:text-green-300"><span data-lang-key="couponCodeApplied">الكود المطبق:</span> <span id="appliedCouponCode"></span></p>
+                    </div>
+                </div>
+                
                 <button type="submit" id="submitOrderBtn" class="btn-primary w-full !bg-green-500 hover:!bg-green-700" data-lang-key="orderSubmitBtn">تقديم الطلب</button>
             </form>
         </div>
@@ -705,6 +721,48 @@
                     </div>
                 </div>
             </div>
+
+            <!-- NEW: Coupon Management for Developer -->
+            <div class="max-w-6xl mx-auto mt-12">
+                <h3 class="section-heading text-center mb-8" data-lang-key="devCouponManagementHeading">إدارة كوبونات الخصم</h3>
+                <div class="card p-8">
+                    <form id="couponForm" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+                            <div class="lg:col-span-1">
+                                <label for="couponCodeInput" class="block text-sm font-medium" data-lang-key="devCouponCode">كود الكوبون:</label>
+                                <input type="text" id="couponCodeInput" placeholder="مثال: SAVE20" class="mt-1 block w-full rounded-md shadow-sm" required>
+                            </div>
+                            <div class="lg:col-span-1">
+                                <label for="couponDiscountInput" class="block text-sm font-medium" data-lang-key="devCouponDiscount">نسبة الخصم (%):</label>
+                                <input type="number" id="couponDiscountInput" placeholder="20" min="1" max="100" class="mt-1 block w-full rounded-md shadow-sm" required>
+                            </div>
+                            <div class="lg:col-span-1">
+                                <label for="couponUsageLimitInput" class="block text-sm font-medium" data-lang-key="devCouponUsageLimit">حد الاستخدام:</label>
+                                <select id="couponUsageLimitInput" class="mt-1 block w-full rounded-md shadow-sm" required>
+                                    <option value="1">مرة واحدة</option>
+                                    <option value="2">مرتين</option>
+                                    <option value="3">3 مرات</option>
+                                    <option value="4">4 مرات</option>
+                                    <option value="5">5 مرات</option>
+                                    <option value="6">6 مرات</option>
+                                    <option value="7">7 مرات</option>
+                                    <option value="8">8 مرات</option>
+                                    <option value="9">9 مرات</option>
+                                    <option value="10">10 مرات</option>
+                                    <option value="-1">لا نهاية</option>
+                                </select>
+                            </div>
+                            <div class="lg:col-span-1">
+                                <button type="submit" class="btn-primary w-full" data-lang-key="devAddCoupon">إضافة كوبون</button>
+                            </div>
+                        </div>
+                    </form>
+                    <hr class="my-6 border-gray-200 dark:border-gray-600">
+                    <div id="devCouponsList" class="space-y-4">
+                        <!-- Coupons will be loaded here by JS -->
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- Contact Section -->
@@ -872,7 +930,22 @@
         const customerPaymentMethodsList = document.getElementById('customerPaymentMethodsList');
         const copyNotification = document.getElementById('copyNotification');
         
+        // Coupon Management Elements
+        const couponForm = document.getElementById('couponForm');
+        const couponCodeInputDev = document.getElementById('couponCodeInput');
+        const couponDiscountInput = document.getElementById('couponDiscountInput');
+        const couponUsageLimitInput = document.getElementById('couponUsageLimitInput');
+        const devCouponsList = document.getElementById('devCouponsList');
+        
         let orderFiles = [];
+        
+        // Coupon variables
+        let appliedCoupon = null;
+        let discountPercentage = 0;
+        const couponCodeInput = document.getElementById('couponCode');
+        const applyCouponBtn = document.getElementById('applyCouponBtn');
+        const couponMessage = document.getElementById('couponMessage');
+        const discountInfo = document.getElementById('discountInfo');
         let userLocation = { latitude: null, longitude: null };
 
         async function getIPAddress() {
@@ -947,7 +1020,12 @@
                 alertDeletePreviewImageConfirm: "هل أنت متأكد أنك تريد حذف هذه الصورة؟", alertDeletePreviewImageSuccess: "تم حذف الصورة بنجاح.", alertDeletePreviewImageError: "حدث خطأ أثناء حذف الصورة.",
                 receiptTitle: "إيصال الدفع", receiptUploadPrompt: "الرجاء إرفاق صورة إيصال الدفع.", receiptUploadBtn: "رفع الإيصال", receiptChangeBtn: "تغيير الإيصال", receiptUploading: "جاري رفع الإيصال...", receiptUploadSuccess: "تم رفع الإيصال بنجاح!", receiptUploadError: "فشل رفع الإيصال.",
                 devAssignedTo: "مسؤول المشروع:", devSave: "حفظ", devAssignedToUpdated: "تم تحديث مسؤول المشروع.",
-                uidModalTitle: "معرف المستخدم الخاص بك", uidModalDescription: "هذا هو معرف المستخدم الخاص بك (UID):", uidCopyBtn: "نسخ المعرف", uidCopiedSuccess: "تم نسخ المعرف بنجاح!", uidModalClose: "إغلاق"
+                uidModalTitle: "معرف المستخدم الخاص بك", uidModalDescription: "هذا هو معرف المستخدم الخاص بك (UID):", uidCopyBtn: "نسخ المعرف", uidCopiedSuccess: "تم نسخ المعرف بنجاح!", uidModalClose: "إغلاق",
+                // Coupon translations
+                couponLabel: "كود الخصم/الدعوة:",
+                couponPlaceholder: "أدخل كود الخصم",
+                couponCodeLabel: "كود الخصم:", couponCodePlaceholder: "أدخل كود الخصم", applyCouponBtn: "تطبيق", couponInvalidCode: "كود الخصم غير صالح.", couponUsageLimitExceeded: "تم استنفاد عدد مرات استخدام هذا الكود.", couponAppliedSuccess: "تم تطبيق كود الخصم بنجاح!", couponDiscountApplied: "خصم مطبق:", couponEnterCode: "الرجاء إدخال كود الخصم.",
+                devCouponManagementHeading: "إدارة كوبونات الخصم", devCouponCode: "كود الكوبون:", devCouponDiscount: "نسبة الخصم (%):", devCouponUsageLimit: "حد الاستخدام:", devAddCoupon: "إضافة كوبون", devDeleteCoupon: "حذف الكوبون", devCouponAddedSuccess: "تم إضافة الكوبون بنجاح!", devCouponAddError: "خطأ في إضافة الكوبون.", devCouponDeletedSuccess: "تم حذف الكوبون بنجاح!", devCouponDeleteError: "خطأ في حذف الكوبون.", devCouponDeleteConfirm: "هل أنت متأكد أنك تريد حذف هذا الكوبون؟", devCouponUsed: "مستخدم:", devCouponDelete: "حذف"
             },
             en: {  
                 siteTitle: "Our Services - Project Design & Development", navHome: "Home", navWhyChooseUs: "Why Choose Us?", navAboutUs: "About Us", navServices: "What We Offer?", navContact: "Contact Us", navComments: "Comments", navTrackOrder: "Track Your Order", heroTitle: "Designers of all types of projects, websites, designs, research, and assignments", heroDiscount: "30% discount for a limited time on all services", heroSubtitle: "We offer integrated solutions to meet all your academic and professional needs", featuresHeading: "Why Choose Us?",
@@ -977,7 +1055,33 @@
                 alertDeletePreviewImageConfirm: "Are you sure you want to delete this image?", alertDeletePreviewImageSuccess: "Image deleted successfully.", alertDeletePreviewImageError: "Error deleting image.",
                 receiptTitle: "Payment Receipt", receiptUploadPrompt: "Please attach the payment receipt image.", receiptUploadBtn: "Upload Receipt", receiptChangeBtn: "Change Receipt", receiptUploading: "Uploading receipt...", receiptUploadSuccess: "Receipt uploaded successfully!", receiptUploadError: "Failed to upload receipt.",
                 devAssignedTo: "Assigned To:", devSave: "Save", devAssignedToUpdated: "Project assignee updated.",
-                uidModalTitle: "Your User ID", uidModalDescription: "This is your User ID (UID):", uidCopyBtn: "Copy ID", uidCopiedSuccess: "ID copied successfully!", uidModalClose: "Close"
+                uidModalTitle: "Your User ID", uidModalDescription: "This is your User ID (UID):", uidCopyBtn: "Copy ID", uidCopiedSuccess: "ID copied successfully!", uidModalClose: "Close",
+                
+                // Coupon translations
+                couponLabel: "Coupon Code:",
+                couponPlaceholder: "Enter coupon code",
+                applyCouponBtn: "Apply",
+                couponInvalidCode: "Invalid coupon code.",
+                couponUsageLimitExceeded: "This coupon has reached its usage limit.",
+                couponAppliedSuccess: "Coupon applied successfully!",
+                couponDiscountApplied: "Discount applied:",
+                couponEnterCode: "Please enter a coupon code.",
+                devCouponManagementHeading: "Coupon Management",
+                devCouponCode: "Coupon Code:",
+                devCouponDiscount: "Discount (%):",
+                devCouponUsageLimit: "Usage Limit:",
+                devAddCoupon: "Add Coupon",
+                devDeleteCoupon: "Delete Coupon",
+                devCouponAddedSuccess: "Coupon added successfully!",
+                devCouponAddError: "Error adding coupon.",
+                devCouponDeletedSuccess: "Coupon deleted successfully!",
+                devCouponDeleteError: "Error deleting coupon.",
+                devCouponDeleteConfirm: "Are you sure you want to delete this coupon?",
+                devCouponUsed: "Used:",
+                devCouponDelete: "Delete",
+                discountApplied: "Discount applied!",
+                discountPercentage: "Discount percentage:",
+                couponCodeApplied: "Applied code:"
             },
             zh: {
                 siteTitle: "我们的服务 - 项目设计与开发", navHome: "主页", navWhyChooseUs: "为什么选择我们？", navAboutUs: "关于我们", navServices: "我们提供什么？", navContact: "联系我们", navComments: "评论", navTrackOrder: "追踪您的订单", heroTitle: "各种项目、网站、设计、研究和作业的设计者", heroDiscount: "所有服务限时30%折扣", heroSubtitle: "我们提供全面的解决方案，满足您所有的学术和专业需求", featuresHeading: "为什么选择我们？",
@@ -1007,7 +1111,11 @@
                 alertDeletePreviewImageConfirm: "您确定要删除此图片吗？", alertDeletePreviewImageSuccess: "图片已成功删除。", alertDeletePreviewImageError: "删除图片时出错。",
                 receiptTitle: "付款收据", receiptUploadPrompt: "请附上付款收据图片。", receiptUploadBtn: "上传收据", receiptChangeBtn: "更改收据", receiptUploading: "正在上传收据...", receiptUploadSuccess: "收据上传成功！", receiptUploadError: "上传收据失败。",
                 devAssignedTo: "项目负责人:", devSave: "保存", devAssignedToUpdated: "项目负责人已更新。",
-                uidModalTitle: "您的用户ID", uidModalDescription: "这是您的用户ID (UID):", uidCopyBtn: "复制ID", uidCopiedSuccess: "ID复制成功!", uidModalClose: "关闭"
+                uidModalTitle: "您的用户ID", uidModalDescription: "这是您的用户ID (UID):", uidCopyBtn: "复制ID", uidCopiedSuccess: "ID复制成功!", uidModalClose: "关闭",
+                // Coupon translations
+                couponLabel: "优惠券/邀请码:",
+                couponPlaceholder: "输入优惠券代码",
+                couponCodeLabel: "优惠券/邀请码:", couponCodePlaceholder: "输入优惠券代码", applyCouponBtn: "应用"
             }
         };
 
@@ -1630,6 +1738,7 @@
                 loadComments();
                 loadDevOrders();
                 loadPaymentMethods(); // Load payment methods for dev
+                loadCoupons(); // Load coupons for dev
             } else {
                 // إذا لم يكن المستخدم مصرحًا له، أظهر رسالة خطأ
                 showAlert("alertNotAuthorized", 'alert', {
@@ -1759,6 +1868,11 @@
             otherServiceField.classList.add('hidden');
             orderFiles = [];
             updateOrderFilePreview();
+            // Reset coupon data
+            appliedCoupon = null;
+            discountPercentage = 0;
+            couponMessage.classList.add('hidden');
+            discountInfo.classList.add('hidden');
         }
 
         function showOrderSubmittedModal(orderId) {
@@ -1809,6 +1923,61 @@
             updateOrderFilePreview();
             e.target.value = null;
         });
+        
+        // Coupon functionality
+        async function applyCoupon() {
+            const couponCode = couponCodeInput.value.trim();
+            if (!couponCode) {
+                showCouponMessage('يرجى إدخال كود الخصم', 'error');
+                return;
+            }
+            
+            try {
+                const couponsRef = collection(db, `artifacts/${appId}/public/data/coupons`);
+                const q = query(couponsRef, where('code', '==', couponCode));
+                const querySnapshot = await getDocs(q);
+                
+                if (querySnapshot.empty) {
+                    showCouponMessage('كود الخصم غير صحيح', 'error');
+                    return;
+                }
+                
+                const couponDoc = querySnapshot.docs[0];
+                const coupon = couponDoc.data();
+                
+                if (coupon.maxUses !== -1 && coupon.uses >= coupon.maxUses) {
+                    showCouponMessage('تم استنفاد استخدامات هذا الكود', 'error');
+                    return;
+                }
+                
+                appliedCoupon = { ...coupon, id: couponDoc.id };
+                discountPercentage = coupon.discount;
+                showCouponMessage(`تم تطبيق الكود بنجاح! خصم ${discountPercentage}%`, 'success');
+                showDiscountInfo(coupon.code, discountPercentage);
+                
+            } catch (error) {
+                console.error('Error applying coupon:', error);
+                showCouponMessage('حدث خطأ في تطبيق الكود', 'error');
+            }
+        }
+        
+        function showCouponMessage(message, type) {
+            couponMessage.textContent = message;
+            couponMessage.className = `mt-2 text-sm ${type === 'success' ? 'text-green-600' : 'text-red-600'}`;
+            couponMessage.classList.remove('hidden');
+        }
+        
+        function showDiscountInfo(code, discount) {
+            discountInfo.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span>كود الخصم: <strong>${code}</strong></span>
+                    <span>خصم: <strong>${discount}%</strong></span>
+                </div>
+            `;
+            discountInfo.classList.remove('hidden');
+        }
+        
+        applyCouponBtn.addEventListener('click', applyCoupon);
 
         orderForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -1854,10 +2023,28 @@
                     status: 1, // 1: Awaiting Approval
                     timestamp: serverTimestamp(), ipAddress, device, browser, deviceName,
                     latitude: userLocation.latitude, longitude: userLocation.longitude,
-                    previewImages: [], estimatedPrice: null, finalPrice: null, currency: null, rejectionReason: null, discount: null, paidViaBank: null,
-                    receiptUrl: null, assignedDeveloper: null // Initialize new fields
+                    previewImages: [], estimatedPrice: null, finalPrice: null, currency: null, rejectionReason: null, 
+                    discount: appliedCoupon ? discountPercentage : null,
+                    couponCode: appliedCoupon ? appliedCoupon.code : null,
+                    paidViaBank: null, receiptUrl: null, assignedDeveloper: null // Initialize new fields
                 };
                 await addDoc(collection(db, `artifacts/${appId}/public/data/orders`), orderData);
+                
+                // Update coupon usage count if coupon was applied
+                if (appliedCoupon) {
+                    try {
+                        const couponRef = doc(db, `artifacts/${appId}/public/data/coupons`, appliedCoupon.id);
+                        await runTransaction(db, async (transaction) => {
+                            const couponDoc = await transaction.get(couponRef);
+                            if (couponDoc.exists()) {
+                                const currentUses = couponDoc.data().uses || 0;
+                                transaction.update(couponRef, { uses: currentUses + 1 });
+                            }
+                        });
+                    } catch (error) {
+                        console.error('Error updating coupon usage:', error);
+                    }
+                }
 
                 const formspreeData = new FormData();
                 formspreeData.append('Order ID', orderId);
@@ -1867,6 +2054,10 @@
                 formspreeData.append('Service', orderData.service);
                 formspreeData.append('Details', orderData.details);
                 formspreeData.append('Image URLs', uploadedImageUrls.join('\n'));
+                if (appliedCoupon) {
+                    formspreeData.append('Coupon Code', appliedCoupon.code);
+                    formspreeData.append('Discount', `${discountPercentage}%`);
+                }
                 formspreeData.append('IP Address', ipAddress);
                 formspreeData.append('Device Info', `${device} - ${browser} (${deviceName})`);
                 if(userLocation.latitude && userLocation.longitude) {
@@ -2526,14 +2717,94 @@
             });
         }
 
+        // Coupon Management Functions
+        function loadCoupons() {
+            if (!db || !isDeveloperMode) return;
+            const q = query(collection(db, `artifacts/${appId}/public/data/coupons`));
+            onSnapshot(q, (snapshot) => {
+                const coupons = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+                devCouponsList.innerHTML = '';
+                if (coupons.length === 0) {
+                    devCouponsList.innerHTML = `<p class="text-center text-gray-500 dark:text-gray-400">لم تتم إضافة أي كوبونات بعد.</p>`;
+                    return;
+                }
+                coupons.forEach(coupon => {
+                    const couponEl = document.createElement('div');
+                    couponEl.className = 'flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 rounded-lg border';
+                    couponEl.innerHTML = `
+                        <div class="flex-grow">
+                            <p class="font-semibold text-lg">${coupon.code}</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">${translations[currentLang].devCouponDiscount} ${coupon.discount}%</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">${translations[currentLang].devCouponUsageLimit} ${coupon.maxUses === -1 ? '∞' : coupon.maxUses}</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-300 mt-1">${translations[currentLang].devCouponUsed} ${coupon.uses || 0}</p>
+                        </div>
+                        <button class="btn-danger text-xs mt-2 sm:mt-0" data-id="${coupon.id}">${translations[currentLang].devCouponDelete}</button>
+                    `;
+                    couponEl.querySelector('button').onclick = () => deleteCoupon(coupon.id);
+                    devCouponsList.appendChild(couponEl);
+                });
+            });
+        }
+
+        async function addCoupon(e) {
+            e.preventDefault();
+            if (!isDeveloperMode) return;
+            const code = couponCodeInputDev.value.trim();
+            const discount = parseInt(couponDiscountInput.value);
+            const usageLimit = parseInt(couponUsageLimitInput.value);
+
+            if (!code || !discount || discount <= 0 || discount > 100) {
+                showAlert("الرجاء ملء جميع الحقول بقيم صحيحة.");
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, `artifacts/${appId}/public/data/coupons`), {
+                    code: code,
+                    discount: discount,
+                    maxUses: usageLimit === 0 ? -1 : usageLimit, // -1 means unlimited
+                    uses: 0,
+                    createdAt: new Date()
+                });
+                showAlert(translations[currentLang].devCouponAddedSuccess);
+                couponForm.reset();
+            } catch (err) {
+                console.error("Error adding coupon:", err);
+                showAlert(translations[currentLang].devCouponAddError);
+            }
+        }
+
+        function deleteCoupon(id) {
+            showAlert(translations[currentLang].devCouponDeleteConfirm, 'confirm', {
+                onConfirm: async (confirmed) => {
+                    if (confirmed) {
+                        try {
+                            await deleteDoc(doc(db, `artifacts/${appId}/public/data/coupons`, id));
+                            showAlert(translations[currentLang].devCouponDeletedSuccess);
+                        } catch (err) {
+                            console.error("Error deleting coupon:", err);
+                            showAlert(translations[currentLang].devCouponDeleteError);
+                        }
+                    }
+                }
+            });
+        }
+
         // Initial setup
         window.onload = async function() {
             await initFirebase();
             userLocation = await getGeolocation();
             setupStarRating(starRatingInputContainer, commentRatingValue);
             applyDarkMode(localStorage.getItem('darkMode') === 'enabled');
-            setLanguage(currentLang);
+            // Force Arabic language for coupon display
+            setLanguage('ar');
             paymentMethodForm.addEventListener('submit', addPaymentMethod);
+            couponForm.addEventListener('submit', addCoupon);
+            
+            // Load coupons if in developer mode
+            if (isDeveloperMode) {
+                loadCoupons();
+            }
             
             // إضافة معالج الحدث لزر تحديث قواعد الأمان
             const updateSecurityRulesBtn = document.getElementById('updateSecurityRulesBtn');
