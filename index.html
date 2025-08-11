@@ -3058,7 +3058,7 @@
     <!-- Loading Screen JavaScript -->
     <script>
         // Apply loading text translation immediately
-        document.addEventListener('DOMContentLoaded', function() {
+        (function() {
             // Get the current language (same logic as main script)
             function detectBrowserLanguage() {
                 const browserLang = navigator.language || navigator.userLanguage;
@@ -3072,7 +3072,6 @@
             }
             
             const currentLang = localStorage.getItem('lang') || detectBrowserLanguage();
-            const loadingTextElement = document.querySelector('[data-lang-key="loadingText"]');
             
             // Apply the appropriate translation immediately
             const loadingTexts = {
@@ -3081,9 +3080,28 @@
                 zh: '服务门户 - 设计与开发'
             };
             
-            if (loadingTextElement && loadingTexts[currentLang]) {
-                loadingTextElement.textContent = loadingTexts[currentLang];
+            // Function to update loading text
+            function updateLoadingText() {
+                const loadingTextElement = document.querySelector('[data-lang-key="loadingText"]');
+                if (loadingTextElement && loadingTexts[currentLang]) {
+                    loadingTextElement.textContent = loadingTexts[currentLang];
+                    console.log('Loading text updated to:', loadingTexts[currentLang]);
+                }
             }
+            
+            // Apply immediately if DOM is ready, otherwise wait for it
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', updateLoadingText);
+            } else {
+                updateLoadingText();
+            }
+            
+            // Also try to update after a short delay to ensure DOM is ready
+            setTimeout(updateLoadingText, 100);
+        })();
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Additional DOM ready functionality can go here
         });
         
         // Loading screen functionality
