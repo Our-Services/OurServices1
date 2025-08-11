@@ -157,6 +157,16 @@
             .card {
                 margin: 0 auto;
                 max-width: 100%;
+                min-height: 200px; /* Ensure consistent height on mobile */
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            
+            /* Ensure grid items have consistent sizing on mobile */
+            .grid.grid-cols-1 .card {
+                width: 100%;
+                margin-bottom: 1rem;
             }
             
             .loading-screen {
