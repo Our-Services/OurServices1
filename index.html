@@ -538,7 +538,7 @@
     <!-- Loading Screen -->
     <div id="loadingScreen" class="loading-screen">
         <img src="1754948697784.png" alt="بوابة الخدمات" class="loading-logo" />
-        <div class="loading-text">بوابة الخدمات - تصميم وتطوير المشاريع</div>
+        <div class="loading-text" id="loadingTextElement">بوابة الخدمات - تصميم وتطوير المشاريع</div>
 
         <div class="loading-progress">
             <div class="loading-progress-bar"></div>
@@ -3057,7 +3057,45 @@
     
     <!-- Loading Screen JavaScript -->
     <script>
-        // Loading screen functionality only
+        // Loading screen functionality with language support
+        (function() {
+            // Get the current language
+            function detectBrowserLanguage() {
+                const browserLang = navigator.language || navigator.userLanguage;
+                if (browserLang.startsWith('ar')) {
+                    return 'ar';
+                } else if (browserLang.startsWith('zh')) {
+                    return 'zh';
+                } else {
+                    return 'en';
+                }
+            }
+            
+            const currentLang = localStorage.getItem('lang') || detectBrowserLanguage();
+            
+            // Loading text translations
+            const loadingTexts = {
+                ar: 'بوابة الخدمات - تصميم وتطوير المشاريع',
+                en: 'Services Portal - Design & Development',
+                zh: '服务门户 - 设计与开发'
+            };
+            
+            // Function to update loading text
+            function updateLoadingText() {
+                const loadingTextElement = document.getElementById('loadingTextElement');
+                if (loadingTextElement && loadingTexts[currentLang]) {
+                    loadingTextElement.textContent = loadingTexts[currentLang];
+                }
+            }
+            
+            // Apply immediately if DOM is ready, otherwise wait for it
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', updateLoadingText);
+            } else {
+                updateLoadingText();
+            }
+        })();
+        
         document.addEventListener('DOMContentLoaded', function() {
             // Additional DOM ready functionality can go here
         });
