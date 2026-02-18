@@ -1931,12 +1931,12 @@
             if (!isAuthReady || !userId) {
                 showAlert("alertFirebaseNotReady");
                 return false;
-            }
+            }                                                                                                      //     <-- لا تسرق الكود، شايفك ترا -->
             
             try {
                 // قائمة UIDs المصرح لهم كمطورين
                 // قم بتغيير هذه القائمة لتتضمن UIDs الخاصة بالمطورين المصرح لهم فقط
-                // للحصول على UID الخاص بك، قم بتسجيل الدخول ثم افتح وحدة تحكم المتصفح (F12) واكتب:
+                // للحصول على UID الخاص بك، قم بتسجيل الدخول ثم افتح وحدة تحكم المتصفح (F12) واكتب:             
                 // console.log(userId)
                 // ثم قم بنسخ الـ UID الظاهر وإضافته هنا
                 const authorizedUIDs = [
@@ -2596,7 +2596,7 @@
                 }
 
             } else {
-                receiptSection.classList.add('hidden');
+                receiptSection.classList.add('hidden');                          //-=-=-=--=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-<-- لا تسرق الكود -->-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
             }
         }
 
@@ -3069,7 +3069,7 @@
     
     <!-- Loading Screen JavaScript -->
     <script>
-        // Loading screen functionality with language support
+        // Loading screen functionality with language support                                -=-=-=--=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-<-- لا تسرق الكود -->-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         (function() {
             // Get the current language
             function detectBrowserLanguage() {
@@ -3133,11 +3133,12 @@
             }, 3000);
         });
         
-        // Loading text translations removed - using static text in HTML
+        // Loading text translations removed - using static text in HTML                 -=-=-=--=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-<-- لا تسرق الكود -->-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     </script>
     
-    <!-- Copy Notification -->
+    <!-- Copy Notification -->              
     <div id="copyNotification" class="copy-notification"></div>
-    
+                                                                                                    
 </body>
-</html>
+</html>                                                                                            
+
